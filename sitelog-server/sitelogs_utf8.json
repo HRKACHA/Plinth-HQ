@@ -1,0 +1,525 @@
+[
+  {
+    "_id": "6a2820ce7d86e2e06a644726",
+    "project": "6a2820ce7d86e2e06a644711",
+    "date": "2026-06-08T00:00:00.000Z",
+    "weather": "sunny",
+    "temperature": 34,
+    "activities": "Completed slab casting for 14th floor. Installed rebar for column grid C1-C8.",
+    "remarks": "Concrete pour delayed 2 hours due to traffic.",
+    "photos": [
+      {
+        "url": "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=60",
+        "_id": "6a2820ce7d86e2e06a644727",
+        "uploadedAt": "2026-06-09T14:18:54.734Z"
+      }
+    ],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 24,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a644728"
+      },
+      {
+        "trade": "carpenter",
+        "present": 12,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a644729"
+      },
+      {
+        "trade": "electrician",
+        "present": 8,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a64472a"
+      },
+      {
+        "trade": "plumber",
+        "present": 6,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a64472b"
+      }
+    ],
+    "materials": [
+      {
+        "name": "Cement",
+        "qty": "200",
+        "unit": "bags",
+        "supplier": "UltraTech",
+        "_id": "6a2820ce7d86e2e06a64472c"
+      }
+    ],
+    "createdBy": "6a2820ce7d86e2e06a64470c",
+    "isLocked": true,
+    "__v": 0,
+    "createdAt": "2026-06-09T14:18:54.737Z",
+    "updatedAt": "2026-06-10T16:30:00.338Z"
+  },
+  {
+    "_id": "6a2820ce7d86e2e06a64472d",
+    "project": "6a2820ce7d86e2e06a644711",
+    "date": "2026-06-07T00:00:00.000Z",
+    "weather": "cloudy",
+    "temperature": 31,
+    "activities": "Formwork removal on 13th floor. Electrical conduit laying in progress.",
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 20,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a64472e"
+      },
+      {
+        "trade": "electrician",
+        "present": 14,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a64472f"
+      }
+    ],
+    "materials": [
+      {
+        "name": "Sand",
+        "qty": "15",
+        "unit": "cubic m",
+        "supplier": "Local",
+        "_id": "6a2820ce7d86e2e06a644730"
+      }
+    ],
+    "createdBy": "6a2820ce7d86e2e06a64470c",
+    "isLocked": true,
+    "photos": [],
+    "__v": 0,
+    "createdAt": "2026-06-09T14:18:54.737Z",
+    "updatedAt": "2026-06-09T16:30:00.944Z"
+  },
+  {
+    "_id": "6a2820ce7d86e2e06a644731",
+    "project": "6a2820ce7d86e2e06a644711",
+    "date": "2026-06-06T00:00:00.000Z",
+    "weather": "rainy",
+    "temperature": 28,
+    "activities": "Work halted after 11 AM due to heavy rain.",
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 8,
+        "absent": 0,
+        "_id": "6a2820ce7d86e2e06a644732"
+      }
+    ],
+    "createdBy": "6a2820ce7d86e2e06a64470c",
+    "isLocked": true,
+    "photos": [],
+    "materials": [],
+    "__v": 0,
+    "createdAt": "2026-06-09T14:18:54.738Z",
+    "updatedAt": "2026-06-09T14:18:54.738Z"
+  },
+  {
+    "_id": "6a28478729238d1cf78e6792",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-09T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "uwgugqucBDLK\n",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "carpenter",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a28478729238d1cf78e6793"
+      },
+      {
+        "trade": "welder",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a28478729238d1cf78e6794"
+      },
+      {
+        "trade": "helper",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a28478729238d1cf78e6795"
+      }
+    ],
+    "materials": [
+      {
+        "name": "DWDQWF",
+        "qty": "20",
+        "unit": "bags",
+        "supplier": "",
+        "recdAt": "2026-06-09T00:00:00.000Z",
+        "_id": "6a28478729238d1cf78e6796"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:04:07.094Z",
+    "updatedAt": "2026-06-11T16:30:00.416Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a284923ddef29e9181ee2e8",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-08T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "HELLO\n",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "electrician",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a284923ddef29e9181ee2e9"
+      },
+      {
+        "trade": "plumber",
+        "present": 3,
+        "absent": 0,
+        "_id": "6a284923ddef29e9181ee2ea"
+      },
+      {
+        "trade": "welder",
+        "present": 4,
+        "absent": 0,
+        "_id": "6a284923ddef29e9181ee2eb"
+      },
+      {
+        "trade": "helper",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a284923ddef29e9181ee2ec"
+      }
+    ],
+    "materials": [
+      {
+        "name": "STEEL",
+        "qty": "10",
+        "unit": "bags",
+        "supplier": "D",
+        "recdAt": "2026-06-08T00:00:00.000Z",
+        "_id": "6a284923ddef29e9181ee2ed"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:10:59.708Z",
+    "updatedAt": "2026-06-10T16:30:00.338Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a284a69037f1d8a4ed1c684",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-06T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "ddwdwe",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a284a69037f1d8a4ed1c685"
+      },
+      {
+        "trade": "carpenter",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a284a69037f1d8a4ed1c686"
+      },
+      {
+        "trade": "electrician",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a284a69037f1d8a4ed1c687"
+      },
+      {
+        "trade": "helper",
+        "present": 4,
+        "absent": 0,
+        "_id": "6a284a69037f1d8a4ed1c688"
+      }
+    ],
+    "materials": [
+      {
+        "name": "e21e2",
+        "qty": "111",
+        "unit": "bags",
+        "supplier": "",
+        "recdAt": "2026-06-06T00:00:00.000Z",
+        "_id": "6a284a69037f1d8a4ed1c689"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:16:25.155Z",
+    "updatedAt": "2026-06-09T17:30:00.518Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a284e3b037f1d8a4ed1cc08",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-05T00:00:00.000Z",
+    "weather": "cloudy",
+    "activities": "qeqwfrwgheytkje",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a284e3b037f1d8a4ed1cc09"
+      },
+      {
+        "trade": "carpenter",
+        "present": 4,
+        "absent": 0,
+        "_id": "6a284e3b037f1d8a4ed1cc0a"
+      },
+      {
+        "trade": "welder",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a284e3b037f1d8a4ed1cc0b"
+      },
+      {
+        "trade": "helper",
+        "present": 4,
+        "absent": 0,
+        "_id": "6a284e3b037f1d8a4ed1cc0c"
+      }
+    ],
+    "materials": [
+      {
+        "name": "frwgteh",
+        "qty": "10",
+        "unit": "bags",
+        "supplier": "",
+        "recdAt": "2026-06-05T00:00:00.000Z",
+        "_id": "6a284e3b037f1d8a4ed1cc0d"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:32:43.850Z",
+    "updatedAt": "2026-06-10T16:30:00.338Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a285050037f1d8a4ed1d72d",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-01T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "fergrg",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 6,
+        "absent": 0,
+        "_id": "6a285050037f1d8a4ed1d72e"
+      },
+      {
+        "trade": "helper",
+        "present": 3,
+        "absent": 0,
+        "_id": "6a285050037f1d8a4ed1d72f"
+      }
+    ],
+    "materials": [
+      {
+        "name": "fef",
+        "qty": "10",
+        "unit": "bags",
+        "supplier": "",
+        "recdAt": "2026-06-01T00:00:00.000Z",
+        "_id": "6a285050037f1d8a4ed1d730"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:41:36.645Z",
+    "updatedAt": "2026-06-10T16:30:00.338Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a285205037f1d8a4ed1d982",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-02T00:00:00.000Z",
+    "weather": "stormy",
+    "activities": "stormy day",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "carpenter",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a285205037f1d8a4ed1d983"
+      },
+      {
+        "trade": "welder",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a285205037f1d8a4ed1d984"
+      },
+      {
+        "trade": "helper",
+        "present": 3,
+        "absent": 0,
+        "_id": "6a285205037f1d8a4ed1d985"
+      }
+    ],
+    "materials": [
+      {
+        "name": "steel",
+        "qty": "100",
+        "unit": "bags",
+        "supplier": "fd",
+        "recdAt": "2026-06-02T00:00:00.000Z",
+        "_id": "6a285205037f1d8a4ed1d986"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-09T17:48:53.931Z",
+    "updatedAt": "2026-06-10T16:30:00.338Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a298ff8063b234e0112cd5d",
+    "project": "6a28423a29238d1cf78e5de4",
+    "date": "2026-06-10T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "Material Delivery: sfd",
+    "photos": [],
+    "labour": [],
+    "materials": [
+      {
+        "name": "sfd",
+        "qty": "400",
+        "unit": "bags",
+        "supplier": "pou'",
+        "price": 100000,
+        "recdAt": "2026-06-10T00:00:00.000Z",
+        "_id": "6a298ff8063b234e0112cd5e"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-10T16:25:28.521Z",
+    "updatedAt": "2026-06-12T06:30:00.332Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a2b03c3bdebae0dba722c88",
+    "project": "6a2b0386bdebae0dba722b1c",
+    "date": "2026-06-11T00:00:00.000Z",
+    "weather": "sunny",
+    "activities": "dwqqrf",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 5,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c89"
+      },
+      {
+        "trade": "carpenter",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c8a"
+      },
+      {
+        "trade": "electrician",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c8b"
+      },
+      {
+        "trade": "plumber",
+        "present": 1,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c8c"
+      },
+      {
+        "trade": "welder",
+        "present": 3,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c8d"
+      },
+      {
+        "trade": "helper",
+        "present": 9,
+        "absent": 0,
+        "_id": "6a2b03c3bdebae0dba722c8e"
+      }
+    ],
+    "materials": [
+      {
+        "name": "bricks",
+        "qty": "200000",
+        "unit": "bags",
+        "supplier": "h",
+        "price": 500000,
+        "recdAt": "2026-06-11T00:00:00.000Z",
+        "_id": "6a2b03c3bdebae0dba722c8f"
+      }
+    ],
+    "createdBy": "6a28390e29238d1cf78e5d06",
+    "isLocked": true,
+    "createdAt": "2026-06-11T18:51:47.152Z",
+    "updatedAt": "2026-06-15T10:30:00.887Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a2fedb2719792bb1cf2a2d2",
+    "project": "6a2febf0719792bb1cf29ec3",
+    "date": "2026-06-15T00:00:00.000Z",
+    "weather": "cloudy",
+    "activities": "Done",
+    "photos": [],
+    "labour": [
+      {
+        "trade": "mason",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a2fedb2719792bb1cf2a2d3"
+      },
+      {
+        "trade": "carpenter",
+        "present": 3,
+        "absent": 0,
+        "_id": "6a2fedb2719792bb1cf2a2d4"
+      },
+      {
+        "trade": "plumber",
+        "present": 2,
+        "absent": 0,
+        "_id": "6a2fedb2719792bb1cf2a2d5"
+      },
+      {
+        "trade": "helper",
+        "present": 4,
+        "absent": 0,
+        "_id": "6a2fedb2719792bb1cf2a2d6"
+      }
+    ],
+    "materials": [
+      {
+        "name": "Iron",
+        "qty": "2000",
+        "unit": "bags",
+        "supplier": "Iron pvt. ltd.",
+        "price": 100000,
+        "recdAt": "2026-06-15T00:00:00.000Z",
+        "_id": "6a2fedb2719792bb1cf2a2d7"
+      }
+    ],
+    "createdBy": "6a2feb74719792bb1cf29dcc",
+    "isLocked": false,
+    "createdAt": "2026-06-15T12:18:58.061Z",
+    "updatedAt": "2026-06-15T12:18:58.061Z",
+    "__v": 0
+  }
+]
