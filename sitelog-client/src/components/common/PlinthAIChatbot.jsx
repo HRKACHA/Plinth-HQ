@@ -20,6 +20,8 @@ function renderMessage(text) {
   let codeLanguage = '';
   let listBuffer = [];
   let listType = null;
+  let inTable = false;
+  let tableBuffer = [];
 
   const flushList = () => {
     if (listBuffer.length > 0) {
@@ -33,6 +35,46 @@ function renderMessage(text) {
       );
       listBuffer = [];
       listType = null;
+    }
+  };
+
+  const flushTable = () => {
+    if (tableBuffer.length > 0) {
+      const parseRow = (str) => {
+        let parts = str.split('|');
+        if (parts.length > 0 && parts[0].trim() === '') parts.shift();
+        if (parts.length > 0 && parts[parts.length - 1].trim() === '') parts.pop();
+        return parts.map(s => s.trim());
+      };
+      
+      const headers = parseRow(tableBuffer[0]);
+      // Skip the separator line (e.g. |---|---|)
+      const rows = tableBuffer.slice(2).map(parseRow);
+      
+      elements.push(
+        <div key={`table-${elements.length}`} className="my-3 w-full overflow-x-auto rounded-lg border border-[var(--color-glass-border)] bg-white/5 dark:bg-white/5">
+          <table className="w-full text-left text-sm text-navy">
+            <thead className="bg-white/10 dark:bg-white/10 text-xs font-semibold uppercase tracking-wider">
+              <tr>
+                {headers.map((h, i) => (
+                  <th key={i} className="px-3 py-2 border-b border-[var(--color-glass-border)]" dangerouslySetInnerHTML={{ __html: inlineFormat(h) }} />
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[var(--color-glass-border)]">
+              {rows.map((row, i) => (
+                <tr key={i} className="hover:bg-white/5 transition-colors">
+                  {headers.map((_, j) => (
+                    <td key={j} className="px-3 py-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: inlineFormat(row[j] || '') }} />
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      );
+      tableBuffer = [];
+      inTable = false;
     }
   };
 
@@ -60,6 +102,18 @@ function renderMessage(text) {
     if (inCodeBlock) {
       codeBuffer.push(line);
       continue;
+    }
+
+    // Tables
+    if (line.trim().startsWith('|') || (inTable && line.includes('|'))) {
+      if (!inTable) {
+        flushList();
+        inTable = true;
+      }
+      tableBuffer.push(line.trim());
+      continue;
+    } else if (inTable) {
+      flushTable();
     }
 
     // Headers
@@ -119,6 +173,7 @@ function renderMessage(text) {
   }
 
   flushList();
+  flushTable();
 
   return <>{elements}</>;
 }
