@@ -84,13 +84,20 @@ export const toolDefinitions = [
   },
   {
     name: 'get_material_inventory',
-    description: 'Get material inventory and recent material deliveries for a project, including quantities, suppliers, and prices.',
+    description: 'Get the organization-wide central material warehouse inventory, including quantities, units, and reorder levels.',
     input_schema: {
       type: 'object',
-      properties: {
-        project_id: { type: 'string', description: 'The MongoDB ObjectId of the project' },
-      },
-      required: ['project_id'],
+      properties: {},
+      required: [],
+    },
+  },
+  {
+    name: 'get_equipment_inventory',
+    description: 'Get the organization-wide equipment and machinery inventory, including their status (idle/working), assigned project, daily rates, and rental end dates.',
+    input_schema: {
+      type: 'object',
+      properties: {},
+      required: [],
     },
   },
   {

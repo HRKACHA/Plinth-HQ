@@ -152,15 +152,15 @@ export const chatHandler = catchAsync(async (req, res) => {
       if (history.length > 0 && history[history.length - 1]?.content === message) {
         history.pop();
       }
-      
+
       // If the error is an API key issue, tell the user directly instead of using offline mode
       if (err.message?.includes('API key not valid') || err.message?.includes('API_KEY_INVALID') || err.message?.includes('400')) {
         return res.json({
           success: true,
-          data: { 
-            message: "⚠️ **API Key Error**\n\nMy Gemini API key is invalid, so I cannot process your request using AI. Google Gemini API keys usually start with `AIza`.\n\nPlease update your `.env` file with a valid `GEMINI_API_KEY` and restart the server to unlock my full AI capabilities!", 
-            session_id: session_id || 'default', 
-            provider: 'fallback' 
+          data: {
+            message: "⚠️ **API Key Error**\n\nMy Gemini API key is invalid, so I cannot process your request using AI. Google Gemini API keys usually start with `AIza`.\n\nPlease update your `.env` file with a valid `GEMINI_API_KEY` and restart the server to unlock my full AI capabilities!",
+            session_id: session_id || 'default',
+            provider: 'fallback'
           },
         });
       }
@@ -295,7 +295,7 @@ async function executeTool(name, input, user, userProjects) {
     case 'get_material_inventory': {
       // Return organization wide central material warehouse data
       const warehouseMaterials = await Material.find({ organisation: user.organisation }).lean();
-      
+
       return {
         warehouse_materials: warehouseMaterials.map(m => ({
           name: m.name,
@@ -764,7 +764,7 @@ async function generateFallbackResponse(message, user, projects, history) {
       });
 
       response += eqList.join('\n');
-      
+
       if (equipmentList.length > 15) {
         response += `\n\n*Showing 15 of ${equipmentList.length} items.*`;
       }
@@ -798,11 +798,11 @@ async function generateFallbackResponse(message, user, projects, history) {
     case 'team': {
       const users = await User.find({ organisation: user.organisation, isActive: true })
         .select('name role email phone').lean();
-      
+
       if (users.length === 0) return `You don't have any team members yet. Head over to the **Team** tab to invite some!`;
 
       const userList = users.map(u => `| ${u.name} | ${u.role || 'User'} | ${u.email} | ${u.phone || '-'} |`);
-      
+
       return `### 👥 Your Team\n\nYou have **${users.length} active team members** in your organization.\n\n| Name | Role | Email | Phone |\n|---|---|---|---|\n${userList.join('\n')}\n\n💡 **Tip:** You can now chat with your team in real-time! Head over to the **Chat** tab to send them a message.`;
     }
 
@@ -973,7 +973,7 @@ async function generateFallbackResponse(message, user, projects, history) {
 
     case 'writing': {
       let template = `**Subject:** [Relevant Subject]\n\n**Dear [Name],**\n\n[Your main message here...]\n\n**Best regards,**\n${firstName}`;
-      
+
       if (/leav|vacation|holiday|sick|absent/.test(msg)) {
         template = `**Subject:** Request for Leave\n\n**Dear [Manager's Name],**\n\nI am writing to formally request a leave of absence from [Start Date] to [End Date] due to [Reason]. I will ensure all my pending tasks are handed over properly before my departure.\n\nThank you for your understanding.\n\n**Best regards,**\n${firstName}`;
       } else if (/inspection|site|report/.test(msg)) {
@@ -997,7 +997,7 @@ async function generateFallbackResponse(message, user, projects, history) {
       const isQuestion = /\?$|^(what|how|why|when|where|who|which|can|could|would|should|explain|describe|tell|show|list|compare|analyze|write|create|generate|draft|build|make|code|debug|plan|summarize|calculate)/.test(msg);
 
       if (isQuestion) {
-        return `⚠️ **Offline Mode Active**\n\nI understand you're asking about **"${message}"**.\n\nI am currently running in a basic fallback mode because my AI API key has not been configured or loaded. To get real AI answers, please add your \`GEMINI_API_KEY\` to the \`.env\` file and restart the server!\n\nIn the meantime, here are some quick links for PlinthHQ:\n\n*   📅 **Project Planning & Gantt**: Click the **Milestones** tab inside your project.\n*   📊 **Project Progress**: Check the **Overview** dashboard on your project page.\n*   📝 **Daily Site Reports**: Go to the **Daily Logs** tab to log activities, weather, labour, and materials.\n*   💰 **Budget & Expense Tracking**: Open the **Budget** tab inside your project.\n*   🧱 **Materials Management**: Go to the **Materials** tab to view logged deliveries.\n\nAlternatively, try asking me directly about your live data (e.g., "show my project summary" or "do I have any notifications?").`;
+        return `I understand you're asking about **"${message}"**.\n\nI am currently running in local assistant mode. Here is how you can find and manage this information on PlinthHQ:\n\n*   📅 **Project Planning & Gantt**: Click the **Milestones** tab inside your project to view, track, and edit your project timeline.\n*   📊 **Project Progress**: Check the **Overview** dashboard on your project page to see progress percentages.\n*   📝 **Daily Site Reports**: Go to the **Daily Logs** tab to log activities, weather, labour, and materials.\n*   💰 **Budget & Expense Tracking**: Open the **Budget** tab inside your project to view expense breakdowns.\n*   🧱 **Materials Management**: Go to the **Materials** tab to view logged deliveries.\n\nAlternatively, try asking me directly about your live data:\n- **"show my project summary"**\n- **"do I have any notifications?"**\n- **"show budget overview"**\n- **"milestone status"**`;
       }
 
       // Simple conversational response
