@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { chatApi, mediaUrl } from '../api/index.js';
 import { getAccessToken } from '../api/axios.js';
 import AppLayout from '../components/layout/AppLayout';
-import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield } from 'lucide-react';
+import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X } from 'lucide-react';
 
 const ROLE_BADGE_COLORS = {
   site_engineer: 'bg-blue-500/20 text-blue-300',
@@ -309,7 +309,7 @@ export default function ChatBox() {
                       Clear Chat
                     </button>
                   )}
-                  <button onClick={() => setShowSidebar(!showSidebar)} className="p-2 rounded-lg hover:bg-white/5 text-muted hidden lg:block">
+                  <button onClick={() => setShowSidebar(!showSidebar)} className="p-2 rounded-lg hover:bg-white/5 text-muted transition">
                     <Users size={18} />
                   </button>
                 </div>
@@ -492,11 +492,19 @@ export default function ChatBox() {
 
           {/* ── Right: Team Members ── */}
           {showSidebar && (
-            <div className="w-[220px] bg-card border-l border-white/[0.06] flex-col shrink-0 hidden lg:flex">
-              <div className="p-4 border-b border-white/[0.06]">
-                <h3 className="text-sm font-semibold text-white">Project Team</h3>
-              </div>
-              <div className="flex-1 overflow-y-auto p-3 space-y-1">
+            <>
+              {/* Mobile overlay backdrop */}
+              <div className="lg:hidden absolute inset-0 bg-black/50 z-40" onClick={() => setShowSidebar(false)} />
+              
+              {/* Sidebar */}
+              <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[220px] bg-card/95 lg:bg-card backdrop-blur-xl border-l border-white/[0.06] flex flex-col shrink-0 animate-slideUp lg:animate-none">
+                <div className="p-4 border-b border-white/[0.06] flex justify-between items-center">
+                  <h3 className="text-sm font-semibold text-white">Project Team</h3>
+                  <button className="lg:hidden p-1 text-muted hover:text-white" onClick={() => setShowSidebar(false)}>
+                    <X size={16} />
+                  </button>
+                </div>
+                <div className="flex-1 overflow-y-auto p-3 space-y-1">
                 {roomMembers.map((u) => {
                   const isOnline = onlineUsers.some(ou => ou.userId === u.userId);
                   return (
