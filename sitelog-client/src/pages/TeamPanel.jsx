@@ -266,9 +266,9 @@ export default function TeamPanel() {
 
         {/* Members Tab */}
         {tab === 'members' && (
-          <div className="bg-card border border-white/[0.06] rounded-2xl pb-6 sm:pb-24">
+          <div className="bg-card border border-white/[0.06] rounded-2xl pb-6">
             {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/[0.06]">

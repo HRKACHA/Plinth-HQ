@@ -52,7 +52,7 @@ export default function EquipmentPortal() {
     if (eq.type === 'Rented' && eq.rentalEndDate) {
       const end = new Date(eq.rentalEndDate);
       end.setHours(0, 0, 0, 0);
-      return end < today;
+      return end <= today;
     }
     return false;
   };
@@ -277,7 +277,14 @@ export default function EquipmentPortal() {
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm">
-                  <div><span className="text-muted text-xs">Status</span><br /><span className={`badge text-xs font-semibold ${statusColor(eq.status)}`}>{eq.status}</span></div>
+                  <div>
+                    <span className="text-muted text-xs">Status</span><br />
+                    {viewMode === 'history' && eq.type === 'Rented' && eq.status !== 'Retired' ? (
+                      <span className="badge text-xs font-semibold bg-danger/10 text-danger">Rental Expired</span>
+                    ) : (
+                      <span className={`badge text-xs font-semibold ${statusColor(eq.status)}`}>{eq.status}</span>
+                    )}
+                  </div>
                   <div><span className="text-muted text-xs">Condition</span><br /><span className={`font-semibold text-sm ${condColor(eq.condition)}`}>{eq.condition}</span></div>
                   <div><span className="text-muted text-xs">Project</span><br /><span className="font-medium text-navy text-xs">{eq.assignedProject?.name || 'Unassigned'}</span></div>
                   {eq.type === 'Rented' && (
