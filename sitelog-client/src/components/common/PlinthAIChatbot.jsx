@@ -295,21 +295,21 @@ export default function PlinthAIChatbot() {
       <button
         onClick={toggleOpen}
         id="plinthai-fab"
-        className={`fixed bottom-6 right-6 z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 active:scale-95 group ${
+        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 active:scale-95 group ${
           isOpen && !isMinimized
-            ? 'h-14 w-14 bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
-            : 'h-16 w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
+            ? 'bottom-4 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
+            : 'bottom-4 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
         }`}
         aria-label={isOpen ? 'Close PlinthAI' : 'Open PlinthAI'}
       >
         {isOpen && !isMinimized ? (
-          <X className="h-6 w-6 text-white transition-transform duration-300" />
+          <X className="h-5 w-5 sm:h-6 sm:w-6 text-white transition-transform duration-300" />
         ) : (
           <>
             <img
               src="/chatbot-logo.png"
               alt="PlinthAI"
-              className="h-10 w-10 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12"
+              className="h-7 w-7 sm:h-10 sm:w-10 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12"
             />
             {/* Pulse ring */}
             {!isOpen && (
@@ -322,7 +322,10 @@ export default function PlinthAIChatbot() {
       {/* Chat Panel */}
       {isOpen && !isMinimized && (
         <div
-          className="fixed bottom-24 right-6 z-[89] flex flex-col w-[400px] max-w-[calc(100vw-2rem)] h-[600px] max-h-[calc(100vh-8rem)] rounded-2xl border border-[var(--color-glass-border)] bg-card/80 backdrop-blur-[24px] shadow-elevated overflow-hidden animate-slideUp"
+          className="fixed z-[89] flex flex-col overflow-hidden animate-slideUp
+            inset-0 sm:inset-auto sm:bottom-20 sm:right-4 md:right-6
+            sm:w-[400px] sm:max-w-[calc(100vw-2rem)] sm:h-[600px] sm:max-h-[calc(100vh-8rem)] sm:rounded-2xl
+            border-0 sm:border border-[var(--color-glass-border)] bg-card/80 backdrop-blur-[24px] shadow-elevated"
           style={{
             background: 'color-mix(in srgb, rgb(var(--color-card)) 75%, transparent)',
           }}
@@ -553,7 +556,7 @@ export default function PlinthAIChatbot() {
       {isOpen && isMinimized && (
         <button
           onClick={() => setIsMinimized(false)}
-          className="fixed bottom-24 right-6 z-[89] flex items-center gap-3 rounded-2xl border border-[var(--color-glass-border)] bg-card/80 backdrop-blur-[24px] shadow-elevated px-4 py-3 transition-all hover:shadow-lg animate-slideUp cursor-pointer group"
+          className="fixed bottom-20 right-4 sm:bottom-24 sm:right-6 z-[89] flex items-center gap-3 rounded-2xl border border-[var(--color-glass-border)] bg-card/80 backdrop-blur-[24px] shadow-elevated px-4 py-3 transition-all hover:shadow-lg animate-slideUp cursor-pointer group"
           style={{
             background: 'color-mix(in srgb, rgb(var(--color-card)) 75%, transparent)',
           }}

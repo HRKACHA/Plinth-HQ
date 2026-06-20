@@ -8,7 +8,7 @@ export default function ProjectCard({ project }) {
 
   return (
     <Link to={`/projects/${project.id}`} className="group card overflow-hidden p-0 block">
-      <div className="relative h-40 overflow-hidden" style={{ background: 'linear-gradient(135deg, #111827 0%, #1a1d2e 50%, #111827 100%)' }}>
+      <div className="relative h-32 sm:h-40 overflow-hidden" style={{ background: 'linear-gradient(135deg, #111827 0%, #1a1d2e 50%, #111827 100%)' }}>
         {project.coverPhoto ? (
           <img src={project.coverPhoto} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 opacity-70" />
         ) : (
@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
           </span>
         </div>
       </div>
-      <div className="p-5" style={{ background: 'rgb(var(--color-card))' }}>
+      <div className="p-3 sm:p-5" style={{ background: 'rgb(var(--color-card))' }}>
         <h3 className="font-bold text-navy group-hover:text-orange transition-colors truncate">{project.name}</h3>
         <p className="mt-1 line-clamp-2 text-sm text-white/40 h-10">{project.description || 'No description provided.'}</p>
         <div className="mt-4 space-y-2 text-xs text-white/40">

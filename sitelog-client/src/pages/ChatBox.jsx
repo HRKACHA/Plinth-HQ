@@ -225,11 +225,11 @@ export default function ChatBox() {
 
   return (
     <AppLayout noPadding={true}>
-      <div className="flex flex-col h-[calc(100vh-64px)] p-4 lg:p-6">
+      <div className="flex flex-col h-[calc(100vh-64px)] p-2 sm:p-4 lg:p-6">
         <div className="flex flex-1 rounded-2xl border border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
-          {/* ── Left: Room List ── */}
-          <div className="w-[280px] bg-card border-r border-white/[0.06] flex flex-col shrink-0 hidden md:flex">
+          {/* ── Left: Room List (Desktop) ── */}
+          <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
             <div className="p-4 border-b border-white/[0.06]">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <MessageCircle size={20} className="text-blue-400" /> Chat
@@ -266,16 +266,39 @@ export default function ChatBox() {
             </div>
           </div>
 
+          {/* ── Mobile Room Selector Strip ── */}
+          <div className="md:hidden flex items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-card overflow-x-auto shrink-0 scrollbar-none">
+            {rooms.map((room) => (
+              <button
+                key={room.name}
+                onClick={() => setActiveRoom(room.name)}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${
+                  activeRoom === room.name
+                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                    : 'text-white/50 hover:bg-white/5 border border-transparent'
+                }`}
+              >
+                {getRoomIcon(room.name)}
+                <span className="capitalize">{room.label || room.name.replace('_', ' ')}</span>
+                {room.unreadCount > 0 && (
+                  <span className="px-1 py-0.5 text-[9px] font-bold bg-blue-500 text-white rounded-full min-w-[14px] text-center leading-none">
+                    {room.unreadCount}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+
           {/* ── Center: Messages ── */}
           <div className="flex-1 flex flex-col min-w-0">
             {/* Room Header */}
             {activeRoom ? (
-              <div className="px-6 py-3 bg-card border-b border-white/[0.06] flex items-center justify-between shrink-0">
-                <div>
-                  <h3 className="text-white font-semibold flex items-center gap-2 text-lg capitalize">
+              <div className="px-3 sm:px-6 py-2 sm:py-3 bg-card border-b border-white/[0.06] flex items-center justify-between shrink-0">
+                <div className="min-w-0">
+                  <h3 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-lg capitalize truncate">
                     {getRoomIcon(activeRoom)} {rooms.find((r) => r.name === activeRoom)?.label || 'Project Chat'}
                   </h3>
-                  <p className="text-xs text-muted">{rooms.find((r) => r.name === activeRoom)?.description || ''}</p>
+                  <p className="text-xs text-muted hidden sm:block">{rooms.find((r) => r.name === activeRoom)?.description || ''}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {['admin', 'project_manager', 'PM', 'SuperAdmin', 'owner', 'Owner'].includes(user?.role) && (
@@ -297,7 +320,7 @@ export default function ChatBox() {
 
             {/* Messages Area */}
             {activeRoom && (
-            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-6 py-4 space-y-1">
+            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-3 sm:px-6 py-3 sm:py-4 space-y-1">
               {/* Load More */}
               {hasMore && (
                 <div className="text-center py-2">
@@ -357,7 +380,7 @@ export default function ChatBox() {
                           </div>
                         )}
 
-                        <div className={`max-w-[75%] ${mine ? 'order-2' : ''}`}>
+                        <div className={`max-w-[85%] sm:max-w-[75%] ${mine ? 'order-2' : ''}`}>
                           {!mine && (
                             <div className="flex items-center gap-2 mb-1">
                               <span className="text-xs font-bold text-white">{msg.senderName}</span>
@@ -368,7 +391,7 @@ export default function ChatBox() {
                           )}
                           <div 
                             onDoubleClick={() => handleDeleteMessage(msg._id)}
-                            className={`group relative px-4 py-2.5 rounded-2xl shadow-sm text-[15px] cursor-pointer transition-transform hover:scale-[1.01] ${
+                            className={`group relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-sm text-sm sm:text-[15px] cursor-pointer transition-transform hover:scale-[1.01] ${
                               mine
                                 ? 'bg-blue-600 text-white rounded-br-sm'
                                 : 'bg-white/5 text-white rounded-bl-sm border border-white/10'
@@ -433,8 +456,8 @@ export default function ChatBox() {
             )}
 
             {/* Input Area */}
-            <div className="px-6 py-4 bg-card border-t border-white/[0.06] shrink-0">
-              <div className="flex items-end gap-3">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
+              <div className="flex items-end gap-2 sm:gap-3">
                 <div className="flex-1 relative">
                   <textarea
                     value={input}

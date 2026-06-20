@@ -140,7 +140,7 @@ export default function MaterialsPortal() {
 
   return (
     <AppLayout title="Materials — Inventory & Stock Management">
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         {/* Low Stock Alert */}
         {safeLowStock.length > 0 && (
           <div className="rounded-2xl bg-warning/5 border border-warning/20 p-4 flex items-start gap-3">
@@ -156,20 +156,20 @@ export default function MaterialsPortal() {
         )}
 
         {/* Stats Row */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[
             { label: 'Total Items', value: safeMaterials.length, icon: Package, accent: 'text-orange bg-orange/10' },
             { label: 'Total Stock Value', value: formatCurrency(totalValue), icon: IndianRupee, accent: 'text-success bg-success/10' },
             { label: 'Low Stock Alerts', value: safeLowStock.length, icon: AlertTriangle, accent: safeLowStock.length > 0 ? 'text-warning bg-warning/10' : 'text-muted bg-info' },
             { label: 'Categories Used', value: [...new Set(safeMaterials.map(m => m.category))].length, icon: Warehouse, accent: 'text-navy bg-info' },
           ].map(({ label, value, icon: Icon, accent }) => (
-            <div key={label} className="card flex items-center gap-4">
-              <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${accent}`}>
-                <Icon className="h-6 w-6" />
+            <div key={label} className="card flex items-center gap-3 sm:gap-4">
+              <div className={`flex h-9 w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-lg sm:rounded-xl ${accent}`}>
+                <Icon className="h-4 w-4 sm:h-6 sm:w-6" />
               </div>
-              <div>
-                <p className="text-xs font-semibold text-muted uppercase tracking-wider">{label}</p>
-                <p className="font-mono text-xl font-bold text-navy mt-0.5">{value}</p>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs font-semibold text-muted uppercase tracking-wider leading-tight">{label}</p>
+                <p className="font-mono text-base sm:text-xl font-bold text-navy mt-0.5 truncate">{value}</p>
               </div>
             </div>
           ))}

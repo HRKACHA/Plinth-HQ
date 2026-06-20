@@ -156,19 +156,19 @@ export default function TeamPanel() {
         )}
 
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white flex items-center gap-3">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
             <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10">
               <Users size={24} className="text-blue-400" />
             </div>
             Team Management
           </h1>
-          <p className="text-muted mt-1">Invite members, manage roles, and track your team.</p>
+          <p className="text-muted mt-1 text-sm">Invite members, manage roles, and track your team.</p>
         </div>
 
         {/* Invite Form */}
         {isManager && (
-          <div className="bg-card border border-white/[0.06] rounded-2xl p-6 mb-6">
+          <div className="bg-card border border-white/[0.06] rounded-2xl p-4 sm:p-6 mb-6">
             <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <Mail size={18} className="text-orange" /> Send Invitation
           </h2>
@@ -266,8 +266,9 @@ export default function TeamPanel() {
 
         {/* Members Tab */}
         {tab === 'members' && (
-          <div className="bg-card border border-white/[0.06] rounded-2xl pb-24">
-            <div className="overflow-visible">
+          <div className="bg-card border border-white/[0.06] rounded-2xl pb-6 sm:pb-24">
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/[0.06]">
@@ -278,9 +279,9 @@ export default function TeamPanel() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={6} className="text-center py-12 text-muted">Loading...</td></tr>
+                    <tr><td colSpan={7} className="text-center py-12 text-muted">Loading...</td></tr>
                   ) : members.length === 0 ? (
-                    <tr><td colSpan={6} className="text-center py-12 text-muted">No team members found.</td></tr>
+                    <tr><td colSpan={7} className="text-center py-12 text-muted">No team members found.</td></tr>
                   ) : members.map((m) => (
                     <tr key={m._id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition">
                       <td className="px-6 py-4">
@@ -329,8 +330,8 @@ export default function TeamPanel() {
                           <span className="text-muted text-xs">Unassigned</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-muted text-sm flex items-center gap-1">
-                        <Clock size={14} /> {timeAgo(m.lastSeen || m.lastLogin)}
+                      <td className="px-6 py-4 text-muted text-sm">
+                        <span className="flex items-center gap-1"><Clock size={14} /> {timeAgo(m.lastSeen || m.lastLogin)}</span>
                       </td>
                       <td className="px-6 py-4">
                         <span className={`inline-flex items-center gap-1 text-xs font-medium ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
@@ -354,6 +355,64 @@ export default function TeamPanel() {
                   ))}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Card Layout */}
+            <div className="md:hidden p-3 space-y-3">
+              {loading ? (
+                <div className="text-center py-12 text-muted">Loading...</div>
+              ) : members.length === 0 ? (
+                <div className="text-center py-12 text-muted">No team members found.</div>
+              ) : members.map((m) => (
+                <div key={m._id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold shrink-0">
+                        {m.name?.charAt(0)?.toUpperCase()}
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-semibold text-white truncate">{m.name}</p>
+                        <p className="text-xs text-muted truncate">{m.email}</p>
+                      </div>
+                    </div>
+                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium shrink-0 ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
+                      {m.isActive ? <><CheckCircle size={10} /> Active</> : <><XCircle size={10} /> Off</>}
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 mt-2.5 pt-2.5 border-t border-white/[0.04]">
+                    <RoleBadge role={m.role} />
+                    {m.projects && m.projects.length > 0 && m.projects.map(p => (
+                      <span key={p.id} className="px-2 py-0.5 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200">
+                        {p.name}
+                      </span>
+                    ))}
+                    <span className="text-[10px] text-muted flex items-center gap-1 ml-auto">
+                      <Clock size={10} /> {timeAgo(m.lastSeen || m.lastLogin)}
+                    </span>
+                  </div>
+                  {isManager && m._id !== user._id && (
+                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
+                      <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-white transition flex items-center gap-1">
+                        Change Role <ChevronDown size={10} />
+                      </button>
+                      <div className="flex-1" />
+                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 rounded-lg text-muted hover:text-amber-400 hover:bg-amber-500/10 transition" title="Deactivate">
+                        <UserMinus size={14} />
+                      </button>
+                    </div>
+                  )}
+                  {roleDropdown === m._id && isManager && (
+                    <div className="mt-2 bg-card border border-white/10 rounded-xl shadow-2xl py-1">
+                      {ROLE_OPTIONS.map((r) => (
+                        <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-white/5 transition flex flex-col items-start gap-0.5">
+                          <span className="text-sm font-semibold text-white">{r.label}</span>
+                          <span className="text-xs text-muted leading-tight">{r.desc}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}

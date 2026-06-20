@@ -161,22 +161,22 @@ export default function ProjectLayout() {
   return (
     <AppLayout backTo="/projects">
       <div className="mb-6 overflow-hidden rounded-2xl shadow-elevated relative" style={{ background: 'rgba(16,18,24,0.40)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="relative h-48 lg:h-64">
+        <div className="relative h-36 sm:h-48 lg:h-64">
           {project.coverPhoto ? (
             <img src={project.coverPhoto} alt={project.name} className="h-full w-full object-cover opacity-60" />
           ) : (
             <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #111827 0%, #1e2435 50%, #111827 100%)' }} />
           )}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgb(var(--color-card)), rgba(var(--color-card), 0.5), transparent)' }} />
-          <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <Badge status={project.status} />
               <span className="font-mono text-sm text-white/40 font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
             </div>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <h1 className="font-display text-3xl font-bold text-navy lg:text-4xl tracking-tight">{project.name}</h1>
-                <p className="mt-2 max-w-2xl text-sm text-muted font-medium">{project.description}</p>
+                <h1 className="font-display text-xl sm:text-3xl font-bold text-navy lg:text-4xl tracking-tight">{project.name}</h1>
+                <p className="mt-1 sm:mt-2 max-w-2xl text-xs sm:text-sm text-muted font-medium line-clamp-2">{project.description}</p>
               </div>
               {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && user?.role !== 'owner' && user?.role !== 'Owner' && (
                 <button onClick={openEdit} className="flex shrink-0 items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold text-white/80 transition hover:text-orange shadow-sm backdrop-blur-md" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -184,7 +184,7 @@ export default function ProjectLayout() {
                 </button>
               )}
             </div>
-            <div className="mt-6 flex flex-wrap gap-8 text-sm text-muted border-t border-[var(--color-glass-border)] pt-4">
+            <div className="mt-3 sm:mt-6 flex flex-wrap gap-3 sm:gap-8 text-xs sm:text-sm text-muted border-t border-[var(--color-glass-border)] pt-3 sm:pt-4">
               <span className="font-medium">Budget: <strong className="font-mono text-navy text-base ml-1">{formatCurrency(project.totalBudget)}</strong></span>
               <span className="font-medium">Progress: <strong className="font-mono text-orange text-base ml-1">{project.progress}%</strong></span>
               <span className="font-medium">Timeline: <span className="text-navy font-semibold ml-1">{formatDate(project.startDate)} — {formatDate(project.endDate)}</span></span>

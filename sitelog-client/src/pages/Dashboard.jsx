@@ -238,7 +238,7 @@ export default function Dashboard() {
         {/* Welcome hero */}
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-2xl font-bold text-navy lg:text-3xl tracking-tight">
+            <h2 className="font-display text-xl sm:text-2xl font-bold text-navy lg:text-3xl tracking-tight">
               {greeting}, <span className="text-orange">{user?.name?.split(' ')[0]}</span>
             </h2>
             <p className="mt-1 text-sm text-white/30">
@@ -251,7 +251,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stat cards */}
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-8">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 xl:grid-cols-4 mb-6 sm:mb-8">
           <StatCard label="Active Projects" value={activeProjects} sub={`${safeProjects.length} total`} icon={FolderKanban} accent="navy" />
           <StatCard label="Total Budget" value={formatCompactCurrency(displayBudget)} sub={budgetFilter === 'all' ? "Across all projects" : safeProjects.find(p => (p._id || p.id) === budgetFilter)?.name} icon={IndianRupee} accent="orange">
             <GlassSelect
@@ -280,7 +280,7 @@ export default function Dashboard() {
 
 
         {/* Main grid: Projects + sidebar */}
-        <div className="grid gap-8 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-8 lg:grid-cols-3">
           {/* Projects section */}
           <div className="lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">

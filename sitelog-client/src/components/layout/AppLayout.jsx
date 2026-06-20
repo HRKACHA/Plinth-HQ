@@ -235,7 +235,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         {/* ═══ Header — Liquid Glass ═══ */}
-        <header className="h-16 flex items-center justify-between px-4 lg:px-8 shrink-0 z-40"
+        <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 z-40"
           style={{ background: 'rgba(16, 18, 24, 0.30)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           
           <div className="flex items-center gap-4">
@@ -351,10 +351,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </header>
 
         {/* ═══ Main Scrolling Content ═══ */}
-        <main className={`flex-1 overflow-y-auto ${noPadding ? '' : 'p-4 lg:p-8'}`}>
+        <main className={`flex-1 overflow-y-auto ${noPadding ? '' : 'p-3 sm:p-4 lg:p-8'}`}>
           {/* Sub-header shown only on mobile or if not in header */}
           {!noPadding && <div className="sm:hidden mb-4">
-            {title && <h1 className="text-xl font-bold text-navy mb-1">{title}</h1>}
+            {title && <h1 className="text-lg font-bold text-navy mb-1">{title}</h1>}
             {backTo && (
               <Link to={backTo} className="inline-flex items-center gap-1 text-sm text-muted hover:text-navy transition-colors">
                 ← Back
