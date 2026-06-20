@@ -164,7 +164,7 @@ export default function ChatBox() {
 
   // Send message
   const handleSend = (e) => {
-    if(e) e.preventDefault();
+    if (e) e.preventDefault();
     if (!input.trim() || !socket) return;
     socket.emit('send-message', { message: input.trim(), room: activeRoom });
     setInput('');
@@ -225,7 +225,7 @@ export default function ChatBox() {
 
   return (
     <AppLayout noPadding={true}>
-      <div className="flex flex-col h-[calc(100vh-64px)] p-2 sm:p-4 lg:p-6">
+      <div className="flex flex-col h-[calc(100dvh-64px)] p-2 sm:p-4 lg:p-6">
         <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
           {/* ── Left: Room List (Desktop) ── */}
@@ -267,16 +267,15 @@ export default function ChatBox() {
           </div>
 
           {/* ── Mobile Room Selector Strip ── */}
-          <div className="md:hidden flex items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-card overflow-x-auto shrink-0 scrollbar-none">
+          <div className="md:hidden flex w-full items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-card overflow-x-auto shrink-0 scrollbar-none">
             {rooms.map((room) => (
               <button
                 key={room.name}
                 onClick={() => setActiveRoom(room.name)}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${
-                  activeRoom === room.name
-                    ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                    : 'text-white/50 hover:bg-white/5 border border-transparent'
-                }`}
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${activeRoom === room.name
+                  ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+                  : 'text-white/50 hover:bg-white/5 border border-transparent'
+                  }`}
               >
                 {getRoomIcon(room.name)}
                 <span className="capitalize">{room.label || room.name.replace('_', ' ')}</span>
@@ -290,7 +289,7 @@ export default function ChatBox() {
           </div>
 
           {/* ── Center: Messages ── */}
-          <div className="flex-1 flex flex-col min-w-0">
+          <div className="flex-1 flex flex-col min-w-0 min-h-0">
             {/* Room Header */}
             {activeRoom ? (
               <div className="px-3 sm:px-6 py-2 sm:py-3 bg-card border-b border-white/[0.06] flex items-center justify-between shrink-0">
@@ -298,11 +297,16 @@ export default function ChatBox() {
                   <h3 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-lg capitalize truncate">
                     {getRoomIcon(activeRoom)} {rooms.find((r) => r.name === activeRoom)?.label || 'Project Chat'}
                   </h3>
-                  <p className="text-xs text-muted hidden sm:block">{rooms.find((r) => r.name === activeRoom)?.description || ''}</p>
+                  <div className="flex items-center gap-3 mt-0.5">
+                    <p className="text-[10px] sm:text-xs text-muted truncate">{rooms.find((r) => r.name === activeRoom)?.description || 'Team Conversation'}</p>
+                    <p className="text-[10px] sm:text-xs text-emerald-400/80 flex items-center gap-1 shrink-0">
+                      <Circle size={6} className="fill-emerald-400" /> {onlineCount} online
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2">
                   {['admin', 'project_manager', 'PM', 'SuperAdmin', 'owner', 'Owner'].includes(user?.role) && (
-                    <button 
+                    <button
                       onClick={handleClearChat}
                       className="text-xs font-semibold text-danger/80 hover:text-danger bg-danger/10 hover:bg-danger/20 px-3 py-1.5 rounded-lg transition"
                     >
@@ -320,139 +324,138 @@ export default function ChatBox() {
 
             {/* Messages Area */}
             {activeRoom && (
-            <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-3 sm:px-6 py-3 sm:py-4 space-y-1">
-              {/* Load More */}
-              {hasMore && (
-                <div className="text-center py-2">
-                  <button
-                    onClick={loadOlder}
-                    disabled={loadingMore}
-                    className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 mx-auto"
-                  >
-                    {loadingMore ? <Loader2 size={12} className="animate-spin" /> : <ChevronUp size={12} />}
-                    Load older messages
-                  </button>
-                </div>
-              )}
-
-              {/* Empty State / Info */}
-              {!loadingMore && messages.length === 0 && (
-                <div className="flex-1 flex flex-col items-center justify-center text-center p-8 mt-10">
-                  <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
-                    {getRoomIcon(activeRoom)}
+              <div ref={messagesContainerRef} className="flex-1 overflow-y-auto px-3 sm:px-6 py-3 sm:py-4 space-y-1">
+                {/* Load More */}
+                {hasMore && (
+                  <div className="text-center py-2">
+                    <button
+                      onClick={loadOlder}
+                      disabled={loadingMore}
+                      className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1 mx-auto"
+                    >
+                      {loadingMore ? <Loader2 size={12} className="animate-spin" /> : <ChevronUp size={12} />}
+                      Load older messages
+                    </button>
                   </div>
-                  <h4 className="text-white font-semibold text-lg capitalize mb-2">Welcome to {rooms.find((r) => r.name === activeRoom)?.label || 'Chat'}</h4>
-                  <p className="text-sm text-muted max-w-md leading-relaxed">
-                    This is the start of your real-time team conversation. 
-                    Messages here are securely end-to-end encrypted and visible to everyone with access to this channel. 
-                    Say hello to your team!
-                  </p>
-                </div>
-              )}
+                )}
 
-              {/* Date Groups */}
-              {Object.entries(groupedMessages).map(([date, msgs]) => (
-                <div key={date}>
-                  <div className="flex items-center justify-center my-4">
-                    <span className="px-3 py-1 text-[11px] bg-white/5 text-muted rounded-full">{date}</span>
+                {/* Empty State / Info */}
+                {!loadingMore && messages.length === 0 && (
+                  <div className="flex-1 flex flex-col items-center justify-center text-center p-8 mt-10">
+                    <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
+                      {getRoomIcon(activeRoom)}
+                    </div>
+                    <h4 className="text-white font-semibold text-lg capitalize mb-2">Welcome to {rooms.find((r) => r.name === activeRoom)?.label || 'Chat'}</h4>
+                    <p className="text-sm text-muted max-w-md leading-relaxed">
+                      This is the start of your real-time team conversation.
+                      Messages here are securely end-to-end encrypted and visible to everyone with access to this channel.
+                      Say hello to your team!
+                    </p>
                   </div>
-                  {msgs.map((msg) => {
-                    const mine = isMyMessage(msg);
-                    return (
-                      <div key={msg._id} className={`flex mb-4 gap-3 ${mine ? 'justify-end' : 'justify-start'}`}>
-                        {/* Avatar */}
-                        {!mine && (
-                          <div className="shrink-0 mt-0.5">
-                            {msg.sender?.avatarUrl ? (
-                              <img
-                                src={mediaUrl(msg.sender.avatarUrl)}
-                                alt={msg.senderName}
-                                className="w-8 h-8 rounded-full object-cover bg-white/5"
-                                onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
-                              />
-                            ) : null}
-                            <div
-                              className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
-                              style={{ display: msg.sender?.avatarUrl ? 'none' : 'flex' }}
-                            >
-                              {msg.senderName?.charAt(0)?.toUpperCase()}
-                            </div>
-                          </div>
-                        )}
+                )}
 
-                        <div className={`max-w-[85%] sm:max-w-[75%] ${mine ? 'order-2' : ''}`}>
+                {/* Date Groups */}
+                {Object.entries(groupedMessages).map(([date, msgs]) => (
+                  <div key={date}>
+                    <div className="flex items-center justify-center my-4">
+                      <span className="px-3 py-1 text-[11px] bg-white/5 text-muted rounded-full">{date}</span>
+                    </div>
+                    {msgs.map((msg) => {
+                      const mine = isMyMessage(msg);
+                      return (
+                        <div key={msg._id} className={`flex mb-4 gap-3 ${mine ? 'justify-end' : 'justify-start'}`}>
+                          {/* Avatar */}
                           {!mine && (
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-bold text-white">{msg.senderName}</span>
-                              <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-medium ${ROLE_BADGE_COLORS[msg.senderRole] || 'bg-gray-500/20 text-gray-300'}`}>
-                                {msg.senderRole?.replace('_', ' ')}
-                              </span>
+                            <div className="shrink-0 mt-0.5">
+                              {msg.sender?.avatarUrl ? (
+                                <img
+                                  src={mediaUrl(msg.sender.avatarUrl)}
+                                  alt={msg.senderName}
+                                  className="w-8 h-8 rounded-full object-cover bg-white/5"
+                                  onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                                />
+                              ) : null}
+                              <div
+                                className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
+                                style={{ display: msg.sender?.avatarUrl ? 'none' : 'flex' }}
+                              >
+                                {msg.senderName?.charAt(0)?.toUpperCase()}
+                              </div>
                             </div>
                           )}
-                          <div 
-                            onDoubleClick={() => handleDeleteMessage(msg._id)}
-                            className={`group relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-sm text-sm sm:text-[15px] cursor-pointer transition-transform hover:scale-[1.01] ${
-                              mine
+
+                          <div className={`max-w-[85%] sm:max-w-[75%] ${mine ? 'order-2' : ''}`}>
+                            {!mine && (
+                              <div className="flex items-center gap-2 mb-1">
+                                <span className="text-xs font-bold text-white">{msg.senderName}</span>
+                                <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-medium ${ROLE_BADGE_COLORS[msg.senderRole] || 'bg-gray-500/20 text-gray-300'}`}>
+                                  {msg.senderRole?.replace('_', ' ')}
+                                </span>
+                              </div>
+                            )}
+                            <div
+                              onDoubleClick={() => handleDeleteMessage(msg._id)}
+                              className={`group relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-sm text-sm sm:text-[15px] cursor-pointer transition-transform hover:scale-[1.01] ${mine
                                 ? 'bg-blue-600 text-white rounded-br-sm'
                                 : 'bg-white/5 text-white rounded-bl-sm border border-white/10'
-                            }`}
-                            title="Double click to delete message"
-                          >
-                            <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
-                            <div className={`flex items-center gap-1 mt-1 ${mine ? 'justify-end' : ''}`}>
-                              <span className={`text-[10px] ${mine ? 'text-blue-200' : 'text-muted'}`}>
-                                {formatTime(msg.createdAt)}
-                              </span>
-                              {mine && (
-                                <span className="text-[10px] text-blue-200">
-                                  {msg.readBy?.length > 1 ? '✓✓' : '✓'}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* User Avatar for Mine */}
-                        {mine && (
-                          <div className="shrink-0 order-3 mt-0.5">
-                            {user?.avatarUrl ? (
-                              <img
-                                src={mediaUrl(user.avatarUrl)}
-                                alt={user.name}
-                                className="w-8 h-8 rounded-full object-cover bg-white/5"
-                                onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
-                              />
-                            ) : null}
-                            <div
-                              className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
-                              style={{ display: user?.avatarUrl ? 'none' : 'flex' }}
+                                }`}
+                              title="Double click to delete message"
                             >
-                              {user?.name?.charAt(0)?.toUpperCase()}
+                              <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
+                              <div className={`flex items-center gap-1 mt-1 ${mine ? 'justify-end' : ''}`}>
+                                <span className={`text-[10px] ${mine ? 'text-blue-200' : 'text-muted'}`}>
+                                  {formatTime(msg.createdAt)}
+                                </span>
+                                {mine && (
+                                  <span className="text-[10px] text-blue-200">
+                                    {msg.readBy?.length > 1 ? '✓✓' : '✓'}
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
 
-              {/* Typing Indicator */}
-              {typingUsers.length > 0 && (
-                <div className="flex items-center gap-2 py-2">
-                  <div className="flex gap-1">
-                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                          {/* User Avatar for Mine */}
+                          {mine && (
+                            <div className="shrink-0 order-3 mt-0.5">
+                              {user?.avatarUrl ? (
+                                <img
+                                  src={mediaUrl(user.avatarUrl)}
+                                  alt={user.name}
+                                  className="w-8 h-8 rounded-full object-cover bg-white/5"
+                                  onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                                />
+                              ) : null}
+                              <div
+                                className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
+                                style={{ display: user?.avatarUrl ? 'none' : 'flex' }}
+                              >
+                                {user?.name?.charAt(0)?.toUpperCase()}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
-                  <span className="text-xs text-muted italic">
-                    {typingUsers.map((u) => u.name).join(', ')} {typingUsers.length === 1 ? 'is' : 'are'} typing...
-                  </span>
-                </div>
-              )}
+                ))}
 
-              <div ref={messagesEndRef} />
-            </div>
+                {/* Typing Indicator */}
+                {typingUsers.length > 0 && (
+                  <div className="flex items-center gap-2 py-2">
+                    <div className="flex gap-1">
+                      <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                      <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                      <span className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    </div>
+                    <span className="text-xs text-muted italic">
+                      {typingUsers.map((u) => u.name).join(', ')} {typingUsers.length === 1 ? 'is' : 'are'} typing...
+                    </span>
+                  </div>
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
             )}
 
             {/* Input Area */}
@@ -495,7 +498,7 @@ export default function ChatBox() {
             <>
               {/* Mobile overlay backdrop */}
               <div className="lg:hidden absolute inset-0 bg-black/50 z-40" onClick={() => setShowSidebar(false)} />
-              
+
               {/* Sidebar */}
               <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[220px] bg-card/95 lg:bg-card backdrop-blur-xl border-l border-white/[0.06] flex flex-col shrink-0 animate-slideUp lg:animate-none">
                 <div className="p-4 border-b border-white/[0.06] flex justify-between items-center">
@@ -505,52 +508,51 @@ export default function ChatBox() {
                   </button>
                 </div>
                 <div className="flex-1 overflow-y-auto p-3 space-y-1">
-                {roomMembers.map((u) => {
-                  const isOnline = onlineUsers.some(ou => ou.userId === u.userId);
-                  return (
-                    <div key={u.userId} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/[0.03] transition group">
-                      <div className="relative shrink-0">
-                        {u.avatarUrl ? (
-                          <img 
-                            src={mediaUrl(u.avatarUrl)} 
-                            alt={u.name} 
-                            className="w-7 h-7 rounded-full object-cover bg-white/5" 
-                            onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }} 
-                          />
-                        ) : null}
-                        <div 
-                          className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
-                          style={{ display: u.avatarUrl ? 'none' : 'flex' }}
-                        >
-                          {u.name?.charAt(0)?.toUpperCase()}
+                  {roomMembers.map((u) => {
+                    const isOnline = onlineUsers.some(ou => ou.userId === u.userId);
+                    return (
+                      <div key={u.userId} className="flex items-center gap-2 px-2 py-1.5 rounded-lg hover:bg-white/[0.03] transition group">
+                        <div className="relative shrink-0">
+                          {u.avatarUrl ? (
+                            <img
+                              src={mediaUrl(u.avatarUrl)}
+                              alt={u.name}
+                              className="w-7 h-7 rounded-full object-cover bg-white/5"
+                              onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
+                            />
+                          ) : null}
+                          <div
+                            className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold"
+                            style={{ display: u.avatarUrl ? 'none' : 'flex' }}
+                          >
+                            {u.name?.charAt(0)?.toUpperCase()}
+                          </div>
+                          {isOnline && (
+                            <Circle size={8} className="absolute -bottom-0.5 -right-0.5 text-emerald-400 fill-emerald-400" />
+                          )}
                         </div>
-                        {isOnline && (
-                          <Circle size={8} className="absolute -bottom-0.5 -right-0.5 text-emerald-400 fill-emerald-400" />
-                        )}
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs text-white truncate">{u.name} {u.userId === user?.id ? '(You)' : ''}</p>
+                          <span className={`text-[10px] px-1 py-0.5 rounded ${ROLE_BADGE_COLORS[u.role] || 'bg-gray-500/20 text-gray-300'}`}>
+                            {u.roleLabel || u.role?.replace('_', ' ')}
+                          </span>
+                          {u.invitedBy && (
+                            <p className="text-[9px] text-white/50 truncate mt-0.5">
+                              Invited by: {u.invitedBy}
+                            </p>
+                          )}
+                        </div>
                       </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs text-white truncate">{u.name} {u.userId === user?.id ? '(You)' : ''}</p>
-                        <span className={`text-[10px] px-1 py-0.5 rounded ${ROLE_BADGE_COLORS[u.role] || 'bg-gray-500/20 text-gray-300'}`}>
-                          {u.roleLabel || u.role?.replace('_', ' ')}
-                        </span>
-                        {u.invitedBy && (
-                          <p className="text-[9px] text-white/50 truncate mt-0.5">
-                            Invited by: {u.invitedBy}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-                {roomMembers.length === 0 && (
-                  <p className="text-xs text-muted text-center py-4">No team members</p>
-                )}
-              </div>
-            </div>
-          </>
+                    );
+                  })}
+                  {roomMembers.length === 0 && (
+                    <p className="text-xs text-muted text-center py-4">No team members</p>
+                  )}
+                </div>
+              </>
           )}
+            </div>
         </div>
-      </div>
     </AppLayout>
   );
 }
