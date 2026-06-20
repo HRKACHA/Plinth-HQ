@@ -226,7 +226,7 @@ export default function ChatBox() {
   return (
     <AppLayout noPadding={true}>
       <div className="flex flex-col h-[calc(100vh-64px)] p-2 sm:p-4 lg:p-6">
-        <div className="flex flex-1 rounded-2xl border border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
+        <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
           {/* ── Left: Room List (Desktop) ── */}
           <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
