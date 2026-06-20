@@ -152,6 +152,18 @@ export const chatHandler = catchAsync(async (req, res) => {
       if (history.length > 0 && history[history.length - 1]?.content === message) {
         history.pop();
       }
+      
+      // If the error is an API key issue, tell the user directly instead of using offline mode
+      if (err.message?.includes('API key not valid') || err.message?.includes('API_KEY_INVALID') || err.message?.includes('400')) {
+        return res.json({
+          success: true,
+          data: { 
+            message: "⚠️ **API Key Error**\n\nMy Gemini API key is invalid, so I cannot process your request using AI. Google Gemini API keys usually start with `AIza`.\n\nPlease update your `.env` file with a valid `GEMINI_API_KEY` and restart the server to unlock my full AI capabilities!", 
+            session_id: session_id || 'default', 
+            provider: 'fallback' 
+          },
+        });
+      }
     }
   }
 
@@ -533,7 +545,7 @@ async function generateFallbackResponse(message, user, projects, history) {
     materials: intentScore(msg, ['material', 'inventor', 'stock', 'supply', 'deliver', 'cement', 'steel', 'brick', 'sand', 'quantity']),
     equipment: intentScore(msg, ['equipment', 'machine', 'rent', 'owned', 'asset', 'tractor', 'crane']),
     milestones: intentScore(msg, ['milestone', 'timeline', 'deadline', 'phase', 'schedule', 'gantt', 'when', /due\s*date/, 'plan', 'planning']),
-    construction: intentScore(msg, [/\bis\s*\d/, 'cpwd', 'concrete', 'curing', 'reinforc', 'beam', 'column', 'slab', 'footing', 'foundation', 'safety', 'scaffold', 'earthquake', 'seismic', 'load', 'plaster', 'excavat', 'fire', 'building', 'bridge', 'home', 'house', 'civil', 'engineer', 'estimation', 'estimating']),
+    construction: intentScore(msg, [/\bis\s*\d/, 'cpwd', 'concrete', 'curing', 'reinforc', 'beam', 'column', 'slab', 'footing', 'foundation', 'scaffold', 'earthquake', 'seismic', 'plaster', 'excavat', 'civil engineer', 'estimation']),
     help: intentScore(msg, ['help', /how\s*to/, 'navigate', 'feature', /what\s*can/, 'guide', /how\s*do\s*i/, 'tutorial']),
     thanks: intentScore(msg, [/^(thanks|thank\s*you|thx|ty)\b/, 'appreciate', 'grateful']),
     bye: intentScore(msg, [/^(bye|goodbye|see\s*you|good\s*night)\b/, 'later', 'signing off']),
