@@ -546,7 +546,7 @@ export default function ChatBox() {
                   <p className="text-xs text-muted text-center py-4">No team members</p>
                 )}
               </div>
-            </div>
+            </>
           )}
         </div>
       </div>
