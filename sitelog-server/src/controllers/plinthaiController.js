@@ -300,9 +300,11 @@ async function executeTool(name, input, user, userProjects) {
         warehouse_materials: warehouseMaterials.map(m => ({
           name: m.name,
           category: m.category,
-          quantity: m.quantity,
+          quantity: m.currentStock,
           unit: m.unit,
-          reorder_level: m.reorderLevel
+          reorder_level: m.minThreshold,
+          unit_price: m.unitPrice,
+          supplier: m.supplier
         })),
         total_items: warehouseMaterials.length,
       };
@@ -317,6 +319,7 @@ async function executeTool(name, input, user, userProjects) {
         total_equipment: equipment.length,
         equipment_list: equipment.map(eq => ({
           name: eq.name,
+          category: eq.category,
           type: eq.type, // Owned or Rented
           status: eq.status,
           assigned_project: eq.assignedProject ? eq.assignedProject.name : 'Unassigned/Idle',
