@@ -59,7 +59,7 @@ export const createLog = catchAsync(async (req, res) => {
     if (temperature !== undefined) log.temperature = temperature;
     
     // Add clear separator for activities
-    const timeStr = new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true });
+    const timeStr = new Date().toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour: 'numeric', minute: '2-digit', hour12: true });
     if (log.activities.startsWith('Material Transferred') && log.activities.split('\n').length === 1) {
       log.activities = activities;
     } else {
