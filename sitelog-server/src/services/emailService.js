@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.resend.com',
-  port: 465,
-  secure: true,
+  host: 'smtp-relay.brevo.com',
+  port: 587,
+  secure: false,
   auth: {
-    user: 'resend',
-    pass: process.env.RESEND_API_KEY,
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
   },
 });
 
@@ -81,15 +81,15 @@ export async function sendInviteEmail({ to, inviteLink, role, roleLabel, invited
   `;
 
   const mailOptions = {
-    from: `"PlinthHQ" <onboarding@resend.dev>`,
+    from: `"PlinthHQ Team" <${process.env.EMAIL_USER}>`,
     to,
     subject: "You've been invited to join the team — PlinthHQ",
     html,
   };
 
   // In development, if API key is missing, just log it
-  if (!process.env.RESEND_API_KEY) {
-    console.log('[Email Service] RESEND_API_KEY not configured. Logging invite instead of sending.');
+  if (!process.env.EMAIL_PASS) {
+    console.log('[Email Service] EMAIL_PASS not configured. Logging invite instead of sending.');
     console.log(`[Email Service] To: ${to}`);
     console.log(`[Email Service] Role: ${roleLabel}`);
     console.log(`[Email Service] Link: ${inviteLink}`);
