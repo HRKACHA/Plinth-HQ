@@ -80,12 +80,9 @@ export default function Landing() {
               Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
             </p>
 
-            <div className="pt-8 flex flex-wrap justify-center gap-4">
-              <Link to="/register" className="btn-accent px-8 py-3.5 text-base">
-                Start Free Trial <ArrowRight className="h-5 w-5" />
-              </Link>
-              <Link to="/login" className="btn-secondary px-8 py-3.5 text-base text-white/80">
-                View Demo
+            <div className="pt-8 flex justify-center">
+              <Link to="/login" className="btn-accent px-12 py-3.5 text-base shadow-glow">
+                Sign In
               </Link>
             </div>
           </div>

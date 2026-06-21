@@ -230,13 +230,10 @@ export default function About() {
         <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto mt-6">
           PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
         </p>
-        <div className="pt-10 flex flex-wrap justify-center gap-4">
-          <Link to="/register" className="btn-accent px-8 py-3.5 text-base shadow-glow">
-            Start Free Trial <ArrowRight className="h-5 w-5" />
+        <div className="pt-10 flex justify-center">
+          <Link to="/login" className="btn-accent px-12 py-3.5 text-base shadow-glow">
+            Sign In
           </Link>
-          <a href="#features" className="btn-secondary px-8 py-3.5 text-base text-white/80">
-            Explore Features <ChevronRight className="h-5 w-5" />
-          </a>
         </div>
       </section>
 
