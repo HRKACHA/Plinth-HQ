@@ -217,6 +217,14 @@ export default function PlinthAIChatbot() {
   const currentInputValueRef = useRef('');
   useEffect(() => {
     currentInputValueRef.current = input;
+    if (inputRef.current) {
+      if (!input) {
+        inputRef.current.style.height = 'auto'; // Reset to default CSS height
+      } else {
+        inputRef.current.style.height = '24px';
+        inputRef.current.style.height = Math.min(inputRef.current.scrollHeight, 96) + 'px';
+      }
+    }
   }, [input]);
 
   const baseInputRef = useRef('');

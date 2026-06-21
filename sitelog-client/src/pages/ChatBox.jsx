@@ -74,8 +74,12 @@ export default function ChatBox() {
   const textareaRef = useRef(null);
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = '44px';
-      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+      if (!input) {
+        textareaRef.current.style.height = 'auto'; // Reset to default CSS height
+      } else {
+        textareaRef.current.style.height = '44px';
+        textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+      }
     }
   }, [input]);
 

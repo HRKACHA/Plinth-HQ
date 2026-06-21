@@ -130,7 +130,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
       </button>
       
       {listening && (
-        <span className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 text-[10px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-red-500/10 px-2 py-0.5 rounded-full">
+        <span className="absolute top-full mt-1 left-1/2 -translate-x-1/2 text-[9px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/20 shadow-sm z-50">
           Listening
         </span>
       )}
