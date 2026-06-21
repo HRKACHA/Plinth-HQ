@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Cloud, Sun, CloudRain, CloudLightning, Minus, Plus, Upload, Camera, Image as ImageIcon } from 'lucide-react';
 import AppLayout from '../../components/layout/AppLayout';
