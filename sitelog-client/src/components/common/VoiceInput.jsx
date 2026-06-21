@@ -14,21 +14,29 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
   const [showLangs, setShowLangs] = useState(false);
   const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
 
+  const [isForceStopped, setIsForceStopped] = useState(false);
+
   useEffect(() => {
-    if (transcript) {
+    console.log("Current Transcript: ", transcript);
+    if (transcript && !isForceStopped) {
       onTranscript(transcript);
     }
-  }, [transcript, onTranscript]);
+  }, [transcript, onTranscript, isForceStopped]);
 
   if (!browserSupportsSpeechRecognition) {
     return null; // Don't render anything if browser doesn't support it
   }
 
+  const isActuallyListening = listening && !isForceStopped;
+
   const toggleListening = (e) => {
     e.preventDefault();
-    if (listening) {
+    if (isActuallyListening) {
+      setIsForceStopped(true);
+      SpeechRecognition.stopListening();
       SpeechRecognition.abortListening();
     } else {
+      setIsForceStopped(false);
       resetTranscript();
       try {
         SpeechRecognition.startListening({ continuous: true, language: lang });
@@ -67,13 +75,13 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
       <button
         type="button"
         onClick={toggleListening}
-        className={`p-2 rounded-lg transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
-        title={listening ? "Stop recording" : "Start recording"}
+        className={`p-2 rounded-lg transition-all flex items-center justify-center ${isActuallyListening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
+        title={isActuallyListening ? "Stop recording" : "Start recording"}
       >
-        {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+        {isActuallyListening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
       </button>
       
-      {listening && (
+      {isActuallyListening && (
         <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-xs text-red-400 font-medium whitespace-nowrap">
           Listening...
         </span>
