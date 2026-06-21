@@ -50,7 +50,7 @@ export const getMessages = catchAsync(async (req, res) => {
  * POST /api/v1/chat/messages
  */
 export const sendMessage = catchAsync(async (req, res) => {
-  const { message, room = 'general' } = req.body;
+  const { message, room = 'general', imageUrl } = req.body;
 
   if (!message || !message.trim()) {
     throw new AppError('Message cannot be empty.', 400);
@@ -66,6 +66,7 @@ export const sendMessage = catchAsync(async (req, res) => {
     roleLabel: ROLE_LABELS[req.user.role] || req.user.roleLabel,
     message: message.trim(),
     room,
+    imageUrl,
     readBy: [req.user._id],
   });
 

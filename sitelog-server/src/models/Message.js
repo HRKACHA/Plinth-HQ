@@ -9,6 +9,7 @@ const messageSchema = new mongoose.Schema(
     message: { type: String, required: true, trim: true, maxlength: 2000 },
     room: { type: String, default: 'general', index: true },
     readBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    imageUrl: { type: String },
     edited: { type: Boolean, default: false },
     editedAt: { type: Date },
     deleted: { type: Boolean, default: false },

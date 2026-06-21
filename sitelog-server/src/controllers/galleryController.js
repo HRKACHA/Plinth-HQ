@@ -1,6 +1,7 @@
 import SiteLog from '../models/SiteLog.js';
 import Issue from '../models/Issue.js';
 import Project from '../models/Project.js';
+import Message from '../models/Message.js';
 import catchAsync from '../utils/catchAsync.js';
 
 export const getProjectGallery = catchAsync(async (req, res) => {
@@ -14,6 +15,9 @@ export const getProjectGallery = catchAsync(async (req, res) => {
   
   // Get photos from issues
   const issues = await Issue.find({ project: projectId }).select('title createdAt photos createdBy').populate('createdBy', 'name');
+  
+  // Get photos from chat messages
+  const chatMessages = await Message.find({ room: projectId, imageUrl: { $exists: true, $ne: null } }).select('message createdAt imageUrl senderName');
   
   let gallery = [];
 
@@ -58,6 +62,17 @@ export const getProjectGallery = catchAsync(async (req, res) => {
         });
       });
     }
+  });
+
+  chatMessages.forEach(msg => {
+    gallery.push({
+      url: msg.imageUrl,
+      source: 'Project Chat',
+      title: msg.message || 'Chat Photo',
+      date: msg.createdAt,
+      uploader: msg.senderName || 'Unknown',
+      id: msg._id
+    });
   });
   
   // Sort by date descending
