@@ -207,31 +207,35 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 pt-12 pb-16 px-4 text-center mx-auto max-w-5xl">
-        <div className="inline-block animate-slideUp mb-6">
-          <SectionBadge>About PlinthHQ</SectionBadge>
-        </div>
-        <div className="mb-8">
-          <AnimatedHeroText 
-            staticText={"The command center"} 
-            rotatingPhrases={[
-              'your construction site\ndeserves.',
-              'your projects\ndeserve.',
-              'your teams\ndeserve.',
-              'your budgets\ndeserve.',
-              'your owners\ndeserve.',
-              'your progress\ndeserves.'
-            ]} 
-            isAboutPage={true} 
-          />
-        </div>
-        <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto mt-6">
-          PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
-        </p>
-        <div className="pt-10 flex justify-center">
-          <Link to="/register" className="btn-accent px-12 py-3.5 text-base shadow-glow">
-            Get Started
-          </Link>
+      <section className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 80px)' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+          <div className="max-w-4xl w-full">
+            <div className="inline-block animate-slideUp mb-6">
+              <SectionBadge>About PlinthHQ</SectionBadge>
+            </div>
+            <div className="mb-8">
+              <AnimatedHeroText 
+                staticText={"The command center"} 
+                rotatingPhrases={[
+                  'your construction site\ndeserves.',
+                  'your projects\ndeserve.',
+                  'your teams\ndeserve.',
+                  'your budgets\ndeserve.',
+                  'your owners\ndeserve.',
+                  'your progress\ndeserves.'
+                ]} 
+                isAboutPage={true} 
+              />
+            </div>
+            <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto mt-6">
+              PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
+            </p>
+            <div className="pt-10 flex justify-center">
+              <Link to="/register" className="btn-accent px-12 py-3.5 text-base shadow-glow">
+                Get Started
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
