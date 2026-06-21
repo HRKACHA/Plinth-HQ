@@ -12,6 +12,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
   const [showLangs, setShowLangs] = useState(false);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
+  const finalTranscriptRef = useRef('');
 
   const onTranscriptRef = useRef(onTranscript);
   const onStartRef = useRef(onStart);
@@ -29,11 +30,17 @@ export default function VoiceInput({ onTranscript, onStart }) {
       recognitionRef.current.interimResults = true;
       
       recognitionRef.current.onresult = (event) => {
-        let currentTranscript = '';
-        for (let i = 0; i < event.results.length; i++) {
-          currentTranscript += event.results[i][0].transcript;
+        let interimTranscript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            finalTranscriptRef.current += event.results[i][0].transcript;
+          } else {
+            interimTranscript += event.results[i][0].transcript;
+          }
         }
-        if (onTranscriptRef.current) onTranscriptRef.current(currentTranscript);
+        if (onTranscriptRef.current) {
+          onTranscriptRef.current(finalTranscriptRef.current + interimTranscript);
+        }
       };
 
       recognitionRef.current.onerror = (event) => {
@@ -74,6 +81,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
         if (onStartRef.current) onStartRef.current();
         recognitionRef.current.lang = lang;
         try {
+          finalTranscriptRef.current = ''; // Reset final transcript on new session
           recognitionRef.current.start();
           setListening(true);
         } catch (err) {
