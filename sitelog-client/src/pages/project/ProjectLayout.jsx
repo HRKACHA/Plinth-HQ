@@ -3,7 +3,7 @@ import { Link, useParams, Outlet, useLocation, useNavigate } from 'react-router-
 import {
   LayoutGrid, ClipboardList, Users, Package, Receipt, PieChart,
   Flag, FileText, Eye, Pencil, Trash2, MoreVertical, Plus,
-  ChevronDown, Briefcase, CalendarCheck, Wrench, AlertTriangle, Image
+  ChevronDown, Briefcase, CalendarCheck, Wrench, AlertTriangle, Image, MessageSquare
 } from 'lucide-react';
 import AppLayout from '../../components/layout/AppLayout';
 import Badge from '../../components/common/Badge';
@@ -268,6 +268,39 @@ export default function ProjectLayout() {
               )}
             </div>
           )}
+
+          {/* Team & Chat Dropdown */}
+          <div className="relative" onMouseEnter={() => handleMouseEnter('teamChat')} onMouseLeave={handleMouseLeave}>
+            <button
+              type="button"
+              onClick={() => toggleDropdown('teamChat')}
+              className={`project-nav-pill ${['/team', '/chat'].includes(location.pathname) ? 'project-nav-pill-active' : ''}`}
+            >
+              <Users className="h-4 w-4" />
+              <span>Team & Chat</span>
+              <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openDropdown === 'teamChat' ? 'rotate-180' : ''}`} />
+            </button>
+            {openDropdown === 'teamChat' && (
+              <div className="left-0 glass-dropdown">
+                {[
+                  { path: '/team', label: 'Manage Team', icon: Users },
+                  { path: '/chat', label: 'Project Chat', icon: MessageSquare }
+                ].map(({ path, label, icon: Icon }) => (
+                  <Link
+                    key={path}
+                    to={path}
+                    onClick={() => setOpenDropdown(null)}
+                    className={`dropdown-item ${location.pathname === path ? 'text-orange bg-orange/5' : ''}`}
+                  >
+                    <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${location.pathname === path ? 'bg-orange/20' : 'bg-orange/10'}`}>
+                      <Icon className={`h-4 w-4 ${location.pathname === path ? 'text-orange' : 'text-orange/70'}`} />
+                    </div>
+                    <span>{label}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
 
           {/* Documents — standalone */}
           <Link
