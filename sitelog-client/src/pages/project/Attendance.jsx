@@ -21,34 +21,52 @@ export default function Attendance() {
 
   if (loading) return <div className="flex h-48 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-navy border-t-orange" /></div>;
 
-  const latestLog = logs[0];
-  const labourMap = {};
-  (latestLog?.labour || []).forEach((l) => { labourMap[l.trade] = l.present; });
-  const totalPresent = Object.values(labourMap).reduce((a, b) => a + b, 0);
+  // Group logs by date to support multiple logs per day
+  const logsByDate = {};
+  logs.forEach(log => {
+    if (!logsByDate[log.date]) logsByDate[log.date] = [];
+    logsByDate[log.date].push(log);
+  });
+  
+  // Sort dates descending (latest first)
+  const sortedDates = Object.keys(logsByDate).sort((a, b) => new Date(b) - new Date(a));
+  
+  // Aggregate labour for the most recent day
+  const latestDate = sortedDates[0];
+  const latestLogs = latestDate ? logsByDate[latestDate] : [];
+  const latestLabourMap = {};
+  
+  latestLogs.forEach(log => {
+    (log.labour || []).forEach(l => {
+      latestLabourMap[l.trade] = (latestLabourMap[l.trade] || 0) + l.present;
+    });
+  });
+  
+  const totalPresent = Object.values(latestLabourMap).reduce((a, b) => a + b, 0);
 
   return (
     <div>
       <div className="grid gap-4 sm:grid-cols-3 mb-8">
         <div className="card">
-          <p className="text-xs uppercase text-muted">Today&apos;s Headcount</p>
+          <p className="text-xs uppercase text-muted">Latest Headcount {latestDate ? `(${new Date(latestDate).toLocaleDateString()})` : ''}</p>
           <p className="mt-2 font-mono text-3xl font-bold text-navy">{totalPresent}</p>
         </div>
         <div className="card">
           <p className="text-xs uppercase text-muted">Trades Active</p>
-          <p className="mt-2 font-mono text-3xl font-bold text-orange-dark">{TRADES.filter((t) => labourMap[t]).length}</p>
+          <p className="mt-2 font-mono text-3xl font-bold text-orange-dark">{TRADES.filter((t) => latestLabourMap[t] > 0).length}</p>
         </div>
         <div className="card">
-          <p className="text-xs uppercase text-muted">Log Entries</p>
+          <p className="text-xs uppercase text-muted">Total Log Entries</p>
           <p className="mt-2 font-mono text-3xl font-bold text-success">{logs.length}</p>
-          <p className="flex items-center gap-1 text-sm text-success"><TrendingUp className="h-3.5 w-3.5" /> From API</p>
+          <p className="flex items-center gap-1 text-sm text-success"><TrendingUp className="h-3.5 w-3.5" /> From {sortedDates.length} Days</p>
         </div>
       </div>
 
       <div className="card mb-6">
-        <h3 className="font-bold text-navy mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Labour by Trade (Latest Log)</h3>
+        <h3 className="font-bold text-navy mb-4 flex items-center gap-2"><Users className="h-5 w-5" /> Labour by Trade (Latest Day)</h3>
         <div className="space-y-4">
           {TRADES.map((trade) => {
-            const count = labourMap[trade] || 0;
+            const count = latestLabourMap[trade] || 0;
             return (
               <div key={trade}>
                 <div className="flex justify-between text-sm mb-1">
@@ -64,25 +82,36 @@ export default function Attendance() {
         </div>
       </div>
 
-      {logs.length === 0 ? (
+      {sortedDates.length === 0 ? (
         <div className="card py-16 text-center">
           <Users className="mx-auto h-12 w-12 text-muted/40" />
           <p className="mt-4 font-semibold text-navy">No attendance records found</p>
         </div>
       ) : (
         <div className="space-y-4">
-          {logs.map((log, index) => {
+          {sortedDates.map((date, index) => {
+            const dayLogs = logsByDate[date];
             const map = {};
-            (log.labour || []).forEach((l) => { map[l.trade] = { present: l.present, wage: l.wagePerDay || TRADE_RATES[l.trade] || 0 }; });
+            
+            // Aggregate all logs for this specific date
+            dayLogs.forEach(log => {
+              (log.labour || []).forEach(l => {
+                if (!map[l.trade]) {
+                  map[l.trade] = { present: 0, wage: l.wagePerDay || TRADE_RATES[l.trade] || 0 };
+                }
+                map[l.trade].present += l.present;
+              });
+            });
+            
             const total = Object.values(map).reduce((a, b) => a + b.present, 0);
             const cost = Object.values(map).reduce((sum, l) => sum + (l.present * l.wage), 0);
 
             return (
               <DateAccordion 
-                key={log._id || log.id} 
-                date={log.date} 
+                key={date} 
+                date={date} 
                 defaultOpen={index === 0}
-                summary={`${total} workers • Total Cost: ₹${cost.toLocaleString('en-IN')}`}
+                summary={`${total} workers • Total Cost: ₹${cost.toLocaleString('en-IN')} (${dayLogs.length} logs)`}
               >
                 <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
                   {TRADES.map((trade) => {
