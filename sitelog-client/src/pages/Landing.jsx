@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import PlinthLogo from '../components/common/PlinthLogo';
 import { useAuth } from '../context/AuthContext';
+import AnimatedHeroText from '../components/common/AnimatedHeroText';
 
 /* ══════════════════════════════════════════════════════════
    FEATURES & DATA
@@ -38,17 +39,21 @@ export default function Landing() {
     <div className="min-h-screen bg-transparent text-white">
       {/* ── Nav ── */}
       <nav className="sticky top-4 z-50 mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="liquid-glass flex items-center justify-between rounded-2xl px-6 py-3">
-          <PlinthLogo size="xxs" />
-          <div className="flex items-center gap-4">
+        <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3">
+          <div className="flex justify-start">
+            <Link to="/"><PlinthLogo size="xxs" /></Link>
+          </div>
+          <div className="flex justify-center items-center gap-6 hidden sm:flex">
+            <Link to="/" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
             <Link to="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
-            <div className="hidden sm:block w-px h-4 bg-white/20 mx-1"></div>
+          </div>
+          <div className="flex justify-end items-center gap-4">
             {user ? (
-              <Link to="/dashboard" className="btn-accent">Go to Dashboard</Link>
+              <Link to="/dashboard" className="btn-accent text-sm px-4 py-1.5">Go to Dashboard</Link>
             ) : (
               <>
-                <Link to="/login" className="btn-ghost hidden sm:inline-flex text-white/70 hover:text-white">Sign In</Link>
-                <Link to="/register" className="btn-accent">Get Started</Link>
+                <Link to="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors hidden sm:block">Sign In</Link>
+                <Link to="/register" className="btn-accent text-sm px-4 py-1.5">Get Started</Link>
               </>
             )}
           </div>
@@ -65,12 +70,13 @@ export default function Landing() {
               </span>
             </div>
 
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.95]"
-              style={{ background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-              Your site&apos;s<br />single source<br />of truth
-            </h1>
+            <AnimatedHeroText 
+              staticText={"Your site's\nsingle source"} 
+              rotatingPhrases={['of truth', 'of control', 'of visibility', 'of progress', 'of accountability', 'of confidence']} 
+              isAboutPage={false} 
+            />
 
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 font-light leading-relaxed">
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 font-light leading-relaxed mt-6">
               Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
             </p>
 

@@ -4,7 +4,9 @@ import { useAuth } from '../context/AuthContext';
 import { chatApi, mediaUrl } from '../api/index.js';
 import { getAccessToken } from '../api/axios.js';
 import AppLayout from '../components/layout/AppLayout';
-import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X } from 'lucide-react';
+import VoiceInput from '../components/common/VoiceInput';
+import { useTranslation } from '../hooks/useTranslation';
+import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages } from 'lucide-react';
 
 const ROLE_BADGE_COLORS = {
   site_engineer: 'bg-blue-500/20 text-blue-300',
@@ -51,6 +53,11 @@ export default function ChatBox() {
   const messagesContainerRef = useRef(null);
   const typingTimeoutRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(true);
+  const { translateText, isTranslating } = useTranslation();
+
+  const handleVoiceInput = useCallback((text) => {
+    setInput(text);
+  }, []);
 
   // Connect socket
   useEffect(() => {
@@ -411,7 +418,38 @@ export default function ChatBox() {
                                     {msg.readBy?.length > 1 ? '✓✓' : '✓'}
                                   </span>
                                 )}
+                                {!mine && (
+                                  <button
+                                    onClick={async (e) => {
+                                      e.stopPropagation();
+                                      if (msg.translated) {
+                                        // toggle back
+                                        msg.translated = false;
+                                        setMessages([...messages]);
+                                      } else {
+                                        msg.isTranslating = true;
+                                        setMessages([...messages]);
+                                        try {
+                                          msg.translatedText = await translateText(msg.message, 'hi', 'en'); // Simplified demo
+                                          msg.translated = true;
+                                        } finally {
+                                          msg.isTranslating = false;
+                                          setMessages([...messages]);
+                                        }
+                                      }
+                                    }}
+                                    className="ml-2 text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                                  >
+                                    {msg.isTranslating ? <Loader2 size={10} className="animate-spin" /> : <Languages size={10} />}
+                                    {msg.translated ? 'Original' : 'Translate'}
+                                  </button>
+                                )}
                               </div>
+                              {msg.translated && (
+                                <p className="mt-1 pt-1 border-t border-white/10 text-xs italic text-white/80">
+                                  {msg.translatedText}
+                                </p>
+                              )}
                             </div>
                           </div>
 
@@ -461,6 +499,7 @@ export default function ChatBox() {
             {/* Input Area */}
             <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
               <div className="flex items-end gap-2 sm:gap-3">
+                <VoiceInput onTranscript={handleVoiceInput} />
                 <div className="flex-1 relative">
                   <textarea
                     value={input}

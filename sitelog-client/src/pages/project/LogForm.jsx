@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Cloud, Sun, CloudRain, CloudLightning, Minus, Plus, Upload, Camera } from 'lucide-react';
 import AppLayout from '../../components/layout/AppLayout';
 import { logApi, uploadApi, budgetApi } from '../../api/index';
-
+import VoiceInput from '../../components/common/VoiceInput';
 import GlassDatePicker from '../../components/common/GlassDatePicker';
 const STEPS = ['Date & Weather', 'Activities', 'Labour', 'Materials', 'Photos', 'Review'];
 const WEATHER = [
@@ -138,7 +138,10 @@ export default function LogForm() {
               <div className="mb-4 text-sm text-muted">
                 <p><strong>Step 2:</strong> Provide a detailed summary of the work accomplished on site today.</p>
               </div>
-              <label className="mb-2 block text-sm font-medium text-navy">Activities</label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium text-navy">Activities</label>
+                <VoiceInput onTranscript={(text) => setActivities(text)} />
+              </div>
               <textarea value={activities} onChange={(e) => setActivities(e.target.value)} maxLength={2000} rows={8} className="input-field resize-none" placeholder="Describe today's work..." />
               <p className="mt-1 text-right text-xs text-muted">{activities.length}/2000</p>
             </div>

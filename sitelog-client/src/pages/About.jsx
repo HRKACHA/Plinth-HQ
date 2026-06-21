@@ -9,6 +9,7 @@ import {
 import ParticleBackground from '../components/common/ParticleBackground';
 import PlinthLogo from '../components/common/PlinthLogo';
 import { useAuth } from '../context/AuthContext';
+import AnimatedHeroText from '../components/common/AnimatedHeroText';
 
 /* ══════════════════════════════════════════════════════════
    ANIMATED COUNTER HOOK
@@ -184,17 +185,21 @@ export default function About() {
 
       {/* ── Nav ── */}
       <nav className="sticky top-4 z-50 mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="liquid-glass flex items-center justify-between rounded-2xl px-6 py-3">
-          <PlinthLogo size="xxs" />
-          <div className="flex items-center gap-4">
+        <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3">
+          <div className="flex justify-start">
+            <Link to="/"><PlinthLogo size="xxs" /></Link>
+          </div>
+          <div className="flex justify-center items-center gap-6 hidden sm:flex">
             <Link to="/" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
-            <div className="hidden sm:block w-px h-4 bg-white/20 mx-2"></div>
+            <Link to="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
+          </div>
+          <div className="flex justify-end items-center gap-4">
             {user ? (
-              <Link to="/dashboard" className="btn-accent">Go to Dashboard</Link>
+              <Link to="/dashboard" className="btn-accent text-sm px-4 py-1.5">Go to Dashboard</Link>
             ) : (
               <>
-                <Link to="/login" className="btn-ghost hidden sm:inline-flex text-white/70 hover:text-white">Sign In</Link>
-                <Link to="/register" className="btn-accent">Get Started</Link>
+                <Link to="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors hidden sm:block">Sign In</Link>
+                <Link to="/register" className="btn-accent text-sm px-4 py-1.5">Get Started</Link>
               </>
             )}
           </div>
@@ -208,11 +213,21 @@ export default function About() {
         <div className="inline-block animate-slideUp mb-6">
           <SectionBadge>About PlinthHQ</SectionBadge>
         </div>
-        <h1 className="font-display text-5xl md:text-7xl font-bold tracking-tighter leading-tight mb-8"
-          style={{ background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.5) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-          The command center<br />your construction<br />site deserves.
-        </h1>
-        <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto">
+        <div className="mb-8">
+          <AnimatedHeroText 
+            staticText={"The command center"} 
+            rotatingPhrases={[
+              'your construction site\ndeserves.',
+              'your projects\ndeserve.',
+              'your teams\ndeserve.',
+              'your budgets\ndeserve.',
+              'your owners\ndeserve.',
+              'your progress\ndeserves.'
+            ]} 
+            isAboutPage={true} 
+          />
+        </div>
+        <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto mt-6">
           PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
         </p>
         <div className="pt-10 flex flex-wrap justify-center gap-4">
