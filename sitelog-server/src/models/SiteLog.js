@@ -18,6 +18,6 @@ const siteLogSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-siteLogSchema.index({ project: 1, date: 1 }, { unique: true });
+siteLogSchema.index({ project: 1, date: -1 });
 
 export default mongoose.model('SiteLog', siteLogSchema);

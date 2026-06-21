@@ -40,51 +40,18 @@ export const createLog = catchAsync(async (req, res) => {
 
   const logDate = date ? new Date(date) : new Date();
 
-  const startOfDay = new Date(logDate);
-  startOfDay.setUTCHours(0, 0, 0, 0);
-  const endOfDay = new Date(logDate);
-  endOfDay.setUTCHours(23, 59, 59, 999);
-
-  let log = await SiteLog.findOne({
+  const log = await SiteLog.create({
     project: req.params.id,
-    date: { $gte: startOfDay, $lte: endOfDay }
+    date: logDate,
+    weather: weather || 'sunny',
+    temperature,
+    activities,
+    remarks,
+    photos: photos || [],
+    labour: labour || [],
+    materials: materials || [],
+    createdBy: req.user._id,
   });
-
-  if (log) {
-    if (log.isLocked && req.user.role !== 'PM' && req.user.role !== 'SuperAdmin') {
-      throw new AppError('Log is locked and cannot be edited.', 403);
-    }
-    
-    log.weather = weather || log.weather;
-    if (temperature !== undefined) log.temperature = temperature;
-    
-    // If the only activity was the auto-generated material transfer message, replace it, otherwise append.
-    if (log.activities.startsWith('Material Transferred') && log.activities.split('\n').length === 1) {
-      log.activities = activities;
-    } else {
-      log.activities = log.activities + '\n\n' + activities;
-    }
-    
-    if (remarks) log.remarks = remarks;
-    if (photos && photos.length > 0) log.photos.push(...photos);
-    if (labour && labour.length > 0) log.labour.push(...labour);
-    if (materials && materials.length > 0) log.materials.push(...materials);
-    
-    await log.save();
-  } else {
-    log = await SiteLog.create({
-      project: req.params.id,
-      date: logDate,
-      weather: weather || 'sunny',
-      temperature,
-      activities,
-      remarks,
-      photos: photos || [],
-      labour: labour || [],
-      materials: materials || [],
-      createdBy: req.user._id,
-    });
-  }
 
   await log.populate('createdBy', 'name avatar');
 
