@@ -528,8 +528,8 @@ export default function ChatBox() {
             <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
               
               <div className="flex flex-col gap-2">
-                <div className="flex items-end gap-2">
-                  <div className="flex-1 relative">
+                <div className="flex gap-2">
+                  <div className="flex-1 relative flex">
                     <textarea
                       value={input}
                       onChange={handleInputChange}
@@ -550,49 +550,51 @@ export default function ChatBox() {
                       </span>
                     )}
                   </div>
-                  <button
-                    onClick={handleSend}
-                    disabled={!input.trim() || input.length > 2000 || isUploading}
-                    className="h-11 w-11 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 shadow-lg"
-                  >
-                    {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-1" />}
-                  </button>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 sm:gap-2">
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      capture="environment" 
-                      ref={cameraInputRef} 
-                      onChange={handlePhotoUpload} 
-                      className="hidden" 
-                    />
-                    <input 
-                      type="file" 
-                      accept="image/*" 
-                      ref={fileInputRef} 
-                      onChange={handlePhotoUpload} 
-                      className="hidden" 
-                    />
+                  <div className="flex flex-col justify-end">
                     <button
-                      onClick={() => cameraInputRef.current?.click()}
-                      disabled={!activeRoom || isUploading}
-                      className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
-                      title="Take Photo"
+                      onClick={handleSend}
+                      disabled={!input.trim() || input.length > 2000 || isUploading}
+                      className="h-11 w-11 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 shadow-lg"
                     >
-                      <Camera size={18} />
-                    </button>
-                    <button
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={!activeRoom || isUploading}
-                      className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
-                      title="Attach File"
-                    >
-                      <ImageIcon size={18} />
+                      {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-1" />}
                     </button>
                   </div>
+                </div>
+                
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    capture="environment" 
+                    ref={cameraInputRef} 
+                    onChange={handlePhotoUpload} 
+                    className="hidden" 
+                  />
+                  <input 
+                    type="file" 
+                    accept="image/*" 
+                    ref={fileInputRef} 
+                    onChange={handlePhotoUpload} 
+                    className="hidden" 
+                  />
+                  <button
+                    onClick={() => cameraInputRef.current?.click()}
+                    disabled={!activeRoom || isUploading}
+                    className="h-10 w-10 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    title="Take Photo"
+                  >
+                    <Camera size={18} />
+                  </button>
+                  <button
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={!activeRoom || isUploading}
+                    className="h-10 w-10 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    title="Attach File"
+                  >
+                    <ImageIcon size={18} />
+                  </button>
+                  
+                  <div className="h-5 w-px bg-white/10 mx-1"></div>
                   
                   <VoiceInput onTranscript={handleVoiceInput} />
                 </div>

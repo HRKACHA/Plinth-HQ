@@ -12,7 +12,7 @@ const LANGUAGES = [
 export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
   const [lang, setLang] = useState('en-IN');
   const [showLangs, setShowLangs] = useState(false);
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
 
   useEffect(() => {
     if (transcript) {
@@ -29,8 +29,15 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
     if (listening) {
       SpeechRecognition.stopListening();
     } else {
+      if (isMicrophoneAvailable === false) {
+        alert("Microphone access is blocked or unavailable! Please allow permissions or ensure the site is running on a secure connection (HTTPS).");
+      }
       resetTranscript();
-      SpeechRecognition.startListening({ continuous: true, language: lang });
+      SpeechRecognition.startListening({ continuous: true, language: lang })
+        .catch(err => {
+          console.error("Speech Recognition Error: ", err);
+          alert("Failed to start microphone: " + err.message);
+        });
     }
   };
 
