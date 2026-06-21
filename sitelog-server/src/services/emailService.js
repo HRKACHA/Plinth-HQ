@@ -1,14 +1,19 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+let transporter;
+
+function getTransporter() {
+  if (!transporter) {
+    transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
+  return transporter;
+}
 
 /**
  * Send an invite email with a styled HTML template.
@@ -96,7 +101,7 @@ export async function sendInviteEmail({ to, inviteLink, role, roleLabel, invited
     return { messageId: 'dev-mode-logged', accepted: [to] };
   }
 
-  return transporter.sendMail(mailOptions);
+  return getTransporter().sendMail(mailOptions);
 }
 
 export default { sendInviteEmail };
