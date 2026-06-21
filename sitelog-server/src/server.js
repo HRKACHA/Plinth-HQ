@@ -101,7 +101,7 @@ io.on('connection', async (socket) => {
   });
 
   // ── Chat: Send Message ──
-  socket.on('send-message', async ({ message, room = 'general' }) => {
+  socket.on('send-message', async ({ message, room = 'general', imageUrl }) => {
     if (!message || !message.trim()) return;
     if (message.length > 2000) return;
 
@@ -113,6 +113,7 @@ io.on('connection', async (socket) => {
         roleLabel: userData.roleLabel,
         message: message.trim(),
         room,
+        imageUrl,
         readBy: [userId],
       });
 
