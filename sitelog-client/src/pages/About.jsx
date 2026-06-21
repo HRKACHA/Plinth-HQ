@@ -4,7 +4,7 @@ import {
   ArrowRight, HardHat, BarChart3, ShieldCheck, Zap, Camera, FileText,
   Users, Smartphone, Building2, CheckCircle, MessageSquare, Package,
   Wrench, ClipboardList, TrendingUp, Lock, Globe, Layers, ChevronRight,
-  Shield, Folder, Clock, Eye, Bell, BookOpen, Target, Award
+  Shield, Folder, Clock, Eye, Bell, BookOpen, Target, Award, Mic
 } from 'lucide-react';
 import ParticleBackground from '../components/common/ParticleBackground';
 import PlinthLogo from '../components/common/PlinthLogo';
@@ -93,6 +93,15 @@ const FEATURES = [
       { icon: MessageSquare, title: 'Project-Wise Chat', desc: 'Real-time encrypted messaging scoped to each project. Only team members assigned to a project can access its chat.' },
       { icon: Camera, title: 'Project Photo Gallery', desc: 'A centralized masonry grid that automatically aggregates all photos uploaded across Daily Logs and Issues.' },
       { icon: Users, title: 'Team Management', desc: 'Invite members via email, assign roles (Engineer, Contractor, Accounts, Owner, PM), and manage rosters.' },
+    ]
+  },
+  {
+    category: 'AI & Accessibility',
+    color: '#EC4899',
+    items: [
+      { icon: Mic, title: 'Voice Dictation', desc: 'Keep your gloves on. Log site updates, create issues, and chat using voice dictation directly from the job site.' },
+      { icon: Globe, title: 'Multi-Language Translation', desc: 'Communicate seamlessly across regional languages with real-time translation for English, Hindi, and Gujarati.' },
+      { icon: Zap, title: 'Smart Logging', desc: 'Speak your daily site diary entries directly into the app for faster and more accurate record keeping.' },
     ]
   },
 ];
