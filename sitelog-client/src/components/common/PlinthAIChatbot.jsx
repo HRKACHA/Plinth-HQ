@@ -597,7 +597,7 @@ export default function PlinthAIChatbot() {
 
           {/* Input Area */}
           <div className="border-t border-[var(--color-glass-border)] p-3">
-            <div className="flex items-end gap-2 rounded-xl border border-[var(--color-glass-border)] bg-surface/50 backdrop-blur-sm px-3 py-2 transition-all focus-within:border-orange focus-within:shadow-[0_0_0_1px_rgb(var(--color-orange))] outline-none">
+            <div className="flex items-center gap-2 rounded-xl border border-[var(--color-glass-border)] bg-surface/50 backdrop-blur-sm px-3 py-2 transition-all focus-within:border-orange focus-within:shadow-[0_0_0_1px_rgb(var(--color-orange))] outline-none">
               <textarea
                 ref={inputRef}
                 value={input}
@@ -605,11 +605,11 @@ export default function PlinthAIChatbot() {
                 onKeyDown={handleKeyDown}
                 placeholder="Ask PlinthAI anything..."
                 rows={1}
-                className="flex-1 resize-none bg-transparent text-sm text-navy outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none placeholder:text-muted/50 max-h-24 py-0"
-                style={{ minHeight: '24px' }}
+                className="flex-1 resize-none bg-transparent text-sm text-navy outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none placeholder:text-muted/50 max-h-24 py-1.5"
+                style={{ minHeight: '32px' }}
                 disabled={loading}
                 onInput={(e) => {
-                  e.target.style.height = '24px';
+                  e.target.style.height = '32px';
                   e.target.style.height = Math.min(e.target.scrollHeight, 96) + 'px';
                 }}
               />
