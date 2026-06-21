@@ -26,9 +26,9 @@ const MAX_HISTORY = 50; // Increased for better context retention
 export const initSession = catchAsync(async (req, res) => {
   const user = req.user;
 
-  const isPM = ['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user.role);
+  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
   const projectFilter = { isDeleted: false, organisation: user.organisation };
-  if (!isPM) {
+  if (!isGlobalManager) {
     projectFilter['team.user'] = user._id;
   }
 
@@ -80,9 +80,9 @@ export const chatHandler = catchAsync(async (req, res) => {
   }
   const history = conversationStore.get(sessionKey);
 
-  const isPM = ['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user.role);
+  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
   const projectFilter = { isDeleted: false, organisation: user.organisation };
-  if (!isPM) {
+  if (!isGlobalManager) {
     projectFilter['team.user'] = user._id;
   }
 

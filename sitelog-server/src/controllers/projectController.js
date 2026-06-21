@@ -23,9 +23,9 @@ export const listProjects = catchAsync(async (req, res) => {
   const limit = parseInt(req.query.limit, 10) || 20;
   const skip = (page - 1) * limit;
 
-  const isManager = ['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(req.user.role);
+  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(req.user.role);
   const filter = { organisation: req.user.organisation, isDeleted: false };
-  if (!isManager) {
+  if (!isGlobalManager) {
     filter['team.user'] = req.user._id;
   }
   const [projects, total] = await Promise.all([

@@ -30,9 +30,9 @@ export const globalSearch = catchAsync(async (req, res) => {
   const queryRegex = new RegExp(q.trim(), 'i');
 
   // Determine Project Visibility
-  const isPM = ['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user.role);
+  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
   const projectFilter = { isDeleted: false, organisation: user.organisation };
-  if (!isPM) {
+  if (!isGlobalManager) {
     projectFilter['team.user'] = user._id;
   }
 

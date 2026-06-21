@@ -18,12 +18,12 @@ export const getProjectOrFail = catchAsync(async (req, res, next) => {
     ['SuperAdmin', 'admin'].includes(req.user.role);
 
   const sameOrg = project.organisation?.toString() === req.user.organisation?.toString();
-  const isPM = ['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(req.user.role);
+  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(req.user.role);
 
   if (!isTeamMember && !sameOrg) {
     return next(new AppError('Not authorized for this project.', 403));
   }
-  if (!isTeamMember && sameOrg && !isPM) {
+  if (!isTeamMember && sameOrg && !isGlobalManager) {
     return next(new AppError('Not authorized for this project.', 403));
   }
 
