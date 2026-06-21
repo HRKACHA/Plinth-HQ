@@ -40,18 +40,64 @@ export const createLog = catchAsync(async (req, res) => {
 
   const logDate = date ? new Date(date) : new Date();
 
-  const log = await SiteLog.create({
+  const startOfDay = new Date(logDate);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  const endOfDay = new Date(logDate);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  let log = await SiteLog.findOne({
     project: req.params.id,
-    date: logDate,
-    weather: weather || 'sunny',
-    temperature,
-    activities,
-    remarks,
-    photos: photos || [],
-    labour: labour || [],
-    materials: materials || [],
-    createdBy: req.user._id,
+    date: { $gte: startOfDay, $lte: endOfDay }
   });
+
+  if (log) {
+    if (log.isLocked && req.user.role !== 'PM' && req.user.role !== 'SuperAdmin') {
+      throw new AppError('Log is locked and cannot be edited.', 403);
+    }
+    
+    log.weather = weather || log.weather;
+    if (temperature !== undefined) log.temperature = temperature;
+    
+    // Add clear separator for activities
+    const timeStr = new Date().toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', hour12: true });
+    if (log.activities.startsWith('Material Transferred') && log.activities.split('\n').length === 1) {
+      log.activities = activities;
+    } else {
+      log.activities = log.activities + `\n\n--- Update (${timeStr}) ---\n` + activities;
+    }
+    
+    if (remarks) log.remarks = remarks;
+    if (photos && photos.length > 0) log.photos.push(...photos);
+    
+    // Aggregate labour without creating duplicates
+    if (labour && labour.length > 0) {
+      labour.forEach(newL => {
+        const existing = log.labour.find(l => l.trade === newL.trade);
+        if (existing) {
+          existing.present += newL.present;
+        } else {
+          log.labour.push(newL);
+        }
+      });
+    }
+    
+    if (materials && materials.length > 0) log.materials.push(...materials);
+    
+    await log.save();
+  } else {
+    log = await SiteLog.create({
+      project: req.params.id,
+      date: logDate,
+      weather: weather || 'sunny',
+      temperature,
+      activities,
+      remarks,
+      photos: photos || [],
+      labour: labour || [],
+      materials: materials || [],
+      createdBy: req.user._id,
+    });
+  }
 
   await log.populate('createdBy', 'name avatar');
 
