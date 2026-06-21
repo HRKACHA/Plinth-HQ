@@ -29,15 +29,12 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
     if (listening) {
       SpeechRecognition.abortListening();
     } else {
-      if (isMicrophoneAvailable === false) {
-        alert("Microphone access is blocked or unavailable! Please allow permissions or ensure the site is running on a secure connection (HTTPS).");
-      }
       resetTranscript();
-      SpeechRecognition.startListening({ continuous: true, language: lang })
-        .catch(err => {
-          console.error("Speech Recognition Error: ", err);
-          alert("Failed to start microphone: " + err.message);
-        });
+      try {
+        SpeechRecognition.startListening({ continuous: true, language: lang });
+      } catch (err) {
+        console.error("Speech Recognition Error: ", err);
+      }
     }
   };
 
