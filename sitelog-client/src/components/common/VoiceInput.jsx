@@ -7,7 +7,7 @@ const LANGUAGES = [
   { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
 ];
 
-export default function VoiceInput({ onTranscript, onStart }) {
+export default function VoiceInput({ onTranscript, onStart, position = 'right' }) {
   const [lang, setLang] = useState('en-US');
   const [showLangs, setShowLangs] = useState(false);
   const [listening, setListening] = useState(false);
@@ -130,7 +130,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
       </button>
       
       {listening && (
-        <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 text-[9px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-black/90 backdrop-blur-md px-2 py-0.5 rounded border border-red-500/30 shadow-lg z-[100]">
+        <span className={`absolute ${position === 'bottom' ? 'top-full mt-2 left-1/2 -translate-x-1/2' : 'left-full ml-3 top-1/2 -translate-y-1/2'} text-[10px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-black/90 backdrop-blur-md px-2 py-0.5 rounded border border-red-500/30 shadow-lg z-[100]`}>
           Listening
         </span>
       )}

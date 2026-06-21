@@ -148,7 +148,7 @@ export default function LogForm() {
               </div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-navy">Activities</label>
-                <VoiceInput onTranscript={(text) => setActivities(text)} />
+                <VoiceInput onTranscript={(text) => setActivities(text)} position="bottom" />
               </div>
               <textarea 
                 ref={activitiesRef}
