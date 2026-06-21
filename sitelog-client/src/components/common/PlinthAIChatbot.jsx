@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { MessageCircle, X, Send, ChevronDown, ThumbsUp, ThumbsDown, Sparkles, Zap, BookOpen, ClipboardList, Loader2, AlertCircle, Minus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { plinthaiApi } from '../../api/index';
+import VoiceInput from './VoiceInput';
 
 // Generate a unique session ID per widget mount
 function generateSessionId() {
@@ -212,6 +213,22 @@ export default function PlinthAIChatbot() {
   const messagesEndRef = useRef(null);
   const chatContainerRef = useRef(null);
   const inputRef = useRef(null);
+
+  const currentInputValueRef = useRef('');
+  useEffect(() => {
+    currentInputValueRef.current = input;
+  }, [input]);
+
+  const baseInputRef = useRef('');
+
+  const handleVoiceStart = useCallback(() => {
+    baseInputRef.current = currentInputValueRef.current;
+  }, []);
+
+  const handleVoiceInput = useCallback((text) => {
+    const newValue = (baseInputRef.current ? baseInputRef.current + ' ' : '') + text;
+    setInput(newValue);
+  }, []);
 
   // Don't render if not authenticated
   if (!isAuthenticated) return null;
@@ -588,17 +605,20 @@ export default function PlinthAIChatbot() {
                   e.target.style.height = Math.min(e.target.scrollHeight, 96) + 'px';
                 }}
               />
-              <button
-                onClick={() => sendMessage()}
-                disabled={!input.trim() || loading}
-                className={`shrink-0 flex items-center justify-center h-8 w-8 rounded-lg transition-all duration-300 ${
-                  input.trim() && !loading
-                    ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95'
-                    : 'bg-white/5 text-muted/40 cursor-not-allowed'
-                }`}
-              >
-                <Send className="h-4 w-4" />
-              </button>
+              <div className="flex items-center gap-1 shrink-0 pb-1">
+                <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} />
+                <button
+                  onClick={() => sendMessage()}
+                  disabled={!input.trim() || loading}
+                  className={`flex items-center justify-center h-8 w-8 rounded-lg transition-all duration-300 ${
+                    input.trim() && !loading
+                      ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95'
+                      : 'bg-white/5 text-muted/40 cursor-not-allowed'
+                  }`}
+                >
+                  <Send className="h-4 w-4" />
+                </button>
+              </div>
             </div>
             <p className="mt-1.5 text-[10px] text-center text-muted/50">
               PlinthAI may make mistakes. Verify important information.
