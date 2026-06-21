@@ -43,16 +43,13 @@ export default function Landing() {
           <div className="flex justify-start">
             <Link to="/"><PlinthLogo size="xxs" /></Link>
           </div>
-          <div className="flex justify-center items-center gap-6 hidden sm:flex">
-            <Link to="/" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
-            <Link to="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
-            {!user && (
-              <Link to="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Sign In</Link>
-            )}
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            {user && (
-              <Link to="/dashboard" className="btn-accent text-sm px-4 py-1.5">Go to Dashboard</Link>
+          <div className="col-span-2 flex justify-end items-center gap-4">
+            <Link to="/" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
+            <Link to="/about" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
+            {!user ? (
+              <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Sign In</Link>
+            ) : (
+              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Go to Dashboard</Link>
             )}
           </div>
         </div>

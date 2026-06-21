@@ -46,7 +46,7 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
       </button>
 
       {showLangs && (
-        <div className="absolute bottom-full mb-2 left-0 bg-gray-900 border border-gray-800 rounded-lg shadow-xl p-2 flex flex-col gap-1 z-50">
+        <div className="absolute bottom-full mb-2 right-0 sm:left-0 sm:right-auto bg-gray-900 border border-gray-800 rounded-lg shadow-xl p-2 flex flex-col gap-1 z-50">
           {LANGUAGES.map(l => (
             <button
               key={l.code}

@@ -526,68 +526,76 @@ export default function ChatBox() {
 
             {/* Input Area */}
             <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
-              <div className="flex items-end gap-2 sm:gap-3">
-                <VoiceInput onTranscript={handleVoiceInput} />
-                <div className="flex-1 relative">
-                  <textarea
-                    value={input}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    placeholder={activeRoom ? `Message ${rooms.find(r => r.name === activeRoom)?.label || 'Project Chat'}...` : "Select a project to start"}
-                    disabled={!activeRoom}
-                    rows={1}
-                    className="w-full px-4 py-3 bg-surface border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
-                    style={{ minHeight: '44px', maxHeight: '120px' }}
-                    onInput={(e) => {
-                      e.target.style.height = 'auto';
-                      e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-                    }}
-                  />
-                  {input.length > 1800 && (
-                    <span className={`absolute bottom-1 right-2 text-[10px] ${input.length > 2000 ? 'text-red-400' : 'text-muted'}`}>
-                      {input.length}/2000
-                    </span>
-                  )}
-                </div>
-                <button
-                  onClick={handleSend}
-                  disabled={!input.trim() || input.length > 2000 || isUploading}
-                  className="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
-                >
-                  {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
-                </button>
-              </div>
               
-              <div className="flex items-center gap-2 mt-2 px-1">
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  capture="environment" 
-                  ref={cameraInputRef} 
-                  onChange={handlePhotoUpload} 
-                  className="hidden" 
-                />
-                <input 
-                  type="file" 
-                  accept="image/*" 
-                  ref={fileInputRef} 
-                  onChange={handlePhotoUpload} 
-                  className="hidden" 
-                />
-                <button
-                  onClick={() => cameraInputRef.current?.click()}
-                  disabled={!activeRoom || isUploading}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-medium text-muted hover:text-white transition-colors disabled:opacity-50"
-                >
-                  <Camera size={14} /> Take Photo
-                </button>
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={!activeRoom || isUploading}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-medium text-muted hover:text-white transition-colors disabled:opacity-50"
-                >
-                  <ImageIcon size={14} /> Attach File
-                </button>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-end gap-2">
+                  <div className="flex-1 relative">
+                    <textarea
+                      value={input}
+                      onChange={handleInputChange}
+                      onKeyDown={handleKeyDown}
+                      placeholder={activeRoom ? `Message ${rooms.find(r => r.name === activeRoom)?.label || 'Project Chat'}...` : "Select a project to start"}
+                      disabled={!activeRoom}
+                      rows={1}
+                      className="w-full px-4 py-3 bg-surface border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
+                      style={{ minHeight: '44px', maxHeight: '120px' }}
+                      onInput={(e) => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
+                      }}
+                    />
+                    {input.length > 1800 && (
+                      <span className={`absolute bottom-1 right-2 text-[10px] ${input.length > 2000 ? 'text-red-400' : 'text-muted'}`}>
+                        {input.length}/2000
+                      </span>
+                    )}
+                  </div>
+                  <button
+                    onClick={handleSend}
+                    disabled={!input.trim() || input.length > 2000 || isUploading}
+                    className="h-11 w-11 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 shadow-lg"
+                  >
+                    {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-1" />}
+                  </button>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      capture="environment" 
+                      ref={cameraInputRef} 
+                      onChange={handlePhotoUpload} 
+                      className="hidden" 
+                    />
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      ref={fileInputRef} 
+                      onChange={handlePhotoUpload} 
+                      className="hidden" 
+                    />
+                    <button
+                      onClick={() => cameraInputRef.current?.click()}
+                      disabled={!activeRoom || isUploading}
+                      className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                      title="Take Photo"
+                    >
+                      <Camera size={18} />
+                    </button>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={!activeRoom || isUploading}
+                      className="p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                      title="Attach File"
+                    >
+                      <ImageIcon size={18} />
+                    </button>
+                  </div>
+                  
+                  <VoiceInput onTranscript={handleVoiceInput} />
+                </div>
               </div>
             </div>
           </div>
