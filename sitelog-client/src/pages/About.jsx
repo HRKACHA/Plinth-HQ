@@ -207,7 +207,7 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 pt-28 pb-16 px-4 text-center mx-auto max-w-5xl">
+      <section className="relative z-10 pt-12 pb-16 px-4 text-center mx-auto max-w-5xl">
         <div className="inline-block animate-slideUp mb-6">
           <SectionBadge>About PlinthHQ</SectionBadge>
         </div>
