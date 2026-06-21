@@ -1,12 +1,12 @@
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false,
+  host: 'smtp.resend.com',
+  port: 465,
+  secure: true,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    user: 'resend',
+    pass: process.env.RESEND_API_KEY,
   },
 });
 
@@ -81,15 +81,15 @@ export async function sendInviteEmail({ to, inviteLink, role, roleLabel, invited
   `;
 
   const mailOptions = {
-    from: `"PlinthHQ" <${process.env.EMAIL_USER}>`,
+    from: `"PlinthHQ" <onboarding@resend.dev>`,
     to,
     subject: "You've been invited to join the team — PlinthHQ",
     html,
   };
 
-  // In development, if EMAIL_USER is not configured, log instead of sending
-  if (!process.env.EMAIL_USER || process.env.EMAIL_USER === 'your_gmail@gmail.com') {
-    console.log('[Email Service] EMAIL_USER not configured. Logging invite instead of sending.');
+  // In development, if API key is missing, just log it
+  if (!process.env.RESEND_API_KEY) {
+    console.log('[Email Service] RESEND_API_KEY not configured. Logging invite instead of sending.');
     console.log(`[Email Service] To: ${to}`);
     console.log(`[Email Service] Role: ${roleLabel}`);
     console.log(`[Email Service] Link: ${inviteLink}`);
