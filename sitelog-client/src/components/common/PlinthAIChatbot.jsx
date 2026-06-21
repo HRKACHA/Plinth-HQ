@@ -606,14 +606,14 @@ export default function PlinthAIChatbot() {
                 placeholder="Ask PlinthAI anything..."
                 rows={1}
                 className="flex-1 resize-none bg-transparent text-sm text-navy outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none placeholder:text-muted/50 max-h-24 py-0"
-                style={{ minHeight: '24px', paddingTop: '2px' }}
+                style={{ minHeight: '24px' }}
                 disabled={loading}
                 onInput={(e) => {
                   e.target.style.height = '24px';
                   e.target.style.height = Math.min(e.target.scrollHeight, 96) + 'px';
                 }}
               />
-              <div className="flex items-center gap-1 shrink-0 pb-1">
+              <div className="flex items-center gap-1 shrink-0">
                 <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} position="bottom" />
                 <button
                   onClick={() => sendMessage()}
