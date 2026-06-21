@@ -55,19 +55,15 @@ export default function ChatBox() {
   const [showSidebar, setShowSidebar] = useState(true);
   const { translateText, isTranslating } = useTranslation();
 
-  const [voiceText, setVoiceText] = useState('');
-  
-  const handleVoiceInput = useCallback((text) => {
-    setVoiceText(text);
-  }, []);
+  const baseInputRef = useRef('');
 
-  // Update input when voiceText changes
-  useEffect(() => {
-    if (voiceText) {
-      // Just overwrite for now to prevent continuous appending issues
-      setInput(voiceText);
-    }
-  }, [voiceText]);
+  const handleVoiceStart = useCallback(() => {
+    baseInputRef.current = input;
+  }, [input]);
+
+  const handleVoiceInput = useCallback((text) => {
+    setInput((baseInputRef.current ? baseInputRef.current + ' ' : '') + text);
+  }, []);
 
   const cameraInputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -606,7 +602,7 @@ export default function ChatBox() {
                   
                   <div className="h-5 w-px bg-white/10 mx-1"></div>
                   
-                  <VoiceInput onTranscript={handleVoiceInput} />
+                  <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} />
                 </div>
               </div>
             </div>

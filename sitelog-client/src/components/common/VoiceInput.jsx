@@ -1,6 +1,4 @@
-import 'regenerator-runtime/runtime';
-import React, { useState, useEffect } from 'react';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Languages } from 'lucide-react';
 
 const LANGUAGES = [
@@ -9,42 +7,78 @@ const LANGUAGES = [
   { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
 ];
 
-export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
+export default function VoiceInput({ onTranscript, onStart }) {
   const [lang, setLang] = useState('en-IN');
   const [showLangs, setShowLangs] = useState(false);
-  const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
-
-  const [isForceStopped, setIsForceStopped] = useState(false);
+  const [listening, setListening] = useState(false);
+  const recognitionRef = useRef(null);
 
   useEffect(() => {
-    console.log("Current Transcript: ", transcript);
-    if (transcript && !isForceStopped) {
-      onTranscript(transcript);
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognitionRef.current = new SpeechRecognition();
+      recognitionRef.current.continuous = true;
+      recognitionRef.current.interimResults = true;
+      
+      recognitionRef.current.onresult = (event) => {
+        let currentTranscript = '';
+        for (let i = 0; i < event.results.length; i++) {
+          currentTranscript += event.results[i][0].transcript;
+        }
+        if (onTranscript) onTranscript(currentTranscript);
+      };
+
+      recognitionRef.current.onerror = (event) => {
+        console.error("Speech recognition error: ", event.error);
+        if (event.error === 'not-allowed') {
+          alert("Microphone permission denied! Please allow microphone access in your browser settings.");
+        }
+        setListening(false);
+      };
+
+      recognitionRef.current.onend = () => {
+        setListening(false);
+      };
     }
-  }, [transcript, onTranscript, isForceStopped]);
+    
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
+  }, [onTranscript]);
 
-  if (!browserSupportsSpeechRecognition) {
-    return null; // Don't render anything if browser doesn't support it
-  }
-
-  const isActuallyListening = listening && !isForceStopped;
+  // Update language dynamically if changed while not listening
+  useEffect(() => {
+    if (recognitionRef.current) {
+      recognitionRef.current.lang = lang;
+    }
+  }, [lang]);
 
   const toggleListening = (e) => {
     e.preventDefault();
-    if (isActuallyListening) {
-      setIsForceStopped(true);
-      SpeechRecognition.stopListening();
-      SpeechRecognition.abortListening();
+    if (listening) {
+      if (recognitionRef.current) recognitionRef.current.stop();
+      setListening(false);
     } else {
-      setIsForceStopped(false);
-      resetTranscript();
-      try {
-        SpeechRecognition.startListening({ continuous: true, language: lang });
-      } catch (err) {
-        console.error("Speech Recognition Error: ", err);
+      if (recognitionRef.current) {
+        if (onStart) onStart();
+        recognitionRef.current.lang = lang;
+        try {
+          recognitionRef.current.start();
+          setListening(true);
+        } catch (err) {
+          console.error("Failed to start speech recognition", err);
+        }
+      } else {
+        alert("Your browser does not support Speech Recognition.");
       }
     }
   };
+
+  if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
+    return null; // Don't render if not supported
+  }
 
   return (
     <div className="relative flex items-center gap-2">
@@ -75,13 +109,13 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
       <button
         type="button"
         onClick={toggleListening}
-        className={`p-2 rounded-lg transition-all flex items-center justify-center ${isActuallyListening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
-        title={isActuallyListening ? "Stop recording" : "Start recording"}
+        className={`p-2 rounded-lg transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
+        title={listening ? "Stop recording" : "Start recording"}
       >
-        {isActuallyListening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+        {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
       </button>
       
-      {isActuallyListening && (
+      {listening && (
         <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-xs text-red-400 font-medium whitespace-nowrap">
           Listening...
         </span>
