@@ -605,8 +605,8 @@ export default function PlinthAIChatbot() {
                 onKeyDown={handleKeyDown}
                 placeholder="Ask PlinthAI anything..."
                 rows={1}
-                className="flex-1 resize-none bg-transparent text-sm text-navy outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none placeholder:text-muted/50 max-h-24"
-                style={{ minHeight: '24px' }}
+                className="flex-1 resize-none bg-transparent text-sm text-navy outline-none border-none focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:outline-none placeholder:text-muted/50 max-h-24 py-0"
+                style={{ minHeight: '24px', paddingTop: '2px' }}
                 disabled={loading}
                 onInput={(e) => {
                   e.target.style.height = '24px';
