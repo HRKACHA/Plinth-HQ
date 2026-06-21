@@ -75,16 +75,34 @@ export const createExpense = catchAsync(async (req, res) => {
     throw new AppError('Category, vendor, amount, and invoice date required.', 400);
   }
 
-  const expense = await Expense.create({
+  const startOfDay = new Date(invoiceDate);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  const endOfDay = new Date(invoiceDate);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  let expense = await Expense.findOne({
     project: req.params.id,
-    category,
     vendor,
     description,
-    amount,
-    invoiceDate,
-    receiptUrl,
-    addedBy: req.user._id,
+    invoiceDate: { $gte: startOfDay, $lte: endOfDay }
   });
+
+  if (expense && expense.category === category) {
+    expense.amount += amount;
+    if (receiptUrl && !expense.receiptUrl) expense.receiptUrl = receiptUrl;
+    await expense.save();
+  } else {
+    expense = await Expense.create({
+      project: req.params.id,
+      category,
+      vendor,
+      description,
+      amount,
+      invoiceDate,
+      receiptUrl,
+      addedBy: req.user._id,
+    });
+  }
 
   const totalSpent = await recalcBudgetSpent(req.params.id);
   const project = req.project;
