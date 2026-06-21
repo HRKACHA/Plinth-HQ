@@ -27,6 +27,18 @@ export default function LogDetail() {
   }
 
   const labourList = log.labour || [];
+  
+  // Aggregate labour to prevent duplicates from legacy logs
+  const aggregatedLabour = {};
+  labourList.forEach(l => {
+    if (!aggregatedLabour[l.trade]) {
+      aggregatedLabour[l.trade] = { trade: l.trade, present: 0, wagePerDay: l.wagePerDay };
+    }
+    aggregatedLabour[l.trade].present += l.present;
+    // Prefer higher wage if there's a discrepancy
+    aggregatedLabour[l.trade].wagePerDay = Math.max(aggregatedLabour[l.trade].wagePerDay || 0, l.wagePerDay || 0);
+  });
+  const displayLabour = Object.values(aggregatedLabour).filter(l => l.present > 0);
 
   return (
     <AppLayout backTo={`/projects/${id}/logs`}>
@@ -42,14 +54,14 @@ export default function LogDetail() {
 
         <div className="card mb-6">
           <h3 className="font-bold text-navy">Activities</h3>
-          <p className="mt-3 text-sm leading-relaxed text-muted">{log.activities}</p>
+          <p className="mt-3 text-sm leading-relaxed text-muted whitespace-pre-wrap">{log.activities}</p>
           {log.remarks && <div className="mt-4 rounded-lg bg-warning/10 p-3 text-sm text-warning"><strong>Remarks:</strong> {log.remarks}</div>}
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 mb-6">
           <div className="card">
             <h3 className="font-bold text-navy mb-4">Labour Attendance</h3>
-            {labourList.map((l) => (
+            {displayLabour.map((l) => (
               <div key={l.trade} className="flex justify-between text-sm mb-3 items-center">
                 <span className="capitalize text-muted">{l.trade}</span>
                 <div className="text-right">
@@ -60,7 +72,7 @@ export default function LogDetail() {
             ))}
             <div className="mt-4 pt-3 border-t border-navy/10 flex justify-between font-bold text-navy">
               <span>Total Cost</span>
-              <span>₹{labourList.reduce((sum, l) => sum + (l.present * (l.wagePerDay || 0)), 0).toLocaleString('en-IN')}</span>
+              <span>₹{displayLabour.reduce((sum, l) => sum + (l.present * (l.wagePerDay || 0)), 0).toLocaleString('en-IN')}</span>
             </div>
           </div>
           <div className="card">
