@@ -28,15 +28,15 @@ export default function LogDetail() {
 
   const labourList = log.labour || [];
   
-  // Aggregate labour to prevent duplicates from legacy logs
+  // Aggregate labour to prevent duplicates, separating by wage
   const aggregatedLabour = {};
   labourList.forEach(l => {
-    if (!aggregatedLabour[l.trade]) {
-      aggregatedLabour[l.trade] = { trade: l.trade, present: 0, wagePerDay: l.wagePerDay };
+    const wage = l.wagePerDay || 0;
+    const key = `${l.trade}_${wage}`;
+    if (!aggregatedLabour[key]) {
+      aggregatedLabour[key] = { trade: l.trade, present: 0, wagePerDay: wage };
     }
-    aggregatedLabour[l.trade].present += l.present;
-    // Prefer higher wage if there's a discrepancy
-    aggregatedLabour[l.trade].wagePerDay = Math.max(aggregatedLabour[l.trade].wagePerDay || 0, l.wagePerDay || 0);
+    aggregatedLabour[key].present += l.present;
   });
   const displayLabour = Object.values(aggregatedLabour).filter(l => l.present > 0);
 
@@ -61,8 +61,8 @@ export default function LogDetail() {
         <div className="grid gap-6 sm:grid-cols-2 mb-6">
           <div className="card">
             <h3 className="font-bold text-navy mb-4">Labour Attendance</h3>
-            {displayLabour.map((l) => (
-              <div key={l.trade} className="flex justify-between text-sm mb-3 items-center">
+            {displayLabour.map((l, idx) => (
+              <div key={idx} className="flex justify-between text-sm mb-3 items-center">
                 <span className="capitalize text-muted">{l.trade}</span>
                 <div className="text-right">
                   <span className="font-mono font-bold block">{l.present} workers</span>

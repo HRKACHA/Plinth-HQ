@@ -96,10 +96,12 @@ export default function Attendance() {
             // Aggregate all logs for this specific date
             dayLogs.forEach(log => {
               (log.labour || []).forEach(l => {
-                if (!map[l.trade]) {
-                  map[l.trade] = { present: 0, wage: l.wagePerDay || TRADE_RATES[l.trade] || 0 };
+                const wage = l.wagePerDay || TRADE_RATES[l.trade] || 0;
+                const key = `${l.trade}_${wage}`;
+                if (!map[key]) {
+                  map[key] = { trade: l.trade, present: 0, wage: wage };
                 }
-                map[l.trade].present += l.present;
+                map[key].present += l.present;
               });
             });
             
@@ -114,14 +116,13 @@ export default function Attendance() {
                 summary={`${total} workers • Total Cost: ₹${cost.toLocaleString('en-IN')} (${dayLogs.length} logs)`}
               >
                 <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-                  {TRADES.map((trade) => {
-                    const data = map[trade];
-                    if (!data || data.present === 0) return null;
+                  {Object.values(map).map((data, idx) => {
+                    if (data.present === 0) return null;
                     const tradeCost = data.present * data.wage;
                     return (
-                      <div key={trade} className="card bg-surface border border-navy/10 p-4">
+                      <div key={idx} className="card bg-surface border border-navy/10 p-4">
                         <div className="flex justify-between items-center mb-1">
-                          <span className="capitalize font-medium text-navy">{trade}</span>
+                          <span className="capitalize font-medium text-navy">{data.trade}</span>
                           <span className="font-mono font-bold text-lg">{data.present}</span>
                         </div>
                         <div className="flex justify-between items-center text-xs text-muted">
