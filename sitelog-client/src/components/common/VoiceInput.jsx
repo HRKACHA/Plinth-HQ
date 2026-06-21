@@ -27,7 +27,7 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
   const toggleListening = (e) => {
     e.preventDefault();
     if (listening) {
-      SpeechRecognition.stopListening();
+      SpeechRecognition.abortListening();
     } else {
       if (isMicrophoneAvailable === false) {
         alert("Microphone access is blocked or unavailable! Please allow permissions or ensure the site is running on a secure connection (HTTPS).");
@@ -76,7 +76,11 @@ export default function VoiceInput({ onTranscript, placeholder = "Speak..." }) {
         {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
       </button>
       
-      {listening && <span className="absolute -top-6 right-0 text-xs text-red-400 font-medium whitespace-nowrap">Listening in {LANGUAGES.find(l => l.code === lang)?.label.split(' ')[0]}...</span>}
+      {listening && (
+        <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 text-xs text-red-400 font-medium whitespace-nowrap">
+          Listening...
+        </span>
+      )}
     </div>
   );
 }

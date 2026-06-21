@@ -55,9 +55,19 @@ export default function ChatBox() {
   const [showSidebar, setShowSidebar] = useState(true);
   const { translateText, isTranslating } = useTranslation();
 
+  const [voiceText, setVoiceText] = useState('');
+  
   const handleVoiceInput = useCallback((text) => {
-    setInput(text);
+    setVoiceText(text);
   }, []);
+
+  // Update input when voiceText changes
+  useEffect(() => {
+    if (voiceText) {
+      // Just overwrite for now to prevent continuous appending issues
+      setInput(voiceText);
+    }
+  }, [voiceText]);
 
   const cameraInputRef = useRef(null);
   const fileInputRef = useRef(null);
