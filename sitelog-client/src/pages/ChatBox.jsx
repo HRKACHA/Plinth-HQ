@@ -67,8 +67,17 @@ export default function ChatBox() {
   }, []);
 
   const handleVoiceInput = useCallback((text) => {
-    setInput((baseInputRef.current ? baseInputRef.current + ' ' : '') + text);
+    const newValue = (baseInputRef.current ? baseInputRef.current + ' ' : '') + text;
+    setInput(newValue);
   }, []);
+
+  const textareaRef = useRef(null);
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = '44px';
+      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+    }
+  }, [input]);
 
   const cameraInputRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -542,6 +551,7 @@ export default function ChatBox() {
                 <div className="flex gap-2">
                   <div className="flex-1 relative flex">
                     <textarea
+                      ref={textareaRef}
                       value={input}
                       onChange={handleInputChange}
                       onKeyDown={handleKeyDown}
@@ -550,10 +560,6 @@ export default function ChatBox() {
                       rows={1}
                       className="w-full px-4 py-3 bg-surface border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
                       style={{ minHeight: '44px', maxHeight: '120px' }}
-                      onInput={(e) => {
-                        e.target.style.height = 'auto';
-                        e.target.style.height = Math.min(e.target.scrollHeight, 120) + 'px';
-                      }}
                     />
                     {input.length > 1800 && (
                       <span className={`absolute bottom-1 right-2 text-[10px] ${input.length > 2000 ? 'text-red-400' : 'text-muted'}`}>

@@ -31,6 +31,14 @@ export default function LogForm() {
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   const [weather, setWeather] = useState('sunny');
   const [activities, setActivities] = useState('');
+  
+  const activitiesRef = useRef(null);
+  useEffect(() => {
+    if (activitiesRef.current) {
+      activitiesRef.current.style.height = '80px';
+      activitiesRef.current.style.height = Math.min(activitiesRef.current.scrollHeight, 300) + 'px';
+    }
+  }, [activities]);
   const [labour, setLabour] = useState(Object.fromEntries(TRADES.map((t) => [t, { present: 0, wage: TRADE_RATES[t] }])));
   const [materials, setMaterials] = useState([{ name: '', qty: '', unit: 'bags', supplier: '', price: '' }]);
   const [photos, setPhotos] = useState([]);
@@ -142,7 +150,16 @@ export default function LogForm() {
                 <label className="block text-sm font-medium text-navy">Activities</label>
                 <VoiceInput onTranscript={(text) => setActivities(text)} />
               </div>
-              <textarea value={activities} onChange={(e) => setActivities(e.target.value)} maxLength={2000} rows={8} className="input-field resize-none" placeholder="Describe today's work..." />
+              <textarea 
+                ref={activitiesRef}
+                value={activities} 
+                onChange={(e) => setActivities(e.target.value)} 
+                maxLength={2000} 
+                rows={3} 
+                className="input-field resize-none overflow-hidden" 
+                placeholder="Describe today's work..." 
+                style={{ minHeight: '80px', maxHeight: '300px' }}
+              />
               <p className="mt-1 text-right text-xs text-muted">{activities.length}/2000</p>
             </div>
           )}
