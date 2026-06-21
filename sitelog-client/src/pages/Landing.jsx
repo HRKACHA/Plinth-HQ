@@ -46,15 +46,13 @@ export default function Landing() {
           <div className="flex justify-center items-center gap-6 hidden sm:flex">
             <Link to="/" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
             <Link to="/about" className="text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
+            {!user && (
+              <Link to="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors">Sign In</Link>
+            )}
           </div>
           <div className="flex justify-end items-center gap-4">
-            {user ? (
+            {user && (
               <Link to="/dashboard" className="btn-accent text-sm px-4 py-1.5">Go to Dashboard</Link>
-            ) : (
-              <>
-                <Link to="/login" className="text-sm font-medium text-white/70 hover:text-white transition-colors hidden sm:block">Sign In</Link>
-                <Link to="/register" className="btn-accent text-sm px-4 py-1.5">Get Started</Link>
-              </>
             )}
           </div>
         </div>
@@ -81,8 +79,8 @@ export default function Landing() {
             </p>
 
             <div className="pt-8 flex justify-center">
-              <Link to="/login" className="btn-accent px-12 py-3.5 text-base shadow-glow">
-                Sign In
+              <Link to="/register" className="btn-accent px-12 py-3.5 text-base shadow-glow">
+                Get Started
               </Link>
             </div>
           </div>
