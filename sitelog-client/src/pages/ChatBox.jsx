@@ -617,7 +617,7 @@ export default function ChatBox() {
                   
                   <div className="h-5 w-px bg-white/10 mx-1"></div>
                   
-                  <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} position="top" />
+                  <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} />
                 </div>
               </div>
             </div>
