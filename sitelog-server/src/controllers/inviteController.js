@@ -67,24 +67,9 @@ export const sendInvite = catchAsync(async (req, res) => {
   const baseUrl = process.env.BASE_URL || process.env.FRONTEND_URL || 'http://localhost:5173';
   const inviteLink = `${baseUrl}/register?token=${token}`;
 
-  // Send email
-  let emailSent = true;
-  try {
-    await sendInviteEmail({
-      to: email,
-      inviteLink,
-      role,
-      roleLabel,
-      invitedByName: req.user.name,
-    });
-  } catch (err) {
-    console.error('Failed to send invite email:', err);
-    emailSent = false;
-  }
-
   res.status(201).json({
     success: true,
-    message: emailSent ? 'Invite sent successfully.' : 'Invite created, but email failed to send. Please share the link manually.',
+    message: 'Invite link generated successfully! Share this link with the user.',
     data: { email, role, roleLabel, inviteLink },
   });
 });

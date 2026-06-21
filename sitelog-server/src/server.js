@@ -218,3 +218,5 @@ cron.schedule('0 0 * * *', () => {
 server.listen(PORT, () => {
   console.log(`PlinthHQ API running on http://localhost:${PORT}`);
 });
+
+// Triggering restart
