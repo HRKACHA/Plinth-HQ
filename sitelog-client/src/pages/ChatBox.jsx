@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 import { useAuth } from '../context/AuthContext';
-import { chatApi, mediaUrl } from '../api/index.js';
+import { chatApi, uploadApi, mediaUrl } from '../api/index.js';
 import { getAccessToken } from '../api/axios.js';
 import AppLayout from '../components/layout/AppLayout';
 import VoiceInput from '../components/common/VoiceInput';
 import { useTranslation } from '../hooks/useTranslation';
-import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages } from 'lucide-react';
+import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages, Camera, Image as ImageIcon } from 'lucide-react';
 
 const ROLE_BADGE_COLORS = {
   site_engineer: 'bg-blue-500/20 text-blue-300',
@@ -58,6 +58,29 @@ export default function ChatBox() {
   const handleVoiceInput = useCallback((text) => {
     setInput(text);
   }, []);
+
+  const cameraInputRef = useRef(null);
+  const fileInputRef = useRef(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handlePhotoUpload = async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length || !socket || !activeRoom) return;
+    
+    try {
+      setIsUploading(true);
+      const data = await uploadApi.photos(files);
+      if (data && data.length > 0) {
+        socket.emit('send-message', { message: 'Photo attached', room: activeRoom, imageUrl: data[0].url });
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to upload photo');
+    } finally {
+      setIsUploading(false);
+      e.target.value = null; // Reset input
+    }
+  };
 
   // Connect socket
   useEffect(() => {
@@ -409,6 +432,11 @@ export default function ChatBox() {
                               title="Double click to delete message"
                             >
                               <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
+                              {msg.imageUrl && (
+                                <div className="mt-2 relative rounded-lg overflow-hidden max-w-[200px] sm:max-w-[250px]">
+                                  <img src={mediaUrl(msg.imageUrl)} alt="Attachment" className="w-full h-auto object-cover rounded-md" />
+                                </div>
+                              )}
                               <div className={`flex items-center gap-1 mt-1 ${mine ? 'justify-end' : ''}`}>
                                 <span className={`text-[10px] ${mine ? 'text-blue-200' : 'text-muted'}`}>
                                   {formatTime(msg.createdAt)}
@@ -523,10 +551,42 @@ export default function ChatBox() {
                 </div>
                 <button
                   onClick={handleSend}
-                  disabled={!input.trim() || input.length > 2000}
+                  disabled={!input.trim() || input.length > 2000 || isUploading}
                   className="p-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
                 >
-                  <Send size={18} />
+                  {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                </button>
+              </div>
+              
+              <div className="flex items-center gap-2 mt-2 px-1">
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  capture="environment" 
+                  ref={cameraInputRef} 
+                  onChange={handlePhotoUpload} 
+                  className="hidden" 
+                />
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  ref={fileInputRef} 
+                  onChange={handlePhotoUpload} 
+                  className="hidden" 
+                />
+                <button
+                  onClick={() => cameraInputRef.current?.click()}
+                  disabled={!activeRoom || isUploading}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-medium text-muted hover:text-white transition-colors disabled:opacity-50"
+                >
+                  <Camera size={14} /> Take Photo
+                </button>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={!activeRoom || isUploading}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-xs font-medium text-muted hover:text-white transition-colors disabled:opacity-50"
+                >
+                  <ImageIcon size={14} /> Attach File
                 </button>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Cloud, Sun, CloudRain, CloudLightning, Minus, Plus, Upload, Camera } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Cloud, Sun, CloudRain, CloudLightning, Minus, Plus, Upload, Camera, Image as ImageIcon } from 'lucide-react';
 import AppLayout from '../../components/layout/AppLayout';
 import { logApi, uploadApi, budgetApi } from '../../api/index';
 import VoiceInput from '../../components/common/VoiceInput';
@@ -200,18 +200,38 @@ export default function LogForm() {
               <div className="mb-4 text-sm text-muted">
                 <p><strong>Step 5:</strong> Upload any relevant site photos, such as progress shots, material deliveries, or safety incidents.</p>
               </div>
-              <div className="rounded-xl border-2 border-dashed border-navy/20 bg-info/30 p-12 text-center">
-                <Upload className="mx-auto h-10 w-10 text-muted" />
-                <p className="mt-4 font-medium text-navy">Upload Photos</p>
-                <p className="text-sm text-muted mb-6">Select images from your PC</p>
-                <input 
-                  type="file" 
-                  multiple 
-                  accept="image/*" 
-                  onChange={handlePhotoUpload} 
-                  disabled={submitting}
-                  className="mx-auto block text-sm text-muted file:mr-4 file:rounded-lg file:border-0 file:bg-orange/10 file:px-4 file:py-2.5 file:text-sm file:font-semibold file:text-orange-dark hover:file:bg-orange/20 cursor-pointer"
-                />
+              <div className="rounded-xl border-2 border-dashed border-navy/20 bg-info/30 p-8 text-center">
+                <Upload className="mx-auto h-10 w-10 text-muted mb-4" />
+                <p className="font-medium text-navy mb-2">Upload Site Photos</p>
+                <p className="text-sm text-muted mb-6">Take a new photo or select from gallery</p>
+                
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                  <label className="flex items-center justify-center gap-2 px-6 py-3 bg-orange text-white rounded-lg cursor-pointer hover:bg-orange-dark transition shadow-sm w-full sm:w-auto">
+                    <Camera size={18} />
+                    <span>Take Photo</span>
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      capture="environment" 
+                      onChange={handlePhotoUpload} 
+                      disabled={submitting}
+                      className="hidden"
+                    />
+                  </label>
+                  
+                  <label className="flex items-center justify-center gap-2 px-6 py-3 bg-surface border-2 border-[var(--color-glass-border)] text-navy rounded-lg cursor-pointer hover:bg-info/50 transition w-full sm:w-auto">
+                    <ImageIcon size={18} />
+                    <span>Browse Files</span>
+                    <input 
+                      type="file" 
+                      multiple 
+                      accept="image/*" 
+                      onChange={handlePhotoUpload} 
+                      disabled={submitting}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
               </div>
               {photos.length > 0 && (
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAsync } from '../../hooks/useAsync';
 import { galleryApi, uploadApi, mediaUrl } from '../../api/index';
-import { Image, ExternalLink, Upload } from 'lucide-react';
+import { Image, ExternalLink, Upload, Camera, Image as ImageIcon } from 'lucide-react';
 
 export default function Gallery() {
   const { id } = useParams();
@@ -10,6 +10,7 @@ export default function Gallery() {
   const [filter, setFilter] = useState('All');
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   const handleUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -26,6 +27,7 @@ export default function Gallery() {
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+      if (cameraInputRef.current) cameraInputRef.current.value = '';
     }
   };
 
@@ -42,8 +44,8 @@ export default function Gallery() {
           Project Gallery
         </h2>
         <div className="flex flex-wrap items-center gap-4">
-          <div className="flex gap-2">
-            {['All', 'Direct Upload', 'Daily Log', 'Issue/Snag'].map(f => (
+          <div className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full sm:w-auto">
+            {['All', 'Direct Upload', 'Project Chat', 'Daily Log', 'Issue/Snag'].map(f => (
               <button 
                 key={f}
                 onClick={() => setFilter(f)}
@@ -56,21 +58,40 @@ export default function Gallery() {
           
           <div className="h-6 w-px bg-white/10 hidden sm:block"></div>
           
-          <button 
-            onClick={() => fileInputRef.current?.click()} 
-            disabled={uploading}
-            className="btn-primary"
-          >
-            <Upload className="h-4 w-4" />
-            {uploading ? 'Uploading...' : 'Upload Photos'}
-          </button>
-          <input 
-            type="file" 
-            ref={fileInputRef}
-            onChange={handleUpload}
-            accept="image/*"
-            className="hidden" 
-          />
+          <div className="flex items-center gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+            <button 
+              onClick={() => cameraInputRef.current?.click()} 
+              disabled={uploading}
+              className="flex-1 sm:flex-none btn-secondary flex items-center justify-center gap-2"
+            >
+              <Camera className="h-4 w-4" />
+              <span>{uploading ? '...' : 'Camera'}</span>
+            </button>
+            <input 
+              type="file" 
+              ref={cameraInputRef}
+              onChange={handleUpload}
+              accept="image/*"
+              capture="environment"
+              className="hidden" 
+            />
+
+            <button 
+              onClick={() => fileInputRef.current?.click()} 
+              disabled={uploading}
+              className="flex-1 sm:flex-none btn-primary flex items-center justify-center gap-2"
+            >
+              <ImageIcon className="h-4 w-4" />
+              <span>{uploading ? 'Uploading...' : 'Upload'}</span>
+            </button>
+            <input 
+              type="file" 
+              ref={fileInputRef}
+              onChange={handleUpload}
+              accept="image/*"
+              className="hidden" 
+            />
+          </div>
         </div>
       </div>
 
