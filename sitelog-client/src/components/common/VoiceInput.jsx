@@ -3,8 +3,8 @@ import { Mic, MicOff, Languages } from 'lucide-react';
 
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
-  { code: 'hi-IN', label: 'Hindi (?????)' },
-  { code: 'gu-IN', label: 'Gujarati (???????)' }
+  { code: 'hi-IN', label: 'Hindi (हिंदी)' },
+  { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
 ];
 
 export default function VoiceInput({ onTranscript, onStart }) {
@@ -107,7 +107,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
               key={l.code}
               type="button"
               onClick={() => { setLang(l.code); setShowLangs(false); }}
-              className={	ext-sm text-left px-3 py-1.5 rounded-md transition }
+              className={`text-sm text-left px-3 py-1.5 rounded-md transition ${lang === l.code ? 'bg-orange/20 text-orange' : 'text-gray-300 hover:bg-gray-800'}`}
             >
               {l.label}
             </button>
@@ -118,7 +118,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
       <button
         type="button"
         onClick={toggleListening}
-        className={p-2 rounded-lg transition-all flex items-center justify-center }
+        className={`p-2 rounded-lg transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
         title={listening ? "Stop recording" : "Start recording"}
       >
         {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
