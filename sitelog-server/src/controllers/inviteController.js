@@ -38,10 +38,11 @@ export const sendInvite = catchAsync(async (req, res) => {
     throw new AppError('A user with this email already exists.', 400);
   }
 
-  // Check if a valid unused invite already exists
+  // Check if a valid unused invite already exists IN THIS ORGANISATION
   const existingInvite = await InviteToken.findOne({
     email: email.toLowerCase(),
     used: false,
+    organisation: req.user.organisation,
     expiresAt: { $gt: new Date() },
   });
   if (existingInvite) {
