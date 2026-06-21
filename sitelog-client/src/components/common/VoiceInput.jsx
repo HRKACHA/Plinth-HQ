@@ -27,19 +27,16 @@ export default function VoiceInput({ onTranscript, onStart }) {
     if (SpeechRecognition) {
       recognitionRef.current = new SpeechRecognition();
       recognitionRef.current.continuous = true;
-      recognitionRef.current.interimResults = true;
+      recognitionRef.current.interimResults = false; // STRICTLY FALSE: This absolutely prevents Android from rapidly firing overlapping progress updates.
       
       recognitionRef.current.onresult = (event) => {
-        let interimTranscript = '';
-        for (let i = event.resultIndex; i < event.results.length; ++i) {
-          if (event.results[i].isFinal) {
-            finalTranscriptRef.current += event.results[i][0].transcript;
-          } else {
-            interimTranscript += event.results[i][0].transcript;
-          }
+        let finalStr = '';
+        for (let i = 0; i < event.results.length; ++i) {
+          // Since interimResults is false, all results are guaranteed final sentences.
+          finalStr += event.results[i][0].transcript;
         }
         if (onTranscriptRef.current) {
-          onTranscriptRef.current(finalTranscriptRef.current + interimTranscript);
+          onTranscriptRef.current(finalStr);
         }
       };
 
