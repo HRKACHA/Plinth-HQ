@@ -130,7 +130,7 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       </button>
       
       {listening && (
-        <span className={`absolute ${position === 'bottom' ? 'top-full mt-2 left-1/2 -translate-x-1/2' : 'left-full ml-3 top-1/2 -translate-y-1/2'} text-[10px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-black/90 backdrop-blur-md px-2 py-0.5 rounded border border-red-500/30 shadow-lg z-[100]`}>
+        <span className={`absolute ${position === 'bottom' ? 'top-full mt-2 left-1/2 -translate-x-1/2' : position === 'top' ? 'bottom-full mb-2 left-1/2 -translate-x-1/2' : 'left-full ml-3 top-1/2 -translate-y-1/2'} text-[10px] text-red-500 font-bold whitespace-nowrap uppercase tracking-wider bg-black/90 backdrop-blur-md px-2 py-0.5 rounded border border-red-500/30 shadow-lg z-[100]`}>
           Listening
         </span>
       )}

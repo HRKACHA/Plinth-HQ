@@ -614,7 +614,7 @@ export default function PlinthAIChatbot() {
                 }}
               />
               <div className="flex items-center gap-1 shrink-0 pb-1">
-                <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} />
+                <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} position="top" />
                 <button
                   onClick={() => sendMessage()}
                   disabled={!input.trim() || loading}
