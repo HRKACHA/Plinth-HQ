@@ -32,6 +32,8 @@ export default function VoiceInput({ onTranscript, onStart }) {
         console.error("Speech recognition error: ", event.error);
         if (event.error === 'not-allowed') {
           alert("Microphone permission denied! Please allow microphone access in your browser settings.");
+        } else if (event.error !== 'no-speech') {
+          alert("Speech Error: " + event.error);
         }
         setListening(false);
       };
