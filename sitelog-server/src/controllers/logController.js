@@ -106,8 +106,7 @@ export const createLog = catchAsync(async (req, res) => {
     type: 'newLog',
     title: 'New daily log submitted',
     body: `${req.user.name} submitted log for ${logDate.toLocaleDateString('en-IN')}`,
-    link: `/projects/${req.params.id}/logs/${log._id}`,
-    excludeUserId: req.user._id,
+    link: `/projects/${req.params.id}/logs/${log._id}`
   });
   if (io) io.to(`project:${req.params.id}`).emit('new:log', { logId: log._id });
 

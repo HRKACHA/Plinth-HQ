@@ -109,6 +109,14 @@ export const createExpense = catchAsync(async (req, res) => {
   const pct = Math.round((totalSpent / project.totalBudget) * 100);
 
   const io = req.app.get('io');
+
+  await notifyProjectTeam(io, project, {
+    type: 'newExpense',
+    title: 'New project expense added',
+    body: `${req.user.name} added a new expense of ₹${amount} for ${category}`,
+    link: `/projects/${project._id}/budget`,
+  });
+
   if (pct >= 80) {
     await notifyProjectTeam(io, project, {
       type: 'budgetAlert',
@@ -128,6 +136,15 @@ export const approveExpense = catchAsync(async (req, res) => {
     { new: true }
   );
   if (!expense) throw new AppError('Expense not found.', 404);
+
+  const io = req.app.get('io');
+  await notifyProjectTeam(io, req.project, {
+    type: 'expenseApproved',
+    title: 'Expense approved',
+    body: `An expense of ₹${expense.amount} was approved by ${req.user.name}`,
+    link: `/projects/${req.params.id}/budget`,
+  });
+
   res.json({ success: true, data: expense });
 });
 

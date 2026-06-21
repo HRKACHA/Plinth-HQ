@@ -30,6 +30,15 @@ export const createMilestone = catchAsync(async (req, res) => {
   });
 
   await recalcProjectProgress(req.params.id);
+
+  const io = req.app.get('io');
+  await notifyProjectTeam(io, req.project, {
+    type: 'newMilestone',
+    title: 'New milestone created',
+    body: `${req.user.name} created the milestone: ${title}`,
+    link: `/projects/${req.params.id}/milestones`,
+  });
+
   res.status(201).json({ success: true, data: milestone });
 });
 
@@ -74,6 +83,14 @@ export const approveMilestone = catchAsync(async (req, res) => {
   milestone.actualEnd = new Date();
   await milestone.save();
   await recalcProjectProgress(req.params.id);
+
+  const io = req.app.get('io');
+  await notifyProjectTeam(io, req.project, {
+    type: 'milestoneCompleted',
+    title: 'Milestone completed!',
+    body: `The milestone ${milestone.title} was approved and completed by ${req.user.name}`,
+    link: `/projects/${req.params.id}/milestones`,
+  });
 
   res.json({ success: true, data: milestone });
 });
