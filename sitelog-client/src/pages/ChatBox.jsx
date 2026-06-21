@@ -52,14 +52,19 @@ export default function ChatBox() {
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const inputRef = useRef('');
+  useEffect(() => {
+    inputRef.current = input;
+  }, [input]);
+
   const [showSidebar, setShowSidebar] = useState(true);
   const { translateText, isTranslating } = useTranslation();
 
   const baseInputRef = useRef('');
 
   const handleVoiceStart = useCallback(() => {
-    baseInputRef.current = input;
-  }, [input]);
+    baseInputRef.current = inputRef.current;
+  }, []);
 
   const handleVoiceInput = useCallback((text) => {
     setInput((baseInputRef.current ? baseInputRef.current + ' ' : '') + text);

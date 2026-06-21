@@ -2,16 +2,24 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Languages } from 'lucide-react';
 
 const LANGUAGES = [
-  { code: 'en-IN', label: 'English' },
-  { code: 'hi-IN', label: 'Hindi (हिंदी)' },
-  { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
+  { code: 'en-US', label: 'English' },
+  { code: 'hi-IN', label: 'Hindi (?????)' },
+  { code: 'gu-IN', label: 'Gujarati (???????)' }
 ];
 
 export default function VoiceInput({ onTranscript, onStart }) {
-  const [lang, setLang] = useState('en-IN');
+  const [lang, setLang] = useState('en-US');
   const [showLangs, setShowLangs] = useState(false);
   const [listening, setListening] = useState(false);
   const recognitionRef = useRef(null);
+
+  const onTranscriptRef = useRef(onTranscript);
+  const onStartRef = useRef(onStart);
+
+  useEffect(() => {
+    onTranscriptRef.current = onTranscript;
+    onStartRef.current = onStart;
+  }, [onTranscript, onStart]);
 
   useEffect(() => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -25,7 +33,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
         for (let i = 0; i < event.results.length; i++) {
           currentTranscript += event.results[i][0].transcript;
         }
-        if (onTranscript) onTranscript(currentTranscript);
+        if (onTranscriptRef.current) onTranscriptRef.current(currentTranscript);
       };
 
       recognitionRef.current.onerror = (event) => {
@@ -48,9 +56,8 @@ export default function VoiceInput({ onTranscript, onStart }) {
         recognitionRef.current.stop();
       }
     };
-  }, [onTranscript]);
+  }, []); // Empty dependency array prevents accidental unmounts!
 
-  // Update language dynamically if changed while not listening
   useEffect(() => {
     if (recognitionRef.current) {
       recognitionRef.current.lang = lang;
@@ -64,7 +71,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
       setListening(false);
     } else {
       if (recognitionRef.current) {
-        if (onStart) onStart();
+        if (onStartRef.current) onStartRef.current();
         recognitionRef.current.lang = lang;
         try {
           recognitionRef.current.start();
@@ -79,7 +86,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
   };
 
   if (!window.SpeechRecognition && !window.webkitSpeechRecognition) {
-    return null; // Don't render if not supported
+    return null;
   }
 
   return (
@@ -100,7 +107,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
               key={l.code}
               type="button"
               onClick={() => { setLang(l.code); setShowLangs(false); }}
-              className={`text-sm text-left px-3 py-1.5 rounded-md transition ${lang === l.code ? 'bg-orange/20 text-orange' : 'text-gray-300 hover:bg-gray-800'}`}
+              className={	ext-sm text-left px-3 py-1.5 rounded-md transition }
             >
               {l.label}
             </button>
@@ -111,7 +118,7 @@ export default function VoiceInput({ onTranscript, onStart }) {
       <button
         type="button"
         onClick={toggleListening}
-        className={`p-2 rounded-lg transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
+        className={p-2 rounded-lg transition-all flex items-center justify-center }
         title={listening ? "Stop recording" : "Start recording"}
       >
         {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
