@@ -146,6 +146,17 @@ export default function TeamPanel() {
     }
   };
 
+  const handleDelete = async (memberId) => {
+    if (!confirm('Permanently remove this member from your team? This action cannot be undone.')) return;
+    try {
+      await teamApi.deleteMember(memberId);
+      showToast('Member completely removed');
+      loadData();
+    } catch (err) {
+      showToast(err.response?.data?.message || 'Failed to remove member', 'error');
+    }
+  };
+
   return (
     <AppLayout>
         {/* Toast */}
@@ -348,6 +359,13 @@ export default function TeamPanel() {
                             >
                               <UserMinus size={14} />
                             </button>
+                            <button
+                              onClick={() => handleDelete(m._id)}
+                              className="p-1.5 rounded-lg text-muted hover:text-red-400 hover:bg-red-500/10 transition"
+                              title="Delete Member"
+                            >
+                              <Trash2 size={14} />
+                            </button>
                           </div>
                         )}
                       </td>
@@ -398,6 +416,9 @@ export default function TeamPanel() {
                       <div className="flex-1" />
                       <button onClick={() => handleDeactivate(m._id)} className="p-1.5 rounded-lg text-muted hover:text-amber-400 hover:bg-amber-500/10 transition" title="Deactivate">
                         <UserMinus size={14} />
+                      </button>
+                      <button onClick={() => handleDelete(m._id)} className="p-1.5 rounded-lg text-muted hover:text-red-400 hover:bg-red-500/10 transition" title="Delete Member">
+                        <Trash2 size={14} />
                       </button>
                     </div>
                   )}
