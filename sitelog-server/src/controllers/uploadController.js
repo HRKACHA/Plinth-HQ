@@ -1,5 +1,4 @@
 import catchAsync from '../utils/catchAsync.js';
-import { fileUrl } from '../middleware/upload.js';
 import AppError from '../utils/AppError.js';
 
 export const uploadFile = catchAsync(async (req, res) => {
@@ -7,7 +6,7 @@ export const uploadFile = catchAsync(async (req, res) => {
   res.status(201).json({
     success: true,
     data: {
-      url: fileUrl(req.file.filename),
+      url: req.file.path, // Cloudinary provides the full absolute URL directly in req.file.path
       filename: req.file.filename,
       size: req.file.size,
       mimeType: req.file.mimetype,
@@ -18,7 +17,7 @@ export const uploadFile = catchAsync(async (req, res) => {
 export const uploadPhotos = catchAsync(async (req, res) => {
   if (!req.files?.length) throw new AppError('No files uploaded.', 400);
   const photos = req.files.map((f) => ({
-    url: fileUrl(f.filename),
+    url: f.path, // Cloudinary absolute URL
     caption: '',
     uploadedAt: new Date(),
   }));
