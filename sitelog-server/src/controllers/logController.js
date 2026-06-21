@@ -69,10 +69,10 @@ export const createLog = catchAsync(async (req, res) => {
     if (remarks) log.remarks = remarks;
     if (photos && photos.length > 0) log.photos.push(...photos);
     
-    // Aggregate labour without creating duplicates
+    // Aggregate labour without creating duplicates, strictly respecting wage differences
     if (labour && labour.length > 0) {
       labour.forEach(newL => {
-        const existing = log.labour.find(l => l.trade === newL.trade);
+        const existing = log.labour.find(l => l.trade === newL.trade && (l.wagePerDay || 0) === (newL.wagePerDay || 0));
         if (existing) {
           existing.present += newL.present;
         } else {
