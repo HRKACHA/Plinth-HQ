@@ -41,15 +41,42 @@ export default function Dashboard() {
   const [materialSuccess, setMaterialSuccess] = useState(false);
 
   const [weatherData, setWeatherData] = useState({ temp: '--', condition: 'Loading...', icon: Sun, city: 'Local Site' });
+  const [weatherProjectId, setWeatherProjectId] = useState('local');
 
   useEffect(() => {
     async function fetchWeather() {
       try {
-        const geoRes = await fetch('https://ipapi.co/json/');
-        if (!geoRes.ok) throw new Error('Geo failed');
-        const geo = await geoRes.json();
+        setWeatherData(prev => ({ ...prev, condition: 'Loading...' }));
+        let lat, lon, cityStr;
         
-        const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${geo.latitude}&longitude=${geo.longitude}&current_weather=true`);
+        if (weatherProjectId === 'local') {
+          const geoRes = await fetch('https://ipapi.co/json/');
+          if (!geoRes.ok) throw new Error('Geo failed');
+          const geo = await geoRes.json();
+          lat = geo.latitude;
+          lon = geo.longitude;
+          cityStr = geo.city || 'Local Site';
+        } else {
+          // Find project city
+          const proj = projects?.find(p => (p._id || p.id) === weatherProjectId);
+          cityStr = proj?.location?.city || proj?.location || 'Unknown';
+          
+          if (cityStr && cityStr !== 'Unknown') {
+            const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityStr)}&count=1&language=en&format=json`);
+            if (!geoRes.ok) throw new Error('Geocoding failed');
+            const geo = await geoRes.json();
+            if (geo.results && geo.results.length > 0) {
+              lat = geo.results[0].latitude;
+              lon = geo.results[0].longitude;
+            } else {
+              throw new Error('City not found');
+            }
+          } else {
+            throw new Error('Project has no location');
+          }
+        }
+        
+        const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
         if (!wRes.ok) throw new Error('Weather failed');
         const w = await wRes.json();
         
@@ -68,15 +95,15 @@ export default function Dashboard() {
           temp: `${Math.round(w.current_weather.temperature)}°C`,
           condition,
           icon: Icon,
-          city: geo.city || 'Site'
+          city: cityStr
         });
       } catch (err) {
         console.error('Weather fetch error:', err);
-        setWeatherData({ temp: '34°C', condition: 'Sunny', icon: Sun, city: 'Site' });
+        setWeatherData({ temp: '--', condition: 'Unavailable', icon: Sun, city: weatherProjectId === 'local' ? 'Local Site' : 'Unknown' });
       }
     }
     fetchWeather();
-  }, []);
+  }, [weatherProjectId, projects]);
 
   const openEdit = (p) => {
     setSelectedProject(p);
@@ -330,9 +357,20 @@ export default function Dashboard() {
               <div className="relative p-6" style={{ background: 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' }}>
                 <div className="flex items-center justify-between relative z-10">
                   <div>
-                    <p className="text-sm text-white/70 font-semibold tracking-wide uppercase">Site Weather • {weatherData.city}</p>
+                    <div className="flex items-center gap-2 mb-2">
+                      <p className="text-sm text-white/70 font-semibold tracking-wide uppercase">Site Weather</p>
+                      <GlassSelect
+                        value={weatherProjectId}
+                        onChange={setWeatherProjectId}
+                        accent="navy"
+                        options={[
+                          { value: 'local', label: 'Local (Auto)' },
+                          ...(safeProjects || []).map(p => ({ value: p._id || p.id, label: p.name }))
+                        ]}
+                      />
+                    </div>
                     <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-white">{weatherData.temp}</p>
-                    <p className="mt-2 text-xs text-white/70 font-medium px-2 py-1 rounded-md inline-block" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>{weatherData.condition}</p>
+                    <p className="mt-2 text-xs text-white/70 font-medium px-2 py-1 rounded-md inline-block" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>{weatherData.condition} • {weatherData.city}</p>
                   </div>
                   <weatherData.icon className="h-16 w-16 text-white/10" />
                 </div>
