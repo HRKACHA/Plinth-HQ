@@ -304,20 +304,20 @@ export default function EquipmentPortal() {
 
                 {/* Actions */}
                 <div className="mt-4 pt-3 border-t border-[var(--color-glass-border)] flex items-center gap-1.5">
-                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="rounded-lg p-1.5 text-muted hover:bg-orange/10 hover:text-orange transition-colors">
+                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <MapPin className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="rounded-lg p-1.5 text-muted hover:bg-success/10 hover:text-success transition-colors">
+                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="p-1.5 bg-black/50 hover:bg-success/20 border border-white/10 rounded-md text-white/80 hover:text-success transition shadow-sm backdrop-blur">
                     <Settings className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="rounded-lg p-1.5 text-muted hover:bg-info transition-colors">
+                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-white/10 rounded-md text-white/80 hover:text-info transition shadow-sm backdrop-blur">
                     <History className="h-4 w-4" />
                   </button>
                   <div className="flex-1" />
-                  <button onClick={() => openEdit(eq)} title="Edit" className="rounded-lg p-1.5 text-muted hover:bg-info hover:text-navy transition-colors">
+                  <button onClick={() => openEdit(eq)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
-                  <button onClick={() => handleDelete(eq)} title="Delete" className="rounded-lg p-1.5 text-muted hover:bg-danger/10 hover:text-danger transition-colors">
+                  <button onClick={() => handleDelete(eq)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>

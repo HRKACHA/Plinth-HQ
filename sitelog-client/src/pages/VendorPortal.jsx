@@ -134,11 +134,11 @@ export default function VendorPortal() {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="badge bg-info text-navy">{v.category}</span>
-                    <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => openEdit(v)} className="p-1.5 rounded-lg text-muted hover:bg-orange/10 hover:text-orange transition" title="Edit vendor">
+                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => openEdit(v)} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit vendor">
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
-                      <button onClick={() => handleDeleteVendor(v)} className="p-1.5 rounded-lg text-muted hover:bg-danger/10 hover:text-danger transition" title="Delete vendor">
+                      <button onClick={() => handleDeleteVendor(v)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete vendor">
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>

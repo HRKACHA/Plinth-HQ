@@ -354,14 +354,14 @@ export default function TeamPanel() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleDeactivate(m._id)}
-                              className="p-1.5 rounded-lg text-muted hover:text-amber-400 hover:bg-amber-500/10 transition"
+                              className="p-1.5 bg-black/50 hover:bg-warning/20 border border-white/10 rounded-md text-white/80 hover:text-warning transition shadow-sm backdrop-blur"
                               title="Deactivate"
                             >
                               <UserMinus size={14} />
                             </button>
                             <button
                               onClick={() => handleDelete(m._id)}
-                              className="p-1.5 rounded-lg text-muted hover:text-red-400 hover:bg-red-500/10 transition"
+                              className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
                               title="Delete Member"
                             >
                               <Trash2 size={14} />
@@ -414,10 +414,10 @@ export default function TeamPanel() {
                         Change Role <ChevronDown size={10} />
                       </button>
                       <div className="flex-1" />
-                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 rounded-lg text-muted hover:text-amber-400 hover:bg-amber-500/10 transition" title="Deactivate">
+                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-black/50 hover:bg-warning/20 border border-white/10 rounded-md text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
                         <UserMinus size={14} />
                       </button>
-                      <button onClick={() => handleDelete(m._id)} className="p-1.5 rounded-lg text-muted hover:text-red-400 hover:bg-red-500/10 transition" title="Delete Member">
+                      <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
                         <Trash2 size={14} />
                       </button>
                     </div>
@@ -476,7 +476,7 @@ export default function TeamPanel() {
                         {!inv.used && (
                           <button
                             onClick={() => handleRevoke(inv._id)}
-                            className="p-1.5 rounded-lg text-muted hover:text-red-400 hover:bg-red-500/10 transition"
+                            className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
                             title="Revoke"
                           >
                             <Trash2 size={14} />

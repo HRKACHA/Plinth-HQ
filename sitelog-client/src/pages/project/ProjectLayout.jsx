@@ -38,6 +38,7 @@ export default function ProjectLayout() {
   const isOverview = location.pathname === basePath || location.pathname === `${basePath}/`;
 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({});
   const [openDropdown, setOpenDropdown] = useState(null); // 'operations' | 'budget' | null
@@ -124,6 +125,20 @@ export default function ProjectLayout() {
     }
   };
 
+  const handleDelete = async () => {
+    setSubmitting(true);
+    try {
+      await projectApi.delete(id);
+      setShowDeleteModal(false);
+      navigate('/projects');
+    } catch (err) {
+      console.error(err);
+      alert('Failed to delete project');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -174,15 +189,22 @@ export default function ProjectLayout() {
               <span className="font-mono text-sm text-white/70 font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
             </div>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-              <div>
-                <h1 className="font-display text-xl sm:text-3xl font-bold text-navy lg:text-4xl tracking-tight">{project.name}</h1>
-                <p className="mt-1 sm:mt-2 max-w-2xl text-xs sm:text-sm text-muted font-medium line-clamp-2">{project.description}</p>
+              <div className="flex items-center gap-4">
+                <div>
+                  <h1 className="font-display text-xl sm:text-3xl font-bold text-navy lg:text-4xl tracking-tight">{project.name}</h1>
+                  <p className="mt-1 sm:mt-2 max-w-2xl text-xs sm:text-sm text-muted font-medium line-clamp-2">{project.description}</p>
+                </div>
+                {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && user?.role !== 'owner' && user?.role !== 'Owner' && (
+                  <div className="flex gap-2 self-start mt-2">
+                    <button onClick={openEdit} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                    <button onClick={() => setShowDeleteModal(true)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Project">
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
               </div>
-              {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && user?.role !== 'owner' && user?.role !== 'Owner' && (
-                <button onClick={openEdit} className="flex shrink-0 items-center gap-1.5 rounded-xl px-4 py-2.5 text-sm font-semibold text-white/80 transition hover:text-orange shadow-sm backdrop-blur-md" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <Pencil className="h-4 w-4" /> Edit Project
-                </button>
-              )}
             </div>
             <div className="mt-3 sm:mt-6 flex flex-wrap gap-3 sm:gap-8 text-xs sm:text-sm text-muted border-t border-[var(--color-glass-border)] pt-3 sm:pt-4">
               <span className="font-medium">Budget: <strong className="font-mono text-navy text-base ml-1">{formatCurrency(project.totalBudget)}</strong></span>
@@ -392,6 +414,28 @@ export default function ProjectLayout() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="modal-backdrop z-[100]">
+          <div className="modal-content max-w-md p-8 text-center border border-[var(--color-glass-border)] shadow-elevated">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-danger/10 mb-6 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]">
+              <AlertTriangle className="h-8 w-8 text-danger" />
+            </div>
+            <h3 className="text-2xl font-bold text-navy tracking-tight">Delete Project?</h3>
+            <p className="mt-3 text-sm text-muted leading-relaxed">
+              Are you sure you want to delete <span className="font-semibold text-navy">{project.name}</span>? 
+              This action cannot be undone and will remove all associated logs, budget, and documents.
+            </p>
+            <div className="mt-8 flex justify-center gap-3 pt-6 border-t border-[var(--color-glass-border)]">
+              <button type="button" onClick={() => setShowDeleteModal(false)} className="btn-secondary w-full py-2.5">Cancel</button>
+              <button type="button" onClick={handleDelete} disabled={submitting} className="btn-danger w-full py-2.5 shadow-lg shadow-danger/20">
+                {submitting ? 'Deleting...' : 'Yes, Delete'}
+              </button>
+            </div>
           </div>
         </div>
       )}
