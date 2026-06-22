@@ -213,10 +213,10 @@ export default function ProjectsList() {
                 <ProjectCard project={{ ...p, id: p._id || p.id, team: p.teamCount || p.team?.length || 0 }} />
                 {['PM', 'project_manager', 'admin', 'SuperAdmin', 'owner', 'Owner'].includes(user?.role) && (
                   <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
-                    <button onClick={(e) => { e.preventDefault(); openEdit(p); }} className="p-1.5 bg-white/90 rounded-md text-navy hover:bg-orange hover:text-white transition shadow-sm backdrop-blur">
+                    <button onClick={(e) => { e.preventDefault(); openEdit(p); }} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button onClick={(e) => { e.preventDefault(); openDelete(p); }} className="p-1.5 bg-white/90 rounded-md text-danger hover:bg-danger hover:text-white transition shadow-sm backdrop-blur">
+                    <button onClick={(e) => { e.preventDefault(); openDelete(p); }} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
