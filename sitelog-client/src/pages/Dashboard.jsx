@@ -83,7 +83,8 @@ export default function Dashboard() {
       for (const city of uniqueCities) {
          try {
            const cleanCity = typeof city === 'string' ? city : String(city);
-           const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cleanCity)}&count=1&language=en&format=json`);
+           const searchQuery = cleanCity.split(',')[0].trim();
+           const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=1&language=en&format=json`);
            const geo = await geoRes.json();
            if (geo.results && geo.results.length > 0) {
              geoMap[city] = { lat: geo.results[0].latitude, lon: geo.results[0].longitude };
