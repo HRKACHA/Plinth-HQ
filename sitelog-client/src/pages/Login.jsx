@@ -93,12 +93,12 @@ export default function Login() {
           </Link>
         </div>
         <div className="relative z-10 max-w-lg">
-          <h2 className="font-display text-4xl font-bold text-white tracking-tight leading-tight">Welcome back to your site command center.</h2>
-          <p className="mt-6 text-lg text-white/70 leading-relaxed">
+          <h2 className="font-display text-4xl font-bold text-navy dark:text-white tracking-tight leading-tight">Welcome back to your site command center.</h2>
+          <p className="mt-6 text-lg text-navy/70 dark:text-white/70 leading-relaxed">
             Monitor projects, review daily logs, track budgets, and keep owners informed — all from one powerful platform.
           </p>
         </div>
-        <p className="relative z-10 text-xs text-white/20 font-mono uppercase tracking-widest">PlinthHQ Enterprise v2.0</p>
+        <p className="relative z-10 text-xs text-navy/20 dark:text-white/20 font-mono uppercase tracking-widest">PlinthHQ Enterprise v2.0</p>
       </div>
 
       <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 sm:px-12 backdrop-blur-md relative overflow-hidden" style={{ background: 'rgba(13,15,20,0.5)' }}>
@@ -106,7 +106,7 @@ export default function Login() {
         <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(66,133,244,0.03) 0%, transparent 70%)' }} />
 
         <div className="w-full max-w-md animate-slideUp relative z-10 mx-auto">
-          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-white transition-colors mb-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-navy dark:text-white transition-colors mb-6">
             <ArrowLeft className="h-4 w-4" /> Back to website
           </Link>
           <div className="card shadow-elevated p-8 sm:p-10">
@@ -124,7 +124,7 @@ export default function Login() {
             {/* Google OAuth Button */}
             <button
               onClick={handleGoogleLogin}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl text-white font-medium text-sm transition-all hover:-translate-y-0.5 hover:shadow-md mb-6"
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl text-navy dark:text-white font-medium text-sm transition-all hover:-translate-y-0.5 hover:shadow-md mb-6"
               style={{ background: 'rgba(16,18,24,0.12)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(18px)' }}
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">

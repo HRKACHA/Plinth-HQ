@@ -92,7 +92,7 @@ export default function Expenses() {
                 <div className="space-y-3">
                   {dayExpenses.map((e) => (
                     <div key={e._id} className="card flex flex-col gap-4 sm:flex-row sm:items-center bg-surface border border-navy/10">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/5">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy/5 dark:bg-white/5">
                         <Receipt className="h-5 w-5 text-navy" />
                       </div>
                       <div className="flex-1">
@@ -126,7 +126,7 @@ export default function Expenses() {
           <div className="modal-content max-w-lg p-6" onClick={e => e.stopPropagation()}>
             <div className="mb-6 flex items-center justify-between border-b border-navy/5 pb-4">
               <h3 className="text-xl font-bold text-navy">Add Expense</h3>
-              <button onClick={() => setShowModal(false)} className="rounded-lg p-2 text-muted hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
+              <button onClick={() => setShowModal(false)} className="rounded-lg p-2 text-muted hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
             </div>
             <form onSubmit={handleCreate} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">

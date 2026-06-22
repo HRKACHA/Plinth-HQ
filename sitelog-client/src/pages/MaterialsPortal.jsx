@@ -231,16 +231,16 @@ export default function MaterialsPortal() {
                       <td className="px-4 py-3 text-muted truncate max-w-[120px]">{m.location || '—'}</td>
                       <td className="px-4 py-3">
                         <div className="flex items-center justify-center gap-1">
-                          <button onClick={() => openMove(m)} title="Stock Movement" className="p-1.5 bg-black/50 hover:bg-success/20 border border-white/10 rounded-md text-white/80 hover:text-success transition shadow-sm backdrop-blur">
+                          <button onClick={() => openMove(m)} title="Stock Movement" className="p-1.5 bg-black/50 hover:bg-success/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-success transition shadow-sm backdrop-blur">
                             <ArrowDownToLine className="h-4 w-4" />
                           </button>
-                          <button onClick={() => openHistory(m)} title="View History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-white/10 rounded-md text-white/80 hover:text-info transition shadow-sm backdrop-blur">
+                          <button onClick={() => openHistory(m)} title="View History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-info transition shadow-sm backdrop-blur">
                             <History className="h-4 w-4" />
                           </button>
-                          <button onClick={() => openEdit(m)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
+                          <button onClick={() => openEdit(m)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                             <Pencil className="h-3.5 w-3.5" />
                           </button>
-                          <button onClick={() => handleDelete(m)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
+                          <button onClick={() => handleDelete(m)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                         </div>
@@ -408,7 +408,7 @@ export default function MaterialsPortal() {
       {/* ═══ MOVEMENT HISTORY PANEL ═══ */}
       {showHistoryPanel && selectedMaterial && (
         <>
-          <div className="fixed inset-0 z-[70] bg-white/5 backdrop-blur-sm" onClick={() => setShowHistoryPanel(false)} />
+          <div className="fixed inset-0 z-[70] bg-navy/5 dark:bg-white/5 backdrop-blur-sm" onClick={() => setShowHistoryPanel(false)} />
           <div className="fixed right-0 inset-y-0 z-[80] w-96 max-w-full bg-card border-l border-[var(--color-glass-border)] shadow-elevated overflow-y-auto animate-slideDown">
             <div className="sticky top-0 bg-card/95 backdrop-blur-sm border-b border-[var(--color-glass-border)] px-5 py-4 flex items-center justify-between z-10">
               <div>

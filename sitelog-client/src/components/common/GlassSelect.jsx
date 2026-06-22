@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Check } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function GlassSelect({ value, onChange, options = [], accent = 'orange', className = '' }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const { theme } = useTheme();
 
   const selected = options.find(o => o.value === value);
 
@@ -18,16 +20,20 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
   const accentColors = {
     orange: 'text-orange hover:text-orange-light',
     danger: 'text-danger hover:text-red-400',
-    navy: 'text-white/80 hover:text-white',
+    navy: 'text-navy/80 dark:text-white/80 hover:text-navy dark:text-white',
     success: 'text-success hover:text-green-400',
   };
 
   const accentDot = {
     orange: 'bg-orange',
     danger: 'bg-danger',
-    navy: 'bg-white/60',
+    navy: 'bg-navy/60 dark:bg-white/60',
     success: 'bg-success',
   };
+
+  const isDark = theme === 'dark';
+  const dropdownBg = isDark ? 'rgba(16,18,24,0.90)' : 'rgba(255,255,255,0.96)';
+  const borderStyle = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)';
 
   return (
     <div ref={ref} className={`relative ${className}`}>
@@ -42,7 +48,7 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
 
       {open && (
         <div className="absolute right-0 top-full z-50 mt-2 w-max min-w-[160px] max-w-[300px] animate-fadeIn">
-          <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(16,18,24,0.90)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 16px 48px rgba(0,0,0,0.4)' }}>
+          <div className="rounded-xl overflow-hidden" style={{ background: dropdownBg, backdropFilter: 'blur(24px) saturate(180%)', border: borderStyle, boxShadow: '0 16px 48px rgba(0,0,0,0.1)' }}>
             <div className="py-1.5 max-h-48 overflow-y-auto overflow-x-hidden scrollbar-hide">
               {options.map((opt) => (
                 <button
@@ -55,8 +61,8 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
                   }}
                   className={`flex w-full items-center gap-2.5 px-3.5 py-2 text-xs font-medium transition-colors duration-150
                     ${value === opt.value
-                      ? `${accentColors[accent]} bg-white/5`
-                      : 'text-white/80 hover:bg-white/5 hover:text-white'
+                      ? `${accentColors[accent]} bg-navy/5 dark:bg-white/5`
+                      : 'text-navy/80 dark:text-white/80 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white'
                     }`}
                 >
                   <span className={`h-1.5 w-1.5 shrink-0 rounded-full transition-all ${value === opt.value ? accentDot[accent] : 'bg-transparent'}`} />

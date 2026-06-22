@@ -93,7 +93,7 @@ export default function NotificationsPage() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--color-glass-border)] bg-card p-16 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-navy/5 dark:bg-white/5">
               <Bell className="h-8 w-8 text-muted/40" />
             </div>
             <h3 className="mt-4 text-lg font-bold text-orange">All caught up!</h3>

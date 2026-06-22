@@ -102,7 +102,7 @@ export default function Settings() {
 
         <div className="card">
           <div className="flex items-center gap-3 mb-6 border-b border-[var(--color-glass-border)] pb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-white/5 text-navy">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-navy/5 dark:bg-white/5 text-navy">
               <Lock className="h-5 w-5" />
             </div>
             <div>

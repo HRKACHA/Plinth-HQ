@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutPage = false }) {
   const [index, setIndex] = useState(0);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,10 +41,15 @@ export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutP
     }
   };
 
+  const isDark = theme === 'dark';
   const gradientStyle = {
-    background: 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)',
+    backgroundImage: isDark 
+      ? 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)'
+      : 'linear-gradient(180deg, #0F1228 0%, rgba(15,18,40,0.6) 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
+    backgroundClip: 'text',
+    color: 'transparent',
   };
 
   // Find the longest phrase to prop open the container so it never jumps

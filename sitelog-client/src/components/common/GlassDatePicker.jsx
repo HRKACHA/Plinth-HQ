@@ -90,18 +90,18 @@ export default function GlassDatePicker({ value, onChange, required, className =
           
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
-            <button type="button" onClick={handlePrevMonth} className="p-1 rounded-md text-muted hover:text-white hover:bg-white/10 transition-colors">
+            <button type="button" onClick={handlePrevMonth} className="p-1 rounded-md text-muted hover:text-navy dark:text-white hover:bg-navy/10 dark:bg-white/10 transition-colors">
               <ChevronLeft className="h-5 w-5" />
             </button>
             <div className="flex items-center gap-1.5">
-              <span className="font-semibold text-white tracking-wide">
+              <span className="font-semibold text-navy dark:text-white tracking-wide">
                 {monthNames[month]}
               </span>
               <div className="relative flex items-center">
                 <select 
                   value={year}
                   onChange={(e) => setCurrentMonth(new Date(Number(e.target.value), month, 1))}
-                  className="bg-transparent hover:bg-white/10 rounded py-0.5 pl-1 pr-4 text-white font-semibold outline-none cursor-pointer tracking-wide appearance-none"
+                  className="bg-transparent hover:bg-navy/10 dark:bg-white/10 rounded py-0.5 pl-1 pr-4 text-navy dark:text-white font-semibold outline-none cursor-pointer tracking-wide appearance-none"
                   style={{ WebkitAppearance: 'none', MozAppearance: 'none' }}
                 >
                   {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - 30 + i).map(y => (
@@ -113,7 +113,7 @@ export default function GlassDatePicker({ value, onChange, required, className =
                 </div>
               </div>
             </div>
-            <button type="button" onClick={handleNextMonth} className="p-1 rounded-md text-muted hover:text-white hover:bg-white/10 transition-colors">
+            <button type="button" onClick={handleNextMonth} className="p-1 rounded-md text-muted hover:text-navy dark:text-white hover:bg-navy/10 dark:bg-white/10 transition-colors">
               <ChevronRight className="h-5 w-5" />
             </button>
           </div>
@@ -149,8 +149,8 @@ export default function GlassDatePicker({ value, onChange, required, className =
                   className={`
                     h-8 w-full rounded-md flex items-center justify-center text-sm transition-all
                     ${isSelected ? 'bg-orange text-white shadow-md shadow-orange/20 font-bold' : 
-                      isToday ? 'border border-orange/50 text-orange font-bold hover:bg-white/5' : 
-                      'text-white/80 hover:bg-white/10 hover:text-white'}
+                      isToday ? 'border border-orange/50 text-orange font-bold hover:bg-navy/5 dark:hover:bg-white/5' : 
+                      'text-navy/80 dark:text-white/80 hover:bg-navy/10 dark:bg-white/10 hover:text-navy dark:text-white'}
                   `}
                 >
                   {day}

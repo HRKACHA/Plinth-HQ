@@ -257,7 +257,7 @@ export default function VendorSpendModal({ isOpen, onClose, onSuccess }) {
               <button type="submit" disabled={submitting} className="btn-accent px-8">
                 {submitting ? (
                   <span className="flex items-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-navy/30 dark:border-white/30 border-t-white" />
                     Saving...
                   </span>
                 ) : 'Save Spend'}

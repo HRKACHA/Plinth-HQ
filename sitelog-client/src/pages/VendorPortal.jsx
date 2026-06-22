@@ -135,10 +135,10 @@ export default function VendorPortal() {
                   <div className="flex items-center gap-2">
                     <span className="badge bg-info text-navy">{v.category}</span>
                     <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <button onClick={() => openEdit(v)} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit vendor">
+                      <button onClick={() => openEdit(v)} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit vendor">
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
-                      <button onClick={() => handleDeleteVendor(v)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete vendor">
+                      <button onClick={() => handleDeleteVendor(v)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete vendor">
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>
@@ -164,7 +164,7 @@ export default function VendorPortal() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--color-glass-border)] bg-card p-16 text-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-navy/5 dark:bg-white/5">
               <Truck className="h-8 w-8 text-muted/40" />
             </div>
             <h3 className="mt-4 text-lg font-bold text-navy">No vendors found</h3>
@@ -179,7 +179,7 @@ export default function VendorPortal() {
             <div className="modal-content max-w-lg p-6">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="font-display text-xl font-bold text-navy">Add New Vendor</h3>
-                <button onClick={() => setShowAddModal(false)} className="rounded-lg p-2 text-muted hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
+                <button onClick={() => setShowAddModal(false)} className="rounded-lg p-2 text-muted hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
               </div>
               <form onSubmit={handleAddVendor} className="space-y-4">
                 <div>
@@ -222,7 +222,7 @@ export default function VendorPortal() {
             <div className="modal-content max-w-lg p-6">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="font-display text-xl font-bold text-navy">Edit Vendor</h3>
-                <button onClick={() => { setShowEditModal(false); setEditingVendor(null); }} className="rounded-lg p-2 text-muted hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
+                <button onClick={() => { setShowEditModal(false); setEditingVendor(null); }} className="rounded-lg p-2 text-muted hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy"><X className="h-5 w-5" /></button>
               </div>
               <form onSubmit={handleEditVendor} className="space-y-4">
                 <div>

@@ -32,7 +32,7 @@ export default function DailyLogs() {
                 if (f === 'Custom') alert('Custom date picker coming soon!');
                 setActiveFilter(f);
               }}
-              className={`rounded-xl px-4 py-2 text-sm font-medium transition ${activeFilter === f ? 'bg-orange text-white shadow-md shadow-orange/20' : 'bg-surface text-navy border border-[var(--color-glass-border)] hover:bg-white/5'}`}
+              className={`rounded-xl px-4 py-2 text-sm font-medium transition ${activeFilter === f ? 'bg-orange text-white shadow-md shadow-orange/20' : 'bg-surface text-navy border border-[var(--color-glass-border)] hover:bg-navy/5 dark:hover:bg-white/5'}`}
             >
               {f}
             </button>

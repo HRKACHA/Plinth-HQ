@@ -13,6 +13,10 @@ const messageSchema = new mongoose.Schema(
     edited: { type: Boolean, default: false },
     editedAt: { type: Date },
     deleted: { type: Boolean, default: false },
+    // Chat Enhancement: Reply support
+    replyTo: { type: mongoose.Schema.Types.ObjectId, ref: 'Message', default: null },
+    // Chat Enhancement: @mentions
+    mentions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }
 );

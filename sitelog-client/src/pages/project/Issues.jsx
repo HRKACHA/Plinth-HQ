@@ -113,7 +113,7 @@ export default function Issues() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {filteredIssues.map((issue) => (
-          <div key={issue._id} className="card p-5 border border-white/5 bg-surface hover:border-white/10 transition-colors flex flex-col">
+          <div key={issue._id} className="card p-5 border border-navy/5 dark:border-white/5 bg-surface hover:border-navy/10 dark:border-white/10 transition-colors flex flex-col">
             <div className="flex justify-between items-start mb-3">
               <span className={`px-2 py-1 text-xs font-semibold rounded-md ${
                 issue.priority === 'Urgent' ? 'bg-danger/10 text-danger' : 
@@ -123,7 +123,7 @@ export default function Issues() {
               <div className="flex items-center gap-2">
                 <button 
                   onClick={() => openEditModal(issue)}
-                  className="p-1.5 rounded-lg text-muted hover:bg-white/5 hover:text-orange transition-colors"
+                  className="p-1.5 rounded-lg text-muted hover:bg-navy/5 dark:hover:bg-white/5 hover:text-orange transition-colors"
                   title="Edit Issue"
                 >
                   <Edit className="h-4 w-4" />
@@ -138,7 +138,7 @@ export default function Issues() {
                   </span>
                   
                   {/* Status Dropdown on hover */}
-                  <div className="absolute right-0 top-full mt-1 w-32 bg-card border border-white/10 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20 overflow-hidden">
+                  <div className="absolute right-0 top-full mt-1 w-32 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20 overflow-hidden">
                     {['Open', 'In Progress', 'Resolved', 'Closed'].map(s => (
                       <div 
                         key={s} 
@@ -159,12 +159,12 @@ export default function Issues() {
             {issue.photos?.length > 0 && (
               <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
                 {issue.photos.map((p, i) => (
-                  <img key={i} src={p} alt="Issue photo" className="h-12 w-12 object-cover rounded-lg border border-white/10 flex-shrink-0" />
+                  <img key={i} src={p} alt="Issue photo" className="h-12 w-12 object-cover rounded-lg border border-navy/10 dark:border-white/10 flex-shrink-0" />
                 ))}
               </div>
             )}
             
-            <div className="mt-auto pt-4 border-t border-white/5 flex justify-between items-center text-xs text-muted">
+            <div className="mt-auto pt-4 border-t border-navy/5 dark:border-white/5 flex justify-between items-center text-xs text-muted">
               <div className="flex items-center gap-1.5">
                 <span className="h-5 w-5 rounded-full bg-orange/20 text-orange flex items-center justify-center font-bold">
                   {(issue.assignedTo?.name || '?').charAt(0).toUpperCase()}
@@ -186,7 +186,7 @@ export default function Issues() {
       {showModal && (
         <div className="modal-backdrop z-50">
           <div className="modal-content max-w-lg p-6">
-            <h3 className="font-display text-xl font-bold text-navy mb-4 border-b border-white/10 pb-3">
+            <h3 className="font-display text-xl font-bold text-navy mb-4 border-b border-navy/10 dark:border-white/10 pb-3">
               {editingIssueId ? 'Edit Issue' : 'Create New Issue'}
             </h3>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -254,7 +254,7 @@ export default function Issues() {
                   ))}
                 </div>
               </div>
-              <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-white/10">
+              <div className="mt-6 flex justify-end gap-3 pt-4 border-t border-navy/10 dark:border-white/10">
                 <button type="button" onClick={() => setShowModal(false)} className="btn-secondary">Cancel</button>
                 <button type="submit" disabled={submitting} className="btn-primary">
                   {submitting ? 'Saving...' : (editingIssueId ? 'Save Changes' : 'Create Issue')}

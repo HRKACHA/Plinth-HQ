@@ -203,7 +203,7 @@ export default function EquipmentPortal() {
           <button
             onClick={() => setViewMode('active')}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-              viewMode === 'active' ? 'bg-white/10 text-white' : 'text-muted hover:text-white hover:bg-white/5'
+              viewMode === 'active' ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-muted hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
             }`}
           >
             Active Equipment ({activeEquipment.length})
@@ -211,7 +211,7 @@ export default function EquipmentPortal() {
           <button
             onClick={() => setViewMode('history')}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
-              viewMode === 'history' ? 'bg-white/10 text-white' : 'text-muted hover:text-white hover:bg-white/5'
+              viewMode === 'history' ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-muted hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
             }`}
           >
             History Box ({historyEquipment.length})
@@ -263,7 +263,7 @@ export default function EquipmentPortal() {
                   {viewMode === 'history' && eq.status === 'Retired' && (
                     <span className="badge text-[10px] font-bold bg-muted/20 text-muted border border-muted/30">Retired</span>
                   )}
-                  <span className={`badge text-[10px] font-bold ${eq.type === 'Owned' ? 'bg-white/5 text-navy' : 'bg-orange/10 text-orange'}`}>{eq.type}</span>
+                  <span className={`badge text-[10px] font-bold ${eq.type === 'Owned' ? 'bg-navy/5 dark:bg-white/5 text-navy' : 'bg-orange/10 text-orange'}`}>{eq.type}</span>
                 </div>
 
                 <div className="flex items-start gap-3">
@@ -304,20 +304,20 @@ export default function EquipmentPortal() {
 
                 {/* Actions */}
                 <div className="mt-4 pt-3 border-t border-[var(--color-glass-border)] flex items-center gap-1.5">
-                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
+                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <MapPin className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="p-1.5 bg-black/50 hover:bg-success/20 border border-white/10 rounded-md text-white/80 hover:text-success transition shadow-sm backdrop-blur">
+                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="p-1.5 bg-black/50 hover:bg-success/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-success transition shadow-sm backdrop-blur">
                     <Settings className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-white/10 rounded-md text-white/80 hover:text-info transition shadow-sm backdrop-blur">
+                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-info transition shadow-sm backdrop-blur">
                     <History className="h-4 w-4" />
                   </button>
                   <div className="flex-1" />
-                  <button onClick={() => openEdit(eq)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
+                  <button onClick={() => openEdit(eq)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
-                  <button onClick={() => handleDelete(eq)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
+                  <button onClick={() => handleDelete(eq)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>
@@ -468,7 +468,7 @@ export default function EquipmentPortal() {
       {/* ═══ SERVICE HISTORY PANEL ═══ */}
       {showServiceHistory && selectedEquipment && (
         <>
-          <div className="fixed inset-0 z-[70] bg-white/5 backdrop-blur-sm" onClick={() => setShowServiceHistory(false)} />
+          <div className="fixed inset-0 z-[70] bg-navy/5 dark:bg-white/5 backdrop-blur-sm" onClick={() => setShowServiceHistory(false)} />
           <div className="fixed right-0 inset-y-0 z-[80] w-96 max-w-full bg-card border-l border-[var(--color-glass-border)] shadow-elevated overflow-y-auto animate-slideDown">
             <div className="sticky top-0 bg-card/95 backdrop-blur-sm border-b border-[var(--color-glass-border)] px-5 py-4 flex items-center justify-between z-10">
               <div><h3 className="font-display text-lg font-bold text-navy">Service History</h3><p className="text-xs text-muted">{selectedEquipment.name}</p></div>

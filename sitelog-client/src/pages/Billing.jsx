@@ -64,10 +64,48 @@ export default function Billing() {
   if (loading) {
     return (
       <AppLayout title="Billing & Subscription">
-        <div className="flex items-center justify-center py-32">
-          <div className="flex flex-col items-center gap-3">
-            <Loader2 className="h-8 w-8 animate-spin text-orange" />
-            <span className="text-sm text-muted">Loading billing info...</span>
+        <div className="space-y-8 animate-fadeIn">
+          {/* Current Plan Skeleton */}
+          <div className="rounded-2xl bg-card p-8 shadow-card border border-[var(--color-glass-border)]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="skeleton h-16 w-16 rounded-xl" />
+              <div className="space-y-2">
+                <div className="skeleton h-4 w-24 rounded-lg" />
+                <div className="skeleton h-8 w-48 rounded-lg" />
+                <div className="skeleton h-3 w-32 rounded-lg" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="rounded-xl bg-surface border border-[var(--color-glass-border)] p-4">
+                  <div className="skeleton h-3 w-16 rounded-lg mb-3" />
+                  <div className="skeleton h-7 w-20 rounded-lg mb-2" />
+                  <div className="skeleton h-1.5 w-full rounded-full" />
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Plans Grid Skeleton */}
+          <div>
+            <div className="skeleton h-6 w-36 rounded-lg mb-4" />
+            <div className="grid gap-6 lg:grid-cols-4">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="card space-y-4">
+                  <div className="skeleton h-10 w-10 rounded-lg" />
+                  <div className="skeleton h-6 w-24 rounded-lg" />
+                  <div className="skeleton h-8 w-20 rounded-lg" />
+                  <div className="space-y-3 pt-2">
+                    {[1, 2, 3].map(j => (
+                      <div key={j} className="flex items-center gap-2">
+                        <div className="skeleton h-4 w-4 rounded-full" />
+                        <div className="skeleton h-3 w-full rounded-lg" />
+                      </div>
+                    ))}
+                  </div>
+                  <div className="skeleton h-11 w-full rounded-xl" />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </AppLayout>
@@ -104,7 +142,7 @@ export default function Billing() {
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div className="flex items-center gap-4">
                 <div className={`flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br ${planColors[status.plan] || planColors.starter} shadow-lg`}>
-                  {(() => { const Icon = planIcons[status.plan] || Star; return <Icon className="h-8 w-8 text-white" />; })()}
+                  {(() => { const Icon = planIcons[status.plan] || Star; return <Icon className="h-8 w-8 text-navy dark:text-white" />; })()}
                 </div>
                 <div>
                   <p className="text-sm font-medium text-muted uppercase tracking-wider mb-1">Current Plan</p>
@@ -136,7 +174,7 @@ export default function Billing() {
                   {status.usage?.projects}
                   <span className="text-sm font-normal text-muted">/{status.limits?.maxProjects === -1 ? '∞' : status.limits?.maxProjects}</span>
                 </p>
-                <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                <div className="mt-2 h-1.5 rounded-full bg-navy/5 dark:bg-white/5 overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all ${status.limits?.maxProjects !== -1 && status.usage?.projects >= status.limits?.maxProjects ? 'bg-danger' : 'bg-orange'}`}
                     style={{ width: `${status.limits?.maxProjects === -1 ? 10 : Math.min(100, (status.usage?.projects / status.limits?.maxProjects) * 100)}%` }}
@@ -153,7 +191,7 @@ export default function Billing() {
                   {status.usage?.users}
                   <span className="text-sm font-normal text-muted">/{status.limits?.maxUsers === -1 ? '∞' : status.limits?.maxUsers}</span>
                 </p>
-                <div className="mt-2 h-1.5 rounded-full bg-white/5 overflow-hidden">
+                <div className="mt-2 h-1.5 rounded-full bg-navy/5 dark:bg-white/5 overflow-hidden">
                   <div
                     className={`h-full rounded-full transition-all ${status.limits?.maxUsers !== -1 && status.usage?.users >= status.limits?.maxUsers ? 'bg-danger' : 'bg-success'}`}
                     style={{ width: `${status.limits?.maxUsers === -1 ? 10 : Math.min(100, (status.usage?.users / status.limits?.maxUsers) * 100)}%` }}
@@ -206,7 +244,7 @@ export default function Billing() {
                   )}
 
                   <div className={`inline-flex items-center justify-center h-10 w-10 rounded-lg bg-gradient-to-br ${planColors[plan.name] || planColors.starter} shadow-md mb-4`}>
-                    <Icon className="h-5 w-5 text-white" />
+                    <Icon className="h-5 w-5 text-navy dark:text-white" />
                   </div>
 
                   <h3 className="text-xl font-bold text-navy capitalize">{plan.name}</h3>
@@ -231,7 +269,7 @@ export default function Billing() {
                         ? 'bg-surface border border-[var(--color-glass-border)] text-muted cursor-default'
                         : isUpg
                         ? 'bg-gradient-to-r from-orange to-orange-dark text-white hover:shadow-lg hover:shadow-orange/20 hover:-translate-y-0.5'
-                        : 'bg-white/5 border border-[var(--color-glass-border)] text-navy hover:bg-white/5'
+                        : 'bg-navy/5 dark:bg-white/5 border border-[var(--color-glass-border)] text-navy hover:bg-navy/5 dark:hover:bg-white/5'
                     }`}
                   >
                     {isCurrent ? 'Current Plan' : switching ? <Loader2 className="h-4 w-4 animate-spin" /> : (

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useCallback } from 'react';
+import { useTheme } from '../../context/ThemeContext';
 
 const PARTICLE_DENSITY = 0.00012;
 const BG_PARTICLE_DENSITY = 0.00004;
@@ -17,6 +18,12 @@ export default function ParticleBackground({ blur = false }) {
   const mouseRef = useRef({ x: -1000, y: -1000, isActive: false });
   const frameIdRef = useRef(0);
   const lastTimeRef = useRef(0);
+  const { theme } = useTheme();
+  const themeRef = useRef(theme);
+
+  useEffect(() => {
+    themeRef.current = theme;
+  }, [theme]);
 
   const initParticles = useCallback((width, height) => {
     const count = Math.floor(width * height * PARTICLE_DENSITY);
@@ -28,7 +35,7 @@ export default function ParticleBackground({ blur = false }) {
         x, y, originX: x, originY: y,
         vx: 0, vy: 0,
         size: randomRange(1, 2.5),
-        color: Math.random() > 0.9 ? '#4285F4' : '#ffffff',
+        isAccent: Math.random() > 0.9,
         angle: Math.random() * Math.PI * 2,
       });
     }
@@ -55,12 +62,14 @@ export default function ParticleBackground({ blur = false }) {
     if (!ctx) return;
     lastTimeRef.current = time;
 
+    const isDark = themeRef.current === 'dark';
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-
-    // Background stars
+    // Background stars/dots
     const bgP = bgParticlesRef.current;
-    ctx.fillStyle = '#ffffff';
+    // In light mode use dark blue dots so they stand out against the light blue background
+    const bgDotColor = isDark ? '255,255,255' : '20,40,90';
     for (let i = 0; i < bgP.length; i++) {
       const p = bgP[i];
       p.x += p.vx; p.y += p.vy;
@@ -69,7 +78,9 @@ export default function ParticleBackground({ blur = false }) {
       if (p.y < 0) p.y = canvas.height;
       if (p.y > canvas.height) p.y = 0;
       const twinkle = Math.sin(time * 0.002 + p.phase) * 0.5 + 0.5;
-      ctx.globalAlpha = p.alpha * (0.3 + 0.7 * twinkle);
+      const baseAlpha = isDark ? p.alpha : p.alpha * 1.5; // Boost alpha in light mode
+      ctx.globalAlpha = baseAlpha * (0.3 + 0.7 * twinkle);
+      ctx.fillStyle = `rgba(${bgDotColor},1)`;
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fill();
@@ -96,6 +107,7 @@ export default function ParticleBackground({ blur = false }) {
     }
 
     // Integration & draw
+    const accentColor = isDark ? '#4285F4' : '#3273E6';
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       p.vx *= DAMPING; p.vy *= DAMPING;
@@ -104,8 +116,17 @@ export default function ParticleBackground({ blur = false }) {
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       const vel = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-      const opacity = Math.min(0.3 + vel * 0.1, 1);
-      ctx.fillStyle = p.color === '#ffffff' ? `rgba(255,255,255,${opacity})` : p.color;
+
+      if (p.isAccent) {
+        ctx.fillStyle = accentColor;
+      } else if (isDark) {
+        const opacity = Math.min(0.3 + vel * 0.1, 1);
+        ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      } else {
+        // Light mode: dark navy particles
+        const opacity = Math.min(0.4 + vel * 0.15, 0.85); // Increased opacity
+        ctx.fillStyle = `rgba(30,45,90,${opacity})`;
+      }
       ctx.fill();
     }
 
@@ -155,11 +176,14 @@ export default function ParticleBackground({ blur = false }) {
     };
   }, []);
 
+  // Background color adapts to theme
+  const bgColor = theme === 'dark' ? '#0D0F14' : '#EBF0FA';
+
   return (
     <div
       ref={containerRef}
       className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${blur ? 'backdrop-blur-md' : ''}`}
-      style={{ background: '#0D0F14' }}
+      style={{ background: bgColor, transition: 'background 0.5s ease' }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>

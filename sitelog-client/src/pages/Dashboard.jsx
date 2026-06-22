@@ -4,14 +4,17 @@ import {
   FolderKanban, ClipboardList, IndianRupee, AlertTriangle, Plus,
   Sun, ArrowUpRight, FileText, Upload, CalendarClock, Activity,
   TrendingUp, Building2, Pencil, Package, CheckCircle2,
-  Cloud, CloudFog, CloudRain, CloudSnow, CloudLightning
+  Cloud, CloudFog, CloudRain, CloudSnow, CloudLightning,
+  AlertCircle, TrendingDown, Loader2
 } from 'lucide-react';
+import ActivityFeed from '../components/dashboard/ActivityFeed';
 import AppLayout from '../components/layout/AppLayout';
 import StatCard from '../components/common/StatCard';
 import GlassSelect from '../components/common/GlassSelect';
 import ProjectCard from '../components/common/ProjectCard';
 import { formatCurrency, formatCompactCurrency } from '../data/mockData';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { useAsync } from '../hooks/useAsync';
 import { projectApi, notificationApi, uploadApi, budgetApi, logApi } from '../api/index';
 
@@ -19,6 +22,7 @@ import GlassDatePicker from '../components/common/GlassDatePicker';
 import CustomSelectMenu from '../components/common/CustomSelectMenu';
 export default function Dashboard() {
   const { user } = useAuth();
+  const { theme } = useTheme();
   const { data: projects, loading: loadingProjects, refresh } = useAsync(() => projectApi.list(), []);
   const { data: notifications } = useAsync(() => notificationApi.list(), []);
 
@@ -315,7 +319,7 @@ export default function Dashboard() {
             <h2 className="font-display text-xl sm:text-2xl font-bold text-navy lg:text-3xl tracking-tight">
               {greeting}, <span className="text-orange">{user?.name?.split(' ')[0]}</span>
             </h2>
-            <p className="mt-1 text-sm text-white/60">
+            <p className="mt-1 text-sm text-navy/60 dark:text-white/60">
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -383,10 +387,10 @@ export default function Dashboard() {
                 <div className="col-span-2 flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
                   style={{ border: '2px dashed rgba(255,255,255,0.08)', background: 'rgba(16,18,24,0.12)', backdropFilter: 'blur(12px)' }}>
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <FolderKanban className="h-8 w-8 text-white/20" />
+                    <FolderKanban className="h-8 w-8 text-navy/20 dark:text-white/20" />
                   </div>
                   <h4 className="mt-5 text-base font-bold text-navy tracking-tight">No projects yet</h4>
-                  <p className="mt-2 max-w-xs text-sm text-white/60">
+                  <p className="mt-2 max-w-xs text-sm text-navy/60 dark:text-white/60">
                     Create your first project to start tracking daily logs, budgets, and milestones.
                   </p>
                   <Link to="/projects" className="btn-accent mt-6">
@@ -401,26 +405,26 @@ export default function Dashboard() {
           <div className="space-y-6">
             {/* Weather widget */}
             <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
-              <div className="relative p-6" style={{ background: 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' }}>
+              <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
                 <div className="flex items-center justify-between relative z-10">
                   {weathers.length > 0 ? (
                     <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
                       <div>
-                        <p className="text-sm text-white/70 font-semibold tracking-wide uppercase">Weather • {weathers[currentWeatherIndex].projectName}</p>
-                        <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-white">{weathers[currentWeatherIndex].temp}</p>
-                        <p className="mt-2 text-xs text-white/70 font-medium px-2 py-1 rounded-md inline-block" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>
+                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
+                        <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
+                        <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
                           {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
                         </p>
                       </div>
                       {(() => {
                          const WIcon = weathers[currentWeatherIndex].icon;
-                         return <WIcon className="h-16 w-16 text-white/10" />;
+                         return <WIcon className={`h-16 w-16 ${theme === 'dark' ? 'text-white/10' : 'text-navy/10'}`} />;
                       })()}
                     </div>
                   ) : (
                     <div className="min-h-[100px]">
-                      <p className="text-sm text-white/70 font-semibold tracking-wide uppercase">Site Weather</p>
-                      <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-white">--</p>
+                      <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Site Weather</p>
+                      <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>--</p>
                     </div>
                   )}
                 </div>
@@ -428,7 +432,7 @@ export default function Dashboard() {
                 {weathers.length > 1 && (budgetFilter === 'all' && burnRateFilter === 'all') && (
                   <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
                     {weathers.map((_, idx) => (
-                      <span key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === currentWeatherIndex ? 'w-4 bg-orange' : 'w-1.5 bg-white/20'}`} />
+                      <span key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === currentWeatherIndex ? 'w-4 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
                     ))}
                   </div>
                 )}
@@ -496,36 +500,13 @@ export default function Dashboard() {
                   )}
                 </form>
               ) : (
-                <p className="text-sm text-white/60">Create a project first</p>
+                <p className="text-sm text-navy/60 dark:text-white/60">Create a project first</p>
               )}
             </div>
 
-            {/* Recent alerts */}
-            <div className="card">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="font-bold text-navy flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-danger" /> Recent Alerts
-                </h3>
-                <Link to="/notifications" className="text-xs font-semibold text-orange hover:text-orange-light transition-colors">See all</Link>
-              </div>
-              <div className="space-y-2">
-                {safeNotifications.slice(0, 4).map((n) => (
-                  <Link
-                    key={n._id}
-                    to={n.link || '/notifications'}
-                    className={`block rounded-xl p-3 transition-colors border border-transparent hover:bg-white/3 ${!n.isRead ? 'border-l-2 !border-l-orange bg-orange/5' : ''}`}
-                    style={{ borderColor: !n.isRead ? undefined : 'transparent' }}
-                  >
-                    <p className="text-sm font-semibold text-navy">{n.title}</p>
-                    <p className="mt-1 text-xs text-white/60 line-clamp-2">{n.body}</p>
-                  </Link>
-                ))}
-                {!safeNotifications.length && (
-                  <div className="text-center py-6 rounded-xl" style={{ border: '1px dashed rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                    <p className="text-sm font-medium text-white/60">No notifications yet</p>
-                  </div>
-                )}
-              </div>
+            {/* Recent Activity Feed */}
+            <div className="h-[500px]">
+              <ActivityFeed />
             </div>
           </div>
         </div>
@@ -581,7 +562,7 @@ export default function Dashboard() {
                 <label className="mb-1.5 block text-sm font-semibold text-navy">Cover Photo</label>
                 <div className="flex items-center gap-4">
                   <label className="flex-1 cursor-pointer">
-                    <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-white/80 transition-colors hover:text-orange"
+                    <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-navy/80 dark:text-white/80 transition-colors hover:text-orange"
                       style={{ border: '1px dashed rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.02)' }}>
                       <Upload className="h-5 w-5" />
                       <span>Click to upload image</span>

@@ -4,47 +4,54 @@
 
 @layer base {
   :root {
-    /* ── Liquid Glass Design System — Dark Premium ── */
-    --color-surface: 13 15 20;          /* #0D0F14 — Deep Space */
-    --color-card: 22 24 30;             /* #16181E — Elevated Dark */
-    --color-border: 40 42 50;           /* #282A32 — Subtle Edge */
+    /* ── Liquid Glass Design System — Light Premium ── */
+    --color-surface: 220 232 255;       /* #DCE8FF — Even Lighter Blue Surface */
+    --color-card: 235 242 255;          /* #EBF2FF — Very Light Soft Blue Card */
+    --color-border: 180 200 240;        /* #B4C8F0 — Light Edge */
 
-    /* Glass System */
+    /* Glass System — Light Mode */
+    --glass-bg: rgba(255, 255, 255, 0.45);
+    --glass-border: rgba(0, 0, 40, 0.06);
+    --glass-border-hover: rgba(0, 0, 40, 0.14);
+    --glass-highlight: rgba(255, 255, 255, 0.60);
+    --glass-shadow: 0 10px 30px rgba(100, 120, 180, 0.10);
+    --glass-blur: 18px;
+    --transition: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --color-glass-border: rgba(0, 0, 40, 0.06);
+    --color-glass-border-hover: rgba(0, 0, 40, 0.14);
+
+    /* Primary — Dark text on light */
+    --color-navy: 30 35 60;             /* #1E233C — Deep Navy */
+    --color-navy-dark: 15 18 40;        /* #0F1228 — Near Black Navy */
+    --color-navy-light: 90 100 130;     /* #5A6482 — Mid Blue-Gray */
+
+    /* Accent — Cool Blue */
+    --color-orange: 50 115 230;         /* #3273E6 — Bright Blue */
+    --color-orange-dark: 40 95 200;     /* #285FC8 — Deep Blue */
+    --color-orange-light: 80 145 255;   /* #5091FF — Light Blue */
+
+    --color-info: 230 236 248;          /* #E6ECF8 — Info Surface */
+    --color-muted: 120 130 155;         /* #78829B — Cool Gray */
+
+    --shadow-card: 0 2px 8px rgba(100, 120, 180, 0.12), 0 1px 3px rgba(100, 120, 180, 0.08);
+    --shadow-elevated: 0 16px 48px rgba(100, 120, 180, 0.18), 0 4px 12px rgba(100, 120, 180, 0.10);
+
+    --text-primary: 30 35 60;
+  }
+
+  /* ── Dark Premium Theme ── */
+  .dark {
+    --color-surface: 10 12 16;          /* Even deeper */
+    --color-card: 20 22 28;
+    --color-border: 36 38 46;
+
     --glass-bg: rgba(16, 18, 24, 0.14);
     --glass-border: rgba(255, 255, 255, 0.03);
     --glass-border-hover: rgba(255, 255, 255, 0.14);
     --glass-highlight: rgba(255, 255, 255, 0.10);
     --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
-    --glass-blur: 18px;
-    --transition: cubic-bezier(0.22, 1, 0.36, 1);
 
-    --color-glass-border: rgba(255, 255, 255, 0.03);
-    --color-glass-border-hover: rgba(255, 255, 255, 0.14);
-
-    /* Primary — Light text on dark */
-    --color-navy: 235 237 245;          /* #EBEDF5 — Pearl White */
-    --color-navy-dark: 255 255 255;     /* #FFFFFF — Pure White */
-    --color-navy-light: 160 165 180;    /* #A0A5B4 — Soft Silver */
-
-    /* Accent — Cool Blue */
-    --color-orange: 66 133 244;         /* #4285F4 — Google Blue */
-    --color-orange-dark: 59 120 231;    /* #3B78E7 — Deep Blue */
-    --color-orange-light: 106 173 255;  /* #6AADFF — Light Blue */
-
-    --color-info: 24 26 34;             /* #181A22 — Elevated Surface */
-    --color-muted: 139 141 148;         /* #8B8D94 — Cool Gray */
-
-    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.15);
-    --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.35), 0 4px 12px rgba(0, 0, 0, 0.2);
-
-    --text-primary: 235 237 245;
-  }
-
-  /* Dark mode uses same palette since we are dark-first */
-  .dark {
-    --color-surface: 10 12 16;          /* Even deeper */
-    --color-card: 20 22 28;
-    --color-border: 36 38 46;
     --color-glass-border: rgba(255, 255, 255, 0.03);
     --color-glass-border-hover: rgba(255, 255, 255, 0.12);
 
@@ -67,7 +74,8 @@
   }
 
   body {
-    @apply bg-surface text-navy antialiased font-sans transition-colors duration-300;
+    @apply antialiased text-navy dark:text-white bg-surface overflow-x-hidden selection:bg-orange/30 selection:text-white;
+    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -93,7 +101,7 @@
 /* Global Glass Material */
 .liquid-glass {
   position: relative;
-  background: rgba(16, 18, 24, 0.14);
+  background: var(--glass-bg);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
   border: 1px solid var(--glass-border);
@@ -378,6 +386,117 @@
   }
 }
 
+/* ══════════════════════════════════════════════════════════
+   LIGHT MODE OVERRIDES
+   ══════════════════════════════════════════════════════════ */
+
+/* Light mode glass system — swap dark glass for white/blue glass */
+:root:not(.dark) .liquid-glass {
+  background: rgba(255, 255, 255, 0.45);
+}
+:root:not(.dark) .liquid-glass::before {
+  background: rgba(0, 0, 40, 0.06);
+}
+:root:not(.dark) .liquid-glass::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+/* Cards in light mode */
+:root:not(.dark) .card,
+:root:not(.dark) .card-static,
+:root:not(.dark) .glass-card,
+:root:not(.dark) .glass-panel {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(0, 0, 40, 0.06);
+  box-shadow: 0 4px 16px rgba(100, 120, 180, 0.08);
+}
+:root:not(.dark) .card:hover {
+  border-color: rgba(0, 0, 40, 0.12);
+}
+
+/* Input fields in light mode */
+:root:not(.dark) .input-field {
+  background: rgba(255, 255, 255, 0.60);
+  border-color: rgba(0, 0, 40, 0.10);
+  color: rgb(30, 35, 60);
+}
+:root:not(.dark) .input-field:focus {
+  border-color: rgba(50, 115, 230, 0.40);
+}
+:root:not(.dark) .input-field:hover {
+  border-color: rgba(0, 0, 40, 0.16);
+}
+
+/* Badge in light mode */
+:root:not(.dark) .badge {
+  border-color: rgba(0, 0, 40, 0.08);
+}
+
+/* Skeleton in light mode */
+:root:not(.dark) .skeleton {
+  background: rgba(0, 0, 40, 0.05);
+}
+:root:not(.dark) .skeleton::after {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+}
+
+/* Modal in light mode */
+:root:not(.dark) .modal-backdrop {
+  background: rgba(0, 0, 40, 0.30);
+}
+:root:not(.dark) .modal-content {
+  background: rgba(245, 248, 255, 0.92);
+  border-color: rgba(0, 0, 40, 0.08);
+}
+:root:not(.dark) .modal-content::before {
+  background: rgba(255, 255, 255, 0.80);
+}
+
+/* Dropdown in light mode */
+:root:not(.dark) .glass-dropdown {
+  background: rgba(245, 248, 255, 0.95);
+  border-color: rgba(0, 0, 40, 0.08);
+  box-shadow: 0 16px 48px rgba(100, 120, 180, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Dropdown items in light mode */
+:root:not(.dark) .dropdown-item {
+  color: rgb(30, 35, 60);
+}
+:root:not(.dark) .dropdown-item:hover {
+  background: rgba(50, 115, 230, 0.06);
+}
+
+/* Buttons in light mode */
+:root:not(.dark) .btn-secondary {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(0, 0, 40, 0.08);
+  color: rgb(30, 35, 60);
+}
+:root:not(.dark) .btn-secondary:hover {
+  border-color: rgba(0, 0, 40, 0.16);
+  background: rgba(255, 255, 255, 0.70);
+}
+:root:not(.dark) .btn-ghost:hover {
+  background: rgba(0, 0, 40, 0.04);
+}
+
+/* Project nav pill in light mode */
+:root:not(.dark) .project-nav-pill {
+  background: rgba(255, 255, 255, 0.50);
+  border-color: rgba(0, 0, 40, 0.06);
+}
+:root:not(.dark) .project-nav-pill:hover {
+  background: rgba(255, 255, 255, 0.70);
+  border-color: rgba(0, 0, 40, 0.12);
+}
+
+/* Select option bg in light mode */
+:root:not(.dark) select.input-field option {
+  background-color: rgb(245, 248, 255);
+  color: rgb(30, 35, 60);
+}
+
 /* ── Custom Scrollbar ── */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
@@ -387,6 +506,12 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+:root:not(.dark) ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 40, 0.10);
+}
+:root:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 40, 0.20);
 }
 
 /* ── Gantt bar animation ── */

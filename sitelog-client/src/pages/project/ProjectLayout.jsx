@@ -9,6 +9,7 @@ import AppLayout from '../../components/layout/AppLayout';
 import Badge from '../../components/common/Badge';
 import { formatCurrency, formatDate } from '../../data/mockData';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 import { useAsync } from '../../hooks/useAsync';
 import { projectApi, uploadApi, equipmentApi } from '../../api/index';
 
@@ -33,6 +34,7 @@ export default function ProjectLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { theme } = useTheme();
   const { data: project, loading, error, refresh } = useAsync(() => projectApi.get(id), [id]);
   const basePath = `/projects/${id}`;
   const isOverview = location.pathname === basePath || location.pathname === `${basePath}/`;
@@ -175,18 +177,18 @@ export default function ProjectLayout() {
 
   return (
     <AppLayout backTo="/projects">
-      <div className="mb-6 overflow-hidden rounded-2xl shadow-elevated relative" style={{ background: 'rgba(16,18,24,0.40)', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="mb-6 overflow-hidden rounded-2xl shadow-elevated relative" style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.40)' : 'rgba(255,255,255,0.40)', border: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="relative h-36 sm:h-48 lg:h-64">
           {project.coverPhoto ? (
             <img src={project.coverPhoto} alt={project.name} className="h-full w-full object-cover opacity-60" />
           ) : (
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, #111827 0%, #1e2435 50%, #111827 100%)' }} />
+            <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }} />
           )}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgb(var(--color-card)), rgba(var(--color-card), 0.5), transparent)' }} />
           <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <Badge status={project.status} />
-              <span className="font-mono text-sm text-white/70 font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
+              <span className={`font-mono text-sm font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.50)' : 'rgba(255,255,255,0.50)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
             </div>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
               <div className="flex items-center gap-4">
@@ -196,10 +198,10 @@ export default function ProjectLayout() {
                 </div>
                 {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && (
                   <div className="flex gap-2 self-start mt-2">
-                    <button onClick={openEdit} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
+                    <button onClick={openEdit} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button onClick={() => setShowDeleteModal(true)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Project">
+                    <button onClick={() => setShowDeleteModal(true)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Project">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
@@ -509,7 +511,7 @@ export function ProjectOverview() {
             ].filter(item => canViewProjectTab(item.to)).map(({ to, label, desc, icon: Icon }) => (
               <Link key={to} to={`/projects/${pid}/${to}`} className="group flex items-start gap-3 rounded-xl p-4 transition-all hover:shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.02)' }}>
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange/10 transition-all group-hover:bg-orange">
-                  <Icon className="h-5 w-5 text-orange transition-colors group-hover:text-white" />
+                  <Icon className="h-5 w-5 text-orange transition-colors group-hover:text-navy dark:text-white" />
                 </div>
                 <div>
                   <p className="font-semibold text-navy group-hover:text-orange transition-colors">{label}</p>

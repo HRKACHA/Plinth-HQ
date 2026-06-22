@@ -10,7 +10,7 @@ export default function DateAccordion({ date, summary, children, defaultOpen = f
     <div className="card overflow-hidden p-0 mb-4 transition-all duration-300">
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 text-left bg-transparent hover:bg-white/5 transition-colors"
+        className="w-full flex items-center justify-between p-5 text-left bg-transparent hover:bg-navy/5 dark:hover:bg-white/5 transition-colors"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange/10 text-orange">

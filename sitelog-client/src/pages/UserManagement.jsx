@@ -90,7 +90,7 @@ export default function UserManagement() {
                   <tr key={u._id} className="transition-colors hover:bg-surface/50">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-xs font-bold text-navy">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-navy/5 dark:bg-white/5 text-xs font-bold text-navy">
                           {u.avatar || u.name.substring(0, 2).toUpperCase()}
                         </div>
                         <div>
@@ -112,7 +112,7 @@ export default function UserManagement() {
                       {u.lastLogin ? new Date(u.lastLogin).toLocaleDateString() : 'Never'}
                     </td>
                     <td className="px-6 py-4 text-right">
-                      <button className="text-muted hover:text-navy transition p-1 rounded-md hover:bg-white/5">
+                      <button className="text-muted hover:text-navy transition p-1 rounded-md hover:bg-navy/5 dark:hover:bg-white/5">
                         <MoreVertical className="h-4 w-4" />
                       </button>
                     </td>

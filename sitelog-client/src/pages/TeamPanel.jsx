@@ -168,8 +168,8 @@ export default function TeamPanel() {
 
         {/* Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10">
+          <h1 className="text-xl sm:text-2xl font-bold text-navy dark:text-white flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-navy/10 dark:border-white/10">
               <Users size={24} className="text-blue-400" />
             </div>
             Team Management
@@ -180,7 +180,7 @@ export default function TeamPanel() {
         {/* Invite Form */}
         {isManager && (
           <div className="bg-card border border-white/[0.06] rounded-2xl p-4 sm:p-6 mb-6">
-            <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-navy dark:text-white mb-4 flex items-center gap-2">
             <Mail size={18} className="text-orange" /> Send Invitation
           </h2>
           <form onSubmit={handleInvite} className="flex flex-wrap gap-3 items-end">
@@ -191,7 +191,7 @@ export default function TeamPanel() {
                 placeholder="colleague@company.com"
                 value={inviteForm.email}
                 onChange={(e) => setInviteForm((f) => ({ ...f, email: e.target.value }))}
-                className="w-full px-4 py-2.5 bg-surface border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition"
+                className="w-full px-4 py-2.5 bg-surface border border-navy/10 dark:border-white/10 rounded-xl text-navy dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition"
                 required
               />
             </div>
@@ -235,8 +235,8 @@ export default function TeamPanel() {
                   If your SMTP email service is not configured, you can manually share this link with the user.
                 </p>
               </div>
-              <div className="flex items-center gap-2 bg-black/20 p-1.5 rounded-lg border border-white/5 w-full sm:w-auto">
-                <code className="text-xs text-white px-2 truncate max-w-[200px] sm:max-w-[300px]">
+              <div className="flex items-center gap-2 bg-black/20 p-1.5 rounded-lg border border-navy/5 dark:border-white/5 w-full sm:w-auto">
+                <code className="text-xs text-navy dark:text-white px-2 truncate max-w-[200px] sm:max-w-[300px]">
                   {generatedInviteLink}
                 </code>
                 <button
@@ -244,7 +244,7 @@ export default function TeamPanel() {
                     navigator.clipboard.writeText(generatedInviteLink);
                     showToast('Link copied to clipboard!');
                   }}
-                  className="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-white text-xs font-medium rounded-md transition"
+                  className="px-3 py-1.5 bg-navy/10 dark:bg-white/10 hover:bg-navy/20 dark:bg-white/20 text-navy dark:text-white text-xs font-medium rounded-md transition"
                 >
                   Copy
                 </button>
@@ -263,7 +263,7 @@ export default function TeamPanel() {
             <button
               key={key}
               onClick={() => setTab(key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition ${tab === key ? 'bg-white/10 text-white' : 'text-muted hover:text-white'}`}
+              className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition ${tab === key ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-muted hover:text-navy dark:text-white'}`}
             >
               <Icon size={16} /> {label}
               {key === 'invites' && invites.filter((i) => !i.used).length > 0 && (
@@ -290,7 +290,17 @@ export default function TeamPanel() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={7} className="text-center py-12 text-muted">Loading...</td></tr>
+                    Array.from({ length: 5 }).map((_, i) => (
+                      <tr key={i} className="border-b border-white/[0.04]">
+                        <td className="px-6 py-4"><div className="flex items-center gap-3"><div className="skeleton h-8 w-8 rounded-full" /><div className="skeleton h-4 w-28 rounded-lg" /></div></td>
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-36 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-5 w-20 rounded-full" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-24 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-16 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-5 w-14 rounded-full" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-8 w-16 rounded-lg" /></td>
+                      </tr>
+                    ))
                   ) : members.length === 0 ? (
                     <tr><td colSpan={7} className="text-center py-12 text-muted">No team members found.</td></tr>
                   ) : members.map((m) => (
@@ -300,13 +310,13 @@ export default function TeamPanel() {
                           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
                             {m.name?.charAt(0)?.toUpperCase()}
                           </div>
-                          <span className="text-white font-medium">{m.name}</span>
+                          <span className="text-navy dark:text-white font-medium">{m.name}</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-muted text-sm">{m.email}</td>
                       <td className="px-6 py-4 relative">
                         {isManager && m._id !== user._id ? (
-                          <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="flex items-center gap-1 hover:bg-white/5 px-2 py-1 -ml-2 rounded transition">
+                          <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="flex items-center gap-1 hover:bg-navy/5 dark:hover:bg-white/5 px-2 py-1 -ml-2 rounded transition">
                             <RoleBadge role={m.role} />
                             <ChevronDown size={12} className="text-muted" />
                           </button>
@@ -314,21 +324,21 @@ export default function TeamPanel() {
                           <RoleBadge role={m.role} />
                         )}
                         {roleDropdown === m._id && isManager && (
-                          <div className="absolute z-50 mt-1 w-56 bg-card border border-white/10 rounded-xl shadow-2xl py-1 left-0">
+                          <div className="absolute z-50 mt-1 w-56 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1 left-0">
                             {ROLE_OPTIONS.map((r) => (
                               <button
                                 key={r.value}
                                 onClick={() => handleChangeRole(m._id, r.value)}
-                                className="w-full text-left px-4 py-2 hover:bg-white/5 transition flex flex-col items-start gap-0.5"
+                                className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5"
                               >
-                                <span className="text-sm font-semibold text-white">{r.label}</span>
+                                <span className="text-sm font-semibold text-navy dark:text-white">{r.label}</span>
                                 <span className="text-xs text-muted leading-tight">{r.desc}</span>
                               </button>
                             ))}
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4 text-white text-sm font-medium">
+                      <td className="px-6 py-4 text-navy dark:text-white text-sm font-medium">
                         {m.projects && m.projects.length > 0 ? (
                           <div className="flex flex-wrap gap-1">
                             {m.projects.map(p => (
@@ -354,14 +364,14 @@ export default function TeamPanel() {
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleDeactivate(m._id)}
-                              className="p-1.5 bg-black/50 hover:bg-warning/20 border border-white/10 rounded-md text-white/80 hover:text-warning transition shadow-sm backdrop-blur"
+                              className="p-1.5 bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur"
                               title="Deactivate"
                             >
                               <UserMinus size={14} />
                             </button>
                             <button
                               onClick={() => handleDelete(m._id)}
-                              className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
+                              className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
                               title="Delete Member"
                             >
                               <Trash2 size={14} />
@@ -378,7 +388,19 @@ export default function TeamPanel() {
             {/* Mobile Card Layout */}
             <div className="md:hidden p-3 space-y-3">
               {loading ? (
-                <div className="text-center py-12 text-muted">Loading...</div>
+                Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="skeleton h-9 w-9 rounded-full" />
+                      <div className="flex-1 space-y-2">
+                        <div className="skeleton h-4 w-28 rounded-lg" />
+                        <div className="skeleton h-3 w-20 rounded-lg" />
+                      </div>
+                      <div className="skeleton h-5 w-14 rounded-full" />
+                    </div>
+                    <div className="skeleton h-3 w-full rounded-lg" />
+                  </div>
+                ))
               ) : members.length === 0 ? (
                 <div className="text-center py-12 text-muted">No team members found.</div>
               ) : members.map((m) => (
@@ -389,7 +411,7 @@ export default function TeamPanel() {
                         {m.name?.charAt(0)?.toUpperCase()}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">{m.name}</p>
+                        <p className="text-sm font-semibold text-navy dark:text-white truncate">{m.name}</p>
                         <p className="text-xs text-muted truncate">{m.email}</p>
                       </div>
                     </div>
@@ -410,23 +432,23 @@ export default function TeamPanel() {
                   </div>
                   {isManager && m._id !== user._id && (
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
-                      <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-white transition flex items-center gap-1">
+                      <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-navy dark:text-white transition flex items-center gap-1">
                         Change Role <ChevronDown size={10} />
                       </button>
                       <div className="flex-1" />
-                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-black/50 hover:bg-warning/20 border border-white/10 rounded-md text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
+                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
                         <UserMinus size={14} />
                       </button>
-                      <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
+                      <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
                         <Trash2 size={14} />
                       </button>
                     </div>
                   )}
                   {roleDropdown === m._id && isManager && (
-                    <div className="mt-2 bg-card border border-white/10 rounded-xl shadow-2xl py-1">
+                    <div className="mt-2 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1">
                       {ROLE_OPTIONS.map((r) => (
-                        <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-white/5 transition flex flex-col items-start gap-0.5">
-                          <span className="text-sm font-semibold text-white">{r.label}</span>
+                        <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5">
+                          <span className="text-sm font-semibold text-navy dark:text-white">{r.label}</span>
                           <span className="text-xs text-muted leading-tight">{r.desc}</span>
                         </button>
                       ))}
@@ -452,12 +474,21 @@ export default function TeamPanel() {
                 </thead>
                 <tbody>
                   {loading ? (
-                    <tr><td colSpan={6} className="text-center py-12 text-muted">Loading...</td></tr>
+                    Array.from({ length: 3 }).map((_, i) => (
+                      <tr key={i} className="border-b border-white/[0.04]">
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-36 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-5 w-20 rounded-full" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-16 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-4 w-20 rounded-lg" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-5 w-16 rounded-full" /></td>
+                        <td className="px-6 py-4"><div className="skeleton h-8 w-16 rounded-lg" /></td>
+                      </tr>
+                    ))
                   ) : invites.length === 0 ? (
                     <tr><td colSpan={6} className="text-center py-12 text-muted">No invites sent yet.</td></tr>
                   ) : invites.map((inv) => (
                     <tr key={inv._id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition">
-                      <td className="px-6 py-4 text-white text-sm">{inv.email}</td>
+                      <td className="px-6 py-4 text-navy dark:text-white text-sm">{inv.email}</td>
                       <td className="px-6 py-4"><RoleBadge role={inv.role} /></td>
                       <td className="px-6 py-4 text-muted text-sm">{timeAgo(inv.createdAt)}</td>
                       <td className="px-6 py-4 text-muted text-sm">{new Date(inv.expiresAt).toLocaleDateString()}</td>
@@ -476,7 +507,7 @@ export default function TeamPanel() {
                         {!inv.used && (
                           <button
                             onClick={() => handleRevoke(inv._id)}
-                            className="p-1.5 bg-black/50 hover:bg-danger/20 border border-white/10 rounded-md text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
+                            className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
                             title="Revoke"
                           >
                             <Trash2 size={14} />

@@ -6,7 +6,7 @@ import { getAccessToken } from '../api/axios.js';
 import AppLayout from '../components/layout/AppLayout';
 import VoiceInput from '../components/common/VoiceInput';
 import { useTranslation } from '../hooks/useTranslation';
-import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages, Camera, Image as ImageIcon } from 'lucide-react';
+import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages, Camera, Image as ImageIcon, Reply, AtSign } from 'lucide-react';
 
 const ROLE_BADGE_COLORS = {
   site_engineer: 'bg-blue-500/20 text-blue-300',
@@ -59,6 +59,13 @@ export default function ChatBox() {
 
   const [showSidebar, setShowSidebar] = useState(true);
   const { translateText, isTranslating } = useTranslation();
+
+  // Chat Enhancement states
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [showMentions, setShowMentions] = useState(false);
+  const [mentionFilter, setMentionFilter] = useState('');
+  const [mentionIndex, setMentionIndex] = useState(0);
+  const [selectedMentions, setSelectedMentions] = useState([]);
 
   const baseInputRef = useRef('');
 
@@ -155,6 +162,12 @@ export default function ChatBox() {
       setMessages((prev) => prev.filter((m) => m.room !== room));
     });
 
+    s.on('message:read', ({ messageId, readBy }) => {
+      setMessages((prev) =>
+        prev.map((m) => (m._id === messageId ? { ...m, readBy } : m))
+      );
+    });
+
     setSocket(s);
     return () => { s.disconnect(); };
   }, []);
@@ -220,8 +233,19 @@ export default function ChatBox() {
   const handleSend = (e) => {
     if (e) e.preventDefault();
     if (!input.trim() || !socket) return;
-    socket.emit('send-message', { message: input.trim(), room: activeRoom });
+
+    // Extract @mention user IDs from selectedMentions
+    const mentionIds = selectedMentions.map((m) => m.userId).filter(Boolean);
+
+    socket.emit('send-message', {
+      message: input.trim(),
+      room: activeRoom,
+      replyTo: replyingTo?._id || null,
+      mentions: mentionIds,
+    });
     setInput('');
+    setReplyingTo(null);
+    setSelectedMentions([]);
     socket.emit('typing', { room: activeRoom, isTyping: false });
   };
 
@@ -240,18 +264,71 @@ export default function ChatBox() {
   };
 
 
-  // Typing indicator
+  // Typing indicator + @mention detection
   const handleInputChange = (e) => {
-    setInput(e.target.value);
+    const value = e.target.value;
+    setInput(value);
     if (!socket) return;
     socket.emit('typing', { room: activeRoom, isTyping: true });
     clearTimeout(typingTimeoutRef.current);
     typingTimeoutRef.current = setTimeout(() => {
       socket.emit('typing', { room: activeRoom, isTyping: false });
     }, 2000);
+
+    // @mention detection
+    const cursorPos = e.target.selectionStart;
+    const textBeforeCursor = value.substring(0, cursorPos);
+    const mentionMatch = textBeforeCursor.match(/@(\w*)$/);
+    if (mentionMatch) {
+      setShowMentions(true);
+      setMentionFilter(mentionMatch[1].toLowerCase());
+      setMentionIndex(0);
+    } else {
+      setShowMentions(false);
+      setMentionFilter('');
+    }
+  };
+
+  const filteredMentionUsers = roomMembers.filter(
+    (u) => u.userId !== user?.id && u.name?.toLowerCase().includes(mentionFilter)
+  ).slice(0, 6);
+
+  const insertMention = (member) => {
+    const cursorPos = textareaRef.current?.selectionStart || input.length;
+    const textBeforeCursor = input.substring(0, cursorPos);
+    const textAfterCursor = input.substring(cursorPos);
+    const newBefore = textBeforeCursor.replace(/@(\w*)$/, `@${member.name} `);
+    setInput(newBefore + textAfterCursor);
+    setShowMentions(false);
+    setSelectedMentions((prev) => {
+      if (prev.some((m) => m.userId === member.userId)) return prev;
+      return [...prev, member];
+    });
+    textareaRef.current?.focus();
   };
 
   const handleKeyDown = (e) => {
+    if (showMentions && filteredMentionUsers.length > 0) {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setMentionIndex((prev) => Math.min(prev + 1, filteredMentionUsers.length - 1));
+        return;
+      }
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setMentionIndex((prev) => Math.max(prev - 1, 0));
+        return;
+      }
+      if (e.key === 'Enter' || e.key === 'Tab') {
+        e.preventDefault();
+        insertMention(filteredMentionUsers[mentionIndex]);
+        return;
+      }
+      if (e.key === 'Escape') {
+        setShowMentions(false);
+        return;
+      }
+    }
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -280,12 +357,12 @@ export default function ChatBox() {
   return (
     <AppLayout noPadding={true}>
       <div className="flex flex-col h-[calc(100dvh-64px)] p-2 sm:p-4 lg:p-6">
-        <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
+        <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-navy/10 dark:border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
           {/* ── Left: Room List (Desktop) ── */}
           <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
             <div className="p-4 border-b border-white/[0.06]">
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+              <h2 className="text-lg font-bold text-navy dark:text-white flex items-center gap-2">
                 <MessageCircle size={20} className="text-blue-400" /> Chat
               </h2>
               <p className="text-xs text-muted mt-1">
@@ -301,7 +378,7 @@ export default function ChatBox() {
                   className={`w-full text-left px-4 py-3 border-b border-white/[0.04] transition hover:bg-white/[0.03] ${activeRoom === room.name ? 'bg-white/[0.06] border-l-2 border-l-blue-500' : ''}`}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-white flex items-center gap-2.5">
+                    <span className="text-sm font-medium text-navy dark:text-white flex items-center gap-2.5">
                       {getRoomIcon(room.name)} <span className="capitalize">{room.label || room.name.replace('_', ' ')}</span>
                     </span>
                     {room.unreadCount > 0 && (
@@ -312,7 +389,7 @@ export default function ChatBox() {
                   </div>
                   {room.lastMessage && (
                     <p className="text-xs text-muted mt-1 truncate">
-                      <span className="text-white/80">{room.lastMessage.sender}:</span> {room.lastMessage.text}
+                      <span className="text-navy/80 dark:text-white/80">{room.lastMessage.sender}:</span> {room.lastMessage.text}
                     </p>
                   )}
                 </button>
@@ -328,7 +405,7 @@ export default function ChatBox() {
                 onClick={() => setActiveRoom(room.name)}
                 className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${activeRoom === room.name
                   ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                  : 'text-white/70 hover:bg-white/5 border border-transparent'
+                  : 'text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 border border-transparent'
                   }`}
               >
                 {getRoomIcon(room.name)}
@@ -348,7 +425,7 @@ export default function ChatBox() {
             {activeRoom ? (
               <div className="px-3 sm:px-6 py-2 sm:py-3 bg-card border-b border-white/[0.06] flex items-center justify-between shrink-0">
                 <div className="min-w-0">
-                  <h3 className="text-white font-semibold flex items-center gap-2 text-sm sm:text-lg capitalize truncate">
+                  <h3 className="text-navy dark:text-white font-semibold flex items-center gap-2 text-sm sm:text-lg capitalize truncate">
                     {getRoomIcon(activeRoom)} {rooms.find((r) => r.name === activeRoom)?.label || 'Project Chat'}
                   </h3>
                   <div className="flex items-center gap-3 mt-0.5">
@@ -367,7 +444,7 @@ export default function ChatBox() {
                       Clear Chat
                     </button>
                   )}
-                  <button onClick={() => setShowSidebar(!showSidebar)} className="p-2 rounded-lg hover:bg-white/5 text-muted transition">
+                  <button onClick={() => setShowSidebar(!showSidebar)} className="p-2 rounded-lg hover:bg-navy/5 dark:hover:bg-white/5 text-muted transition">
                     <Users size={18} />
                   </button>
                 </div>
@@ -399,7 +476,7 @@ export default function ChatBox() {
                     <div className="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-4">
                       {getRoomIcon(activeRoom)}
                     </div>
-                    <h4 className="text-white font-semibold text-lg capitalize mb-2">Welcome to {rooms.find((r) => r.name === activeRoom)?.label || 'Chat'}</h4>
+                    <h4 className="text-navy dark:text-white font-semibold text-lg capitalize mb-2">Welcome to {rooms.find((r) => r.name === activeRoom)?.label || 'Chat'}</h4>
                     <p className="text-sm text-muted max-w-md leading-relaxed">
                       This is the start of your real-time team conversation.
                       Messages here are securely end-to-end encrypted and visible to everyone with access to this channel.
@@ -412,7 +489,7 @@ export default function ChatBox() {
                 {Object.entries(groupedMessages).map(([date, msgs]) => (
                   <div key={date}>
                     <div className="flex items-center justify-center my-4">
-                      <span className="px-3 py-1 text-[11px] bg-white/5 text-muted rounded-full">{date}</span>
+                      <span className="px-3 py-1 text-[11px] bg-navy/5 dark:bg-white/5 text-muted rounded-full">{date}</span>
                     </div>
                     {msgs.map((msg) => {
                       const mine = isMyMessage(msg);
@@ -425,7 +502,7 @@ export default function ChatBox() {
                                 <img
                                   src={mediaUrl(msg.sender.avatarUrl)}
                                   alt={msg.senderName}
-                                  className="w-8 h-8 rounded-full object-cover bg-white/5"
+                                  className="w-8 h-8 rounded-full object-cover bg-navy/5 dark:bg-white/5"
                                   onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
                                 />
                               ) : null}
@@ -441,7 +518,7 @@ export default function ChatBox() {
                           <div className={`max-w-[85%] sm:max-w-[75%] ${mine ? 'order-2' : ''}`}>
                             {!mine && (
                               <div className="flex items-center gap-2 mb-1">
-                                <span className="text-xs font-bold text-white">{msg.senderName}</span>
+                                <span className="text-xs font-bold text-navy dark:text-white">{msg.senderName}</span>
                                 <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-medium ${ROLE_BADGE_COLORS[msg.senderRole] || 'bg-gray-500/20 text-gray-300'}`}>
                                   {msg.senderRole?.replace('_', ' ')}
                                 </span>
@@ -451,11 +528,23 @@ export default function ChatBox() {
                               onDoubleClick={() => handleDeleteMessage(msg._id)}
                               className={`group relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-sm text-sm sm:text-[15px] cursor-pointer transition-transform hover:scale-[1.01] ${mine
                                 ? 'bg-blue-600 text-white rounded-br-sm'
-                                : 'bg-white/5 text-white rounded-bl-sm border border-white/10'
+                                : 'bg-navy/5 dark:bg-white/5 text-navy dark:text-white rounded-bl-sm border border-navy/10 dark:border-white/10'
                                 }`}
                               title="Double click to delete message"
                             >
-                              <p className="whitespace-pre-wrap break-words leading-relaxed">{msg.message}</p>
+                              {/* Reply Preview */}
+                              {msg.replyTo && (
+                                <div className={`mb-2 px-3 py-1.5 rounded-lg text-xs border-l-2 ${mine ? 'bg-blue-700/50 border-blue-300' : 'bg-navy/5 dark:bg-white/5 border-blue-400'}`}>
+                                  <p className="font-semibold text-[10px] opacity-80">{msg.replyTo.senderName}</p>
+                                  <p className="opacity-70 truncate">{msg.replyTo.message}</p>
+                                </div>
+                              )}
+                              <p className="whitespace-pre-wrap break-words leading-relaxed">{
+                                // Highlight @mentions in the message
+                                msg.message.split(/(@\w+(?:\s\w+)?)/g).map((part, idx) =>
+                                  part.startsWith('@') ? <span key={idx} className="font-bold text-blue-300">{part}</span> : part
+                                )
+                              }</p>
                               {msg.imageUrl && (
                                 <div className="mt-2 relative rounded-lg overflow-hidden max-w-[200px] sm:max-w-[250px]">
                                   <img src={mediaUrl(msg.imageUrl)} alt="Attachment" className="w-full h-auto object-cover rounded-md" />
@@ -466,10 +555,17 @@ export default function ChatBox() {
                                   {formatTime(msg.createdAt)}
                                 </span>
                                 {mine && (
-                                  <span className="text-[10px] text-blue-200">
+                                  <span className="text-[10px] text-blue-200 cursor-default" title={msg.readBy?.length > 1 ? `Read by ${msg.readBy.length - 1} others` : 'Sent'}>
                                     {msg.readBy?.length > 1 ? '✓✓' : '✓'}
                                   </span>
                                 )}
+                                {/* Reply button */}
+                                <button
+                                  onClick={(e) => { e.stopPropagation(); setReplyingTo(msg); textareaRef.current?.focus(); }}
+                                  className="ml-1 text-[10px] text-blue-400 hover:text-blue-300 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+                                >
+                                  <Reply size={10} /> Reply
+                                </button>
                                 {!mine && (
                                   <button
                                     onClick={async (e) => {
@@ -498,7 +594,7 @@ export default function ChatBox() {
                                 )}
                               </div>
                               {msg.translated && (
-                                <p className="mt-1 pt-1 border-t border-white/10 text-xs italic text-white/80">
+                                <p className="mt-1 pt-1 border-t border-navy/10 dark:border-white/10 text-xs italic text-navy/80 dark:text-white/80">
                                   {msg.translatedText}
                                 </p>
                               )}
@@ -512,7 +608,7 @@ export default function ChatBox() {
                                 <img
                                   src={mediaUrl(user.avatarUrl)}
                                   alt={user.name}
-                                  className="w-8 h-8 rounded-full object-cover bg-white/5"
+                                  className="w-8 h-8 rounded-full object-cover bg-navy/5 dark:bg-white/5"
                                   onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
                                 />
                               ) : null}
@@ -551,6 +647,44 @@ export default function ChatBox() {
             {/* Input Area */}
             <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
               
+              {/* Reply Preview Bar */}
+              {replyingTo && (
+                <div className="flex items-center gap-3 mb-2 px-3 py-2 rounded-xl bg-blue-500/10 border border-blue-500/20 animate-slideUp">
+                  <Reply size={14} className="text-blue-400 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[11px] font-semibold text-blue-400">Replying to {replyingTo.senderName}</p>
+                    <p className="text-xs text-navy/60 dark:text-white/60 truncate">{replyingTo.message}</p>
+                  </div>
+                  <button onClick={() => setReplyingTo(null)} className="p-1 rounded-lg hover:bg-navy/5 dark:hover:bg-white/5 text-navy/40 dark:text-white/40 hover:text-navy dark:text-white transition-colors shrink-0">
+                    <X size={14} />
+                  </button>
+                </div>
+              )}
+
+              {/* @Mention Autocomplete Popup */}
+              {showMentions && filteredMentionUsers.length > 0 && (
+                <div className="mb-2 rounded-xl border border-navy/10 dark:border-white/10 bg-card shadow-elevated overflow-hidden animate-slideUp">
+                  <div className="px-3 py-1.5 text-[10px] font-semibold text-muted uppercase tracking-wider border-b border-white/[0.06] flex items-center gap-1">
+                    <AtSign size={10} /> Mention a team member
+                  </div>
+                  {filteredMentionUsers.map((member, idx) => (
+                    <button
+                      key={member.userId}
+                      onClick={() => insertMention(member)}
+                      className={`w-full flex items-center gap-2.5 px-3 py-2 text-sm text-left transition-colors ${idx === mentionIndex ? 'bg-blue-500/15 text-white' : 'text-navy/80 dark:text-white/80 hover:bg-navy/5 dark:hover:bg-white/5'}`}
+                    >
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-[10px] font-bold shrink-0">
+                        {member.name?.charAt(0)?.toUpperCase()}
+                      </div>
+                      <span className="font-medium truncate">{member.name}</span>
+                      <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${ROLE_BADGE_COLORS[member.role] || 'bg-gray-500/20 text-gray-300'}`}>
+                        {member.role?.replace('_', ' ')}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+
               <div className="flex flex-col gap-2">
                 <div className="flex gap-2">
                   <div className="flex-1 relative flex">
@@ -562,7 +696,7 @@ export default function ChatBox() {
                       placeholder={activeRoom ? `Message ${rooms.find(r => r.name === activeRoom)?.label || 'Project Chat'}...` : "Select a project to start"}
                       disabled={!activeRoom}
                       rows={1}
-                      className="w-full px-4 py-3 bg-surface border border-white/10 rounded-2xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
+                      className="w-full px-4 py-3 bg-surface border border-navy/10 dark:border-white/10 rounded-2xl text-navy dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
                       style={{ minHeight: '44px', maxHeight: '120px' }}
                     />
                     {input.length > 1800 && (
@@ -601,7 +735,7 @@ export default function ChatBox() {
                   <button
                     onClick={() => cameraInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-muted hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Take Photo"
                   >
                     <Camera size={18} />
@@ -609,13 +743,13 @@ export default function ChatBox() {
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-white/5 hover:bg-white/10 text-muted hover:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-muted hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Attach File"
                   >
                     <ImageIcon size={18} />
                   </button>
                   
-                  <div className="h-5 w-px bg-white/10 mx-1"></div>
+                  <div className="h-5 w-px bg-navy/10 dark:bg-white/10 mx-1"></div>
                   
                   <VoiceInput onStart={handleVoiceStart} onTranscript={handleVoiceInput} />
                 </div>
@@ -632,8 +766,8 @@ export default function ChatBox() {
               {/* Sidebar */}
               <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[220px] bg-card/95 lg:bg-card backdrop-blur-xl border-l border-white/[0.06] flex flex-col shrink-0 animate-slideUp lg:animate-none">
                 <div className="p-4 border-b border-white/[0.06] flex justify-between items-center">
-                  <h3 className="text-sm font-semibold text-white">Project Team</h3>
-                  <button className="lg:hidden p-1 text-muted hover:text-white" onClick={() => setShowSidebar(false)}>
+                  <h3 className="text-sm font-semibold text-navy dark:text-white">Project Team</h3>
+                  <button className="lg:hidden p-1 text-muted hover:text-navy dark:text-white" onClick={() => setShowSidebar(false)}>
                     <X size={16} />
                   </button>
                 </div>
@@ -647,7 +781,7 @@ export default function ChatBox() {
                             <img
                               src={mediaUrl(u.avatarUrl)}
                               alt={u.name}
-                              className="w-7 h-7 rounded-full object-cover bg-white/5"
+                              className="w-7 h-7 rounded-full object-cover bg-navy/5 dark:bg-white/5"
                               onError={(e) => { e.target.style.display = 'none'; e.target.nextElementSibling.style.display = 'flex'; }}
                             />
                           ) : null}
@@ -662,12 +796,12 @@ export default function ChatBox() {
                           )}
                         </div>
                         <div className="min-w-0 flex-1">
-                          <p className="text-xs text-white truncate">{u.name} {u.userId === user?.id ? '(You)' : ''}</p>
+                          <p className="text-xs text-navy dark:text-white truncate">{u.name} {u.userId === user?.id ? '(You)' : ''}</p>
                           <span className={`text-[10px] px-1 py-0.5 rounded ${ROLE_BADGE_COLORS[u.role] || 'bg-gray-500/20 text-gray-300'}`}>
                             {u.roleLabel || u.role?.replace('_', ' ')}
                           </span>
                           {u.invitedBy && (
-                            <p className="text-[9px] text-white/70 truncate mt-0.5">
+                            <p className="text-[9px] text-navy/70 dark:text-white/70 truncate mt-0.5">
                               Invited by: {u.invitedBy}
                             </p>
                           )}

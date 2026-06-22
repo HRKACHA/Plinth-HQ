@@ -101,7 +101,7 @@ io.on('connection', async (socket) => {
   });
 
   // ── Chat: Send Message ──
-  socket.on('send-message', async ({ message, room = 'general', imageUrl }) => {
+  socket.on('send-message', async ({ message, room = 'general', imageUrl, replyTo, mentions }) => {
     if (!message || !message.trim()) return;
     if (message.length > 2000) return;
 
@@ -115,10 +115,14 @@ io.on('connection', async (socket) => {
         room,
         imageUrl,
         readBy: [userId],
+        replyTo: replyTo || null,
+        mentions: mentions || [],
       });
 
       const populated = await Message.findById(newMsg._id)
         .populate('sender', 'name role roleLabel avatar avatarUrl')
+        .populate('replyTo', 'message senderName')
+        .populate('mentions', 'name')
         .lean();
 
       io.to(room).emit('new-message', populated);
@@ -139,12 +143,21 @@ io.on('connection', async (socket) => {
   });
 
   // ── Chat: Mark as Read ──
-  socket.on('mark-read', async ({ messageId }) => {
+  socket.on('mark-read', async ({ messageId, room }) => {
     try {
-      await Message.findByIdAndUpdate(messageId, {
-        $addToSet: { readBy: userId },
-      });
-      // Could emit 'message:read' to room if needed
+      const msg = await Message.findByIdAndUpdate(
+        messageId,
+        { $addToSet: { readBy: userId } },
+        { new: true }
+      );
+      if (msg && room) {
+        io.to(room).emit('message:read', {
+          messageId,
+          readBy: msg.readBy,
+          userId: userData.userId,
+          name: userData.name,
+        });
+      }
     } catch (err) {
       console.error('[Socket] Error marking read:', err.message);
     }

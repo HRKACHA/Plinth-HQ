@@ -99,7 +99,7 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       <button
         type="button"
         onClick={() => setShowLangs(!showLangs)}
-        className="p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700 transition text-gray-400 hover:text-white"
+        className="p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700 transition text-gray-400 hover:text-navy dark:text-white"
         title="Select Language"
       >
         <Languages className="w-4 h-4" />

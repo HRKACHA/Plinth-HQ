@@ -53,9 +53,9 @@ function renderMessage(text) {
       const rows = tableBuffer.slice(2).map(parseRow);
       
       elements.push(
-        <div key={`table-${elements.length}`} className="my-3 w-full overflow-x-auto rounded-lg border border-[var(--color-glass-border)] bg-white/5 dark:bg-white/5">
+        <div key={`table-${elements.length}`} className="my-3 w-full overflow-x-auto rounded-lg border border-[var(--color-glass-border)] bg-navy/5 dark:bg-white/5 dark:bg-navy/5 dark:bg-white/5">
           <table className="w-full text-left text-sm text-navy">
-            <thead className="bg-white/10 dark:bg-white/10 text-xs font-semibold uppercase tracking-wider">
+            <thead className="bg-navy/10 dark:bg-white/10 dark:bg-navy/10 dark:bg-white/10 text-xs font-semibold uppercase tracking-wider">
               <tr>
                 {headers.map((h, i) => (
                   <th key={i} className="px-3 py-2 border-b border-[var(--color-glass-border)]" dangerouslySetInnerHTML={{ __html: inlineFormat(h) }} />
@@ -64,7 +64,7 @@ function renderMessage(text) {
             </thead>
             <tbody className="divide-y divide-[var(--color-glass-border)]">
               {rows.map((row, i) => (
-                <tr key={i} className="hover:bg-white/5 transition-colors">
+                <tr key={i} className="hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
                   {headers.map((_, j) => (
                     <td key={j} className="px-3 py-2 whitespace-nowrap" dangerouslySetInnerHTML={{ __html: inlineFormat(row[j] || '') }} />
                   ))}
@@ -86,7 +86,7 @@ function renderMessage(text) {
     if (line.trim().startsWith('```')) {
       if (inCodeBlock) {
         elements.push(
-          <pre key={`code-${elements.length}`} className="my-2 rounded-lg bg-white/5 dark:bg-white/5 p-3 overflow-x-auto border border-[var(--color-glass-border)]">
+          <pre key={`code-${elements.length}`} className="my-2 rounded-lg bg-navy/5 dark:bg-white/5 dark:bg-navy/5 dark:bg-white/5 p-3 overflow-x-auto border border-[var(--color-glass-border)]">
             <code className="text-xs font-mono text-navy">{codeBuffer.join('\n')}</code>
           </pre>
         );
@@ -185,7 +185,7 @@ function inlineFormat(text) {
   // Italic
   result = result.replace(/\*(.+?)\*/g, '<em>$1</em>');
   // Inline code
-  result = result.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-white/5 dark:bg-white/10 text-xs font-mono">$1</code>');
+  result = result.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-navy/5 dark:bg-white/5 dark:bg-navy/10 dark:bg-white/10 text-xs font-mono">$1</code>');
   // Citation markers like [IS 456:2000 §26.5.1.1]
   result = result.replace(/\[([A-Z][A-Z\s\d:.§/()–-]+)\]/g, '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-orange/10 text-orange-dark text-[11px] font-semibold cursor-help border border-orange/20" title="$1">📋 $1</span>');
   return result;
@@ -383,7 +383,7 @@ export default function PlinthAIChatbot() {
         aria-label={isOpen ? 'Close PlinthAI' : 'Open PlinthAI'}
       >
         {isOpen && !isMinimized ? (
-          <X className="h-5 w-5 sm:h-6 sm:w-6 text-white transition-transform duration-300" />
+          <X className="h-5 w-5 sm:h-6 sm:w-6 text-navy dark:text-white transition-transform duration-300" />
         ) : (
           <>
             <img
@@ -441,7 +441,7 @@ export default function PlinthAIChatbot() {
             <div className="flex items-center gap-1">
               <button
                 onClick={handleMinimize}
-                className="rounded-lg p-1.5 text-muted hover:bg-white/5 hover:text-navy transition"
+                className="rounded-lg p-1.5 text-muted hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy transition"
                 title="Minimize"
               >
                 <Minus className="h-4 w-4" />
@@ -482,7 +482,7 @@ export default function PlinthAIChatbot() {
                 {msg.role === 'assistant' && (
                   <div className="shrink-0 mt-0.5">
                     <div className="h-7 w-7 rounded-full bg-gradient-to-br from-orange to-orange-dark flex items-center justify-center shadow-md">
-                      <Sparkles className="h-3.5 w-3.5 text-white" />
+                      <Sparkles className="h-3.5 w-3.5 text-navy dark:text-white" />
                     </div>
                   </div>
                 )}
@@ -547,7 +547,7 @@ export default function PlinthAIChatbot() {
               <div className="flex gap-2.5 animate-slideUp">
                 <div className="shrink-0 mt-0.5">
                   <div className="h-7 w-7 rounded-full bg-gradient-to-br from-orange to-orange-dark flex items-center justify-center shadow-md">
-                    <Sparkles className="h-3.5 w-3.5 text-white" />
+                    <Sparkles className="h-3.5 w-3.5 text-navy dark:text-white" />
                   </div>
                 </div>
                 <div className="bg-surface border border-[var(--color-glass-border)] rounded-2xl rounded-bl-md px-4 py-3">
@@ -621,7 +621,7 @@ export default function PlinthAIChatbot() {
                   className={`flex items-center justify-center h-8 w-8 rounded-lg transition-all duration-300 ${
                     input.trim() && !loading
                       ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95'
-                      : 'bg-white/5 text-muted/40 cursor-not-allowed'
+                      : 'bg-navy/5 dark:bg-white/5 text-muted/40 cursor-not-allowed'
                   }`}
                 >
                   <Send className="h-4 w-4" />

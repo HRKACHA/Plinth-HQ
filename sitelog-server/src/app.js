@@ -21,6 +21,7 @@ import inviteRoutes from './routes/invite.js';
 import teamRoutes from './routes/team.js';
 import chatRoutes from './routes/chat.js';
 import searchRoutes from './routes/search.js';
+import activityRoutes from './routes/activity.js';
 import { protect } from './middleware/auth.js';
 import globalErrorHandler, { notFound } from './middleware/errorHandler.js';
 
@@ -59,6 +60,7 @@ app.use('/api/v1/invite', inviteRoutes);
 app.use('/api/v1/team', teamRoutes);
 app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/search', searchRoutes);
+app.use('/api/v1/activity', activityRoutes);
 
 app.use(notFound);
 app.use(globalErrorHandler);

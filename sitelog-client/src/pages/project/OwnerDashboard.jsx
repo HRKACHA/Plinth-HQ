@@ -25,7 +25,7 @@ export default function OwnerDashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl bg-white/5 border border-navy/10 p-4 flex items-center justify-between">
+      <div className="rounded-xl bg-navy/5 dark:bg-white/5 border border-navy/10 p-4 flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-navy">Owner View — Read Only</p>
           <p className="text-xs text-muted">{shareLink || 'Generate a secure share link for building owners'}</p>

@@ -185,3 +185,9 @@ export const chatApi = {
 export const searchApi = {
   global: (query) => api.get('/search', { params: { q: query, _t: Date.now() } }).then((r) => r.data.data),
 };
+
+// ── Activity API ──
+export const activityApi = {
+  feed: () => api.get('/activity').then((r) => r.data.data),
+};
+
