@@ -66,39 +66,65 @@ export default function Dashboard() {
         return;
       }
       
+      let fallbackLat, fallbackLon, fallbackCity = 'Local Site';
+      try {
+        const fallbackGeo = await fetch('https://ipapi.co/json/').then(r => r.json());
+        fallbackLat = fallbackGeo.latitude;
+        fallbackLon = fallbackGeo.longitude;
+        fallbackCity = fallbackGeo.city || 'Local Site';
+      } catch (e) {
+        console.error("Fallback geo failed");
+      }
+
       const weatherResults = [];
       const uniqueCities = [...new Set(projects.map(p => p.location?.city || p.location))].filter(Boolean);
       
       const geoMap = {};
       for (const city of uniqueCities) {
          try {
-           const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`);
+           const cleanCity = typeof city === 'string' ? city : String(city);
+           const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cleanCity)}&count=1&language=en&format=json`);
            const geo = await geoRes.json();
            if (geo.results && geo.results.length > 0) {
              geoMap[city] = { lat: geo.results[0].latitude, lon: geo.results[0].longitude };
            }
-         } catch(e) {}
+         } catch(e) {
+           console.error("Geocode error for", city, e);
+         }
       }
       
       for (const proj of projects) {
-         const city = proj.location?.city || proj.location;
-         let weatherObj = { temp: '--', condition: 'Unavailable', icon: Sun, city: city || 'Unknown', projectId: proj._id || proj.id, projectName: proj.name };
+         const city = proj.location?.city || proj.location || 'Unknown';
+         let weatherObj = { temp: '--', condition: 'Unavailable', icon: Sun, city: city, projectId: proj._id || proj.id, projectName: proj.name };
          
-         if (city && geoMap[city]) {
+         let lat = fallbackLat;
+         let lon = fallbackLon;
+         let resolvedCity = fallbackCity;
+         
+         if (geoMap[city]) {
+            lat = geoMap[city].lat;
+            lon = geoMap[city].lon;
+            resolvedCity = typeof city === 'string' ? city : resolvedCity;
+         }
+
+         if (lat && lon) {
             try {
-              const { lat, lon } = geoMap[city];
               const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
               const w = await wRes.json();
-              const code = w.current_weather.weathercode;
-              let condition = 'Clear'; let Icon = Sun;
-              if (code >= 1 && code <= 3) { condition = 'Cloudy'; Icon = Cloud; }
-              if (code >= 45 && code <= 48) { condition = 'Foggy'; Icon = CloudFog; }
-              if (code >= 51 && code <= 67) { condition = 'Rainy'; Icon = CloudRain; }
-              if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
-              if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
-              if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon };
-            } catch(e) {}
+              if (w.current_weather) {
+                const code = w.current_weather.weathercode;
+                let condition = 'Clear'; let Icon = Sun;
+                if (code >= 1 && code <= 3) { condition = 'Cloudy'; Icon = Cloud; }
+                if (code >= 45 && code <= 48) { condition = 'Foggy'; Icon = CloudFog; }
+                if (code >= 51 && code <= 67) { condition = 'Rainy'; Icon = CloudRain; }
+                if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
+                if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
+                if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
+                weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: resolvedCity };
+              }
+            } catch(e) {
+              console.error("Weather fetch failed for", proj.name, e);
+            }
          }
          weatherResults.push(weatherObj);
       }
