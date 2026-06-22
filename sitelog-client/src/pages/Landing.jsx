@@ -46,6 +46,7 @@ export default function Landing() {
           <div className="col-span-2 flex justify-end items-center gap-4">
             <Link to="/" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
             <Link to="/about" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
+            <Link to="/sitemap" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">Sitemap</Link>
             {!user ? (
               <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Sign In</Link>
             ) : (

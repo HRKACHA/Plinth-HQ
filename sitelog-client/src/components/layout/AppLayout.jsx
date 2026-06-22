@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, FolderKanban, Bell, Settings, Users, CreditCard,
   Truck, LogOut, Menu, X, Search, User, Sun, Moon, ChevronDown, MessageCircle,
-  Package, Wrench, Shield, UserCog, PanelLeftClose, PanelLeftOpen, Globe, Info, Receipt, FileText
+  Package, Wrench, Shield, UserCog, PanelLeftClose, PanelLeftOpen, Globe, Info, Receipt, FileText, Map
 } from 'lucide-react';
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth } from '../../context/AuthContext';
@@ -29,6 +29,7 @@ const operationsItems = [
 const accountItems = [
   { path: '/billing', label: 'Billing', desc: 'Plan, Payments & Invoices', icon: CreditCard },
   { path: '/settings', label: 'Settings', desc: 'Profile & Preferences', icon: Settings },
+  { path: '/sitemap', label: 'Sitemap', desc: 'Overview of all pages', icon: Map },
 ];
 
 export default function AppLayout({ children, title, backTo, noPadding = false }) {

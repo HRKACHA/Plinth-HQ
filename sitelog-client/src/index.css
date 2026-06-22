@@ -161,8 +161,10 @@
     pointer-events: none;
   }
   .btn-primary:hover {
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.20);
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 16px 40px rgba(66, 133, 244, 0.40);
+    background: linear-gradient(135deg, rgb(var(--color-orange-light)), rgb(var(--color-orange)));
   }
 
   .btn-secondary {
@@ -193,9 +195,10 @@
     pointer-events: none;
   }
   .btn-accent:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.14);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.20);
+    transform: translateY(-2px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 16px 40px rgba(66, 133, 244, 0.40);
+    background: linear-gradient(135deg, rgb(var(--color-orange-light)), rgb(var(--color-orange)));
   }
 
   .btn-danger {

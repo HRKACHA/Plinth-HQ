@@ -201,6 +201,7 @@ export default function About() {
           <div className="col-span-2 flex justify-end items-center gap-4">
             <Link to="/" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">Home</Link>
             <Link to="/about" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">About</Link>
+            <Link to="/sitemap" className="hidden sm:block text-sm font-medium text-white/70 hover:text-white transition-colors">Sitemap</Link>
             {!user ? (
               <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Sign In</Link>
             ) : (
@@ -608,7 +609,10 @@ export default function About() {
       <footer className="relative z-10 liquid-glass rounded-none py-12" style={{ borderLeft: 'none', borderRight: 'none', borderBottom: 'none' }}>
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row lg:px-8">
           <PlinthLogo size="xs" variant="full" />
-          <p className="text-sm text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+          <div className="flex items-center gap-6">
+            <Link to="/sitemap" className="text-sm text-white/60 hover:text-white transition-colors">Sitemap</Link>
+            <p className="text-sm text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
