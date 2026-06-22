@@ -251,7 +251,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stat cards */}
-        <div className="grid gap-3 sm:gap-4 grid-cols-2 xl:grid-cols-4 mb-6 sm:mb-8">
+        <div className="grid gap-3 sm:gap-4 grid-cols-2 xl:grid-cols-4 mb-6 sm:mb-8 relative z-50">
           <StatCard label="Active Projects" value={activeProjects} sub={`${safeProjects.length} total`} icon={FolderKanban} accent="navy" />
           <StatCard label="Total Budget" value={formatCompactCurrency(displayBudget)} sub={budgetFilter === 'all' ? "Across all projects" : safeProjects.find(p => (p._id || p.id) === budgetFilter)?.name} icon={IndianRupee} accent="orange">
             <GlassSelect
