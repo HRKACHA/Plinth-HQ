@@ -41,9 +41,9 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 min-w-[160px] animate-fadeIn">
+        <div className="absolute right-0 top-full z-50 mt-2 w-max min-w-[160px] max-w-[300px] animate-fadeIn">
           <div className="rounded-xl overflow-hidden" style={{ background: 'rgba(16,18,24,0.90)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 16px 48px rgba(0,0,0,0.4)' }}>
-            <div className="py-1.5 max-h-48 overflow-y-auto scrollbar-hide">
+            <div className="py-1.5 max-h-48 overflow-y-auto overflow-x-hidden scrollbar-hide">
               {options.map((opt) => (
                 <button
                   key={opt.value}

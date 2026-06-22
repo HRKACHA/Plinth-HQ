@@ -270,10 +270,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   <span className="truncate max-w-[160px]">{location.pathname.includes('/projects/') ? projects.find(p => location.pathname.includes(p._id || p.id))?.name || 'Select Project' : 'Select Project'}</span>
                   <ChevronDown className="h-4 w-4 text-white/60" />
                 </button>
-                <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
+                <div className="absolute right-0 top-full mt-2 w-max min-w-[260px] max-w-[320px] rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
                   style={{ background: 'rgba(16,18,24,0.88)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <p className="px-3 py-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Your Projects</p>
-                  <div className="max-h-60 overflow-y-auto">
+                  <div className="max-h-60 overflow-y-auto overflow-x-hidden">
                     {projects.map(p => (
                       <Link
                         key={p._id || p.id}
