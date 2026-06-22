@@ -312,7 +312,7 @@ export default function ChatBox() {
                   </div>
                   {room.lastMessage && (
                     <p className="text-xs text-muted mt-1 truncate">
-                      <span className="text-white/60">{room.lastMessage.sender}:</span> {room.lastMessage.text}
+                      <span className="text-white/80">{room.lastMessage.sender}:</span> {room.lastMessage.text}
                     </p>
                   )}
                 </button>
@@ -328,7 +328,7 @@ export default function ChatBox() {
                 onClick={() => setActiveRoom(room.name)}
                 className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${activeRoom === room.name
                   ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                  : 'text-white/50 hover:bg-white/5 border border-transparent'
+                  : 'text-white/70 hover:bg-white/5 border border-transparent'
                   }`}
               >
                 {getRoomIcon(room.name)}
@@ -667,7 +667,7 @@ export default function ChatBox() {
                             {u.roleLabel || u.role?.replace('_', ' ')}
                           </span>
                           {u.invitedBy && (
-                            <p className="text-[9px] text-white/50 truncate mt-0.5">
+                            <p className="text-[9px] text-white/70 truncate mt-0.5">
                               Invited by: {u.invitedBy}
                             </p>
                           )}

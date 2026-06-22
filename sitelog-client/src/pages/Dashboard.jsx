@@ -241,7 +241,7 @@ export default function Dashboard() {
             <h2 className="font-display text-xl sm:text-2xl font-bold text-navy lg:text-3xl tracking-tight">
               {greeting}, <span className="text-orange">{user?.name?.split(' ')[0]}</span>
             </h2>
-            <p className="mt-1 text-sm text-white/30">
+            <p className="mt-1 text-sm text-white/60">
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -312,7 +312,7 @@ export default function Dashboard() {
                     <FolderKanban className="h-8 w-8 text-white/20" />
                   </div>
                   <h4 className="mt-5 text-base font-bold text-navy tracking-tight">No projects yet</h4>
-                  <p className="mt-2 max-w-xs text-sm text-white/30">
+                  <p className="mt-2 max-w-xs text-sm text-white/60">
                     Create your first project to start tracking daily logs, budgets, and milestones.
                   </p>
                   <Link to="/projects" className="btn-accent mt-6">
@@ -330,9 +330,9 @@ export default function Dashboard() {
               <div className="relative p-6" style={{ background: 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' }}>
                 <div className="flex items-center justify-between relative z-10">
                   <div>
-                    <p className="text-sm text-white/50 font-semibold tracking-wide uppercase">Site Weather • {weatherData.city}</p>
+                    <p className="text-sm text-white/70 font-semibold tracking-wide uppercase">Site Weather • {weatherData.city}</p>
                     <p className="mt-1 font-mono text-4xl font-bold tracking-tight text-white">{weatherData.temp}</p>
-                    <p className="mt-2 text-xs text-white/40 font-medium px-2 py-1 rounded-md inline-block" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>{weatherData.condition}</p>
+                    <p className="mt-2 text-xs text-white/70 font-medium px-2 py-1 rounded-md inline-block" style={{ background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(8px)' }}>{weatherData.condition}</p>
                   </div>
                   <weatherData.icon className="h-16 w-16 text-white/10" />
                 </div>
@@ -400,7 +400,7 @@ export default function Dashboard() {
                   )}
                 </form>
               ) : (
-                <p className="text-sm text-white/30">Create a project first</p>
+                <p className="text-sm text-white/60">Create a project first</p>
               )}
             </div>
 
@@ -421,12 +421,12 @@ export default function Dashboard() {
                     style={{ borderColor: !n.isRead ? undefined : 'transparent' }}
                   >
                     <p className="text-sm font-semibold text-navy">{n.title}</p>
-                    <p className="mt-1 text-xs text-white/30 line-clamp-2">{n.body}</p>
+                    <p className="mt-1 text-xs text-white/60 line-clamp-2">{n.body}</p>
                   </Link>
                 ))}
                 {!safeNotifications.length && (
                   <div className="text-center py-6 rounded-xl" style={{ border: '1px dashed rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.02)' }}>
-                    <p className="text-sm font-medium text-white/30">No notifications yet</p>
+                    <p className="text-sm font-medium text-white/60">No notifications yet</p>
                   </div>
                 )}
               </div>
@@ -485,7 +485,7 @@ export default function Dashboard() {
                 <label className="mb-1.5 block text-sm font-semibold text-navy">Cover Photo</label>
                 <div className="flex items-center gap-4">
                   <label className="flex-1 cursor-pointer">
-                    <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-white/60 transition-colors hover:text-orange"
+                    <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-white/80 transition-colors hover:text-orange"
                       style={{ border: '1px dashed rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.02)' }}>
                       <Upload className="h-5 w-5" />
                       <span>Click to upload image</span>

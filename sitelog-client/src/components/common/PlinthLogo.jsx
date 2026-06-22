@@ -35,7 +35,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
             <span className="text-white transition-colors duration-300">PLINTH </span>
             <span className="text-orange transition-colors duration-300">HQ</span>
           </span>
-          <span className={`${size === 'xs' || size === 'sm' ? 'text-[0.35em] mt-0.5' : 'text-[0.28em] mt-1'} font-bold tracking-[0.25em] text-white/50 whitespace-nowrap transition-colors duration-300 uppercase`}>
+          <span className={`${size === 'xs' || size === 'sm' ? 'text-[0.35em] mt-0.5' : 'text-[0.28em] mt-1'} font-bold tracking-[0.25em] text-white/70 whitespace-nowrap transition-colors duration-300 uppercase`}>
             FOUNDATION TO FINISH.
           </span>
         </div>

@@ -18,7 +18,7 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
   const accentColors = {
     orange: 'text-orange hover:text-orange-light',
     danger: 'text-danger hover:text-red-400',
-    navy: 'text-white/60 hover:text-white',
+    navy: 'text-white/80 hover:text-white',
     success: 'text-success hover:text-green-400',
   };
 
@@ -56,7 +56,7 @@ export default function GlassSelect({ value, onChange, options = [], accent = 'o
                   className={`flex w-full items-center gap-2.5 px-3.5 py-2 text-xs font-medium transition-colors duration-150
                     ${value === opt.value
                       ? `${accentColors[accent]} bg-white/5`
-                      : 'text-white/60 hover:bg-white/5 hover:text-white'
+                      : 'text-white/80 hover:bg-white/5 hover:text-white'
                     }`}
                 >
                   <span className={`h-1.5 w-1.5 shrink-0 rounded-full transition-all ${value === opt.value ? accentDot[accent] : 'bg-transparent'}`} />

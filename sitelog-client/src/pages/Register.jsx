@@ -183,7 +183,7 @@ export default function Register() {
         </div>
         <div className="relative z-10 max-w-lg">
           <h2 className="font-display text-4xl font-bold text-white tracking-tight leading-tight">Start managing your construction sites digitally.</h2>
-          <p className="mt-6 text-lg text-white/40 leading-relaxed">
+          <p className="mt-6 text-lg text-white/70 leading-relaxed">
             Join thousands of professionals using PlinthHQ to streamline their construction workflows from foundation to finish.
           </p>
         </div>

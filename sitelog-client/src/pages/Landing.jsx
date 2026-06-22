@@ -59,7 +59,7 @@ export default function Landing() {
       <section className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 80px)' }}>        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
           <div className="max-w-4xl w-full space-y-8">
             <div className="inline-block animate-slideUp">
-              <span className="py-1 px-3 rounded-full text-xs font-mono text-white/60 tracking-widest uppercase"
+              <span className="py-1 px-3 rounded-full text-xs font-mono text-white/80 tracking-widest uppercase"
                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
                 <Building2 className="h-3 w-3 inline mr-1.5 -mt-0.5" /> Enterprise Construction Platform
               </span>
@@ -71,11 +71,18 @@ export default function Landing() {
               isAboutPage={false} 
             />
 
-            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/50 font-light leading-relaxed mt-6">
+            <div className="mt-8 flex flex-wrap justify-center gap-3 animate-slideUp" style={{ animationDelay: '0.1s' }}>
+              <span className="badge bg-white/5 text-white/80 border-white/10 px-3 py-1 text-sm">Real-time Sync</span>
+              <span className="badge bg-white/5 text-white/80 border-white/10 px-3 py-1 text-sm">Cloud Storage</span>
+              <span className="badge bg-white/5 text-white/80 border-white/10 px-3 py-1 text-sm">Offline Mode</span>
+              <span className="badge bg-white/5 text-white/80 border-white/10 px-3 py-1 text-sm">Owner Dashboards</span>
+            </div>
+
+            <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/70 font-light leading-relaxed mt-6 animate-slideUp" style={{ animationDelay: '0.2s' }}>
               Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
             </p>
 
-            <div className="pt-8 flex justify-center">
+            <div className="pt-8 flex justify-center animate-slideUp" style={{ animationDelay: '0.3s' }}>
               <Link to="/register" className="btn-accent px-12 py-3.5 text-base shadow-glow">
                 Get Started
               </Link>
@@ -90,7 +97,7 @@ export default function Landing() {
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="font-mono text-3xl font-bold text-white tracking-tight">{value}</p>
-              <p className="mt-1.5 text-sm text-white/40 font-medium">{label}</p>
+              <p className="mt-1.5 text-sm text-white/70 font-medium">{label}</p>
             </div>
           ))}
         </div>
@@ -100,7 +107,7 @@ export default function Landing() {
       <section className="mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight">Built for the field, trusted by owners</h2>
-          <p className="mt-5 text-lg text-white/40 leading-relaxed">
+          <p className="mt-5 text-lg text-white/70 leading-relaxed">
             Every module designed around real construction workflows — from daily diary entries to milestone sign-offs.
           </p>
         </div>
@@ -112,7 +119,7 @@ export default function Landing() {
                 <Icon className="h-6 w-6 text-orange" />
               </div>
               <h3 className="font-semibold text-white text-lg tracking-tight">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/40">{desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-white/70">{desc}</p>
             </div>
           ))}
         </div>
@@ -127,7 +134,7 @@ export default function Landing() {
         }} />
         <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
           <h2 className="font-display text-3xl font-bold lg:text-4xl tracking-tight text-white">Ready to digitise your construction site?</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/40 leading-relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70 leading-relaxed">
             Join forward-thinking contractors who reduced project overruns by 30% with PlinthHQ&apos;s real-time accountability and owner visibility.
           </p>
           <Link to="/register" className="btn-accent mt-10 inline-flex px-10 py-4 text-base shadow-glow">
@@ -140,7 +147,7 @@ export default function Landing() {
       <footer className="liquid-glass rounded-none py-12" style={{ borderLeft: 'none', borderRight: 'none', borderBottom: 'none' }}>
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row lg:px-8">
           <PlinthLogo size="xs" variant="full" />
-          <p className="text-sm text-white/30">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+          <p className="text-sm text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
         </div>
       </footer>
     </div>

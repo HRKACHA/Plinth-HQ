@@ -16,12 +16,12 @@ export const uploadDocument = catchAsync(async (req, res) => {
     project: req.params.id,
     name: req.body.name || req.file.originalname,
     type: req.body.type || 'other',
-    fileUrl: `/uploads/${req.file.filename}`,
+    fileUrl: req.file.path,
     fileSize: req.file.size,
     mimeType: req.file.mimetype,
     tags: req.body.tags ? JSON.parse(req.body.tags) : [],
     uploadedBy: req.user._id,
-    versions: [{ url: `/uploads/${req.file.filename}`, version: 1, uploadedAt: new Date(), uploadedBy: req.user._id }],
+    versions: [{ url: req.file.path, version: 1, uploadedAt: new Date(), uploadedBy: req.user._id }],
   });
 
   res.status(201).json({ success: true, data: doc });

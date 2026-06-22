@@ -94,7 +94,7 @@ export default function Login() {
         </div>
         <div className="relative z-10 max-w-lg">
           <h2 className="font-display text-4xl font-bold text-white tracking-tight leading-tight">Welcome back to your site command center.</h2>
-          <p className="mt-6 text-lg text-white/40 leading-relaxed">
+          <p className="mt-6 text-lg text-white/70 leading-relaxed">
             Monitor projects, review daily logs, track budgets, and keep owners informed — all from one powerful platform.
           </p>
         </div>

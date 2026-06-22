@@ -166,7 +166,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 key={path}
                 to={path}
                 title={isCollapsed ? label : ""}
-                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}
+                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}
               >
                 <Icon className="h-4 w-4 shrink-0" />
                 {!isCollapsed && <span className="truncate">{label}</span>}
@@ -185,13 +185,13 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 title={isCollapsed ? label + (comingSoon ? ' (Soon)' : '') : ""}
                 onClick={() => { if (!comingSoon) navigate(path); }}
                 disabled={comingSoon}
-                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5 w-full text-left'} rounded-xl text-sm font-medium transition-all ${comingSoon ? 'opacity-40 cursor-not-allowed' : isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}
+                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5 w-full text-left'} rounded-xl text-sm font-medium transition-all ${comingSoon ? 'opacity-40 cursor-not-allowed' : isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}
               >
                 <Icon className="h-4 w-4 shrink-0" />
                 {!isCollapsed && (
                   <div className="flex-1 flex items-center justify-between min-w-0">
                     <span className="truncate">{label}</span>
-                    {comingSoon && <span className="text-[9px] text-white/30 bg-white/5 px-1 py-0.5 rounded shrink-0 ml-1">Soon</span>}
+                    {comingSoon && <span className="text-[9px] text-white/60 bg-white/5 px-1 py-0.5 rounded shrink-0 ml-1">Soon</span>}
                   </div>
                 )}
               </button>
@@ -209,7 +209,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 key={path}
                 to={path}
                 title={isCollapsed ? label : ""}
-                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}
+                className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}
               >
                 <Icon className="h-4 w-4 shrink-0" />
                 {!isCollapsed && <span className="truncate">{label}</span>}
@@ -221,7 +221,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           <div className="pt-4 mt-4 relative" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'w-full gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium text-white/30 hover:text-white hover:bg-white/5 transition-all`}
+              className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'w-full gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-all`}
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
               {isCollapsed ? <PanelLeftOpen className="h-4 w-4 shrink-0" /> : <PanelLeftClose className="h-4 w-4 shrink-0" />}
@@ -242,7 +242,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             {/* Mobile hamburger */}
             <button
               type="button"
-              className="lg:hidden rounded-xl p-2 text-white/60 hover:bg-white/5 transition-colors"
+              className="lg:hidden rounded-xl p-2 text-white/80 hover:bg-white/5 transition-colors"
               onClick={() => setMobileOpen(true)}
             >
               <Menu className="h-5 w-5" />
@@ -264,15 +264,15 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             {/* Project Selector */}
             {projects && projects.length > 0 && (
               <div className="hidden md:flex relative group mr-2">
-                <button className="flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium text-white/60 transition-all hover:text-white hover:bg-white/5"
+                <button className="flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium text-white/80 transition-all hover:text-white hover:bg-white/5"
                   style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
                   <FolderKanban className="h-4 w-4 text-orange" />
                   <span className="truncate max-w-[160px]">{location.pathname.includes('/projects/') ? projects.find(p => location.pathname.includes(p._id || p.id))?.name || 'Select Project' : 'Select Project'}</span>
-                  <ChevronDown className="h-4 w-4 text-white/30" />
+                  <ChevronDown className="h-4 w-4 text-white/60" />
                 </button>
                 <div className="absolute right-0 top-full mt-2 w-64 rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
                   style={{ background: 'rgba(16,18,24,0.88)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <p className="px-3 py-2 text-xs font-semibold text-white/30 uppercase tracking-wider">Your Projects</p>
+                  <p className="px-3 py-2 text-xs font-semibold text-white/60 uppercase tracking-wider">Your Projects</p>
                   <div className="max-h-60 overflow-y-auto">
                     {projects.map(p => (
                       <Link
@@ -292,7 +292,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             )}
 
             <button
-              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-white/40 transition-all hover:text-white hover:bg-white/5"
+              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-white/70 transition-all hover:text-white hover:bg-white/5"
               style={{ border: '1px solid rgba(255,255,255,0.06)' }}
               onClick={() => setSearchOpen(true)}
             >
@@ -301,15 +301,15 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
               <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>⌘K</kbd>
             </button>
 
-            <Link to="/about" className="rounded-full p-2 text-white/40 hover:bg-white/5 hover:text-white transition-all" title="About PlinthHQ">
+            <Link to="/about" className="rounded-full p-2 text-white/70 hover:bg-white/5 hover:text-white transition-all" title="About PlinthHQ">
               <Info className="h-4 w-4" />
             </Link>
 
-            <Link to="/" className="rounded-full p-2 text-white/40 hover:bg-white/5 hover:text-white transition-all" title="Back to Website">
+            <Link to="/" className="rounded-full p-2 text-white/70 hover:bg-white/5 hover:text-white transition-all" title="Back to Website">
               <Globe className="h-4 w-4" />
             </Link>
 
-            <Link to="/notifications" className="relative rounded-full p-2 text-white/40 hover:bg-white/5 hover:text-white transition-all">
+            <Link to="/notifications" className="relative rounded-full p-2 text-white/70 hover:bg-white/5 hover:text-white transition-all">
               <Bell className="h-4 w-4" />
               {unreadCount > 0 && (
                 <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white">
@@ -326,7 +326,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 </div>
                 <div className="hidden md:block text-left min-w-0">
                   <p className="text-sm font-semibold text-navy truncate max-w-[100px]">{user?.name}</p>
-                  <p className="text-[10px] text-white/30">{user?.role}</p>
+                  <p className="text-[10px] text-white/60">{user?.role}</p>
                 </div>
               </button>
 
@@ -373,31 +373,31 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             style={{ background: 'rgba(16,18,24,0.92)', backdropFilter: 'blur(24px) saturate(180%)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
             <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
               <PlinthLogo size="sm" />
-              <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-white/40 hover:text-white hover:bg-white/5 transition-colors">
+              <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-white/70 hover:text-white hover:bg-white/5 transition-colors">
                 <X className="h-5 w-5" />
               </button>
             </div>
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
               {directNavItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon }) => (
-                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
+                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}>
                   <Icon className="h-4 w-4" /> {label}
                 </Link>
               ))}
 
               <p className="px-3 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/20">Operations</p>
               {operationsItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon, comingSoon }) => (
-                <button key={path} type="button" onClick={() => { if (!comingSoon) { navigate(path); setMobileOpen(false); } }} disabled={comingSoon} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all w-full text-left ${comingSoon ? 'opacity-40' : isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
+                <button key={path} type="button" onClick={() => { if (!comingSoon) { navigate(path); setMobileOpen(false); } }} disabled={comingSoon} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all w-full text-left ${comingSoon ? 'opacity-40' : isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}>
                   <Icon className="h-4 w-4" />
                   <div>
                     <span>{label}</span>
-                    {comingSoon && <span className="ml-1.5 text-[9px] text-white/30 bg-white/5 px-1 py-0.5 rounded">Soon</span>}
+                    {comingSoon && <span className="ml-1.5 text-[9px] text-white/60 bg-white/5 px-1 py-0.5 rounded">Soon</span>}
                   </div>
                 </button>
               ))}
 
               <p className="px-3 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-white/20">Account</p>
               {accountItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon }) => (
-                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/60 hover:bg-white/5 hover:text-white'}`}>
+                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-white/80 hover:bg-white/5 hover:text-white'}`}>
                   <Icon className="h-4 w-4" /> {label}
                 </Link>
               ))}
@@ -411,24 +411,24 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: 'rgba(0,0,0,0.40)' }} onClick={() => setSearchOpen(false)}>
           <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: 'rgba(16,18,24,0.90)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid rgba(255,255,255,0.08)' }} onClick={e => e.stopPropagation()}>
             <div className="flex items-center gap-3 p-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-              <Search className="h-5 w-5 text-white/30" />
+              <Search className="h-5 w-5 text-white/60" />
               <input autoFocus type="text" className="flex-1 bg-transparent text-white outline-none text-lg placeholder:text-white/20" placeholder="Search projects, pages, team..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-              <button onClick={() => setSearchOpen(false)} className="rounded-lg p-1 hover:bg-white/5 text-white/30 transition-colors"><X className="h-5 w-5" /></button>
+              <button onClick={() => setSearchOpen(false)} className="rounded-lg p-1 hover:bg-white/5 text-white/60 transition-colors"><X className="h-5 w-5" /></button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-2">
               {searchQuery ? (
                 <div className="space-y-4 p-2">
-                  {isSearching && <div className="text-center text-white/40 py-4"><div className="animate-spin h-5 w-5 border-2 border-white/20 border-t-white rounded-full mx-auto" /></div>}
+                  {isSearching && <div className="text-center text-white/70 py-4"><div className="animate-spin h-5 w-5 border-2 border-white/20 border-t-white rounded-full mx-auto" /></div>}
                   {!isSearching && searchResults && (
                     <>
                       {/* Projects */}
                       {searchResults.projects?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2">Projects</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2">Projects</h4>
                           {searchResults.projects.map(p => (
                             <Link key={p._id} to={`/projects/${p._id}`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange/10"><FolderKanban className="h-5 w-5 text-orange" /></div>
-                              <div><p className="font-semibold text-sm">{p.name}</p><p className="text-xs text-white/40">{p.location?.city || p.location}</p></div>
+                              <div><p className="font-semibold text-sm">{p.name}</p><p className="text-xs text-white/70">{p.location?.city || p.location}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -437,11 +437,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Team */}
                       {searchResults.team?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Team Members</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Team Members</h4>
                           {searchResults.team.map(u => (
                             <Link key={u._id} to="/team" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-info/10"><User className="h-5 w-5 text-info" /></div>
-                              <div><p className="font-semibold text-sm">{u.name}</p><p className="text-xs text-white/40">{u.role}</p></div>
+                              <div><p className="font-semibold text-sm">{u.name}</p><p className="text-xs text-white/70">{u.role}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -450,11 +450,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Materials */}
                       {searchResults.materials?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Materials</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Materials</h4>
                           {searchResults.materials.map(m => (
                             <Link key={m._id} to="/materials" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-success/10"><Package className="h-5 w-5 text-success" /></div>
-                              <div><p className="font-semibold text-sm">{m.name}</p><p className="text-xs text-white/40">{m.category}</p></div>
+                              <div><p className="font-semibold text-sm">{m.name}</p><p className="text-xs text-white/70">{m.category}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -463,11 +463,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Equipment */}
                       {searchResults.equipment?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Equipment</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Equipment</h4>
                           {searchResults.equipment.map(eq => (
                             <Link key={eq._id} to="/equipment" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning/10"><Wrench className="h-5 w-5 text-warning" /></div>
-                              <div><p className="font-semibold text-sm">{eq.name}</p><p className="text-xs text-white/40">{eq.type}</p></div>
+                              <div><p className="font-semibold text-sm">{eq.name}</p><p className="text-xs text-white/70">{eq.type}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -476,11 +476,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Vendors */}
                       {searchResults.vendors?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Vendors</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Vendors</h4>
                           {searchResults.vendors.map(v => (
                             <Link key={v._id} to="/vendor" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10"><Truck className="h-5 w-5 text-indigo-400" /></div>
-                              <div><p className="font-semibold text-sm">{v.name}</p><p className="text-xs text-white/40">{v.category}</p></div>
+                              <div><p className="font-semibold text-sm">{v.name}</p><p className="text-xs text-white/70">{v.category}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -489,11 +489,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Expenses */}
                       {searchResults.expenses?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Expenses</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Expenses</h4>
                           {searchResults.expenses.map(e => (
                             <Link key={e._id} to={`/projects/${e.project?._id || e.project}/budget`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-danger/10"><Receipt className="h-5 w-5 text-danger" /></div>
-                              <div><p className="font-semibold text-sm">{e.vendor} - ₹{e.amount}</p><p className="text-xs text-white/40">{e.description}</p></div>
+                              <div><p className="font-semibold text-sm">{e.vendor} - ₹{e.amount}</p><p className="text-xs text-white/70">{e.description}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -502,11 +502,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Logs */}
                       {searchResults.logs?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-white/40 uppercase tracking-wider mb-2 px-2 mt-4">Daily Logs</h4>
+                          <h4 className="text-xs font-bold text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Daily Logs</h4>
                           {searchResults.logs.map(l => (
                             <Link key={l._id} to={`/projects/${l.project?._id || l.project}/logs/${l._id}`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-white/5 rounded-xl text-white transition-colors">
-                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10"><FileText className="h-5 w-5 text-white/60" /></div>
-                              <div><p className="font-semibold text-sm">Log from {new Date(l.date).toLocaleDateString()}</p><p className="text-xs text-white/40 line-clamp-1">{l.activities}</p></div>
+                              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10"><FileText className="h-5 w-5 text-white/80" /></div>
+                              <div><p className="font-semibold text-sm">Log from {new Date(l.date).toLocaleDateString()}</p><p className="text-xs text-white/70 line-clamp-1">{l.activities}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -514,7 +514,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
                       {/* Empty State */}
                       {!Object.values(searchResults).some(arr => arr?.length > 0) && (
-                        <div className="p-8 text-center text-white/30">
+                        <div className="p-8 text-center text-white/60">
                           <p className="text-sm">No results found for "{searchQuery}"</p>
                         </div>
                       )}
@@ -522,7 +522,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   )}
                 </div>
               ) : (
-                <div className="p-8 text-center text-white/30">
+                <div className="p-8 text-center text-white/60">
                   <Search className="h-8 w-8 mx-auto mb-3 opacity-20" />
                   <p className="text-sm font-medium">Type to search across your workspace</p>
                 </div>

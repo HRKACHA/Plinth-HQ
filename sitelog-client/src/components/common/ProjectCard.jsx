@@ -25,15 +25,15 @@ export default function ProjectCard({ project }) {
       </div>
       <div className="p-3 sm:p-5" style={{ background: 'rgb(var(--color-card))' }}>
         <h3 className="font-bold text-navy group-hover:text-orange transition-colors truncate">{project.name}</h3>
-        <p className="mt-1 line-clamp-2 text-sm text-white/40 h-10">{project.description || 'No description provided.'}</p>
-        <div className="mt-4 space-y-2 text-xs text-white/40">
+        <p className="mt-1 line-clamp-2 text-sm text-white/70 h-10">{project.description || 'No description provided.'}</p>
+        <div className="mt-4 space-y-2 text-xs text-white/70">
           <div className="flex items-center gap-2 truncate"><MapPin className="h-3.5 w-3.5 text-orange/50 shrink-0" />{project.location?.city || project.location || 'Unknown Location'}</div>
           <div className="flex items-center gap-2"><Users className="h-3.5 w-3.5 text-orange/50 shrink-0" />{project.team || 0} team members</div>
           <div className="flex items-center gap-2 truncate"><Calendar className="h-3.5 w-3.5 text-orange/50 shrink-0" />Last log: {project.lastLogDate ? formatDate(project.lastLogDate) : 'No logs yet'}</div>
         </div>
         <div className="mt-4 pt-4" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <div className="flex justify-between text-xs mb-1.5">
-            <span className="text-white/30 font-medium">Budget used</span>
+            <span className="text-white/60 font-medium">Budget used</span>
             <span className="font-mono font-bold text-navy">{spentPct}%</span>
           </div>
           <div className="h-1.5 overflow-hidden rounded-full" style={{ background: 'rgba(255,255,255,0.04)' }}>

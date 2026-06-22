@@ -166,14 +166,14 @@ function StatCounter({ value, suffix, label }) {
       <p className="font-mono text-4xl md:text-5xl font-bold text-white tracking-tight">
         {count}{suffix}
       </p>
-      <p className="mt-2 text-sm text-white/40 font-medium">{label}</p>
+      <p className="mt-2 text-sm text-white/70 font-medium">{label}</p>
     </div>
   );
 }
 
 function SectionBadge({ children }) {
   return (
-    <span className="inline-block py-1.5 px-4 rounded-full text-xs font-mono text-white/60 tracking-widest uppercase mb-6"
+    <span className="inline-block py-1.5 px-4 rounded-full text-xs font-mono text-white/80 tracking-widest uppercase mb-6"
       style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
       {children}
     </span>
@@ -233,7 +233,7 @@ export default function About() {
                 isAboutPage={true} 
               />
             </div>
-            <p className="text-xl text-white/50 leading-relaxed max-w-3xl mx-auto mt-6">
+            <p className="text-xl text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">
               PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
             </p>
             <div className="pt-10 flex justify-center">
@@ -265,7 +265,7 @@ export default function About() {
           <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight">
             Construction sites run on chaos.<br />We bring clarity.
           </h2>
-          <p className="mt-5 text-lg text-white/40 leading-relaxed">
+          <p className="mt-5 text-lg text-white/70 leading-relaxed">
             Every day, project managers lose hours to disconnected tools, missing data, and communication gaps. Here's how PlinthHQ transforms each pain point into a superpower.
           </p>
         </div>
@@ -289,7 +289,7 @@ export default function About() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-emerald-400/70 uppercase tracking-wider">PlinthHQ Solution</p>
-                  <p className="text-sm text-white/50 leading-relaxed">{solution}</p>
+                  <p className="text-sm text-white/70 leading-relaxed">{solution}</p>
                 </div>
               </div>
             </div>
@@ -306,7 +306,7 @@ export default function About() {
           <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight">
             Everything you need,<br />nothing you don't.
           </h2>
-          <p className="mt-5 text-lg text-white/40 leading-relaxed">
+          <p className="mt-5 text-lg text-white/70 leading-relaxed">
             Four powerful modules covering every aspect of construction project management — from field operations to financial oversight.
           </p>
         </div>
@@ -320,7 +320,7 @@ export default function About() {
               className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
                 activeFeatureCategory === idx
                   ? 'text-white shadow-lg'
-                  : 'text-white/50 hover:text-white/80'
+                  : 'text-white/70 hover:text-white/80'
               }`}
               style={activeFeatureCategory === idx
                 ? { background: `${cat.color}20`, border: `1px solid ${cat.color}40`, boxShadow: `0 0 20px ${cat.color}15` }
@@ -341,7 +341,7 @@ export default function About() {
                 <Icon className="h-6 w-6" style={{ color: FEATURES[activeFeatureCategory].color }} />
               </div>
               <h3 className="font-semibold text-white text-lg tracking-tight mb-2">{title}</h3>
-              <p className="text-sm leading-relaxed text-white/40">{desc}</p>
+              <p className="text-sm leading-relaxed text-white/70">{desc}</p>
             </div>
           ))}
         </div>
@@ -379,7 +379,7 @@ export default function About() {
                       <Icon className="h-4 w-4 text-orange" />
                       <h3 className="font-semibold text-white tracking-tight">{title}</h3>
                     </div>
-                    <p className="text-sm text-white/40 leading-relaxed">{desc}</p>
+                    <p className="text-sm text-white/70 leading-relaxed">{desc}</p>
                   </div>
                 </div>
               </div>
@@ -397,7 +397,7 @@ export default function About() {
           <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight">
             Right access for the<br />right people.
           </h2>
-          <p className="mt-5 text-lg text-white/40 leading-relaxed">
+          <p className="mt-5 text-lg text-white/70 leading-relaxed">
             Every team member sees exactly what they need — no more, no less. Our granular permission system ensures data security while maximizing productivity.
           </p>
         </div>
@@ -414,7 +414,7 @@ export default function About() {
                 {access.map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 shrink-0 mt-0.5" style={{ color }} />
-                    <span className="text-xs text-white/50 leading-relaxed">{item}</span>
+                    <span className="text-xs text-white/70 leading-relaxed">{item}</span>
                   </li>
                 ))}
               </ul>
@@ -440,7 +440,7 @@ export default function About() {
               <HardHat className="h-6 w-6 text-orange" />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Built for the Field</h3>
-            <p className="text-white/40 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               Software shouldn't be confined to an office. We designed PlinthHQ with the reality of the Indian jobsite in mind — fast, resilient, and intuitive. Whether you're tracking daily logs under the sun or logging heavy equipment usage on a muddy site, our platform stays out of your way so you can focus on building.
             </p>
           </div>
@@ -450,7 +450,7 @@ export default function About() {
               <BarChart3 className="h-6 w-6" style={{ color: '#4285F4' }} />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Unprecedented Visibility</h3>
-            <p className="text-white/40 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               Construction is a game of margins and timelines. PlinthHQ bridges the gap between the field crew and project owners by delivering real-time insights into budgets, milestones, and daily operations. No more guessing — just hard data and absolute accountability.
             </p>
           </div>
@@ -460,7 +460,7 @@ export default function About() {
               <ShieldCheck className="h-6 w-6" style={{ color: '#34A853' }} />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Ironclad Reliability</h3>
-            <p className="text-white/40 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               Your data is the lifeblood of your project. We employ enterprise-grade security and robust cloud infrastructure to ensure that your site logs, financial documents, and vendor details are protected and accessible the moment you need them — backed by MongoDB Atlas.
             </p>
           </div>
@@ -470,7 +470,7 @@ export default function About() {
               <Zap className="h-6 w-6" style={{ color: '#A855F7' }} />
             </div>
             <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">Frictionless Workflows</h3>
-            <p className="text-white/40 leading-relaxed">
+            <p className="text-white/70 leading-relaxed">
               Stop fighting with disconnected spreadsheets and fragmented chat threads. PlinthHQ centralizes materials, equipment, team roles, and site communications into one unified command center, driving efficiency across your entire organization from foundation to finish.
             </p>
           </div>
@@ -487,7 +487,7 @@ export default function About() {
             <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight mb-6">
               Give building owners<br />complete visibility.
             </h2>
-            <p className="text-white/40 leading-relaxed mb-8">
+            <p className="text-white/70 leading-relaxed mb-8">
               Generate a secure, shareable link that gives building owners a read-only dashboard. They can see project progress, budget health, milestone status, and daily activity — without needing a PlinthHQ account or any technical knowledge.
             </p>
             <ul className="space-y-3">
@@ -500,7 +500,7 @@ export default function About() {
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3">
                   <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
-                  <span className="text-sm text-white/60">{item}</span>
+                  <span className="text-sm text-white/80">{item}</span>
                 </li>
               ))}
             </ul>
@@ -536,7 +536,7 @@ export default function About() {
                 </div>
                 <div className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}>
                   <p className="text-[10px] text-muted mb-1">Latest Log</p>
-                  <p className="text-xs text-white/60">Foundation work completed. RCC column casting started for Block A.</p>
+                  <p className="text-xs text-white/80">Foundation work completed. RCC column casting started for Block A.</p>
                 </div>
               </div>
             </div>
@@ -555,7 +555,7 @@ export default function About() {
             <h2 className="font-display text-3xl font-bold text-white lg:text-4xl tracking-tight">
               Modern stack,<br />enterprise reliability.
             </h2>
-            <p className="mt-5 text-lg text-white/40 leading-relaxed">
+            <p className="mt-5 text-lg text-white/70 leading-relaxed">
               PlinthHQ is built with a modern, scalable technology stack designed for performance and reliability at every layer.
             </p>
           </div>
@@ -574,7 +574,7 @@ export default function About() {
                 </div>
                 <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-1">{label}</p>
                 <h3 className="text-white font-bold tracking-tight mb-2">{tech}</h3>
-                <p className="text-xs text-white/40 leading-relaxed">{desc}</p>
+                <p className="text-xs text-white/70 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -590,7 +590,7 @@ export default function About() {
           <h2 className="font-display text-3xl font-bold lg:text-5xl tracking-tight text-white">
             Ready to transform your<br />construction workflow?
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/40 leading-relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70 leading-relaxed">
             Join forward-thinking contractors who reduced project overruns by 30% with PlinthHQ's real-time accountability and owner visibility. Start your free trial today.
           </p>
           <div className="pt-10 flex flex-wrap justify-center gap-4">
@@ -608,7 +608,7 @@ export default function About() {
       <footer className="relative z-10 liquid-glass rounded-none py-12" style={{ borderLeft: 'none', borderRight: 'none', borderBottom: 'none' }}>
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row lg:px-8">
           <PlinthLogo size="xs" variant="full" />
-          <p className="text-sm text-white/30">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+          <p className="text-sm text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
         </div>
       </footer>
     </div>

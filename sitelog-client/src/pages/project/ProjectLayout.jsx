@@ -171,7 +171,7 @@ export default function ProjectLayout() {
           <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <Badge status={project.status} />
-              <span className="font-mono text-sm text-white/40 font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
+              <span className="font-mono text-sm text-white/70 font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm" style={{ background: 'rgba(16,18,24,0.50)', border: '1px solid rgba(255,255,255,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
             </div>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
               <div>
