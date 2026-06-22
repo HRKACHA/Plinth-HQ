@@ -5,6 +5,7 @@ import { ProtectedRoute, PublicRoute } from './components/ProtectedRoute';
 
 import Landing from './pages/Landing';
 import About from './pages/About';
+import Sitemap from './pages/Sitemap';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -45,6 +46,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Landing />} />
             <Route path="/about" element={<About />} />
+            <Route path="/sitemap" element={<Sitemap />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 

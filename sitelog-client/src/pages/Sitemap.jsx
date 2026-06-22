@@ -1,0 +1,100 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ChevronRight } from 'lucide-react';
+import PlinthLogo from '../components/common/PlinthLogo';
+
+export default function Sitemap() {
+  const sitemapLinks = [
+    {
+      category: 'Public Pages',
+      links: [
+        { label: 'Home (Landing)', path: '/' },
+        { label: 'About Us', path: '/about' },
+        { label: 'Sitemap', path: '/sitemap' },
+        { label: 'Login', path: '/login' },
+        { label: 'Register', path: '/register' },
+      ],
+    },
+    {
+      category: 'Dashboard & Core Tools',
+      links: [
+        { label: 'Main Dashboard', path: '/dashboard' },
+        { label: 'All Projects', path: '/projects' },
+        { label: 'Notifications', path: '/notifications' },
+        { label: 'Settings', path: '/settings' },
+        { label: 'Team & Users', path: '/team' },
+        { label: 'Billing', path: '/billing' },
+        { label: 'Vendor Portal', path: '/vendor' },
+        { label: 'Materials Portal', path: '/materials' },
+        { label: 'Equipment Portal', path: '/equipment' },
+        { label: 'Team Chat', path: '/chat' },
+      ],
+    },
+    {
+      category: 'Project Specific (Requires Project)',
+      links: [
+        { label: 'Project Overview', path: '/projects' },
+        { label: 'Daily Logs', path: '/projects' },
+        { label: 'Attendance', path: '/projects' },
+        { label: 'Materials & Equipment', path: '/projects' },
+        { label: 'Expenses & Budget', path: '/projects' },
+        { label: 'Milestones', path: '/projects' },
+        { label: 'Document Manager', path: '/projects' },
+        { label: 'Issues & Tasks', path: '/projects' },
+        { label: 'Gallery', path: '/projects' },
+        { label: 'Owner Dashboard', path: '/projects' },
+      ],
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-transparent relative z-10 flex flex-col">
+      <header className="h-20 flex items-center justify-between px-6 lg:px-12 relative z-50">
+        <Link to="/" className="flex items-center gap-3">
+          <PlinthLogo size="sm" variant="full" />
+        </Link>
+        <nav className="hidden md:flex items-center gap-8">
+          <Link to="/about" className="text-sm font-semibold text-white/70 hover:text-white transition-colors">About</Link>
+          <Link to="/login" className="text-sm font-semibold text-white/70 hover:text-white transition-colors">Log In</Link>
+          <Link to="/register" className="btn-accent text-sm px-5 py-2">Get Started</Link>
+        </nav>
+      </header>
+
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-16 lg:px-8">
+        <div className="mb-12">
+          <h1 className="text-4xl font-bold text-white tracking-tight">Sitemap</h1>
+          <p className="mt-4 text-lg text-white/60 max-w-2xl">A complete, bird's-eye view of all the pages, tools, and portals available across the PlinthHQ platform.</p>
+        </div>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {sitemapLinks.map((section, idx) => (
+            <div key={idx} className="card p-8 animate-slideUp" style={{ animationDelay: `${idx * 0.1}s` }}>
+              <h2 className="text-lg font-bold text-navy mb-6 pb-4 border-b border-white/10">{section.category}</h2>
+              <ul className="space-y-4">
+                {section.links.map((link, lIdx) => (
+                  <li key={lIdx}>
+                    <Link to={link.path} className="group flex items-center text-white/70 hover:text-white transition-colors">
+                      <ChevronRight className="h-4 w-4 mr-3 text-white/20 group-hover:text-orange transition-colors shrink-0" />
+                      <span className="font-medium text-sm">{link.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="liquid-glass rounded-none py-12 mt-auto" style={{ borderLeft: 'none', borderRight: 'none', borderBottom: 'none' }}>
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row lg:px-8">
+          <PlinthLogo size="xs" variant="full" />
+          <div className="flex items-center gap-6">
+            <Link to="/sitemap" className="text-sm text-white/60 hover:text-white transition-colors">Sitemap</Link>
+            <p className="text-sm text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
