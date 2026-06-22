@@ -235,7 +235,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         {/* ═══ Header — Liquid Glass ═══ */}
-        <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 z-40"
+        <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 relative z-[60]"
           style={{ background: 'rgba(16, 18, 24, 0.30)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
           
           <div className="flex items-center gap-4">
