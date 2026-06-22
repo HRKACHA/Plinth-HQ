@@ -194,7 +194,7 @@ export default function ProjectLayout() {
                   <h1 className="font-display text-xl sm:text-3xl font-bold text-navy lg:text-4xl tracking-tight">{project.name}</h1>
                   <p className="mt-1 sm:mt-2 max-w-2xl text-xs sm:text-sm text-muted font-medium line-clamp-2">{project.description}</p>
                 </div>
-                {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && user?.role !== 'owner' && user?.role !== 'Owner' && (
+                {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && (
                   <div className="flex gap-2 self-start mt-2">
                     <button onClick={openEdit} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-white/10 rounded-md text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
                       <Pencil className="h-4 w-4" />
