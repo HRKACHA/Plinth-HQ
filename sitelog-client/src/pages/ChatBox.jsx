@@ -9,16 +9,17 @@ import { useTranslation } from '../hooks/useTranslation';
 import { Send, Hash, Users, Circle, MessageCircle, ChevronUp, Loader2, MessageSquare, Shield, X, Languages, Camera, Image as ImageIcon, Reply, AtSign } from 'lucide-react';
 
 const ROLE_BADGE_COLORS = {
-  site_engineer: 'bg-blue-500/20 text-blue-300',
-  accounts: 'bg-amber-500/20 text-amber-300',
-  owner: 'bg-purple-500/20 text-purple-300',
-  project_manager: 'bg-emerald-500/20 text-emerald-300',
-  admin: 'bg-red-500/20 text-red-300',
-  PM: 'bg-emerald-500/20 text-emerald-300',
-  SuperAdmin: 'bg-red-500/20 text-red-300',
-  Engineer: 'bg-blue-500/20 text-blue-300',
-  Owner: 'bg-purple-500/20 text-purple-300',
-  Accounts: 'bg-amber-500/20 text-amber-300',
+  site_engineer: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
+  accounts: 'bg-amber-500/20 text-amber-700 dark:text-amber-300',
+  owner: 'bg-purple-500/20 text-purple-700 dark:text-purple-300',
+  project_manager: 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300',
+  admin: 'bg-red-500/20 text-red-700 dark:text-red-300',
+  contractor: 'bg-orange-500/20 text-orange-700 dark:text-orange-300',
+  PM: 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300',
+  SuperAdmin: 'bg-red-500/20 text-red-700 dark:text-red-300',
+  Engineer: 'bg-blue-500/20 text-blue-700 dark:text-blue-300',
+  Owner: 'bg-purple-500/20 text-purple-700 dark:text-purple-300',
+  Accounts: 'bg-amber-500/20 text-amber-700 dark:text-amber-300',
 };
 
 function formatTime(date) {

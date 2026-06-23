@@ -8,12 +8,16 @@ Built with a stunning, high-performance web interface, PlinthHQ brings real-time
 
 - **🛡️ Role-Based Access Control (RBAC):** Custom permissions tailored for Owners, Admins, Project Managers, Site Engineers, Accounts, and Contractors.
 - **📝 Daily Site Logs:** Effortlessly record weather conditions, labor counts, equipment usage, materials, and daily activities with photo evidence.
+- **🗣️ Voice Dictation & Smart Logging:** Speak your site updates directly into the app from the job site for faster, hands-free record keeping.
+- **🌐 Real-Time Translation:** Communicate seamlessly across regional languages with integrated translation for English, Hindi, and Gujarati.
+- **💬 Project-Wise Encrypted Chat:** Dedicated real-time communication channels for each project with typing indicators, photo sharing, and online status.
 - **💰 Budget & Expense Tracking:** Monitor project budgets in real-time. Track expenses, vendor payments, and generate financial insights.
 - **👥 Team & Vendor Management:** Add team members via secure invite links. Maintain a centralized directory of suppliers and contractors.
 - **📦 Materials & Equipment:** Comprehensive tracking for inventory, material transfers, and equipment maintenance.
 - **🚧 Issue Tracking:** Report, assign, and resolve site issues seamlessly. Restricted editing ensures that assignees can update the status and upload photos without altering core issue details.
 - **🔔 Real-Time Notifications:** In-app notifications for task assignments, team invitations, and critical project updates.
 - **🌐 Shared Owner Dashboards:** Generate secure, view-only links for external stakeholders and owners to track high-level progress.
+- **✨ Premium UI & UX:** Beautiful liquid-glass design system with smooth theme transitions, animated skeleton loaders, and interactive charts.
 
 ## 🛠️ Tech Stack
 

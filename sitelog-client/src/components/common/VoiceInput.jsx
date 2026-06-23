@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Languages } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
@@ -8,6 +9,7 @@ const LANGUAGES = [
 ];
 
 export default function VoiceInput({ onTranscript, onStart, position = 'right' }) {
+  const { theme } = useTheme();
   const [lang, setLang] = useState('en-US');
   const [showLangs, setShowLangs] = useState(false);
   const [listening, setListening] = useState(false);
@@ -99,20 +101,20 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       <button
         type="button"
         onClick={() => setShowLangs(!showLangs)}
-        className="p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700 transition text-gray-400 hover:text-navy dark:text-white"
+        className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-muted hover:text-navy dark:hover:text-white transition-colors flex items-center justify-center"
         title="Select Language"
       >
         <Languages className="w-4 h-4" />
       </button>
 
       {showLangs && (
-        <div className="absolute bottom-full mb-2 right-0 sm:left-0 sm:right-auto bg-gray-900 border border-gray-800 rounded-lg shadow-xl p-2 flex flex-col gap-1 z-50">
+        <div className={`absolute bottom-full mb-2 right-0 sm:left-0 sm:right-auto border rounded-xl shadow-xl p-2 flex flex-col gap-1 z-50 ${theme === 'dark' ? 'bg-gray-900 border-gray-800' : 'bg-card border-border'}`}>
           {LANGUAGES.map(l => (
             <button
               key={l.code}
               type="button"
               onClick={() => { setLang(l.code); setShowLangs(false); }}
-              className={`text-sm text-left px-3 py-1.5 rounded-md transition ${lang === l.code ? 'bg-orange/20 text-orange' : 'text-gray-300 hover:bg-gray-800'}`}
+              className={`text-sm text-left px-3 py-1.5 rounded-md transition ${lang === l.code ? 'bg-orange/20 text-orange font-medium' : theme === 'dark' ? 'text-gray-300 hover:bg-gray-800' : 'text-navy hover:bg-surface'}`}
             >
               {l.label}
             </button>
@@ -123,7 +125,7 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       <button
         type="button"
         onClick={toggleListening}
-        className={`p-2 rounded-lg transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-gray-800/50 hover:bg-gray-700 text-gray-400 hover:text-white'}`}
+        className={`h-10 w-10 rounded-full transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse border border-red-500/30' : 'bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-muted hover:text-navy dark:hover:text-white'}`}
         title={listening ? "Stop recording" : "Start recording"}
       >
         {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}

@@ -28,7 +28,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
       <div className={`relative overflow-hidden shrink-0 ${h} aspect-square flex items-start justify-center`}>
         {/* Dark mode logo (white) */}
         <img
-          src="/plinth-logo.png"
+          src="/White_logo.png"
           alt="PlinthHQ Logo"
           className="absolute top-0 w-full h-auto max-w-[140%] scale-[1.35] origin-top drop-shadow-md"
           style={{
@@ -36,15 +36,14 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
             transition: 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />
-        {/* Light mode logo (inverted to dark) */}
+        {/* Light mode logo (dark text) */}
         <img
-          src="/plinth-logo.png"
+          src="/Plinth_HQ_logo.png"
           alt="PlinthHQ Logo"
           className="absolute top-0 w-full h-auto max-w-[140%] scale-[1.35] origin-top"
           style={{
             opacity: theme === 'dark' ? 0 : 1,
             transition: 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
-            filter: 'invert(0.85) sepia(0.15) saturate(1.2) hue-rotate(190deg) brightness(0.45)',
           }}
         />
       </div>
