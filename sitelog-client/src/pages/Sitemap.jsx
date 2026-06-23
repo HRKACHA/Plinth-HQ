@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Sun, Moon } from 'lucide-react';
 import PlinthLogo from '../components/common/PlinthLogo';
+import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import Switch from '../components/ui/sky-toggle';
 
 export default function Sitemap() {
+  const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const sitemapLinks = [
     {
@@ -56,11 +58,18 @@ export default function Sitemap() {
         <Link to="/" className="flex items-center gap-3">
           <PlinthLogo size="sm" variant="full" />
         </Link>
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
+          <Link to="/" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Home</Link>
           <Link to="/about" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">About</Link>
-          <Link to="/login" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
           <Switch theme={theme} toggleTheme={toggleTheme} />
-          <Link to="/register" className="btn-accent text-sm px-5 py-2 text-white">Get Started</Link>
+          {!user ? (
+            <div className="flex items-center gap-4 ml-2">
+              <Link to="/login" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
+              <Link to="/register" className="btn-accent text-sm px-5 py-2 text-white">Get Started</Link>
+            </div>
+          ) : (
+            <Link to="/dashboard" className="btn-accent text-sm px-5 py-2 text-white ml-2">Go to Dashboard</Link>
+          )}
         </nav>
       </header>
 
