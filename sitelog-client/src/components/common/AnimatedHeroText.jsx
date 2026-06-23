@@ -45,7 +45,7 @@ export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutP
   const gradientStyle = {
     backgroundImage: isDark 
       ? 'linear-gradient(180deg, #ffffff 0%, rgba(255,255,255,0.4) 100%)'
-      : 'linear-gradient(180deg, #0F1228 0%, rgba(15,18,40,0.6) 100%)',
+      : 'linear-gradient(180deg, #1a1f4e 0%, #3b4c8a 100%)',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',

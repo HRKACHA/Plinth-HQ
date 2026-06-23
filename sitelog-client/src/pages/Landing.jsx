@@ -68,8 +68,8 @@ export default function Landing() {
       <section className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 80px)' }}>        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
           <div className="max-w-4xl w-full space-y-8">
             <div className="inline-block animate-slideUp">
-              <span className="py-1 px-3 rounded-full text-xs font-mono text-navy/80 dark:text-white/80 tracking-widest uppercase"
-                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
+              <span className="py-1 px-3 rounded-full text-xs font-mono text-muted tracking-widest uppercase"
+                style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.08)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(8px)' }}>
                 <Building2 className="h-3 w-3 inline mr-1.5 -mt-0.5" /> Enterprise Construction Platform
               </span>
             </div>
@@ -136,9 +136,9 @@ export default function Landing() {
 
       {/* ── CTA ── */}
       <section className="relative overflow-hidden py-24">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' : 'linear-gradient(135deg, rgba(200,210,240,0.35) 0%, rgba(180,195,230,0.35) 50%, rgba(200,210,240,0.35) 100%)' }} />
         <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)',
+          backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
           backgroundSize: '24px 24px',
         }} />
         <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">

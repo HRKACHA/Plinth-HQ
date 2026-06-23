@@ -401,40 +401,42 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
 }
 
-/* Cards in light mode */
+/* Cards in light mode — frosted white-violet glass, easy on the eyes */
 :root:not(.dark) .card,
 :root:not(.dark) .card-static,
 :root:not(.dark) .glass-card,
 :root:not(.dark) .glass-panel {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(0, 0, 40, 0.06);
-  box-shadow: 0 4px 16px rgba(100, 120, 180, 0.08);
+  background: rgba(235, 240, 255, 0.65);
+  border-color: rgba(120, 140, 200, 0.12);
+  box-shadow: 0 4px 20px rgba(100, 120, 200, 0.08), 0 1px 3px rgba(100, 120, 200, 0.05);
 }
 :root:not(.dark) .card:hover {
-  border-color: rgba(0, 0, 40, 0.12);
+  border-color: rgba(100, 120, 200, 0.20);
+  box-shadow: 0 8px 28px rgba(100, 120, 200, 0.12), 0 2px 6px rgba(100, 120, 200, 0.06);
 }
 
 /* Input fields in light mode */
 :root:not(.dark) .input-field {
-  background: rgba(255, 255, 255, 0.60);
-  border-color: rgba(0, 0, 40, 0.10);
+  background: rgba(240, 244, 255, 0.70);
+  border-color: rgba(120, 140, 200, 0.15);
   color: rgb(30, 35, 60);
 }
 :root:not(.dark) .input-field:focus {
-  border-color: rgba(50, 115, 230, 0.40);
+  border-color: rgba(50, 115, 230, 0.45);
+  box-shadow: 0 0 0 3px rgba(50, 115, 230, 0.08);
 }
 :root:not(.dark) .input-field:hover {
-  border-color: rgba(0, 0, 40, 0.16);
+  border-color: rgba(100, 120, 200, 0.25);
 }
 
 /* Badge in light mode */
 :root:not(.dark) .badge {
-  border-color: rgba(0, 0, 40, 0.08);
+  border-color: rgba(100, 120, 200, 0.12);
 }
 
 /* Skeleton in light mode */
 :root:not(.dark) .skeleton {
-  background: rgba(0, 0, 40, 0.05);
+  background: rgba(120, 140, 200, 0.06);
 }
 :root:not(.dark) .skeleton::after {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
@@ -442,11 +444,12 @@
 
 /* Modal in light mode */
 :root:not(.dark) .modal-backdrop {
-  background: rgba(0, 0, 40, 0.30);
+  background: rgba(30, 35, 60, 0.25);
 }
 :root:not(.dark) .modal-content {
-  background: rgba(245, 248, 255, 0.92);
-  border-color: rgba(0, 0, 40, 0.08);
+  background: rgba(237, 242, 255, 0.95);
+  border-color: rgba(120, 140, 200, 0.12);
+  box-shadow: 0 24px 64px rgba(80, 100, 180, 0.20);
 }
 :root:not(.dark) .modal-content::before {
   background: rgba(255, 255, 255, 0.80);
@@ -454,9 +457,9 @@
 
 /* Dropdown in light mode */
 :root:not(.dark) .glass-dropdown {
-  background: rgba(245, 248, 255, 0.95);
-  border-color: rgba(0, 0, 40, 0.08);
-  box-shadow: 0 16px 48px rgba(100, 120, 180, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  background: rgba(240, 244, 255, 0.96);
+  border-color: rgba(120, 140, 200, 0.12);
+  box-shadow: 0 16px 48px rgba(80, 100, 180, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 /* Dropdown items in light mode */
@@ -469,31 +472,33 @@
 
 /* Buttons in light mode */
 :root:not(.dark) .btn-secondary {
-  background: rgba(255, 255, 255, 0.55);
-  border-color: rgba(0, 0, 40, 0.08);
+  background: rgba(235, 240, 255, 0.65);
+  border-color: rgba(120, 140, 200, 0.12);
   color: rgb(30, 35, 60);
 }
 :root:not(.dark) .btn-secondary:hover {
-  border-color: rgba(0, 0, 40, 0.16);
-  background: rgba(255, 255, 255, 0.70);
+  border-color: rgba(100, 120, 200, 0.22);
+  background: rgba(235, 240, 255, 0.80);
 }
 :root:not(.dark) .btn-ghost:hover {
-  background: rgba(0, 0, 40, 0.04);
+  background: rgba(50, 115, 230, 0.05);
 }
 
-/* Project nav pill in light mode */
+/* Project nav pill in light mode — clear readable text */
 :root:not(.dark) .project-nav-pill {
-  background: rgba(255, 255, 255, 0.50);
-  border-color: rgba(0, 0, 40, 0.06);
+  background: rgba(235, 240, 255, 0.65);
+  border-color: rgba(120, 140, 200, 0.12);
+  color: rgb(50, 60, 90);
 }
 :root:not(.dark) .project-nav-pill:hover {
-  background: rgba(255, 255, 255, 0.70);
-  border-color: rgba(0, 0, 40, 0.12);
+  background: rgba(230, 236, 255, 0.80);
+  border-color: rgba(100, 120, 200, 0.20);
+  color: rgb(30, 35, 60);
 }
 
 /* Select option bg in light mode */
 :root:not(.dark) select.input-field option {
-  background-color: rgb(245, 248, 255);
+  background-color: rgb(240, 244, 255);
   color: rgb(30, 35, 60);
 }
 

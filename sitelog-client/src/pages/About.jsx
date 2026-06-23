@@ -173,9 +173,10 @@ function StatCounter({ value, suffix, label }) {
 }
 
 function SectionBadge({ children }) {
+  const { theme } = useTheme();
   return (
-    <span className="inline-block py-1.5 px-4 rounded-full text-xs font-mono text-navy/80 dark:text-white/80 tracking-widest uppercase mb-6"
-      style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}>
+    <span className="inline-block py-1.5 px-4 rounded-full text-xs font-mono text-muted tracking-widest uppercase mb-6"
+      style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.08)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(8px)' }}>
       {children}
     </span>
   );
@@ -291,7 +292,7 @@ export default function About() {
                   <p className="text-sm font-semibold text-navy/80 dark:text-white/80">{problem}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 pt-3 border-t" style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+              <div className="flex items-start gap-3 pt-3 border-t" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(120,140,200,0.10)' }}>
                 <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0 mt-0.5"
                   style={{ background: 'rgba(52, 168, 83, 0.08)', border: '1px solid rgba(52, 168, 83, 0.15)' }}>
                   <CheckCircle className="h-5 w-5 text-emerald-400" />
@@ -333,7 +334,7 @@ export default function About() {
               }`}
               style={activeFeatureCategory === idx
                 ? { background: `${cat.color}20`, border: `1px solid ${cat.color}40`, boxShadow: `0 0 20px ${cat.color}15` }
-                : { background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }
+                : { background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(120,140,200,0.06)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.10)' }
               }
             >
               {cat.category}
@@ -360,9 +361,9 @@ export default function About() {
          SECTION 5: How It Works (Workflow)
          ══════════════════════════════════════════════════ */}
       <section className="relative z-10 py-24 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' }} />
+        <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' : 'linear-gradient(135deg, rgba(200,210,240,0.35) 0%, rgba(180,195,230,0.35) 50%, rgba(200,210,240,0.35) 100%)' }} />
         <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)',
+          backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
           backgroundSize: '24px 24px',
         }} />
         <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
@@ -515,13 +516,13 @@ export default function About() {
             </ul>
           </div>
           <div className="flex-1 flex justify-center">
-            <div className="w-full max-w-[340px] rounded-2xl p-6" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div className="w-full max-w-[340px] rounded-2xl p-6" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(120,140,200,0.06)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.10)' }}>
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-10 w-10 rounded-xl bg-emerald-500/15 flex items-center justify-center">
                   <Eye className="h-5 w-5 text-emerald-400" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-navy dark:text-white">Owner Dashboard</p>
+                  <p className="text-sm font-bold text-navy">Owner Dashboard</p>
                   <p className="text-[10px] text-muted">Shared via secure link</p>
                 </div>
               </div>
@@ -530,22 +531,22 @@ export default function About() {
                   <span className="text-xs text-muted">Progress</span>
                   <span className="text-xs font-bold text-emerald-400">67%</span>
                 </div>
-                <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                <div className="h-2 rounded-full" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(120,140,200,0.08)' }}>
                   <div className="h-2 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style={{ width: '67%' }} />
                 </div>
                 <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                  <div className="p-3 rounded-xl" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(120,140,200,0.05)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(120,140,200,0.08)' }}>
                     <p className="text-[10px] text-muted">Budget Used</p>
-                    <p className="text-sm font-bold text-navy dark:text-white">₹12.4L</p>
+                    <p className="text-sm font-bold text-navy">₹12.4L</p>
                   </div>
-                  <div className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                  <div className="p-3 rounded-xl" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(120,140,200,0.05)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(120,140,200,0.08)' }}>
                     <p className="text-[10px] text-muted">Milestones</p>
-                    <p className="text-sm font-bold text-navy dark:text-white">4 / 6</p>
+                    <p className="text-sm font-bold text-navy">4 / 6</p>
                   </div>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}>
+                <div className="p-3 rounded-xl" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(120,140,200,0.05)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.04)' : '1px solid rgba(120,140,200,0.08)' }}>
                   <p className="text-[10px] text-muted mb-1">Latest Log</p>
-                  <p className="text-xs text-navy/80 dark:text-white/80">Foundation work completed. RCC column casting started for Block A.</p>
+                  <p className="text-xs text-muted">Foundation work completed. RCC column casting started for Block A.</p>
                 </div>
               </div>
             </div>
@@ -593,8 +594,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 10: CTA
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 mt-8 overflow-hidden border-t" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(66,133,244,0.04) 0%, transparent 70%)' }} />
+      <section className="relative z-10 py-24 mt-8 overflow-hidden border-t" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.10)' }}>
+        <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'radial-gradient(ellipse at center, rgba(66,133,244,0.04) 0%, transparent 70%)' : 'radial-gradient(ellipse at center, rgba(100,130,230,0.06) 0%, transparent 70%)' }} />
         <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
           <h2 className="font-display text-3xl font-bold lg:text-5xl tracking-tight text-navy dark:text-white">
             Ready to transform your<br />construction workflow?

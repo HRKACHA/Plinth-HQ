@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { Mail, Lock, User, AlertCircle, ArrowRight, Check, CheckCircle, XCircle, Loader2, ArrowLeft, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import CustomSelectMenu from '../components/common/CustomSelectMenu';
 import { verificationApi, inviteApi } from '../api/index';
 import PlinthLogo from '../components/common/PlinthLogo';
@@ -45,6 +46,7 @@ function getPasswordStrength(pw) {
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { theme } = useTheme();
   const [searchParams] = useSearchParams();
   const inviteToken = searchParams.get('token');
   const [name, setName] = useState('');
@@ -172,9 +174,9 @@ export default function Register() {
   return (
     <div className="flex min-h-screen bg-transparent relative z-10">
       <div className="hidden w-1/2 flex-col justify-between p-12 lg:flex relative overflow-hidden backdrop-blur-sm"
-        style={{ background: 'linear-gradient(135deg, rgba(10,12,16,0.6) 0%, rgba(17,24,39,0.6) 50%, rgba(13,17,23,0.6) 100%)', borderRight: '1px solid rgba(255,255,255,0.06)' }}>
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full blur-[120px] pointer-events-none" style={{ background: 'rgba(66,133,244,0.06)' }} />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[100px] pointer-events-none" style={{ background: 'rgba(66,133,244,0.04)' }} />
+        style={{ background: theme === 'dark' ? 'linear-gradient(135deg, rgba(10,12,16,0.6) 0%, rgba(17,24,39,0.6) 50%, rgba(13,17,23,0.6) 100%)' : 'linear-gradient(135deg, rgba(200,210,240,0.5) 0%, rgba(180,195,230,0.5) 50%, rgba(165,180,220,0.5) 100%)', borderRight: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.12)' }}>
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full blur-[120px] pointer-events-none" style={{ background: theme === 'dark' ? 'rgba(66,133,244,0.06)' : 'rgba(100,130,230,0.12)' }} />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[100px] pointer-events-none" style={{ background: theme === 'dark' ? 'rgba(66,133,244,0.04)' : 'rgba(130,100,230,0.08)' }} />
         
         <div className="relative z-10">
           <Link to="/">
@@ -182,16 +184,16 @@ export default function Register() {
           </Link>
         </div>
         <div className="relative z-10 max-w-lg">
-          <h2 className="font-display text-4xl font-bold text-navy dark:text-white tracking-tight leading-tight">Start managing your construction sites digitally.</h2>
-          <p className="mt-6 text-lg text-navy/70 dark:text-white/70 leading-relaxed">
+          <h2 className="font-display text-4xl font-bold text-navy tracking-tight leading-tight">Start managing your construction sites digitally.</h2>
+          <p className="mt-6 text-lg text-muted leading-relaxed">
             Join thousands of professionals using PlinthHQ to streamline their construction workflows from foundation to finish.
           </p>
         </div>
-        <p className="relative z-10 text-xs text-navy/20 dark:text-white/20 font-mono uppercase tracking-widest">Free Starter plan — 3 projects, 5 users</p>
+        <p className="relative z-10 text-xs text-muted/40 font-mono uppercase tracking-widest">Free Starter plan — 3 projects, 5 users</p>
       </div>
 
-      <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 sm:px-12 backdrop-blur-md relative overflow-hidden" style={{ background: 'rgba(13,15,20,0.5)' }}>
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse at center, rgba(66,133,244,0.03) 0%, transparent 70%)' }} />
+      <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 sm:px-12 backdrop-blur-md relative overflow-hidden" style={{ background: theme === 'dark' ? 'rgba(13,15,20,0.5)' : 'rgba(235,240,255,0.4)' }}>
+        <div className="absolute inset-0 pointer-events-none" style={{ background: theme === 'dark' ? 'radial-gradient(ellipse at center, rgba(66,133,244,0.03) 0%, transparent 70%)' : 'radial-gradient(ellipse at center, rgba(100,130,230,0.06) 0%, transparent 70%)' }} />
         
         <div className="w-full max-w-md animate-slideUp relative z-10 mx-auto">
           <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-navy dark:text-white transition-colors mb-6">
@@ -234,8 +236,8 @@ export default function Register() {
             {/* Google OAuth Button */}
             <button
               onClick={handleGoogleRegister}
-              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl text-navy dark:text-white font-medium text-sm transition-all hover:-translate-y-0.5 hover:shadow-md mb-6"
-              style={{ background: 'rgba(16,18,24,0.12)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(18px)' }}
+              className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl text-navy font-medium text-sm transition-all hover:-translate-y-0.5 hover:shadow-md mb-6"
+              style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.12)' : 'rgba(235,240,255,0.65)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(18px)' }}
             >
               <svg className="h-5 w-5" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
@@ -248,7 +250,7 @@ export default function Register() {
 
             <div className="relative mb-6">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+                <div className="w-full" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(120,140,200,0.12)' }} />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
                 <span className="px-4 text-muted font-medium" style={{ background: 'rgb(var(--color-card))' }}>or register with email</span>
