@@ -69,6 +69,14 @@ export default {
           from: { opacity: '0', transform: 'translateY(-12px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
+        slideLeft: {
+          from: { opacity: '0', transform: 'translateX(32px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
+        slideRight: {
+          from: { opacity: '0', transform: 'translateX(-32px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
+        },
         scaleIn: {
           from: { opacity: '0', transform: 'scale(0.96)' },
           to: { opacity: '1', transform: 'scale(1)' },
@@ -103,6 +111,8 @@ export default {
         fadeOut: 'fadeOut 0.2s ease-in',
         slideUp: 'slideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1)',
         slideDown: 'slideDown 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+        slideLeft: 'slideLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+        slideRight: 'slideRight 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
         scaleIn: 'scaleIn 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
         shimmer: 'shimmer 2s infinite linear',
         countUp: 'countUp 0.5s cubic-bezier(0.22, 1, 0.36, 1)',

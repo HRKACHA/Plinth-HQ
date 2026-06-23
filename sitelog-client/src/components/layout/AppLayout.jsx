@@ -388,7 +388,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           <div className="fixed inset-y-0 left-0 z-[80] w-64 flex flex-col shadow-elevated animate-slideDown lg:hidden"
             style={{ background: mobileBg, backdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder }}>
             <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: subtleBorder }}>
-              <PlinthLogo size="sm" />
+              <PlinthLogo size="xs" />
               <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
                 <X className="h-5 w-5" />
               </button>

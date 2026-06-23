@@ -47,6 +47,7 @@ export default function Dashboard() {
   const [weathers, setWeathers] = useState([]);
   const [currentWeatherIndex, setCurrentWeatherIndex] = useState(0);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [slideDir, setSlideDir] = useState('fadeIn');
 
   useEffect(() => {
     async function fetchAllWeather() {
@@ -372,7 +373,7 @@ export default function Dashboard() {
             </div>
             <div className="relative pb-6">
               {safeProjects.length > 0 ? (
-                <div className="relative group">
+                <div key={`${currentProjectIndex}-${slideDir}`} className={`relative group animate-${slideDir}`}>
                   <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
                   {user?.role === 'PM' && (
                     <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
@@ -385,14 +386,20 @@ export default function Dashboard() {
                   {safeProjects.length > 1 && (
                     <>
                       <button 
-                        onClick={() => setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length)}
+                        onClick={() => {
+                          setSlideDir('slideRight');
+                          setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                        }}
                         className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
                         style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
                       >
                         <ChevronLeft className="h-6 w-6" />
                       </button>
                       <button 
-                        onClick={() => setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length)}
+                        onClick={() => {
+                          setSlideDir('slideLeft');
+                          setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                        }}
                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
                         style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
                       >
