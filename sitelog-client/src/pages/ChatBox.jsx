@@ -687,7 +687,7 @@ export default function ChatBox() {
               )}
 
               <div className="flex flex-col gap-2">
-                <div className="flex gap-2">
+                <div className="flex gap-2 pr-14 sm:pr-0">
                   <div className="flex-1 relative flex">
                     <textarea
                       ref={textareaRef}

@@ -169,7 +169,7 @@ export default function Login() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={handleEmailBlur}
-                    className={`input-field pl-11 py-3 text-base ${emailError ? 'border-danger focus:ring-danger/20' : ''}`}
+                    className={`input-field !pl-11 py-3 text-base ${emailError ? 'border-danger focus:ring-danger/20' : ''}`}
                     placeholder="priya@plinthhq.in"
                     required
                   />
@@ -183,7 +183,7 @@ export default function Login() {
                 </div>
                 <div className="relative group">
                   <Lock className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted transition group-focus-within:text-orange" />
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field pl-11 py-3 text-base" placeholder="••••••••" required />
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field !pl-11 py-3 text-base" placeholder="••••••••" required />
                 </div>
               </div>
               <button type="submit" disabled={submitting} className="btn-accent w-full py-3.5 text-base mt-4">

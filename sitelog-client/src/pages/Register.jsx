@@ -270,7 +270,7 @@ export default function Register() {
                 <label className="mb-1.5 block text-sm font-semibold text-navy">Full name</label>
                 <div className="relative group">
                   <User className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted transition group-focus-within:text-orange" />
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field pl-11 py-3 text-base" placeholder="John Doe" required />
+                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field !pl-11 py-3 text-base" placeholder="John Doe" required />
                 </div>
               </div>
 
@@ -284,7 +284,7 @@ export default function Register() {
                     value={email}
                     onChange={inviteData ? undefined : handleEmailChange}
                     disabled={!!inviteData}
-                    className={`input-field pl-11 pr-10 py-3 text-base ${inviteData ? 'opacity-60 cursor-not-allowed' : ''} ${emailError ? 'border-danger focus:ring-danger/20' : emailAvailable ? 'border-success focus:ring-success/20' : ''}`}
+                    className={`input-field !pl-11 pr-10 py-3 text-base ${inviteData ? 'opacity-60 cursor-not-allowed' : ''} ${emailError ? 'border-danger focus:ring-danger/20' : emailAvailable ? 'border-success focus:ring-success/20' : ''}`}
                     placeholder="john@company.com"
                     required
                   />
@@ -319,7 +319,7 @@ export default function Register() {
                 <label className="mb-1.5 block text-sm font-semibold text-navy">Password</label>
                 <div className="relative group">
                   <Lock className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted transition group-focus-within:text-orange" />
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field pl-11 py-3 text-base" placeholder="Min. 8 characters" required />
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field !pl-11 py-3 text-base" placeholder="Min. 8 characters" required />
                 </div>
                 {/* Password Strength Meter */}
                 {password && (
@@ -353,7 +353,7 @@ export default function Register() {
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className={`input-field pl-11 py-3 text-base ${confirmPassword && confirmPassword !== password ? 'border-danger' : ''}`}
+                    className={`input-field !pl-11 py-3 text-base ${confirmPassword && confirmPassword !== password ? 'border-danger' : ''}`}
                     placeholder="Re-enter password"
                     required
                   />
