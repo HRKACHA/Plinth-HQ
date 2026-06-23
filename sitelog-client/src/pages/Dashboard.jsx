@@ -361,9 +361,10 @@ export default function Dashboard() {
 
 
         {/* Main grid: Projects + sidebar */}
-        <div className="flex flex-col lg:grid gap-4 sm:gap-8 lg:grid-cols-3">
-          {/* Projects section */}
-          <div className="lg:col-span-2">
+        <div className="flex flex-col lg:grid gap-4 sm:gap-8 lg:grid-cols-2">
+          {/* Left section: Projects + Activity */}
+          <div className="space-y-6">
+            <div>
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-bold text-navy flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-orange" /> Your Projects
@@ -453,7 +454,13 @@ export default function Dashboard() {
                     <Plus className="h-4 w-4" /> Create First Project
                   </Link>
                 </div>
+                </div>
               )}
+            </div>
+
+            {/* Recent Activity Feed (Under Projects on PC) */}
+            <div className="h-[500px]">
+              <ActivityFeed />
             </div>
           </div>
 
@@ -558,11 +565,6 @@ export default function Dashboard() {
               ) : (
                 <p className="text-sm text-navy/60 dark:text-white/60">Create a project first</p>
               )}
-            </div>
-
-            {/* Recent Activity Feed */}
-            <div className="h-[500px]">
-              <ActivityFeed />
             </div>
           </div>
         </div>
