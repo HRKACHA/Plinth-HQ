@@ -374,71 +374,91 @@ export default function Dashboard() {
               </div>
               <div className="relative pb-6">
                 {safeProjects.length > 0 ? (
-                  <div className="relative group overflow-hidden rounded-2xl">
-                    <AnimatePresence mode="wait" custom={slideDir}>
-                      <motion.div
-                        key={currentProjectIndex}
-                        custom={slideDir}
-                        initial={{ opacity: 0, x: slideDir === 'slideLeft' ? 50 : -50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: slideDir === 'slideLeft' ? -50 : 50 }}
-                        transition={{ duration: 0.2 }}
-                        drag="x"
-                        dragConstraints={{ left: 0, right: 0 }}
-                        dragElastic={0.2}
-                        onDragEnd={(e, { offset, velocity }) => {
-                          const swipe = offset.x;
-                          if (swipe < -50) {
-                            setSlideDir('slideLeft');
-                            setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
-                          } else if (swipe > 50) {
-                            setSlideDir('slideRight');
-                            setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
-                          }
-                        }}
-                        className="relative"
-                      >
-                        <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
-                        {user?.role === 'PM' && (
-                          <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
-                            <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
-                              style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                              <Pencil className="h-4 w-4" />
-                            </button>
+                  <>
+                    {/* Mobile/Tablet Slider */}
+                    <div className="lg:hidden relative group overflow-hidden rounded-2xl">
+                      <AnimatePresence mode="wait" custom={slideDir}>
+                        <motion.div
+                          key={currentProjectIndex}
+                          custom={slideDir}
+                          initial={{ opacity: 0, x: slideDir === 'slideLeft' ? 50 : -50 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: slideDir === 'slideLeft' ? -50 : 50 }}
+                          transition={{ duration: 0.2 }}
+                          drag="x"
+                          dragConstraints={{ left: 0, right: 0 }}
+                          dragElastic={0.2}
+                          onDragEnd={(e, { offset, velocity }) => {
+                            const swipe = offset.x;
+                            if (swipe < -50) {
+                              setSlideDir('slideLeft');
+                              setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                            } else if (swipe > 50) {
+                              setSlideDir('slideRight');
+                              setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                            }
+                          }}
+                          className="relative"
+                        >
+                          <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
+                          {user?.role === 'PM' && (
+                            <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
+                              <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
+                                style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                <Pencil className="h-4 w-4" />
+                              </button>
+                            </div>
+                          )}
+                        </motion.div>
+                      </AnimatePresence>
+                      {safeProjects.length > 1 && (
+                        <>
+                          <button
+                            onClick={() => {
+                              setSlideDir('slideRight');
+                              setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                            }}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                            style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                          >
+                            <ChevronLeft className="h-6 w-6" />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSlideDir('slideLeft');
+                              setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                            }}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                            style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                          >
+                            <ChevronRight className="h-6 w-6" />
+                          </button>
+                          <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
+                            {safeProjects.map((_, idx) => (
+                              <span key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentProjectIndex ? 'w-5 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
+                            ))}
                           </div>
-                        )}
-                      </motion.div>
-                    </AnimatePresence>
-                    {safeProjects.length > 1 && (
-                      <>
-                        <button
-                          onClick={() => {
-                            setSlideDir('slideRight');
-                            setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
-                          }}
-                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
-                          style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
-                        >
-                          <ChevronLeft className="h-6 w-6" />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setSlideDir('slideLeft');
-                            setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
-                          }}
-                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
-                          style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
-                        >
-                          <ChevronRight className="h-6 w-6" />
-                        </button>
-                        <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
-                          {safeProjects.map((_, idx) => (
-                            <span key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentProjectIndex ? 'w-5 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
-                          ))}
+                        </>
+                      )}
+                    </div>
+
+                    {/* Desktop Grid */}
+                    <div className="hidden lg:grid grid-cols-2 gap-4 xl:gap-6">
+                      {safeProjects.map((p, idx) => (
+                        <div key={idx} className="relative group animate-fadeIn" style={{ animationDelay: `${idx * 50}ms` }}>
+                          <ProjectCard project={{ ...p, id: p._id || p.id, team: p.teamCount || p.team?.length || 0 }} />
+                          {user?.role === 'PM' && (
+                            <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
+                              <button onClick={(e) => { e.preventDefault(); openEdit(p); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
+                                style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                                <Pencil className="h-4 w-4" />
+                              </button>
+                            </div>
+                          )}
                         </div>
-                      </>
-                    )}
-                  </div>
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <div className="flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
                     style={{ border: '2px dashed rgba(255,255,255,0.08)', background: 'rgba(16,18,24,0.12)', backdropFilter: 'blur(12px)' }}>
