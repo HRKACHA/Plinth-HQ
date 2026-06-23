@@ -358,9 +358,9 @@ export default function Dashboard() {
 
 
         {/* Main grid: Projects + sidebar */}
-        <div className="grid gap-4 sm:gap-8 lg:grid-cols-3">
+        <div className="flex flex-col lg:grid gap-4 sm:gap-8 lg:grid-cols-3">
           {/* Projects section */}
-          <div className="lg:col-span-2">
+          <div className="order-2 lg:order-1 lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-bold text-navy flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-orange" /> Your Projects
@@ -369,9 +369,9 @@ export default function Dashboard() {
                 View all <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-            <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+            <div className="grid gap-6 sm:grid-cols-2">
               {safeProjects.slice(0, 4).map((p) => (
-                <div key={p._id || p.id} className="relative group w-[85vw] sm:w-auto shrink-0 snap-center">
+                <div key={p._id || p.id} className="relative group">
                   <ProjectCard project={{ ...p, id: p._id || p.id, team: p.teamCount || p.team?.length || 0 }} />
                   {user?.role === 'PM' && (
                     <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
@@ -402,7 +402,7 @@ export default function Dashboard() {
           </div>
 
           {/* Right sidebar */}
-          <div className="space-y-6">
+          <div className="order-1 lg:order-2 space-y-6">
             {/* Weather widget */}
             <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
               <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
