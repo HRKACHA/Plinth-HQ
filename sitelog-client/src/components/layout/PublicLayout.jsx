@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import PlinthLogo from '../common/PlinthLogo';
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -17,16 +18,17 @@ function PublicNavbar() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const location = useLocation();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <div className="sticky top-4 z-50 mx-auto max-w-7xl w-full px-4 lg:px-8 pt-4 pointer-events-none">
-      <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3 pointer-events-auto">
+      <div className="liquid-glass grid grid-cols-2 md:grid-cols-3 items-center rounded-2xl px-6 py-3 pointer-events-auto relative">
         <div className="flex justify-start">
           <Link to="/"><PlinthLogo size="xxs" /></Link>
         </div>
         
-        <div className="col-span-2 flex justify-end items-center gap-4">
-          <div className="hidden sm:flex items-center gap-4">
+        <div className="hidden md:flex justify-end md:col-span-2 items-center gap-4">
+          <div className="flex items-center gap-4">
             {navItems.map(item => {
               const isActive = location.pathname === item.path;
               return (
@@ -54,14 +56,62 @@ function PublicNavbar() {
 
           {!user ? (
             <div className="flex items-center gap-4">
-              <Link to="/login" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
+              <Link to="/login" className="hidden lg:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
               <Link to="/register" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Get Started</Link>
             </div>
           ) : (
             <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Go to Dashboard</Link>
           )}
         </div>
+
+        {/* Mobile menu button */}
+        <div className="flex md:hidden justify-end items-center gap-4">
+          <Switch theme={theme} toggleTheme={toggleTheme} />
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-navy dark:text-white focus:outline-none"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Dropdown */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full left-4 right-4 mt-2 liquid-glass rounded-2xl p-4 flex flex-col gap-2 pointer-events-auto md:hidden shadow-lg border border-navy/5 dark:border-white/5"
+          >
+            {navItems.map(item => {
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                    isActive ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-navy/70 dark:text-white/70'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+            <hr className="border-navy/5 dark:border-white/5 my-2" />
+            {!user ? (
+              <div className="flex flex-col gap-2">
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl text-sm font-medium text-navy/70 dark:text-white/70 text-center">Log In</Link>
+                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-3 text-white rounded-xl">Get Started</Link>
+              </div>
+            ) : (
+              <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-3 text-white rounded-xl">Go to Dashboard</Link>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
