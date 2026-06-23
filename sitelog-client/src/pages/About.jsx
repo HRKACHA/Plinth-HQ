@@ -150,11 +150,6 @@ const WORKFLOW_STEPS = [
   { step: '06', title: 'Report & Deliver', desc: 'Generate professional PDF reports, track milestone completion, and close projects with full documentation.', icon: Award },
 ];
 
-const STATS = [
-  { value: 90, suffix: '%+', label: 'Daily log completion rate' },
-  { value: 5, suffix: '', label: 'User roles supported' },
-];
-
 /* ══════════════════════════════════════════════════════════
    COMPONENTS
    ══════════════════════════════════════════════════════════ */
@@ -229,6 +224,16 @@ export default function About() {
         </div>
       </section>
 
+      {/* ══════════════════════════════════════════════════
+         SECTION 2: Stats Bar
+         ══════════════════════════════════════════════════ */}
+      <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:px-8">
+          {STATS.map((stat) => (
+            <StatCounter key={stat.label} {...stat} />
+          ))}
+        </div>
+      </section>
 
       {/* ══════════════════════════════════════════════════
          SECTION 3: The Problem We Solve
@@ -292,8 +297,8 @@ export default function About() {
               key={cat.category}
               onClick={() => setActiveFeatureCategory(idx)}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeFeatureCategory === idx
-                  ? 'text-navy dark:text-white shadow-lg'
-                  : 'text-navy/70 dark:text-white/70 hover:text-navy/80 dark:text-white/80'
+                ? 'text-navy dark:text-white shadow-lg'
+                : 'text-navy/70 dark:text-white/70 hover:text-navy/80 dark:text-white/80'
                 }`}
               style={activeFeatureCategory === idx
                 ? { background: `${cat.color}20`, border: `1px solid ${cat.color}40`, boxShadow: `0 0 20px ${cat.color}15` }
