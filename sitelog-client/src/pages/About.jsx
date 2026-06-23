@@ -11,6 +11,7 @@ import PlinthLogo from '../components/common/PlinthLogo';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import AnimatedHeroText from '../components/common/AnimatedHeroText';
+import Switch from '../components/ui/sky-toggle';
 
 /* ══════════════════════════════════════════════════════════
    ANIMATED COUNTER HOOK
@@ -207,18 +208,7 @@ export default function About() {
             <Link to="/sitemap" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Sitemap</Link>
             
             {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none ${theme === 'dark' ? 'bg-navy border border-white/20' : 'bg-orange/10 border border-orange/20'}`}
-              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              <span className="sr-only">Toggle theme</span>
-              <Sun className={`absolute left-1.5 h-3 w-3 text-orange transition-opacity duration-300 ${theme === 'dark' ? 'opacity-0' : 'opacity-100'}`} />
-              <Moon className={`absolute right-1.5 h-3 w-3 text-white transition-opacity duration-300 ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`} />
-              <span
-                className={`inline-block h-4 w-4 transform rounded-full shadow transition-transform duration-300 z-10 ${theme === 'dark' ? 'translate-x-6 bg-white' : 'translate-x-1 bg-orange'}`}
-              />
-            </button>
+            <Switch theme={theme} toggleTheme={toggleTheme} />
 
             {!user ? (
               <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Sign In</Link>
