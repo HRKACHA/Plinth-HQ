@@ -150,27 +150,6 @@ const WORKFLOW_STEPS = [
   { step: '06', title: 'Report & Deliver', desc: 'Generate professional PDF reports, track milestone completion, and close projects with full documentation.', icon: Award },
 ];
 
-const STATS = [
-  { value: 90, suffix: '%+', label: 'Daily log completion rate' },
-  { value: 5, suffix: '', label: 'User roles supported' },
-];
-
-/* ══════════════════════════════════════════════════════════
-   COMPONENTS
-   ══════════════════════════════════════════════════════════ */
-
-function StatCounter({ value, suffix, label }) {
-  const { count, ref } = useCountUp(value, 1800);
-  return (
-    <div ref={ref} className="text-center">
-      <p className="font-mono text-4xl md:text-5xl font-bold text-navy dark:text-white tracking-tight">
-        {count}{suffix}
-      </p>
-      <p className="mt-2 text-sm text-navy/70 dark:text-white/70 font-medium">{label}</p>
-    </div>
-  );
-}
-
 function SectionBadge({ children }) {
   const { theme } = useTheme();
   return (
@@ -229,16 +208,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════
-         SECTION 2: Stats Bar
-         ══════════════════════════════════════════════════ */}
-      <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:px-8">
-          {STATS.map((stat) => (
-            <StatCounter key={stat.label} {...stat} />
-          ))}
-        </div>
-      </section>
 
       {/* ══════════════════════════════════════════════════
          SECTION 3: The Problem We Solve
