@@ -85,7 +85,7 @@ function PublicNavbar() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="absolute top-full left-0 right-0 mt-2 liquid-glass rounded-2xl p-3 flex flex-col gap-1 pointer-events-auto md:hidden shadow-lg border border-navy/5 dark:border-white/5"
+              className="!absolute top-full left-0 right-0 mt-2 liquid-glass rounded-2xl p-3 flex flex-col gap-1 pointer-events-auto md:hidden shadow-lg border border-navy/5 dark:border-white/5"
             >
               {navItems.map(item => {
                 const isActive = location.pathname === item.path;
