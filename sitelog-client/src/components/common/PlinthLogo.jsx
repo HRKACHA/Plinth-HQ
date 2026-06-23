@@ -28,7 +28,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
       <div className={`relative shrink-0 ${h} flex items-center justify-center`}>
         {/* Dark mode logo */}
         <img
-          src="/Plinth_HQ_logo.png"
+          src="/Plinth_Hq_logo.png"
           alt="PlinthHQ Logo"
           className="absolute inset-0 w-auto h-full object-contain drop-shadow-md"
           style={{
