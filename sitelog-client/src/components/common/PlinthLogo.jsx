@@ -28,7 +28,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
       <div className={`relative shrink-0 ${h} flex items-center justify-center`}>
         {/* Dark mode logo */}
         <img
-          src="/White_logo.png"
+          src="/Plinth_HQ_logo.png"
           alt="PlinthHQ Logo"
           className="absolute inset-0 w-auto h-full object-contain drop-shadow-md"
           style={{
@@ -38,7 +38,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
         />
         {/* Light mode logo */}
         <img
-          src="/Plinth_Hq_logo.png"
+          src="/White_logo.png"
           alt="PlinthHQ Logo"
           className="w-auto h-full object-contain"
           style={{
@@ -47,17 +47,6 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
           }}
         />
       </div>
-      {!iconOnly && (
-        <div className="flex flex-col items-center text-center">
-          <span className={`font-bold tracking-widest ${ts} leading-none`} style={{ fontFamily: '"Playfair Display", "Georgia", serif' }}>
-            <span className="text-navy transition-colors duration-500">PLINTH </span>
-            <span className="text-orange transition-colors duration-500">HQ</span>
-          </span>
-          <span className={`${size === 'xs' || size === 'sm' ? 'text-[0.35em] mt-0.5' : 'text-[0.28em] mt-1'} font-bold tracking-[0.25em] text-muted whitespace-nowrap transition-colors duration-500 uppercase`}>
-            FOUNDATION TO FINISH.
-          </span>
-        </div>
-      )}
     </div>
   );
 }

@@ -13,7 +13,7 @@ function generateSessionId() {
 // Simple markdown-like rendering for chat messages
 function renderMessage(text) {
   if (!text) return null;
-  
+
   // Split into lines and process
   const lines = text.split('\n');
   const elements = [];
@@ -48,11 +48,11 @@ function renderMessage(text) {
         if (parts.length > 0 && parts[parts.length - 1].trim() === '') parts.pop();
         return parts.map(s => s.trim());
       };
-      
+
       const headers = parseRow(tableBuffer[0]);
       // Skip the separator line (e.g. |---|---|)
       const rows = tableBuffer.slice(2).map(parseRow);
-      
+
       elements.push(
         <div key={`table-${elements.length}`} className="my-3 w-full overflow-x-auto rounded-lg border border-[var(--color-glass-border)] bg-navy/5 dark:bg-white/5 dark:bg-navy/5 dark:bg-white/5">
           <table className="w-full text-left text-sm text-navy">
@@ -379,7 +379,7 @@ export default function PlinthAIChatbot() {
     // Assume button is about 64px wide, and its original position is right-4 (16px) or right-6 (24px).
     // Let's use an approximate offset for the left side (e.g., negative offset from right)
     const offset = isLeftHalf ? -(screenWidth - 64 - 32) : 0;
-    
+
     controls.start({
       x: offset,
       transition: { type: 'spring', stiffness: 300, damping: 25 }
@@ -398,11 +398,10 @@ export default function PlinthAIChatbot() {
         whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
         onClick={toggleOpen}
         id="plinthai-fab"
-        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-colors transition-shadow duration-500 hover:scale-105 group ${
-          isOpen && !isMinimized
+        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-colors transition-shadow duration-500 hover:scale-105 group ${isOpen && !isMinimized
             ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
             : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
-        }`}
+          }`}
         aria-label={isOpen ? 'Close PlinthAI' : 'Open PlinthAI'}
       >
         {isOpen && !isMinimized ? (
@@ -519,13 +518,12 @@ export default function PlinthAIChatbot() {
 
                 {/* Message Bubble */}
                 <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${
-                    msg.role === 'user'
+                  className={`max-w-[85%] rounded-2xl px-3.5 py-2.5 ${msg.role === 'user'
                       ? 'bg-gradient-to-br from-orange to-orange-dark text-white rounded-br-md shadow-md shadow-orange/20'
                       : msg.role === 'error'
-                      ? 'bg-danger/10 text-danger border border-danger/20 rounded-bl-md'
-                      : 'bg-surface border border-[var(--color-glass-border)] rounded-bl-md'
-                  }`}
+                        ? 'bg-danger/10 text-danger border border-danger/20 rounded-bl-md'
+                        : 'bg-surface border border-[var(--color-glass-border)] rounded-bl-md'
+                    }`}
                 >
                   {msg.role === 'user' ? (
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.content}</p>
@@ -543,18 +541,16 @@ export default function PlinthAIChatbot() {
                       </span>
                       <button
                         onClick={() => handleFeedback(msg.id, 'up')}
-                        className={`p-1 rounded transition ${
-                          msg.feedback === 'up' ? 'text-success bg-success/10' : 'text-muted hover:text-success hover:bg-success/10'
-                        }`}
+                        className={`p-1 rounded transition ${msg.feedback === 'up' ? 'text-success bg-success/10' : 'text-muted hover:text-success hover:bg-success/10'
+                          }`}
                         title="Helpful"
                       >
                         <ThumbsUp className="h-3 w-3" />
                       </button>
                       <button
                         onClick={() => handleFeedback(msg.id, 'down')}
-                        className={`p-1 rounded transition ${
-                          msg.feedback === 'down' ? 'text-danger bg-danger/10' : 'text-muted hover:text-danger hover:bg-danger/10'
-                        }`}
+                        className={`p-1 rounded transition ${msg.feedback === 'down' ? 'text-danger bg-danger/10' : 'text-muted hover:text-danger hover:bg-danger/10'
+                          }`}
                         title="Not helpful"
                       >
                         <ThumbsDown className="h-3 w-3" />
@@ -641,11 +637,10 @@ export default function PlinthAIChatbot() {
                 <button
                   onClick={() => sendMessage()}
                   disabled={!input.trim() || loading}
-                  className={`flex items-center justify-center h-10 w-10 rounded-full transition-all duration-300 ${
-                    input.trim() && !loading
+                  className={`flex items-center justify-center h-10 w-10 rounded-full transition-all duration-300 ${input.trim() && !loading
                       ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95 pr-[2px]'
                       : 'bg-navy/5 dark:bg-white/5 text-navy/70 dark:text-white/70 cursor-not-allowed'
-                  }`}
+                    }`}
                 >
                   <Send className="h-5 w-5" />
                 </button>
