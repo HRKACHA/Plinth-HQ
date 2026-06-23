@@ -15,12 +15,12 @@ import Switch from '../components/ui/sky-toggle';
    ══════════════════════════════════════════════════════════ */
 
 const features = [
-  { icon: Camera, title: 'Photo-Evidence Logs', desc: 'Attach up to 20 photos per daily entry with automatic compression and CDN delivery.' },
-  { icon: BarChart3, title: 'Budget Control', desc: 'Real-time budget vs. actual tracking with alerts at 80% and 100% thresholds.' },
-  { icon: FileText, title: 'PDF Reports', desc: 'Generate daily, weekly, and monthly reports with digital PM signatures.' },
   { icon: Shield, title: 'Owner Dashboard', desc: 'Secure shareable links for building owners with progress visibility and approvals.' },
-  { icon: Smartphone, title: 'Mobile-First PWA', desc: 'Works offline on site. Capture photos directly from your phone camera.' },
   { icon: Users, title: 'Team Management', desc: 'Role-based access for engineers, PMs, owners, and accounts teams.' },
+  { icon: Smartphone, title: 'Mobile-First PWA', desc: 'Works offline on site. Capture photos directly from your phone camera.' },
+  { icon: BarChart3, title: 'Budget Control', desc: 'Real-time budget vs. actual tracking with alerts at 80% and 100% thresholds.' },
+  { icon: Camera, title: 'Photo-Evidence Logs', desc: 'Attach up to 20 photos per daily entry with automatic compression and CDN delivery.' },
+  { icon: FileText, title: 'PDF Reports', desc: 'Generate daily, weekly, and monthly reports with digital PM signatures.' },
 ];
 
 const stats = [
