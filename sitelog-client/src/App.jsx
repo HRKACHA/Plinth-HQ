@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import { ProtectedRoute, PublicRoute } from './components/ProtectedRoute';
+import PublicLayout from './components/layout/PublicLayout';
 
 import Landing from './pages/Landing';
 import About from './pages/About';
@@ -44,9 +45,11 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/sitemap" element={<Sitemap />} />
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Landing />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/sitemap" element={<Sitemap />} />
+            </Route>
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
 

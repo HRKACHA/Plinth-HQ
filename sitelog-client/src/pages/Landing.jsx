@@ -37,41 +37,9 @@ const stats = [
 export default function Landing() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
-
-  const getNavLinkClass = (path) => {
-    const isActive = location.pathname === path;
-    return `hidden sm:block text-sm font-medium transition-colors px-3 py-1.5 rounded-full ${
-      isActive 
-        ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white shadow-sm' 
-        : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
-    }`;
-  };
-
   return (
-    <div className="min-h-screen bg-transparent text-navy dark:text-white">
-      {/* ── Nav ── */}
-      <nav className="sticky top-4 z-50 mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3">
-          <div className="flex justify-start">
-            <Link to="/"><PlinthLogo size="xxs" /></Link>
-          </div>
-          <div className="col-span-2 flex justify-end items-center gap-4">
-            <Link to="/" className={getNavLinkClass('/')}>Home</Link>
-            <Link to="/about" className={getNavLinkClass('/about')}>About</Link>
-            <Link to="/sitemap" className={getNavLinkClass('/sitemap')}>Sitemap</Link>
-            
-            {/* Theme Toggle */}
-            <Switch theme={theme} toggleTheme={toggleTheme} />
+    <>
 
-            {!user ? (
-              <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Sign In</Link>
-            ) : (
-              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Go to Dashboard</Link>
-            )}
-          </div>
-        </div>
-      </nav>
 
       {/* ── Hero with Particle Canvas ── */}
       <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
@@ -166,6 +134,6 @@ export default function Landing() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 }

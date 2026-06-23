@@ -7,18 +7,6 @@ import { useTheme } from '../context/ThemeContext';
 import Switch from '../components/ui/sky-toggle';
 
 export default function Sitemap() {
-  const { user } = useAuth();
-  const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
-
-  const getNavLinkClass = (path) => {
-    const isActive = location.pathname === path;
-    return `hidden sm:block text-sm font-medium transition-colors px-3 py-1.5 rounded-full ${
-      isActive 
-        ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white shadow-sm' 
-        : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
-    }`;
-  };
   const sitemapLinks = [
     {
       category: 'Public Pages',
@@ -63,29 +51,7 @@ export default function Sitemap() {
   ];
 
   return (
-    <div className="min-h-screen bg-transparent relative z-10 flex flex-col">
-      {/* ── Nav ── */}
-      <nav className="sticky top-4 z-50 mx-auto max-w-7xl w-full px-4 lg:px-8 mt-4">
-        <div className="liquid-glass flex items-center justify-between rounded-2xl px-6 py-3">
-          <div className="flex justify-start">
-            <Link to="/"><PlinthLogo size="xxs" /></Link>
-          </div>
-          <div className="flex justify-end items-center gap-4">
-            <Link to="/" className={getNavLinkClass('/')}>Home</Link>
-            <Link to="/about" className={getNavLinkClass('/about')}>About</Link>
-            <Link to="/sitemap" className={getNavLinkClass('/sitemap')}>Sitemap</Link>
-            <Switch theme={theme} toggleTheme={toggleTheme} />
-            {!user ? (
-              <div className="flex items-center gap-4">
-                <Link to="/login" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
-                <Link to="/register" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Get Started</Link>
-              </div>
-            ) : (
-              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Go to Dashboard</Link>
-            )}
-          </div>
-        </div>
-      </nav>
+    <>
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-16 lg:px-8">
         <div className="mb-12">

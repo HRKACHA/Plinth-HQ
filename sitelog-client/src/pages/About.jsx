@@ -191,43 +191,11 @@ export default function About() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [activeFeatureCategory, setActiveFeatureCategory] = useState(0);
-  const location = useLocation();
-
-  const getNavLinkClass = (path) => {
-    const isActive = location.pathname === path;
-    return `hidden sm:block text-sm font-medium transition-colors px-3 py-1.5 rounded-full ${
-      isActive 
-        ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white shadow-sm' 
-        : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
-    }`;
-  };
-
   return (
-    <div className="min-h-screen bg-transparent text-navy dark:text-white relative">
+    <>
       <ParticleBackground />
 
-      {/* ── Nav ── */}
-      <nav className="sticky top-4 z-50 mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3">
-          <div className="flex justify-start">
-            <Link to="/"><PlinthLogo size="xxs" /></Link>
-          </div>
-          <div className="col-span-2 flex justify-end items-center gap-4">
-            <Link to="/" className={getNavLinkClass('/')}>Home</Link>
-            <Link to="/about" className={getNavLinkClass('/about')}>About</Link>
-            <Link to="/sitemap" className={getNavLinkClass('/sitemap')}>Sitemap</Link>
 
-            {/* Theme Toggle */}
-            <Switch theme={theme} toggleTheme={toggleTheme} />
-
-            {!user ? (
-              <Link to="/login" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Sign In</Link>
-            ) : (
-              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5">Go to Dashboard</Link>
-            )}
-          </div>
-        </div>
-      </nav>
 
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
@@ -632,6 +600,6 @@ export default function About() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
