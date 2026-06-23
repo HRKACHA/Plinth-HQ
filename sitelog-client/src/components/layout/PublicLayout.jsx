@@ -74,8 +74,6 @@ function PublicNavbar() {
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
-      </div>
-
       {/* Mobile Dropdown */}
       <AnimatePresence>
         {isMobileMenuOpen && (
@@ -83,7 +81,7 @@ function PublicNavbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-4 right-4 mt-2 liquid-glass rounded-2xl p-4 flex flex-col gap-2 pointer-events-auto md:hidden shadow-lg border border-navy/5 dark:border-white/5"
+            className="absolute top-full left-0 right-0 mt-2 liquid-glass rounded-2xl p-3 flex flex-col gap-1 pointer-events-auto md:hidden shadow-lg border border-navy/5 dark:border-white/5"
           >
             {navItems.map(item => {
               const isActive = location.pathname === item.path;
@@ -92,7 +90,7 @@ function PublicNavbar() {
                   key={item.name}
                   to={item.path}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
                     isActive ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-navy/70 dark:text-white/70'
                   }`}
                 >
@@ -100,18 +98,19 @@ function PublicNavbar() {
                 </Link>
               );
             })}
-            <hr className="border-navy/5 dark:border-white/5 my-2" />
+            <hr className="border-navy/5 dark:border-white/5 my-1.5" />
             {!user ? (
-              <div className="flex flex-col gap-2">
-                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-3 rounded-xl text-sm font-medium text-navy/70 dark:text-white/70 text-center">Log In</Link>
-                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-3 text-white rounded-xl">Get Started</Link>
+              <div className="flex flex-col gap-1">
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium text-navy/70 dark:text-white/70 text-center">Log In</Link>
+                <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-2.5 text-white rounded-xl">Get Started</Link>
               </div>
             ) : (
-              <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-3 text-white rounded-xl">Go to Dashboard</Link>
+              <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-2.5 text-white rounded-xl">Go to Dashboard</Link>
             )}
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }

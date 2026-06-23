@@ -200,9 +200,7 @@ export default function Register() {
             <ArrowLeft className="h-4 w-4" /> Back to website
           </Link>
           <div className="card shadow-elevated p-8 sm:p-10">
-            <div className="lg:hidden mb-8 flex justify-center">
-              <PlinthLogo size="md" />
-            </div>
+
             <div className="text-center mb-8">
               <h1 className="font-display text-3xl font-bold text-navy tracking-tight">
                 {inviteToken ? 'Accept Invitation' : 'Create account'}
