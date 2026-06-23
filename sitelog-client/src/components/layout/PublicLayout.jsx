@@ -19,13 +19,13 @@ function PublicNavbar() {
   const location = useLocation();
 
   return (
-    <div className="sticky top-4 z-50 mx-auto max-w-7xl px-4 lg:px-8 pt-4 pointer-events-none">
-      <div className="liquid-glass flex items-center justify-between rounded-2xl px-6 py-3 pointer-events-auto">
+    <div className="sticky top-4 z-50 mx-auto max-w-7xl w-full px-4 lg:px-8 pt-4 pointer-events-none">
+      <div className="liquid-glass grid grid-cols-3 items-center rounded-2xl px-6 py-3 pointer-events-auto">
         <div className="flex justify-start">
           <Link to="/"><PlinthLogo size="xxs" /></Link>
         </div>
         
-        <div className="flex justify-end items-center gap-4">
+        <div className="col-span-2 flex justify-end items-center gap-4">
           <div className="hidden sm:flex items-center gap-4">
             {navItems.map(item => {
               const isActive = location.pathname === item.path;
