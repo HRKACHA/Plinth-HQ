@@ -26,14 +26,14 @@ function PublicNavbar() {
         </div>
         
         <div className="flex justify-end items-center gap-4">
-          <div className="hidden sm:flex items-center gap-1">
+          <div className="hidden sm:flex items-center gap-4">
             {navItems.map(item => {
               const isActive = location.pathname === item.path;
               return (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`relative px-4 py-1.5 text-sm font-medium transition-colors rounded-full ${
+                  className={`relative px-3 py-1.5 text-sm font-medium transition-colors rounded-full ${
                     isActive ? 'text-navy dark:text-white' : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
                   }`}
                 >
