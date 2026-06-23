@@ -150,6 +150,11 @@ const WORKFLOW_STEPS = [
   { step: '06', title: 'Report & Deliver', desc: 'Generate professional PDF reports, track milestone completion, and close projects with full documentation.', icon: Award },
 ];
 
+const STATS = [
+  { value: 90, suffix: '%+', label: 'Daily log completion rate' },
+  { value: 5, suffix: '', label: 'User roles supported' },
+];
+
 /* ══════════════════════════════════════════════════════════
    COMPONENTS
    ══════════════════════════════════════════════════════════ */
