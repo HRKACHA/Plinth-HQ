@@ -4,7 +4,7 @@ import {
   ArrowRight, HardHat, BarChart3, ShieldCheck, Zap, Camera, FileText,
   Users, Smartphone, Building2, CheckCircle, MessageSquare, Package,
   Wrench, ClipboardList, TrendingUp, Lock, Globe, Layers, ChevronRight,
-  Shield, Folder, Clock, Eye, Bell, BookOpen, Target, Award, Mic, Sun, Moon
+  Shield, Folder, Clock, Eye, Bell, BookOpen, Target, Award, Mic, Sun, Moon, Bot, Map
 } from 'lucide-react';
 import ParticleBackground from '../components/common/ParticleBackground';
 import PlinthLogo from '../components/common/PlinthLogo';
@@ -103,7 +103,7 @@ const FEATURES = [
     items: [
       { icon: Mic, title: 'Voice Dictation', desc: 'Keep your gloves on. Log site updates, create issues, and chat using voice dictation directly from the job site.' },
       { icon: Globe, title: 'Multi-Language Translation', desc: 'Communicate seamlessly across regional languages with real-time translation for English, Hindi, and Gujarati.' },
-      { icon: Zap, title: 'Smart Logging', desc: 'Speak your daily site diary entries directly into the app for faster and more accurate record keeping.' },
+      { icon: Bot, title: 'PlinthAI Assistant', desc: 'A floating, context-aware AI assistant available everywhere to answer project queries and help you navigate the platform instantly.' },
     ]
   },
 ];
@@ -206,7 +206,7 @@ export default function About() {
             <Link to="/" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Home</Link>
             <Link to="/about" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">About</Link>
             <Link to="/sitemap" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Sitemap</Link>
-            
+
             {/* Theme Toggle */}
             <Switch theme={theme} toggleTheme={toggleTheme} />
 
@@ -229,8 +229,8 @@ export default function About() {
               <SectionBadge>About PlinthHQ</SectionBadge>
             </div>
             <div className="mb-8">
-              <AnimatedHeroText 
-                staticText={"The command center"} 
+              <AnimatedHeroText
+                staticText={"The command center"}
                 rotatingPhrases={[
                   'your construction site\ndeserves.',
                   'your projects\ndeserve.',
@@ -238,8 +238,8 @@ export default function About() {
                   'your budgets\ndeserve.',
                   'your owners\ndeserve.',
                   'your progress\ndeserves.'
-                ]} 
-                isAboutPage={true} 
+                ]}
+                isAboutPage={true}
               />
             </div>
             <p className="text-xl text-navy/70 dark:text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">
@@ -316,7 +316,7 @@ export default function About() {
             Everything you need,<br />nothing you don't.
           </h2>
           <p className="mt-5 text-lg text-navy/70 dark:text-white/70 leading-relaxed">
-            Four powerful modules covering every aspect of construction project management — from field operations to financial oversight.
+            Five powerful modules covering every aspect of construction project management — from field operations to financial oversight.
           </p>
         </div>
 
@@ -326,11 +326,10 @@ export default function About() {
             <button
               key={cat.category}
               onClick={() => setActiveFeatureCategory(idx)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeFeatureCategory === idx
+              className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${activeFeatureCategory === idx
                   ? 'text-navy dark:text-white shadow-lg'
                   : 'text-navy/70 dark:text-white/70 hover:text-navy/80 dark:text-white/80'
-              }`}
+                }`}
               style={activeFeatureCategory === idx
                 ? { background: `${cat.color}20`, border: `1px solid ${cat.color}40`, boxShadow: `0 0 20px ${cat.color}15` }
                 : { background: theme === 'dark' ? 'rgba(255,255,255,0.03)' : 'rgba(120,140,200,0.06)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.10)' }

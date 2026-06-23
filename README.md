@@ -17,7 +17,10 @@ Built with a stunning, high-performance web interface, PlinthHQ brings real-time
 - **🚧 Issue Tracking:** Report, assign, and resolve site issues seamlessly. Restricted editing ensures that assignees can update the status and upload photos without altering core issue details.
 - **🔔 Real-Time Notifications:** In-app notifications for task assignments, team invitations, and critical project updates.
 - **🌐 Shared Owner Dashboards:** Generate secure, view-only links for external stakeholders and owners to track high-level progress.
-- **✨ Premium UI & UX:** Beautiful liquid-glass design system with smooth theme transitions, animated skeleton loaders, and interactive charts.
+- **🤖 PlinthAI Assistant:** Context-aware floating AI chatbot available everywhere to instantly answer project queries, analyze budgets, and help navigate the platform.
+- **🗺️ Interactive Sitemap:** A beautifully designed bird's-eye view of all platform modules for quick navigation.
+- **🌓 Advanced Theming:** Premium liquid-glass design system with smooth, animated transitions between light and dark modes via a custom interactive sky toggle.
+- **✨ Premium UI & UX:** Modern styling with glowing glassmorphism effects, animated skeleton loaders, and interactive charts.
 
 ## 🛠️ Tech Stack
 
