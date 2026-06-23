@@ -102,7 +102,7 @@ export default function Landing() {
 
       {/* ── Stats bar ── */}
       <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-12 lg:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-8 lg:grid-cols-4 lg:px-8">
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="font-mono text-3xl font-bold text-navy dark:text-white tracking-tight">{value}</p>
@@ -113,14 +113,14 @@ export default function Landing() {
       </section>
 
       {/* ── Features ── */}
-      <section className="mx-auto max-w-7xl px-4 py-24 lg:px-8 lg:py-32">
+      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">Built for the field, trusted by owners</h2>
           <p className="mt-5 text-lg text-navy/70 dark:text-white/70 leading-relaxed">
             Every module designed around real construction workflows — from daily diary entries to milestone sign-offs.
           </p>
         </div>
-        <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map(({ icon: Icon, title, desc }, idx) => (
             <div key={title} className="card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:shadow-lg"
@@ -135,7 +135,7 @@ export default function Landing() {
       </section>
 
       {/* ── CTA ── */}
-      <section className="relative overflow-hidden py-24">
+      <section className="relative overflow-hidden py-12">
         <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' : 'linear-gradient(135deg, rgba(200,210,240,0.35) 0%, rgba(180,195,230,0.35) 50%, rgba(200,210,240,0.35) 100%)' }} />
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
