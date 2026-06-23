@@ -369,9 +369,9 @@ export default function Dashboard() {
                 View all <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
               {safeProjects.slice(0, 4).map((p) => (
-                <div key={p._id || p.id} className="relative group">
+                <div key={p._id || p.id} className="relative group w-[85vw] sm:w-auto shrink-0 snap-center">
                   <ProjectCard project={{ ...p, id: p._id || p.id, team: p.teamCount || p.team?.length || 0 }} />
                   {user?.role === 'PM' && (
                     <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
