@@ -66,13 +66,14 @@ function PublicNavbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden justify-end items-center gap-4">
+          <div className="flex md:hidden justify-end items-center gap-2">
             <Switch theme={theme} toggleTheme={toggleTheme} />
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-navy dark:text-white focus:outline-none"
+              className="flex items-center gap-1.5 p-2 text-navy dark:text-white focus:outline-none rounded-xl hover:bg-navy/5 dark:hover:bg-white/5 transition-colors"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <span className="text-sm font-medium">{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
