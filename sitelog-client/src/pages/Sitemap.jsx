@@ -76,12 +76,12 @@ export default function Sitemap() {
             <Link to="/sitemap" className={getNavLinkClass('/sitemap')}>Sitemap</Link>
             <Switch theme={theme} toggleTheme={toggleTheme} />
             {!user ? (
-              <div className="flex items-center gap-4 ml-2">
+              <div className="flex items-center gap-4">
                 <Link to="/login" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
                 <Link to="/register" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Get Started</Link>
               </div>
             ) : (
-              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white ml-2">Go to Dashboard</Link>
+              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Go to Dashboard</Link>
             )}
           </div>
         </div>
