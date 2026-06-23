@@ -72,7 +72,7 @@ export default function Dashboard() {
         }
         return;
       }
-      
+
       let fallbackLat, fallbackLon, fallbackCity = 'Local Site';
       try {
         const fallbackGeo = await fetch('https://ipapi.co/json/').then(r => r.json());
@@ -85,56 +85,56 @@ export default function Dashboard() {
 
       const weatherResults = [];
       const uniqueCities = [...new Set(projects.map(p => p.location?.city || p.location))].filter(Boolean);
-      
+
       const geoMap = {};
       for (const city of uniqueCities) {
-         try {
-           const cleanCity = typeof city === 'string' ? city : String(city);
-           const searchQuery = cleanCity.split(',')[0].trim();
-           const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=1&language=en&format=json`);
-           const geo = await geoRes.json();
-           if (geo.results && geo.results.length > 0) {
-             geoMap[city] = { lat: geo.results[0].latitude, lon: geo.results[0].longitude };
-           }
-         } catch(e) {
-           console.error("Geocode error for", city, e);
-         }
+        try {
+          const cleanCity = typeof city === 'string' ? city : String(city);
+          const searchQuery = cleanCity.split(',')[0].trim();
+          const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchQuery)}&count=1&language=en&format=json`);
+          const geo = await geoRes.json();
+          if (geo.results && geo.results.length > 0) {
+            geoMap[city] = { lat: geo.results[0].latitude, lon: geo.results[0].longitude };
+          }
+        } catch (e) {
+          console.error("Geocode error for", city, e);
+        }
       }
-      
-      for (const proj of projects) {
-         const city = proj.location?.city || proj.location || 'Unknown';
-         let weatherObj = { temp: '--', condition: 'Unavailable', icon: Sun, city: city, projectId: proj._id || proj.id, projectName: proj.name };
-         
-         let lat = fallbackLat;
-         let lon = fallbackLon;
-         let resolvedCity = fallbackCity;
-         
-         if (geoMap[city]) {
-            lat = geoMap[city].lat;
-            lon = geoMap[city].lon;
-            resolvedCity = typeof city === 'string' ? city : resolvedCity;
-         }
 
-         if (lat && lon) {
-            try {
-              const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-              const w = await wRes.json();
-              if (w.current_weather) {
-                const code = w.current_weather.weathercode;
-                let condition = 'Clear'; let Icon = Sun;
-                if (code >= 1 && code <= 3) { condition = 'Cloudy'; Icon = Cloud; }
-                if (code >= 45 && code <= 48) { condition = 'Foggy'; Icon = CloudFog; }
-                if (code >= 51 && code <= 67) { condition = 'Rainy'; Icon = CloudRain; }
-                if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
-                if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
-                if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-                weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: resolvedCity };
-              }
-            } catch(e) {
-              console.error("Weather fetch failed for", proj.name, e);
+      for (const proj of projects) {
+        const city = proj.location?.city || proj.location || 'Unknown';
+        let weatherObj = { temp: '--', condition: 'Unavailable', icon: Sun, city: city, projectId: proj._id || proj.id, projectName: proj.name };
+
+        let lat = fallbackLat;
+        let lon = fallbackLon;
+        let resolvedCity = fallbackCity;
+
+        if (geoMap[city]) {
+          lat = geoMap[city].lat;
+          lon = geoMap[city].lon;
+          resolvedCity = typeof city === 'string' ? city : resolvedCity;
+        }
+
+        if (lat && lon) {
+          try {
+            const wRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+            const w = await wRes.json();
+            if (w.current_weather) {
+              const code = w.current_weather.weathercode;
+              let condition = 'Clear'; let Icon = Sun;
+              if (code >= 1 && code <= 3) { condition = 'Cloudy'; Icon = Cloud; }
+              if (code >= 45 && code <= 48) { condition = 'Foggy'; Icon = CloudFog; }
+              if (code >= 51 && code <= 67) { condition = 'Rainy'; Icon = CloudRain; }
+              if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
+              if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
+              if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
+              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: resolvedCity };
             }
-         }
-         weatherResults.push(weatherObj);
+          } catch (e) {
+            console.error("Weather fetch failed for", proj.name, e);
+          }
+        }
+        weatherResults.push(weatherObj);
       }
       setWeathers(weatherResults);
     }
@@ -226,7 +226,7 @@ export default function Dashboard() {
 
       const logs = await logApi.list(materialForm.projectId);
       const existingLog = logs.find(l => l.date.substring(0, 10) === dateStr);
-      
+
       if (existingLog) {
         await logApi.update(materialForm.projectId, existingLog._id || existingLog.id, {
           materials: [...(existingLog.materials || []), newMat]
@@ -365,281 +365,282 @@ export default function Dashboard() {
           {/* Left section: Projects + Activity */}
           <div className="space-y-6">
             <div>
-            <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-navy flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-orange" /> Your Projects
-              </h3>
-              <Link to="/projects" className="flex items-center gap-1 text-sm font-semibold text-orange hover:text-orange-light transition">
-                View all <ArrowUpRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-            <div className="relative pb-6">
-              {safeProjects.length > 0 ? (
-                <div className="relative group overflow-hidden rounded-2xl">
-                  <AnimatePresence mode="wait" custom={slideDir}>
-                    <motion.div
-                      key={currentProjectIndex}
-                      custom={slideDir}
-                      initial={{ opacity: 0, x: slideDir === 'slideLeft' ? 50 : -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: slideDir === 'slideLeft' ? -50 : 50 }}
-                      transition={{ duration: 0.2 }}
-                      drag="x"
-                      dragConstraints={{ left: 0, right: 0 }}
-                      dragElastic={0.2}
-                      onDragEnd={(e, { offset, velocity }) => {
-                        const swipe = offset.x;
-                        if (swipe < -50) {
-                          setSlideDir('slideLeft');
-                          setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
-                        } else if (swipe > 50) {
-                          setSlideDir('slideRight');
-                          setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
-                        }
-                      }}
-                      className="relative"
-                    >
-                      <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
-                      {user?.role === 'PM' && (
-                        <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
-                          <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
-                            style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                            <Pencil className="h-4 w-4" />
-                          </button>
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-bold text-navy flex items-center gap-2">
+                  <Building2 className="h-5 w-5 text-orange" /> Your Projects
+                </h3>
+                <Link to="/projects" className="flex items-center gap-1 text-sm font-semibold text-orange hover:text-orange-light transition">
+                  View all <ArrowUpRight className="h-3.5 w-3.5" />
+                </Link>
+              </div>
+              <div className="relative pb-6">
+                {safeProjects.length > 0 ? (
+                  <div className="relative group overflow-hidden rounded-2xl">
+                    <AnimatePresence mode="wait" custom={slideDir}>
+                      <motion.div
+                        key={currentProjectIndex}
+                        custom={slideDir}
+                        initial={{ opacity: 0, x: slideDir === 'slideLeft' ? 50 : -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: slideDir === 'slideLeft' ? -50 : 50 }}
+                        transition={{ duration: 0.2 }}
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={(e, { offset, velocity }) => {
+                          const swipe = offset.x;
+                          if (swipe < -50) {
+                            setSlideDir('slideLeft');
+                            setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                          } else if (swipe > 50) {
+                            setSlideDir('slideRight');
+                            setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                          }
+                        }}
+                        className="relative"
+                      >
+                        <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
+                        {user?.role === 'PM' && (
+                          <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
+                            <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
+                              style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                              <Pencil className="h-4 w-4" />
+                            </button>
+                          </div>
+                        )}
+                      </motion.div>
+                    </AnimatePresence>
+                    {safeProjects.length > 1 && (
+                      <>
+                        <button
+                          onClick={() => {
+                            setSlideDir('slideRight');
+                            setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                          }}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                          style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                        >
+                          <ChevronLeft className="h-6 w-6" />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setSlideDir('slideLeft');
+                            setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                          }}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                          style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                        >
+                          <ChevronRight className="h-6 w-6" />
+                        </button>
+                        <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
+                          {safeProjects.map((_, idx) => (
+                            <span key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentProjectIndex ? 'w-5 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
+                          ))}
                         </div>
-                      )}
-                    </motion.div>
-                  </AnimatePresence>
-                  {safeProjects.length > 1 && (
-                    <>
-                      <button 
-                        onClick={() => {
-                          setSlideDir('slideRight');
-                          setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
-                        }}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
-                        style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
-                      >
-                        <ChevronLeft className="h-6 w-6" />
-                      </button>
-                      <button 
-                        onClick={() => {
-                          setSlideDir('slideLeft');
-                          setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
-                        }}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
-                        style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
-                      >
-                        <ChevronRight className="h-6 w-6" />
-                      </button>
-                      <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
-                        {safeProjects.map((_, idx) => (
-                          <span key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentProjectIndex ? 'w-5 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
-                  style={{ border: '2px dashed rgba(255,255,255,0.08)', background: 'rgba(16,18,24,0.12)', backdropFilter: 'blur(12px)' }}>
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                    <FolderKanban className="h-8 w-8 text-navy/20 dark:text-white/20" />
+                      </>
+                    )}
                   </div>
-                  <h4 className="mt-5 text-base font-bold text-navy tracking-tight">No projects yet</h4>
-                  <p className="mt-2 max-w-xs text-sm text-navy/60 dark:text-white/60">
-                    Create your first project to start tracking daily logs, budgets, and milestones.
-                  </p>
-                  <Link to="/projects" className="btn-accent mt-6">
-                    <Plus className="h-4 w-4" /> Create First Project
-                  </Link>
-                </div>
-                </div>
-              )}
-            </div>
-
-            {/* Recent Activity Feed (Under Projects on PC) */}
-            <div className="h-[500px]">
-              <ActivityFeed />
-            </div>
-          </div>
-
-          {/* Right sidebar */}
-          <div className="space-y-6">
-            {/* Weather widget */}
-            <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
-              <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
-                <div className="flex items-center justify-between relative z-10">
-                  {weathers.length > 0 ? (
-                    <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
-                      <div>
-                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
-                        <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
-                        <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
-                          {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
-                        </p>
-                      </div>
-                      {(() => {
-                         const WIcon = weathers[currentWeatherIndex].icon;
-                         return <WIcon className={`h-16 w-16 ${theme === 'dark' ? 'text-white/10' : 'text-navy/10'}`} />;
-                      })()}
+                ) : (
+                  <div className="flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
+                    style={{ border: '2px dashed rgba(255,255,255,0.08)', background: 'rgba(16,18,24,0.12)', backdropFilter: 'blur(12px)' }}>
+                    <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                      <FolderKanban className="h-8 w-8 text-navy/20 dark:text-white/20" />
                     </div>
-                  ) : (
-                    <div className="min-h-[100px]">
-                      <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Site Weather</p>
-                      <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>--</p>
-                    </div>
-                  )}
-                </div>
-                {/* Carousel Indicators */}
-                {weathers.length > 1 && (budgetFilter === 'all' && burnRateFilter === 'all') && (
-                  <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
-                    {weathers.map((_, idx) => (
-                      <span key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === currentWeatherIndex ? 'w-4 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
-                    ))}
+                    <h4 className="mt-5 text-base font-bold text-navy tracking-tight">No projects yet</h4>
+                    <p className="mt-2 max-w-xs text-sm text-navy/60 dark:text-white/60">
+                      Create your first project to start tracking daily logs, budgets, and milestones.
+                    </p>
+                    <Link to="/projects" className="btn-accent mt-6">
+                      <Plus className="h-4 w-4" /> Create First Project
+                    </Link>
                   </div>
+
                 )}
               </div>
             </div>
 
-            {/* Quick Add Material */}
-            <div className="card">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="font-bold text-navy flex items-center gap-2">
-                  <Package className="h-5 w-5 text-orange" /> Quick Add Material
-                </h3>
+            {/* Recent Activity Feed (Under Projects on PC) */}
+              <div className="h-[500px]">
+                <ActivityFeed />
               </div>
-              {safeProjects.length > 0 ? (
-                <form className="space-y-3" onSubmit={handleMaterialSubmit}>
-                  <CustomSelectMenu
-                    value={materialForm.projectId}
-                    onChange={val => setMaterialForm({ ...materialForm, projectId: val })}
-                    options={[{value: '', label: 'Select Project...'}, ...safeProjects.map(p => ({value: p.id || p._id, label: p.name}))]}
-                    placeholder="Select Project"
-                    className="mb-3"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Material Name (e.g. Cement)"
-                    className="input-field py-2 text-sm"
-                    value={materialForm.name}
-                    onChange={(e) => setMaterialForm({ ...materialForm, name: e.target.value })}
-                    required
-                  />
-                  <div className="grid grid-cols-2 gap-3">
-                    <input
-                      type="text"
-                      placeholder="Quantity (e.g. 50 bags)"
-                      className="input-field py-2 text-sm"
-                      value={materialForm.quantity}
-                      onChange={(e) => setMaterialForm({ ...materialForm, quantity: e.target.value })}
-                      required
-                    />
-                    <input
-                      type="number"
-                      placeholder="Total Price (₹)"
-                      className="input-field py-2 text-sm"
-                      min="0"
-                      value={materialForm.price}
-                      onChange={(e) => setMaterialForm({ ...materialForm, price: e.target.value })}
-                      required
-                    />
+            </div>
+
+            {/* Right sidebar */}
+            <div className="space-y-6">
+              {/* Weather widget */}
+              <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
+                <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
+                  <div className="flex items-center justify-between relative z-10">
+                    {weathers.length > 0 ? (
+                      <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
+                        <div>
+                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
+                          <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
+                          <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
+                            {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
+                          </p>
+                        </div>
+                        {(() => {
+                          const WIcon = weathers[currentWeatherIndex].icon;
+                          return <WIcon className={`h-16 w-16 ${theme === 'dark' ? 'text-white/10' : 'text-navy/10'}`} />;
+                        })()}
+                      </div>
+                    ) : (
+                      <div className="min-h-[100px]">
+                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Site Weather</p>
+                        <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>--</p>
+                      </div>
+                    )}
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Supplier Name"
-                    className="input-field py-2 text-sm"
-                    value={materialForm.supplier}
-                    onChange={(e) => setMaterialForm({ ...materialForm, supplier: e.target.value })}
-                    required
-                  />
-                  <button type="submit" disabled={materialSubmitting} className="btn-accent w-full py-2.5 text-sm mt-2">
-                    {materialSubmitting ? 'Adding...' : 'Add Material'}
-                  </button>
-                  {materialSuccess && (
-                    <div className="flex items-center gap-2 text-sm text-success mt-2 justify-center py-1.5 rounded-xl" style={{ background: 'rgba(74,200,140,0.06)', border: '1px solid rgba(74,200,140,0.10)' }}>
-                      <CheckCircle2 className="h-4 w-4" /> Material added successfully!
+                  {/* Carousel Indicators */}
+                  {weathers.length > 1 && (budgetFilter === 'all' && burnRateFilter === 'all') && (
+                    <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5 z-10">
+                      {weathers.map((_, idx) => (
+                        <span key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === currentWeatherIndex ? 'w-4 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
+                      ))}
                     </div>
                   )}
-                </form>
-              ) : (
-                <p className="text-sm text-navy/60 dark:text-white/60">Create a project first</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+                </div>
+              </div>
 
-      {/* Edit Modal */}
-      {showEditModal && selectedProject && (
-        <div className="modal-backdrop z-[100]">
-          <div className="modal-content max-w-lg p-6 sm:p-8">
-            <div className="mb-6 flex items-center justify-between">
-              <h3 className="font-display text-2xl font-bold text-navy tracking-tight">Edit Project</h3>
-            </div>
-            <form onSubmit={handleEdit} className="space-y-5">
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-navy">Project Name *</label>
-                <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="input-field" required />
-              </div>
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-navy">Description</label>
-                <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="input-field min-h-[100px] resize-none" />
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">City / Location</label>
-                  <input type="text" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} className="input-field" placeholder="e.g. Pune" />
+              {/* Quick Add Material */}
+              <div className="card">
+                <div className="flex items-center justify-between mb-5">
+                  <h3 className="font-bold text-navy flex items-center gap-2">
+                    <Package className="h-5 w-5 text-orange" /> Quick Add Material
+                  </h3>
                 </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">State</label>
-                  <input type="text" value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} className="input-field" placeholder="e.g. Maharashtra" />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">Start Date *</label>
-                  <GlassDatePicker value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} className="input-field" required />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">End Date *</label>
-                  <GlassDatePicker value={formData.endDate} onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} className="input-field" required />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (₹) *</label>
-                  <input type="number" value={formData.totalBudget} onChange={(e) => setFormData({ ...formData, totalBudget: e.target.value })} className="input-field" required min="0" />
-                </div>
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">Current Progress (%)</label>
-                  <input type="number" value={formData.progress} onChange={(e) => setFormData({ ...formData, progress: e.target.value })} className="input-field" min="0" max="100" />
-                </div>
-              </div>
-              <div>
-                <label className="mb-1.5 block text-sm font-semibold text-navy">Cover Photo</label>
-                <div className="flex items-center gap-4">
-                  <label className="flex-1 cursor-pointer">
-                    <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-navy/80 dark:text-white/80 transition-colors hover:text-orange"
-                      style={{ border: '1px dashed rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.02)' }}>
-                      <Upload className="h-5 w-5" />
-                      <span>Click to upload image</span>
+                {safeProjects.length > 0 ? (
+                  <form className="space-y-3" onSubmit={handleMaterialSubmit}>
+                    <CustomSelectMenu
+                      value={materialForm.projectId}
+                      onChange={val => setMaterialForm({ ...materialForm, projectId: val })}
+                      options={[{ value: '', label: 'Select Project...' }, ...safeProjects.map(p => ({ value: p.id || p._id, label: p.name }))]}
+                      placeholder="Select Project"
+                      className="mb-3"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Material Name (e.g. Cement)"
+                      className="input-field py-2 text-sm"
+                      value={materialForm.name}
+                      onChange={(e) => setMaterialForm({ ...materialForm, name: e.target.value })}
+                      required
+                    />
+                    <div className="grid grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        placeholder="Quantity (e.g. 50 bags)"
+                        className="input-field py-2 text-sm"
+                        value={materialForm.quantity}
+                        onChange={(e) => setMaterialForm({ ...materialForm, quantity: e.target.value })}
+                        required
+                      />
+                      <input
+                        type="number"
+                        placeholder="Total Price (₹)"
+                        className="input-field py-2 text-sm"
+                        min="0"
+                        value={materialForm.price}
+                        onChange={(e) => setMaterialForm({ ...materialForm, price: e.target.value })}
+                        required
+                      />
                     </div>
-                    <input type="file" accept="image/*" onChange={handleFileUpload} disabled={submitting} className="hidden" />
-                  </label>
-                  {formData.coverPhoto && <img src={formData.coverPhoto} alt="Cover" className="h-20 w-20 shrink-0 rounded-xl object-cover shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.08)' }} />}
-                </div>
+                    <input
+                      type="text"
+                      placeholder="Supplier Name"
+                      className="input-field py-2 text-sm"
+                      value={materialForm.supplier}
+                      onChange={(e) => setMaterialForm({ ...materialForm, supplier: e.target.value })}
+                      required
+                    />
+                    <button type="submit" disabled={materialSubmitting} className="btn-accent w-full py-2.5 text-sm mt-2">
+                      {materialSubmitting ? 'Adding...' : 'Add Material'}
+                    </button>
+                    {materialSuccess && (
+                      <div className="flex items-center gap-2 text-sm text-success mt-2 justify-center py-1.5 rounded-xl" style={{ background: 'rgba(74,200,140,0.06)', border: '1px solid rgba(74,200,140,0.10)' }}>
+                        <CheckCircle2 className="h-4 w-4" /> Material added successfully!
+                      </div>
+                    )}
+                  </form>
+                ) : (
+                  <p className="text-sm text-navy/60 dark:text-white/60">Create a project first</p>
+                )}
               </div>
-              <div className="mt-8 flex justify-end gap-3 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
-                <button type="button" onClick={() => setShowEditModal(false)} className="btn-secondary px-6">Cancel</button>
-                <button type="submit" disabled={submitting} className="btn-accent px-8">
-                  {submitting ? 'Saving...' : 'Save Changes'}
-                </button>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
-      )}
+
+        {/* Edit Modal */}
+        {showEditModal && selectedProject && (
+          <div className="modal-backdrop z-[100]">
+            <div className="modal-content max-w-lg p-6 sm:p-8">
+              <div className="mb-6 flex items-center justify-between">
+                <h3 className="font-display text-2xl font-bold text-navy tracking-tight">Edit Project</h3>
+              </div>
+              <form onSubmit={handleEdit} className="space-y-5">
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-navy">Project Name *</label>
+                  <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="input-field" required />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-navy">Description</label>
+                  <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} className="input-field min-h-[100px] resize-none" />
+                </div>
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">City / Location</label>
+                    <input type="text" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} className="input-field" placeholder="e.g. Pune" />
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">State</label>
+                    <input type="text" value={formData.state} onChange={(e) => setFormData({ ...formData, state: e.target.value })} className="input-field" placeholder="e.g. Maharashtra" />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">Start Date *</label>
+                    <GlassDatePicker value={formData.startDate} onChange={(e) => setFormData({ ...formData, startDate: e.target.value })} className="input-field" required />
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">End Date *</label>
+                    <GlassDatePicker value={formData.endDate} onChange={(e) => setFormData({ ...formData, endDate: e.target.value })} className="input-field" required />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-5">
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (₹) *</label>
+                    <input type="number" value={formData.totalBudget} onChange={(e) => setFormData({ ...formData, totalBudget: e.target.value })} className="input-field" required min="0" />
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">Current Progress (%)</label>
+                    <input type="number" value={formData.progress} onChange={(e) => setFormData({ ...formData, progress: e.target.value })} className="input-field" min="0" max="100" />
+                  </div>
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-navy">Cover Photo</label>
+                  <div className="flex items-center gap-4">
+                    <label className="flex-1 cursor-pointer">
+                      <div className="flex items-center justify-center gap-2 rounded-xl px-4 py-6 text-sm font-semibold text-navy/80 dark:text-white/80 transition-colors hover:text-orange"
+                        style={{ border: '1px dashed rgba(255,255,255,0.10)', background: 'rgba(255,255,255,0.02)' }}>
+                        <Upload className="h-5 w-5" />
+                        <span>Click to upload image</span>
+                      </div>
+                      <input type="file" accept="image/*" onChange={handleFileUpload} disabled={submitting} className="hidden" />
+                    </label>
+                    {formData.coverPhoto && <img src={formData.coverPhoto} alt="Cover" className="h-20 w-20 shrink-0 rounded-xl object-cover shadow-sm" style={{ border: '1px solid rgba(255,255,255,0.08)' }} />}
+                  </div>
+                </div>
+                <div className="mt-8 flex justify-end gap-3 pt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+                  <button type="button" onClick={() => setShowEditModal(false)} className="btn-secondary px-6">Cancel</button>
+                  <button type="submit" disabled={submitting} className="btn-accent px-8">
+                    {submitting ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
     </AppLayout>
   );
 }
