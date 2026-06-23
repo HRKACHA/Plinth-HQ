@@ -193,7 +193,6 @@ export default function About() {
   const [activeFeatureCategory, setActiveFeatureCategory] = useState(0);
   return (
     <>
-      <ParticleBackground />
 
 
 
