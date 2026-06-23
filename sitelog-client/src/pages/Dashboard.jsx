@@ -5,7 +5,7 @@ import {
   Sun, ArrowUpRight, FileText, Upload, CalendarClock, Activity,
   TrendingUp, Building2, Pencil, Package, CheckCircle2,
   Cloud, CloudFog, CloudRain, CloudSnow, CloudLightning,
-  AlertCircle, TrendingDown, Loader2
+  AlertCircle, TrendingDown, Loader2, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
 import AppLayout from '../components/layout/AppLayout';
@@ -46,6 +46,7 @@ export default function Dashboard() {
 
   const [weathers, setWeathers] = useState([]);
   const [currentWeatherIndex, setCurrentWeatherIndex] = useState(0);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
 
   useEffect(() => {
     async function fetchAllWeather() {
@@ -360,7 +361,7 @@ export default function Dashboard() {
         {/* Main grid: Projects + sidebar */}
         <div className="flex flex-col lg:grid gap-4 sm:gap-8 lg:grid-cols-3">
           {/* Projects section */}
-          <div className="order-2 lg:order-1 lg:col-span-2">
+          <div className="lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-bold text-navy flex items-center gap-2">
                 <Building2 className="h-5 w-5 text-orange" /> Your Projects
@@ -369,22 +370,44 @@ export default function Dashboard() {
                 View all <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             </div>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {safeProjects.slice(0, 4).map((p) => (
-                <div key={p._id || p.id} className="relative group">
-                  <ProjectCard project={{ ...p, id: p._id || p.id, team: p.teamCount || p.team?.length || 0 }} />
+            <div className="relative pb-6">
+              {safeProjects.length > 0 ? (
+                <div className="relative group">
+                  <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
                   {user?.role === 'PM' && (
                     <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
-                      <button onClick={(e) => { e.preventDefault(); openEdit(p); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
+                      <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
                         style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
                         <Pencil className="h-4 w-4" />
                       </button>
                     </div>
                   )}
+                  {safeProjects.length > 1 && (
+                    <>
+                      <button 
+                        onClick={() => setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                        style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                      >
+                        <ChevronLeft className="h-6 w-6" />
+                      </button>
+                      <button 
+                        onClick={() => setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-full text-white transition opacity-100 sm:opacity-0 group-hover:opacity-100 z-10 shadow-lg hover:scale-110"
+                        style={{ background: 'rgba(16,18,24,0.6)', backdropFilter: 'blur(4px)' }}
+                      >
+                        <ChevronRight className="h-6 w-6" />
+                      </button>
+                      <div className="absolute -bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
+                        {safeProjects.map((_, idx) => (
+                          <span key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentProjectIndex ? 'w-5 bg-orange' : 'w-1.5 bg-navy/20 dark:bg-white/20'}`} />
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
-              ))}
-              {!safeProjects.length && (
-                <div className="col-span-2 flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
+              ) : (
+                <div className="flex flex-col items-center justify-center rounded-2xl p-12 text-center animate-slideUp"
                   style={{ border: '2px dashed rgba(255,255,255,0.08)', background: 'rgba(16,18,24,0.12)', backdropFilter: 'blur(12px)' }}>
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
                     <FolderKanban className="h-8 w-8 text-navy/20 dark:text-white/20" />
@@ -402,7 +425,7 @@ export default function Dashboard() {
           </div>
 
           {/* Right sidebar */}
-          <div className="order-1 lg:order-2 space-y-6">
+          <div className="space-y-6">
             {/* Weather widget */}
             <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
               <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
