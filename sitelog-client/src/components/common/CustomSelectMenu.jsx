@@ -23,7 +23,6 @@ export default function CustomSelectMenu({ value, onChange, options, placeholder
   const selected = options.find((o) => o.value === value || o.value === String(value));
   
   const isDark = theme === 'dark';
-  const dropdownBg = isDark ? '#161622' : 'rgba(255,255,255,0.96)';
   const dropdownBorder = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,40,0.08)';
 
   return (
@@ -41,7 +40,7 @@ export default function CustomSelectMenu({ value, onChange, options, placeholder
       </button>
       
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-full min-w-[240px] rounded-2xl shadow-elevated z-50 overflow-hidden animate-fadeIn" style={{ background: dropdownBg, border: `1px solid ${dropdownBorder}`, backdropFilter: 'blur(24px) saturate(180%)' }}>
+        <div className={`absolute top-full mt-2 w-max min-w-full max-w-[90vw] sm:max-w-xs rounded-2xl shadow-elevated z-[100] overflow-hidden animate-fadeIn ${className.includes('w-') ? 'right-0' : 'left-0'} ${isDark ? 'bg-[#161622]' : 'bg-card'}`} style={{ border: `1px solid ${dropdownBorder}`, backdropFilter: 'blur(24px) saturate(180%)' }}>
           {title && (
             <div className="px-4 py-3 border-b" style={{ borderColor: dropdownBorder }}>
               <span className="text-[10px] font-bold text-muted uppercase tracking-wider">{title}</span>

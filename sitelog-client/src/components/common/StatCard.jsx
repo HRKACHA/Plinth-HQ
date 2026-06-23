@@ -29,7 +29,7 @@ export default function StatCard({ label, value, sub, icon: Icon, accent = 'navy
   const bgAccent = theme === 'dark' ? bgAccentsDark[accent] : bgAccentsLight[accent];
 
   return (
-    <div className="card flex items-start gap-3 sm:gap-4 relative group">
+    <div className="card flex items-start gap-3 sm:gap-4 relative group focus-within:z-[60] hover:z-[60]">
       {Icon && (
         <div className={`relative flex h-9 w-9 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-lg sm:rounded-xl transition-transform duration-300 group-hover:scale-105 ${accents[accent]}`}
           style={{ background: bgAccent }}>

@@ -45,7 +45,7 @@ export const getRecentActivity = async (req, res) => {
     })
       .sort({ createdAt: -1 })
       .limit(10)
-      .populate('createdBy', 'name')
+      .populate('addedBy', 'name')
       .lean();
 
     // Fetch recent team members (users)
@@ -100,7 +100,7 @@ export const getRecentActivity = async (req, res) => {
         description: `₹${exp.amount?.toLocaleString('en-IN')} — ${exp.description || exp.category || 'Expense'}`,
         projectName: projectMap[exp.project?.toString()] || 'Unknown',
         projectId: exp.project,
-        user: exp.createdBy?.name || 'System',
+        user: exp.addedBy?.name || 'System',
         timestamp: exp.createdAt,
         icon: 'receipt',
       });

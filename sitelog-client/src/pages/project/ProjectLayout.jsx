@@ -198,10 +198,10 @@ export default function ProjectLayout() {
                 </div>
                 {['PM', 'SuperAdmin', 'project_manager', 'admin', 'owner', 'Owner'].includes(user?.role) && (
                   <div className="flex gap-2 self-start mt-2">
-                    <button onClick={openEdit} className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
+                    <button onClick={openEdit} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur" title="Edit Project">
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button onClick={() => setShowDeleteModal(true)} className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Project">
+                    <button onClick={() => setShowDeleteModal(true)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Project">
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>

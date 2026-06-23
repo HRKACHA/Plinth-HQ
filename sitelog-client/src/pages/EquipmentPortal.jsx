@@ -304,20 +304,20 @@ export default function EquipmentPortal() {
 
                 {/* Actions */}
                 <div className="mt-4 pt-3 border-t border-[var(--color-glass-border)] flex items-center gap-1.5">
-                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
+                  <button onClick={() => openAssign(eq)} title="Assign to Project" className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <MapPin className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="p-1.5 bg-black/50 hover:bg-success/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-success transition shadow-sm backdrop-blur">
+                  <button onClick={() => openServiceAdd(eq)} title="Add Service Log" className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-success/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-success transition shadow-sm backdrop-blur">
                     <Settings className="h-4 w-4" />
                   </button>
-                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="p-1.5 bg-black/50 hover:bg-info/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-info transition shadow-sm backdrop-blur">
+                  <button onClick={() => openServiceHistory(eq)} title="Service History" className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-info/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-info transition shadow-sm backdrop-blur">
                     <History className="h-4 w-4" />
                   </button>
                   <div className="flex-1" />
-                  <button onClick={() => openEdit(eq)} title="Edit" className="p-1.5 bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
+                  <button onClick={() => openEdit(eq)} title="Edit" className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-orange/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-orange transition shadow-sm backdrop-blur">
                     <Pencil className="h-3.5 w-3.5" />
                   </button>
-                  <button onClick={() => handleDelete(eq)} title="Delete" className="p-1.5 bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
+                  <button onClick={() => handleDelete(eq)} title="Delete" className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
                 </div>

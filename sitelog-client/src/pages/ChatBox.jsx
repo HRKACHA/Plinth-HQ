@@ -762,7 +762,7 @@ export default function ChatBox() {
           {showSidebar && (
             <>
               {/* Mobile overlay backdrop */}
-              <div className="lg:hidden absolute inset-0 bg-black/50 z-40" onClick={() => setShowSidebar(false)} />
+              <div className="lg:hidden absolute inset-0 bg-navy/5 dark:bg-black/50 z-40" onClick={() => setShowSidebar(false)} />
 
               {/* Sidebar */}
               <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[220px] bg-card/95 lg:bg-card backdrop-blur-xl border-l border-white/[0.06] flex flex-col shrink-0 animate-slideUp lg:animate-none">
