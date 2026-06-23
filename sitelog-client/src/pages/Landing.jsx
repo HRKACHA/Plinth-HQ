@@ -76,18 +76,6 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* ── Stats bar ── */}
-      <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-4 lg:px-8">
-          {stats.map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <p className="font-mono text-3xl font-bold text-navy dark:text-white tracking-tight">{value}</p>
-              <p className="mt-1.5 text-sm text-navy/70 dark:text-white/70 font-medium">{label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ── Features ── */}
       <section className="mx-auto max-w-7xl px-4 pb-8 lg:px-8">
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-4">
