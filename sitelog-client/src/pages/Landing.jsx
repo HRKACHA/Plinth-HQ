@@ -24,10 +24,8 @@ const features = [
 ];
 
 const stats = [
-  { value: '30%', label: 'Reduction in overruns' },
   { value: '90%+', label: 'Daily log completion' },
   { value: '7 weeks', label: 'Full deployment' },
-  { value: '35+', label: 'API endpoints' },
 ];
 
 /* ══════════════════════════════════════════════════════════
@@ -80,7 +78,7 @@ export default function Landing() {
 
       {/* ── Stats bar ── */}
       <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-4 lg:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-4 lg:px-8">
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="font-mono text-3xl font-bold text-navy dark:text-white tracking-tight">{value}</p>

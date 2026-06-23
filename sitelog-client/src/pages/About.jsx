@@ -151,10 +151,8 @@ const WORKFLOW_STEPS = [
 ];
 
 const STATS = [
-  { value: 30, suffix: '%', label: 'Reduction in cost overruns' },
   { value: 90, suffix: '%+', label: 'Daily log completion rate' },
-  { value: 35, suffix: '+', label: 'API endpoints' },
-  { value: 7, suffix: '', label: 'User roles supported' },
+  { value: 5, suffix: '', label: 'User roles supported' },
 ];
 
 /* ══════════════════════════════════════════════════════════
@@ -235,7 +233,7 @@ export default function About() {
          SECTION 2: Stats Bar
          ══════════════════════════════════════════════════ */}
       <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:px-8">
           {STATS.map((stat) => (
             <StatCounter key={stat.label} {...stat} />
           ))}
