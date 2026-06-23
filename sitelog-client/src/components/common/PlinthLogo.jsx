@@ -47,6 +47,17 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
           }}
         />
       </div>
+      {!iconOnly && (
+        <div className="flex flex-col items-center text-center">
+          <span className={`font-bold tracking-widest ${ts} leading-none`} style={{ fontFamily: '"Playfair Display", "Georgia", serif' }}>
+            <span className="text-navy dark:text-white transition-colors duration-500">PLINTH </span>
+            <span className="text-orange transition-colors duration-500">HQ</span>
+          </span>
+          <span className={`${size === 'xs' || size === 'sm' ? 'text-[0.35em] mt-0.5' : 'text-[0.28em] mt-1'} font-bold tracking-[0.25em] text-muted whitespace-nowrap transition-colors duration-500 uppercase`}>
+            FOUNDATION TO FINISH.
+          </span>
+        </div>
+      )}
     </div>
   );
 }
