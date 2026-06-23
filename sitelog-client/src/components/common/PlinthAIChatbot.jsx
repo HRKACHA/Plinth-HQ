@@ -398,7 +398,7 @@ export default function PlinthAIChatbot() {
         whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
         onClick={toggleOpen}
         id="plinthai-fab"
-        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 group ${
+        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-colors transition-shadow duration-500 hover:scale-105 group ${
           isOpen && !isMinimized
             ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
             : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'

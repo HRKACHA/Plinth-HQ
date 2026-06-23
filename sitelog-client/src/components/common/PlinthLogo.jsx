@@ -26,7 +26,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
     <div className={`flex flex-col items-center justify-center gap-1 ${className}`}>
       {/* Crossfading logo with smooth transition */}
       <div className={`relative shrink-0 ${h} flex items-center justify-center`}>
-        {/* Dark mode logo (White text for dark backgrounds) */}
+        {/* Dark mode logo */}
         <img
           src="/White_logo.png"
           alt="PlinthHQ Logo"
@@ -36,9 +36,9 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
             transition: 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
           }}
         />
-        {/* Light mode logo (Dark text for light backgrounds) */}
+        {/* Light mode logo */}
         <img
-          src="/Plinth_HQ_logo.png"
+          src="/Plinth_Hq_logo.png"
           alt="PlinthHQ Logo"
           className="w-auto h-full object-contain"
           style={{
