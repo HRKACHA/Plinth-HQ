@@ -229,16 +229,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════
-         SECTION 2: Stats Bar
-         ══════════════════════════════════════════════════ */}
-      <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:px-8">
-          {STATS.map((stat) => (
-            <StatCounter key={stat.label} {...stat} />
-          ))}
-        </div>
-      </section>
 
       {/* ══════════════════════════════════════════════════
          SECTION 3: The Problem We Solve
