@@ -40,7 +40,7 @@ export default function CustomSelectMenu({ value, onChange, options, placeholder
       </button>
       
       {isOpen && (
-        <div className={`absolute top-full mt-2 w-max min-w-full max-w-[90vw] sm:max-w-xs rounded-2xl shadow-elevated z-[100] overflow-hidden animate-fadeIn ${className.includes('w-') ? 'right-0' : 'left-0'} ${isDark ? 'bg-[#161622]' : 'bg-card'}`} style={{ border: `1px solid ${dropdownBorder}`, backdropFilter: 'blur(24px) saturate(180%)' }}>
+        <div className={`absolute top-full mt-2 w-full rounded-2xl shadow-elevated z-[100] overflow-hidden animate-fadeIn ${className.includes('w-') ? 'right-0' : 'left-0'} ${isDark ? 'bg-[#161622]' : 'bg-card'}`} style={{ border: `1px solid ${dropdownBorder}`, backdropFilter: 'blur(24px) saturate(180%)' }}>
           {title && (
             <div className="px-4 py-3 border-b" style={{ borderColor: dropdownBorder }}>
               <span className="text-[10px] font-bold text-muted uppercase tracking-wider">{title}</span>
@@ -58,13 +58,13 @@ export default function CustomSelectMenu({ value, onChange, options, placeholder
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all ${value === opt.value ? 'bg-orange/10 text-orange' : 'hover:bg-navy/5 dark:hover:bg-white/5 text-navy dark:text-white'}`}
               >
                 {(Icon || opt.icon) && (
-                  <div className={`p-1.5 rounded-lg shrink-0 ${value === opt.value ? 'bg-orange/20 text-orange' : 'bg-navy/5 dark:bg-white/5'}`}>
-                    {Icon ? <Icon size={16} /> : opt.icon ? <opt.icon size={16} /> : null}
+                  <div className="flex items-center justify-center w-8 h-8 rounded-lg shrink-0" style={{ background: value === opt.value ? 'rgba(255,100,0,0.1)' : isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)' }}>
+                    {Icon ? <Icon size={16} className={value === opt.value ? 'text-orange' : 'text-muted'} /> : opt.icon && <opt.icon size={16} className={value === opt.value ? 'text-orange' : 'text-muted'} />}
                   </div>
                 )}
-                <div className="text-left flex-1 min-w-0">
-                  <p className="text-sm font-medium truncate">{opt.label}</p>
-                  {opt.desc && <p className="text-xs text-muted truncate mt-0.5">{opt.desc}</p>}
+                <div className="flex flex-col items-start min-w-0">
+                  <span className="text-sm font-medium leading-snug text-left">{opt.label}</span>
+                  {opt.description && <span className="text-[11px] text-muted text-left mt-0.5">{opt.description}</span>}
                 </div>
               </button>
             ))}

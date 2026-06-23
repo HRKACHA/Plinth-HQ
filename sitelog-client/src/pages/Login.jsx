@@ -103,17 +103,17 @@ export default function Login() {
         <p className="relative z-10 text-xs text-muted/40 font-mono uppercase tracking-widest">PlinthHQ Enterprise v2.0</p>
       </div>
 
-      <div className="flex w-full flex-col justify-center px-6 py-12 lg:w-1/2 sm:px-12 backdrop-blur-md relative overflow-hidden" style={{ background: theme === 'dark' ? 'rgba(13,15,20,0.5)' : 'rgba(235,240,255,0.4)' }}>
+      <div className="flex w-full flex-col justify-center px-4 py-6 lg:py-12 lg:w-1/2 sm:px-12 backdrop-blur-md relative overflow-hidden" style={{ background: theme === 'dark' ? 'rgba(13,15,20,0.5)' : 'rgba(235,240,255,0.4)' }}>
         {/* Subtle background glow */}
         <div className="absolute inset-0 pointer-events-none" style={{ background: theme === 'dark' ? 'radial-gradient(ellipse at center, rgba(66,133,244,0.03) 0%, transparent 70%)' : 'radial-gradient(ellipse at center, rgba(100,130,230,0.06) 0%, transparent 70%)' }} />
 
         <div className="w-full max-w-md animate-slideUp relative z-10 mx-auto">
-          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-navy dark:text-white transition-colors mb-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-navy dark:text-white transition-colors mb-4">
             <ArrowLeft className="h-4 w-4" /> Back to website
           </Link>
-          <div className="card shadow-elevated p-8 sm:p-10">
+          <div className="card shadow-elevated p-6 sm:p-10">
 
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
               <h1 className="font-display text-3xl font-bold text-navy tracking-tight">Sign in</h1>
               <p className="mt-2 text-base text-muted">
                 Don&apos;t have an account?{' '}
@@ -136,7 +136,7 @@ export default function Login() {
               Continue with Google
             </button>
 
-            <div className="relative mb-6">
+            <div className="relative mb-4">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(120,140,200,0.12)' }} />
               </div>
@@ -145,7 +145,7 @@ export default function Login() {
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {success && (
                 <div className="flex items-center gap-3 rounded-xl border border-success/20 bg-success/5 px-4 py-3 text-sm text-success animate-fadeIn">
                   <Check className="h-5 w-5 shrink-0" />
@@ -167,7 +167,7 @@ export default function Login() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={handleEmailBlur}
-                    className={`input-field !pl-11 py-3 text-base ${emailError ? 'border-danger focus:ring-danger/20' : ''}`}
+                    className={`input-field !pl-11 py-2.5 text-base ${emailError ? 'border-danger focus:ring-danger/20' : ''}`}
                     placeholder="priya@plinthhq.in"
                     required
                   />
@@ -181,10 +181,10 @@ export default function Login() {
                 </div>
                 <div className="relative group">
                   <Lock className="absolute left-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-muted transition group-focus-within:text-orange" />
-                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field !pl-11 py-3 text-base" placeholder="••••••••" required />
+                  <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="input-field !pl-11 py-2.5 text-base" placeholder="••••••••" required />
                 </div>
               </div>
-              <button type="submit" disabled={submitting} className="btn-accent w-full py-3.5 text-base mt-4">
+              <button type="submit" disabled={submitting} className="btn-accent w-full py-3 text-base mt-2">
                 {submitting ? 'Signing in...' : 'Sign In'} <ArrowRight className="h-5 w-5 ml-2" />
               </button>
             </form>
