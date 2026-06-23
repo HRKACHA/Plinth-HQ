@@ -320,11 +320,15 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
             <button
               onClick={toggleTheme}
-              className="relative rounded-full p-2 text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all overflow-hidden"
+              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full transition-colors duration-300 focus:outline-none ${theme === 'dark' ? 'bg-navy border border-white/20' : 'bg-orange/10 border border-orange/20'}`}
               title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
             >
-              <Sun className={`h-4 w-4 absolute inset-0 m-auto transition-all duration-300 ${theme === 'dark' ? 'opacity-0 rotate-90 scale-0' : 'opacity-100 rotate-0 scale-100 text-amber-500'}`} />
-              <Moon className={`h-4 w-4 transition-all duration-300 ${theme === 'dark' ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-0'}`} />
+              <span className="sr-only">Toggle theme</span>
+              <Sun className={`absolute left-1.5 h-3 w-3 text-orange transition-opacity duration-300 ${theme === 'dark' ? 'opacity-0' : 'opacity-100'}`} />
+              <Moon className={`absolute right-1.5 h-3 w-3 text-white transition-opacity duration-300 ${theme === 'dark' ? 'opacity-100' : 'opacity-0'}`} />
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full shadow transition-transform duration-300 z-10 ${theme === 'dark' ? 'translate-x-6 bg-white' : 'translate-x-1 bg-orange'}`}
+              />
             </button>
 
             <Link to="/" className="rounded-full p-2 text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="Back to Website">

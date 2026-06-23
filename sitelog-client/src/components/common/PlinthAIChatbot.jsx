@@ -372,7 +372,18 @@ export default function PlinthAIChatbot() {
 
   const controls = useAnimation();
 
+  const isDraggingRef = useRef(false);
+
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+  };
+
   const handleDragEnd = (event, info) => {
+    // Delay resetting so that onClick (which fires immediately after dragEnd on touch) gets blocked
+    setTimeout(() => {
+      isDraggingRef.current = false;
+    }, 150);
+
     // Determine whether to snap to left or right edge based on the final pointer position
     const screenWidth = window.innerWidth;
     const isLeftHalf = info.point.x < screenWidth / 2;
@@ -393,10 +404,18 @@ export default function PlinthAIChatbot() {
         drag
         dragMomentum={false}
         dragElastic={0.1}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         animate={controls}
         whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
-        onClick={toggleOpen}
+        onClick={(e) => {
+          if (isDraggingRef.current) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
+          toggleOpen();
+        }}
         id="plinthai-fab"
         className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-colors transition-shadow duration-500 hover:scale-105 group ${isOpen && !isMinimized
             ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
