@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import {
   ArrowRight, HardHat, BarChart3, ShieldCheck, Zap, Camera, FileText,
@@ -191,6 +191,16 @@ export default function About() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [activeFeatureCategory, setActiveFeatureCategory] = useState(0);
+  const location = useLocation();
+
+  const getNavLinkClass = (path) => {
+    const isActive = location.pathname === path;
+    return `hidden sm:block text-sm font-medium transition-colors px-3 py-1.5 rounded-full ${
+      isActive 
+        ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white shadow-sm' 
+        : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
+    }`;
+  };
 
   return (
     <div className="min-h-screen bg-transparent text-navy dark:text-white relative">
@@ -203,9 +213,9 @@ export default function About() {
             <Link to="/"><PlinthLogo size="xxs" /></Link>
           </div>
           <div className="col-span-2 flex justify-end items-center gap-4">
-            <Link to="/" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Home</Link>
-            <Link to="/about" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">About</Link>
-            <Link to="/sitemap" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Sitemap</Link>
+            <Link to="/" className={getNavLinkClass('/')}>Home</Link>
+            <Link to="/about" className={getNavLinkClass('/about')}>About</Link>
+            <Link to="/sitemap" className={getNavLinkClass('/sitemap')}>Sitemap</Link>
 
             {/* Theme Toggle */}
             <Switch theme={theme} toggleTheme={toggleTheme} />
