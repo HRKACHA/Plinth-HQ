@@ -222,8 +222,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 80px)' }}>
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+      <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20" style={{ minHeight: '60vh' }}>
           <div className="max-w-4xl w-full">
             <div className="inline-block animate-slideUp mb-6">
               <SectionBadge>About PlinthHQ</SectionBadge>
@@ -258,7 +258,7 @@ export default function About() {
          SECTION 2: Stats Bar
          ══════════════════════════════════════════════════ */}
       <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-14 lg:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-4 py-8 lg:grid-cols-4 lg:px-8">
           {STATS.map((stat) => (
             <StatCounter key={stat.label} {...stat} />
           ))}
@@ -268,8 +268,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 3: The Problem We Solve
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 px-4 mx-auto max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section className="relative z-10 py-12 px-4 mx-auto max-w-7xl">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <SectionBadge>The Problem</SectionBadge>
           <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
             Construction sites run on chaos.<br />We bring clarity.
@@ -309,8 +309,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 4: Features (Tabbed)
          ══════════════════════════════════════════════════ */}
-      <section id="features" className="relative z-10 py-24 px-4 mx-auto max-w-7xl scroll-mt-24">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+      <section id="features" className="relative z-10 py-12 px-4 mx-auto max-w-7xl scroll-mt-24">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <SectionBadge>Platform Features</SectionBadge>
           <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
             Everything you need,<br />nothing you don't.
@@ -321,7 +321,7 @@ export default function About() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
           {FEATURES.map((cat, idx) => (
             <button
               key={cat.category}
@@ -359,14 +359,14 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 5: How It Works (Workflow)
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 overflow-hidden">
+      <section className="relative z-10 py-12 overflow-hidden">
         <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, rgba(10,12,16,0.3) 0%, rgba(17,24,39,0.3) 50%, rgba(10,12,16,0.3) 100%)' : 'linear-gradient(135deg, rgba(200,210,240,0.35) 0%, rgba(180,195,230,0.35) 50%, rgba(200,210,240,0.35) 100%)' }} />
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
           backgroundSize: '24px 24px',
         }} />
         <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-8">
             <SectionBadge>How It Works</SectionBadge>
             <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
               From setup to site delivery,<br />in six simple steps.
@@ -400,8 +400,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 6: Role-Based Access
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 px-4 mx-auto max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section className="relative z-10 py-12 px-4 mx-auto max-w-7xl">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <SectionBadge>Role-Based Access</SectionBadge>
           <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
             Right access for the<br />right people.
@@ -435,8 +435,8 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 7: Core Values
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 px-4 mx-auto max-w-7xl">
-        <div className="text-center max-w-3xl mx-auto mb-16">
+      <section className="relative z-10 py-12 px-4 mx-auto max-w-7xl">
+        <div className="text-center max-w-3xl mx-auto mb-8">
           <SectionBadge>Why PlinthHQ</SectionBadge>
           <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
             Built different.<br />Built for construction.
@@ -489,7 +489,7 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 8: Owner Dashboard Highlight
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 px-4 mx-auto max-w-7xl">
+      <section className="relative z-10 py-12 px-4 mx-auto max-w-7xl">
         <div className="liquid-glass rounded-3xl p-10 md:p-14 flex flex-col md:flex-row gap-10 items-center">
           <div className="flex-1">
             <SectionBadge>Owner Transparency</SectionBadge>
@@ -556,10 +556,10 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 9: Tech Stack
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 overflow-hidden">
+      <section className="relative z-10 py-12 overflow-hidden">
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at center, rgba(66,133,244,0.03) 0%, transparent 70%)' }} />
         <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-8">
             <SectionBadge>Technology</SectionBadge>
             <h2 className="font-display text-3xl font-bold text-navy dark:text-white lg:text-4xl tracking-tight">
               Modern stack,<br />enterprise reliability.
@@ -593,7 +593,7 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 10: CTA
          ══════════════════════════════════════════════════ */}
-      <section className="relative z-10 py-24 mt-8 overflow-hidden border-t" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.10)' }}>
+      <section className="relative z-10 py-12 mt-4 overflow-hidden border-t" style={{ borderColor: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.10)' }}>
         <div className="absolute inset-0" style={{ background: theme === 'dark' ? 'radial-gradient(ellipse at center, rgba(66,133,244,0.04) 0%, transparent 70%)' : 'radial-gradient(ellipse at center, rgba(100,130,230,0.06) 0%, transparent 70%)' }} />
         <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
           <h2 className="font-display text-3xl font-bold lg:text-5xl tracking-tight text-navy dark:text-white">
