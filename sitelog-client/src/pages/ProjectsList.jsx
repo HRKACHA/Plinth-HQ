@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Search, Filter, MoreVertical, LayoutGrid, List, Clock, IndianRupee, MapPin, Building, Building2, Activity, Trash2, Edit2, Pencil, Play, Pause, CheckCircle } from 'lucide-react';
+import { Plus, Search, Filter, MoreVertical, LayoutGrid, List, Clock, IndianRupee, MapPin, Building, Building2, Activity, Trash2, Edit2, Pencil, Play, Pause, CheckCircle, X } from 'lucide-react';
 import CustomSelectMenu from '../components/common/CustomSelectMenu';
 import AppLayout from '../components/layout/AppLayout';
 import ProjectCard from '../components/common/ProjectCard';
@@ -248,7 +248,7 @@ export default function ProjectsList() {
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="text-2xl font-bold text-navy tracking-tight">Create New Project</h3>
                 <button onClick={() => setShowCreateModal(false)} className="text-muted hover:text-navy transition-colors">
-                  <MoreVertical className="h-5 w-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
               <form onSubmit={handleCreate} className="space-y-5">

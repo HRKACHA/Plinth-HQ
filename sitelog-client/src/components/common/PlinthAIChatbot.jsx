@@ -377,7 +377,7 @@ export default function PlinthAIChatbot() {
         id="plinthai-fab"
         className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 active:scale-95 group ${
           isOpen && !isMinimized
-            ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
+            ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
             : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
         }`}
         aria-label={isOpen ? 'Close PlinthAI' : 'Open PlinthAI'}
@@ -618,13 +618,13 @@ export default function PlinthAIChatbot() {
                 <button
                   onClick={() => sendMessage()}
                   disabled={!input.trim() || loading}
-                  className={`flex items-center justify-center h-8 w-8 rounded-lg transition-all duration-300 ${
+                  className={`flex items-center justify-center h-10 w-10 rounded-full transition-all duration-300 ${
                     input.trim() && !loading
-                      ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95'
-                      : 'bg-navy/5 dark:bg-white/5 text-muted/40 cursor-not-allowed'
+                      ? 'bg-gradient-to-br from-orange to-orange-dark text-white shadow-md shadow-orange/20 hover:shadow-lg hover:scale-105 active:scale-95 pr-[2px]'
+                      : 'bg-navy/5 dark:bg-white/5 text-navy/70 dark:text-white/70 cursor-not-allowed'
                   }`}
                 >
-                  <Send className="h-4 w-4" />
+                  <Send className="h-5 w-5" />
                 </button>
               </div>
             </div>

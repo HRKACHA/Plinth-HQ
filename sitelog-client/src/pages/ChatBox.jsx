@@ -710,9 +710,9 @@ export default function ChatBox() {
                     <button
                       onClick={handleSend}
                       disabled={!input.trim() || input.length > 2000 || isUploading}
-                      className="h-11 w-11 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 shadow-lg"
+                      className="h-11 w-11 flex items-center justify-center bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full hover:from-blue-500 hover:to-blue-400 transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0 shadow-lg pr-[2px]"
                     >
-                      {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-1" />}
+                      {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
                     </button>
                   </div>
                 </div>
@@ -736,7 +736,7 @@ export default function ChatBox() {
                   <button
                     onClick={() => cameraInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-muted hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Take Photo"
                   >
                     <Camera size={18} />
@@ -744,7 +744,7 @@ export default function ChatBox() {
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-muted hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Attach File"
                   >
                     <ImageIcon size={18} />
