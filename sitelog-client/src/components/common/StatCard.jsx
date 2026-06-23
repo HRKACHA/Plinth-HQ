@@ -38,7 +38,7 @@ export default function StatCard({ label, value, sub, icon: Icon, accent = 'navy
       )}
       <div className="relative z-10 flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2 mb-1">
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-navy/60 dark:text-white/60 truncate">{label}</p>
+          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-navy/60 dark:text-white/60 leading-tight">{label}</p>
           {children}
         </div>
         <p className="font-mono text-base sm:text-xl xl:text-2xl font-bold text-navy tracking-tighter break-all">{value}</p>

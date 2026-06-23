@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FolderKanban, ClipboardList, IndianRupee, AlertTriangle, Plus,
   Sun, ArrowUpRight, FileText, Upload, CalendarClock, Activity,
@@ -373,16 +374,41 @@ export default function Dashboard() {
             </div>
             <div className="relative pb-6">
               {safeProjects.length > 0 ? (
-                <div key={`${currentProjectIndex}-${slideDir}`} className={`relative group animate-${slideDir}`}>
-                  <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
-                  {user?.role === 'PM' && (
-                    <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
-                      <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
-                        style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                        <Pencil className="h-4 w-4" />
-                      </button>
-                    </div>
-                  )}
+                <div className="relative group overflow-hidden rounded-2xl">
+                  <AnimatePresence mode="wait" custom={slideDir}>
+                    <motion.div
+                      key={currentProjectIndex}
+                      custom={slideDir}
+                      initial={{ opacity: 0, x: slideDir === 'slideLeft' ? 50 : -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: slideDir === 'slideLeft' ? -50 : 50 }}
+                      transition={{ duration: 0.2 }}
+                      drag="x"
+                      dragConstraints={{ left: 0, right: 0 }}
+                      dragElastic={0.2}
+                      onDragEnd={(e, { offset, velocity }) => {
+                        const swipe = offset.x;
+                        if (swipe < -50) {
+                          setSlideDir('slideLeft');
+                          setCurrentProjectIndex((prev) => (prev + 1) % safeProjects.length);
+                        } else if (swipe > 50) {
+                          setSlideDir('slideRight');
+                          setCurrentProjectIndex((prev) => (prev - 1 + safeProjects.length) % safeProjects.length);
+                        }
+                      }}
+                      className="relative"
+                    >
+                      <ProjectCard project={{ ...safeProjects[currentProjectIndex], id: safeProjects[currentProjectIndex]._id || safeProjects[currentProjectIndex].id, team: safeProjects[currentProjectIndex].teamCount || safeProjects[currentProjectIndex].team?.length || 0 }} />
+                      {user?.role === 'PM' && (
+                        <div className="absolute top-2 right-2 flex opacity-0 group-hover:opacity-100 transition-opacity gap-1 z-10">
+                          <button onClick={(e) => { e.preventDefault(); openEdit(safeProjects[currentProjectIndex]); }} className="p-1.5 rounded-lg text-white hover:bg-orange hover:text-white transition shadow-sm"
+                            style={{ background: 'rgba(16,18,24,0.70)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                            <Pencil className="h-4 w-4" />
+                          </button>
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
                   {safeProjects.length > 1 && (
                     <>
                       <button 
