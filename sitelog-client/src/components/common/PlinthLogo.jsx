@@ -40,7 +40,7 @@ export default function PlinthLogo({ size = 'md', className = '', iconOnly = fal
         <img
           src="/White_logo.png"
           alt="PlinthHQ Logo"
-          className="absolute inset-0 w-auto h-full object-contain"
+          className="w-auto h-full object-contain"
           style={{
             opacity: theme === 'dark' ? 0 : 1,
             transition: 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)',
