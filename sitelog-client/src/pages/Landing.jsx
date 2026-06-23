@@ -102,7 +102,7 @@ export default function Landing() {
 
       {/* ── Stats bar ── */}
       <section className="liquid-glass rounded-none" style={{ borderLeft: 'none', borderRight: 'none' }}>
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-6 lg:grid-cols-4 lg:px-8">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-4 lg:grid-cols-4 lg:px-8">
           {stats.map(({ value, label }) => (
             <div key={label} className="text-center">
               <p className="font-mono text-3xl font-bold text-navy dark:text-white tracking-tight">{value}</p>
@@ -113,8 +113,8 @@ export default function Landing() {
       </section>
 
       {/* ── Features ── */}
-      <section className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
-        <div className="mt-2 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-4 pb-8 lg:px-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-4">
           {features.map(({ icon: Icon, title, desc }, idx) => (
             <div key={title} className="card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:shadow-lg"
