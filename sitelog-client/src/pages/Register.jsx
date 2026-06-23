@@ -55,7 +55,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [preferredRole, setPreferredRole] = useState('site_engineer');
+  const [preferredRole, setPreferredRole] = useState('project_manager');
 
   // Invite token verification states
   const [inviteValid, setInviteValid] = useState(null); // null = not checked, true/false
@@ -297,20 +297,6 @@ export default function Register() {
                 {emailAvailable && !emailError && <p className="mt-1 text-xs text-success">Email is available ✓</p>}
               </div>
 
-              {/* Role Selector — only for direct registration (no invite token) */}
-              {!inviteToken && (
-                <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">Select your role</label>
-                    <CustomSelectMenu
-                      value={preferredRole}
-                      onChange={setPreferredRole}
-                      options={ROLE_OPTIONS}
-                      placeholder="Select Role"
-                      icon={Shield}
-                    />
-                  <p className="mt-1 text-xs text-muted">Your role determines what you can access on the platform</p>
-                </div>
-              )}
 
               {/* Password with strength meter */}
               <div>
