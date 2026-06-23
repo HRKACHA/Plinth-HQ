@@ -54,24 +54,27 @@ export default function Sitemap() {
 
   return (
     <div className="min-h-screen bg-transparent relative z-10 flex flex-col">
-      <header className="h-20 flex items-center justify-between px-6 lg:px-12 relative z-50">
-        <Link to="/" className="flex items-center gap-3">
-          <PlinthLogo size="sm" variant="full" />
-        </Link>
-        <nav className="hidden md:flex items-center gap-6">
-          <Link to="/" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Home</Link>
-          <Link to="/about" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">About</Link>
-          <Switch theme={theme} toggleTheme={toggleTheme} />
-          {!user ? (
-            <div className="flex items-center gap-4 ml-2">
-              <Link to="/login" className="text-sm font-semibold text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
-              <Link to="/register" className="btn-accent text-sm px-5 py-2 text-white">Get Started</Link>
-            </div>
-          ) : (
-            <Link to="/dashboard" className="btn-accent text-sm px-5 py-2 text-white ml-2">Go to Dashboard</Link>
-          )}
-        </nav>
-      </header>
+      {/* ── Nav ── */}
+      <nav className="sticky top-4 z-50 mx-auto max-w-7xl w-full px-4 lg:px-8 mt-4">
+        <div className="liquid-glass flex items-center justify-between rounded-2xl px-6 py-3">
+          <div className="flex justify-start">
+            <Link to="/"><PlinthLogo size="xxs" /></Link>
+          </div>
+          <div className="flex justify-end items-center gap-4">
+            <Link to="/" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Home</Link>
+            <Link to="/about" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">About</Link>
+            <Switch theme={theme} toggleTheme={toggleTheme} />
+            {!user ? (
+              <div className="flex items-center gap-4 ml-2">
+                <Link to="/login" className="hidden sm:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
+                <Link to="/register" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Get Started</Link>
+              </div>
+            ) : (
+              <Link to="/dashboard" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white ml-2">Go to Dashboard</Link>
+            )}
+          </div>
+        </div>
+      </nav>
 
       <main className="flex-1 max-w-5xl w-full mx-auto px-4 py-16 lg:px-8">
         <div className="mb-12">
