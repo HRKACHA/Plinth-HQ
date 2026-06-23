@@ -64,7 +64,8 @@ export default function Landing() {
       </nav>
 
       {/* ── Hero with Particle Canvas ── */}
-      <section className="relative overflow-hidden" style={{ minHeight: 'calc(100vh - 80px)' }}>        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4" style={{ minHeight: 'calc(100vh - 80px)' }}>
+      <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20" style={{ minHeight: '60vh' }}>
           <div className="max-w-4xl w-full space-y-8">
             <div className="inline-block animate-slideUp">
               <span className="py-1 px-3 rounded-full text-xs font-mono text-muted tracking-widest uppercase"
