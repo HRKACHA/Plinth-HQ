@@ -242,7 +242,7 @@ export default function ProjectLayout() {
                 <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openDropdown === 'operations' ? 'rotate-180' : ''}`} />
               </button>
               {openDropdown === 'operations' && (
-                <div className="glass-dropdown right-0 sm:right-auto sm:left-0 max-w-[85vw]">
+                <div className="left-0 glass-dropdown max-w-[85vw]">
                   {allowedOperationsItems.map(({ path, label, icon: Icon }) => (
                     <Link
                       key={path}
@@ -274,7 +274,7 @@ export default function ProjectLayout() {
                 <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openDropdown === 'budget' ? 'rotate-180' : ''}`} />
               </button>
               {openDropdown === 'budget' && (
-                <div className="glass-dropdown right-0 sm:right-auto sm:left-0 max-w-[85vw]">
+                <div className="left-0 glass-dropdown max-w-[85vw]">
                   {allowedBudgetItems.map(({ path, label, icon: Icon }) => (
                     <Link
                       key={path}
@@ -305,7 +305,7 @@ export default function ProjectLayout() {
               <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${openDropdown === 'teamChat' ? 'rotate-180' : ''}`} />
             </button>
             {openDropdown === 'teamChat' && (
-              <div className="glass-dropdown right-0 sm:right-auto sm:left-0 max-w-[85vw]">
+              <div className="right-0 glass-dropdown max-w-[85vw]">
                 {[
                   { path: '/team', label: 'Manage Team', icon: Users },
                   { path: '/chat', label: 'Project Chat', icon: MessageSquare }

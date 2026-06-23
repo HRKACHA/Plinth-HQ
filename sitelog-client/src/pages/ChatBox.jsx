@@ -646,7 +646,7 @@ export default function ChatBox() {
             )}
 
             {/* Input Area */}
-            <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-[env(safe-area-inset-bottom,0.75rem)]">
+            <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-3 sm:pb-4">
               
               {/* Reply Preview Bar */}
               {replyingTo && (
@@ -687,7 +687,7 @@ export default function ChatBox() {
               )}
 
               <div className="flex flex-col gap-2">
-                <div className="flex gap-2 pr-14 sm:pr-0">
+                <div className="flex gap-2">
                   <div className="flex-1 relative flex">
                     <textarea
                       ref={textareaRef}

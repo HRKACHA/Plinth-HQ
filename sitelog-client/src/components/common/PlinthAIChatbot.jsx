@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { MessageCircle, X, Send, ChevronDown, ThumbsUp, ThumbsDown, Sparkles, Zap, BookOpen, ClipboardList, Loader2, AlertCircle, Minus } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { plinthaiApi } from '../../api/index';
@@ -369,13 +370,35 @@ export default function PlinthAIChatbot() {
     setIsMinimized(false);
   };
 
+  const controls = useAnimation();
+
+  const handleDragEnd = (event, info) => {
+    // Determine whether to snap to left or right edge based on the final pointer position
+    const screenWidth = window.innerWidth;
+    const isLeftHalf = info.point.x < screenWidth / 2;
+    // Assume button is about 64px wide, and its original position is right-4 (16px) or right-6 (24px).
+    // Let's use an approximate offset for the left side (e.g., negative offset from right)
+    const offset = isLeftHalf ? -(screenWidth - 64 - 32) : 0;
+    
+    controls.start({
+      x: offset,
+      transition: { type: 'spring', stiffness: 300, damping: 25 }
+    });
+  };
+
   return (
     <>
       {/* Floating Action Button */}
-      <button
+      <motion.button
+        drag
+        dragMomentum={false}
+        dragElastic={0.1}
+        onDragEnd={handleDragEnd}
+        animate={controls}
+        whileDrag={{ scale: 1.1, cursor: 'grabbing' }}
         onClick={toggleOpen}
         id="plinthai-fab"
-        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 active:scale-95 group ${
+        className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-all duration-500 hover:scale-105 group ${
           isOpen && !isMinimized
             ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
             : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
@@ -389,15 +412,15 @@ export default function PlinthAIChatbot() {
             <img
               src="/chatbot-logo.png"
               alt="PlinthAI"
-              className="h-7 w-7 sm:h-10 sm:w-10 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12"
+              className="h-7 w-7 sm:h-10 sm:w-10 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12 pointer-events-none"
             />
             {/* Pulse ring */}
             {!isOpen && (
-              <span className="absolute inset-0 rounded-full border-2 border-orange animate-pulse_ring" />
+              <span className="absolute inset-0 rounded-full border-2 border-orange animate-pulse_ring pointer-events-none" />
             )}
           </>
         )}
-      </button>
+      </motion.button>
 
       {/* Chat Panel */}
       {isOpen && !isMinimized && (
