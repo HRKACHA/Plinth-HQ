@@ -288,13 +288,13 @@ export default function TeamPanel() {
               const unassigned = members.filter(m => !m.projects || m.projects.length === 0);
 
               const renderMemberTable = (groupName, memberList) => (
-                <div key={groupName} className="bg-card border border-white/[0.06] rounded-2xl pb-2 overflow-hidden">
-                  <div className="px-6 py-4 border-b border-white/[0.06] bg-surface/30">
+                <div key={groupName} className="bg-card border border-white/[0.06] rounded-2xl pb-2">
+                  <div className="px-6 py-4 border-b border-white/[0.06] bg-surface/30 rounded-t-2xl">
                     <h3 className="font-bold text-navy dark:text-white">{groupName}</h3>
                   </div>
                   
                   {/* Desktop Table */}
-                  <div className="hidden md:block overflow-x-auto">
+                  <div className="hidden md:block overflow-visible">
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-white/[0.06]">
