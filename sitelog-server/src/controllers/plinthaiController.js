@@ -164,28 +164,6 @@ export const chatHandler = catchAsync(async (req, res) => {
           },
         });
       }
-
-      if (err.message?.includes('429') || err.message?.includes('quota') || err.message?.includes('Too Many Requests')) {
-        return res.json({
-          success: true,
-          data: {
-            message: "⚠️ **API Quota Exceeded**\n\nThe Gemini AI API has exceeded its usage quota or rate limit. I am currently operating in basic offline mode.\n\nPlease check your Google Cloud Console to upgrade your API tier to restore full ChatGPT-like capabilities.",
-            session_id: session_id || 'default',
-            provider: 'fallback'
-          },
-        });
-      }
-
-      if (err.message?.includes('503') || err.message?.includes('Service Unavailable') || err.message?.includes('high demand')) {
-        return res.json({
-          success: true,
-          data: {
-            message: "⚠️ **Service Unavailable**\n\nThe Gemini AI models are currently experiencing high demand globally. I am falling back to basic offline mode for now. Please try again in a few minutes.",
-            session_id: session_id || 'default',
-            provider: 'fallback'
-          },
-        });
-      }
     }
   }
 
