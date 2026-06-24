@@ -7,19 +7,22 @@ import { logApi, budgetApi } from '../../api/index';
 import DateAccordion from '../../components/common/DateAccordion';
 
 import GlassDatePicker from '../../components/common/GlassDatePicker';
+import CustomSelectMenu from '../../components/common/CustomSelectMenu';
+
+const UNITS = ['bags', 'kg', 'ton', 'pieces', 'sqft', 'litres', 'cu.m', 'bundle', 'Other'];
 export default function Materials() {
   const { id } = useParams();
   const { data: logs = [], loading } = useAsync(() => logApi.list(id), [id]);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ date: new Date().toISOString().split('T')[0], name: '', qty: '', supplier: '', price: '' });
+  const [formData, setFormData] = useState({ date: new Date().toISOString().split('T')[0], name: '', qty: '', unit: 'bags', customUnit: '', supplier: '', price: '' });
 
   const submitMaterial = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
       const existingLog = logs.find(l => l.date.substring(0, 10) === formData.date);
-      const newMat = { name: formData.name, qty: formData.qty, unit: 'bags', supplier: formData.supplier, price: Number(formData.price), recdAt: formData.date };
+      const newMat = { name: formData.name, qty: formData.qty, unit: formData.unit === 'Other' ? formData.customUnit : formData.unit, supplier: formData.supplier, price: Number(formData.price), recdAt: formData.date };
       
       if (existingLog) {
         await logApi.update(id, existingLog._id, {
@@ -78,7 +81,7 @@ export default function Materials() {
             <h4 className="font-bold text-navy">Add New Material</h4>
             <button onClick={() => setShowForm(false)} className="text-muted hover:text-navy"><X className="h-5 w-5" /></button>
           </div>
-          <form onSubmit={submitMaterial} className="grid gap-4 sm:grid-cols-6">
+          <form onSubmit={submitMaterial} className="grid gap-4 sm:grid-cols-7 items-start">
             <div className="sm:col-span-1">
               <label className="mb-1 text-xs font-semibold text-navy">Date</label>
               <GlassDatePicker required  value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
@@ -92,6 +95,13 @@ export default function Materials() {
               <input placeholder="e.g. 50" required className="input-field" value={formData.qty} onChange={(e) => setFormData({ ...formData, qty: e.target.value })} />
             </div>
             <div className="sm:col-span-1">
+              <label className="mb-1 text-xs font-semibold text-navy">Unit</label>
+              <CustomSelectMenu value={formData.unit} onChange={(val) => setFormData({ ...formData, unit: val })} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Unit" />
+              {formData.unit === 'Other' && (
+                <input placeholder="Specify..." required className="input-field mt-2" value={formData.customUnit} onChange={(e) => setFormData({ ...formData, customUnit: e.target.value })} />
+              )}
+            </div>
+            <div className="sm:col-span-1">
               <label className="mb-1 text-xs font-semibold text-navy">Supplier</label>
               <input placeholder="Supplier" className="input-field" value={formData.supplier} onChange={(e) => setFormData({ ...formData, supplier: e.target.value })} />
             </div>
@@ -99,7 +109,7 @@ export default function Materials() {
               <label className="mb-1 text-xs font-semibold text-navy">Price (₹)</label>
               <input placeholder="Price" required type="number" min="0" className="input-field" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
             </div>
-            <div className="sm:col-span-6 flex justify-end mt-2">
+            <div className="sm:col-span-7 flex justify-end mt-2">
               <button type="submit" disabled={submitting} className="btn-primary">{submitting ? 'Saving...' : 'Save Material'}</button>
             </div>
           </form>
