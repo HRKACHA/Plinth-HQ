@@ -164,6 +164,28 @@ export const chatHandler = catchAsync(async (req, res) => {
           },
         });
       }
+
+      if (err.message?.includes('429') || err.message?.includes('quota') || err.message?.includes('Too Many Requests')) {
+        return res.json({
+          success: true,
+          data: {
+            message: "⚠️ **API Quota Exceeded**\n\nThe Gemini AI API has exceeded its usage quota or rate limit. I am currently operating in basic offline mode.\n\nPlease check your Google Cloud Console to upgrade your API tier to restore full ChatGPT-like capabilities.",
+            session_id: session_id || 'default',
+            provider: 'fallback'
+          },
+        });
+      }
+
+      if (err.message?.includes('503') || err.message?.includes('Service Unavailable') || err.message?.includes('high demand')) {
+        return res.json({
+          success: true,
+          data: {
+            message: "⚠️ **Service Unavailable**\n\nThe Gemini AI models are currently experiencing high demand globally. I am falling back to basic offline mode for now. Please try again in a few minutes.",
+            session_id: session_id || 'default',
+            provider: 'fallback'
+          },
+        });
+      }
     }
   }
 
@@ -540,25 +562,25 @@ async function generateFallbackResponse(message, user, projects, history) {
 
   // ── Intent Scoring ──
   const intents = {
-    greeting: intentScore(msg, [/^(hi|hello|hey|namaste|howdy|sup|yo)\b/, /good\s*(morning|afternoon|evening|night)/, 'how are you']),
-    notification: intentScore(msg, ['notification', 'alert', 'unread', 'updates', /any\s*notif/, /pending\s*alert/, 'bell', /what.*new/]),
-    project: intentScore(msg, ['project', 'progress', 'summary', 'status', 'overview', 'dashboard', /how.*project/, /show.*project/]),
-    tasks: intentScore(msg, ['task', 'activit', 'log', 'today', /my\s*work/, 'doing', 'recent', /what.*done/, 'daily log']),
-    budget: intentScore(msg, ['budget', 'expense', 'spend', 'cost', 'money', 'financ', 'bill', 'payment', 'invoice', /how\s*much/]),
-    materials: intentScore(msg, ['material', 'inventor', 'stock', 'supply', 'deliver', 'cement', 'steel', 'brick', 'sand', 'quantity']),
-    equipment: intentScore(msg, ['equipment', 'machine', 'rent', 'owned', 'asset', 'tractor', 'crane']),
-    milestones: intentScore(msg, ['milestone', 'timeline', 'deadline', 'phase', 'schedule', 'gantt', 'when', /due\s*date/, 'plan', 'planning']),
-    construction: intentScore(msg, [/\bis\s*\d/, 'cpwd', 'concrete', 'curing', 'reinforc', 'beam', 'column', 'slab', 'footing', 'foundation', 'scaffold', 'earthquake', 'seismic', 'plaster', 'excavat', 'civil engineer', 'estimation']),
-    help: intentScore(msg, ['help', /how\s*to/, 'navigate', 'feature', /what\s*can/, 'guide', /how\s*do\s*i/, 'tutorial']),
-    thanks: intentScore(msg, [/^(thanks|thank\s*you|thx|ty)\b/, 'appreciate', 'grateful']),
-    bye: intentScore(msg, [/^(bye|goodbye|see\s*you|good\s*night)\b/, 'later', 'signing off']),
-    team: intentScore(msg, ['team', 'member', 'colleague', 'user', 'people', 'workforce', 'labour', 'worker', 'staff']),
-    weather: intentScore(msg, ['weather', 'rain', 'temperature', 'climate', 'forecast', 'sunny', 'storm']),
-    math: intentScore(msg, [/\d+\s*[\+\-\*\/\%]\s*\d+/, /calculate/, /what\s*is\s*\d+/, /percentage/, /convert/]),
-    capabilities: intentScore(msg, [/what\s*can\s*you/, /what\s*do\s*you/, /your\s*capabilit/, /are\s*you\s*able/, /can\s*you\s*help/]),
-    writing: intentScore(msg, ['write', 'email', 'draft', 'letter', 'proposal', 'report', 'message']),
-    vendor: intentScore(msg, ['vendor', 'supplier', 'contractor', /purchase\s*order/, 'supply', 'procurement', /vendor\s*list/, /vendor\s*contact/]),
-    billing: intentScore(msg, ['billing', 'subscription', 'plan', 'pricing', 'upgrade', 'downgrade', 'renewal', 'expire', /my\s*plan/, /change\s*plan/, /current\s*plan/, 'tier']),
+    greeting: intentScore(msg, [/^(hi|hello|hey|namaste|howdy|sup|yo|kem cho|su chale che)\b/, /good\s*(morning|afternoon|evening|night)/, 'how are you', 'kese ho']),
+    notification: intentScore(msg, ['notification', 'alert', 'unread', 'updates', /any\s*notif/, /pending\s*alert/, 'bell', /what.*new/, 'sandesh', 'suchna']),
+    project: intentScore(msg, ['project', 'progress', 'summary', 'status', 'overview', 'dashboard', /how.*project/, /show.*project/, 'kaam', 'yojna', 'site']),
+    tasks: intentScore(msg, ['task', 'activit', 'log', 'today', /my\s*work/, 'doing', 'recent', /what.*done/, 'daily log', 'aaj', 'kam karyu', 'kaam kiya']),
+    budget: intentScore(msg, ['budget', 'expense', 'spend', 'cost', 'money', 'financ', 'bill', 'payment', 'invoice', /how\s*much/, 'kharcha', 'paise', 'rupya', 'karcho']),
+    materials: intentScore(msg, ['material', 'inventor', 'stock', 'supply', 'deliver', 'cement', 'steel', 'brick', 'sand', 'quantity', 'saman', 'maal']),
+    equipment: intentScore(msg, ['equipment', 'machine', 'rent', 'owned', 'asset', 'tractor', 'crane', 'jcb', 'sadhan']),
+    milestones: intentScore(msg, ['milestone', 'timeline', 'deadline', 'phase', 'schedule', 'gantt', 'when', /due\s*date/, 'plan', 'planning', 'samay']),
+    construction: intentScore(msg, [/\bis\s*\d/, 'cpwd', 'concrete', 'curing', 'reinforc', 'beam', 'column', 'slab', 'footing', 'foundation', 'scaffold', 'earthquake', 'seismic', 'plaster', 'excavat', 'civil engineer', 'estimation', 'chunai', 'chatar']),
+    help: intentScore(msg, ['help', /how\s*to/, 'navigate', 'feature', /what\s*can/, 'guide', /how\s*do\s*i/, 'tutorial', 'madad', 'sahaya']),
+    thanks: intentScore(msg, [/^(thanks|thank\s*you|thx|ty|dhanyavad|aabhar)\b/, 'appreciate', 'grateful']),
+    bye: intentScore(msg, [/^(bye|goodbye|see\s*you|good\s*night|alvida|aavjo)\b/, 'later', 'signing off']),
+    team: intentScore(msg, ['team', 'member', 'colleague', 'user', 'people', 'workforce', 'labour', 'worker', 'staff', 'log', 'manas', 'majdoor']),
+    weather: intentScore(msg, ['weather', 'rain', 'temperature', 'climate', 'forecast', 'sunny', 'storm', 'mausam', 'vatavaran', 'barsat', 'varsad']),
+    math: intentScore(msg, [/\d+\s*[\+\-\*\/\%]\s*\d+/, /calculate/, /what\s*is\s*\d+/, /percentage/, /convert/, 'ganti', 'hisab']),
+    capabilities: intentScore(msg, [/what\s*can\s*you/, /what\s*do\s*you/, /your\s*capabilit/, /are\s*you\s*able/, /can\s*you\s*help/, 'su kari sake che', 'kya kar sakte ho']),
+    writing: intentScore(msg, ['write', 'email', 'draft', 'letter', 'proposal', 'report', 'message', 'likho', 'lakh']),
+    vendor: intentScore(msg, ['vendor', 'supplier', 'contractor', /purchase\s*order/, 'supply', 'procurement', /vendor\s*list/, /vendor\s*contact/, 'vyapari', 'thekedar']),
+    billing: intentScore(msg, ['billing', 'subscription', 'plan', 'pricing', 'upgrade', 'downgrade', 'renewal', 'expire', /my\s*plan/, /change\s*plan/, /current\s*plan/, 'tier', 'paisa']),
   };
 
   // Find the highest-scoring intent
@@ -608,8 +630,15 @@ async function generateFallbackResponse(message, user, projects, history) {
         return `You don't have any projects assigned yet, ${firstName}.\n\n### How to get started:\n1. **Create a new project** from the **Projects** page\n2. Or ask your **Project Manager** to add you to an existing team\n\nWould you like me to explain how to set up a new project?`;
       }
 
+      // Filter projects based on message content
+      let targetProjects = projects;
+      const matchedProjects = projects.filter(p => msg.includes(p.name.toLowerCase()));
+      if (matchedProjects.length > 0) {
+        targetProjects = matchedProjects;
+      }
+
       const projectDetails = [];
-      for (const p of projects) {
+      for (const p of targetProjects) {
         const recentLogs = await SiteLog.find({ project: p._id })
           .sort({ date: -1 }).limit(3).select('date activities weather').lean();
 
@@ -637,7 +666,7 @@ async function generateFallbackResponse(message, user, projects, history) {
         );
       }
 
-      return `Here's a comprehensive overview of your ${projects.length} project${projects.length > 1 ? 's' : ''}, ${firstName}:\n\n${projectDetails.join('\n\n---\n\n')}\n\n### 💡 What's next?\nAsk me to dive deeper into any project — budgets, milestones, materials, or team details.`;
+      return `Here's an overview of the requested project${targetProjects.length > 1 ? 's' : ''}, ${firstName}:\n\n${projectDetails.join('\n\n---\n\n')}\n\n### 💡 What's next?\nAsk me to dive deeper into any project — budgets, milestones, materials, or team details.`;
     }
 
     case 'tasks': {
