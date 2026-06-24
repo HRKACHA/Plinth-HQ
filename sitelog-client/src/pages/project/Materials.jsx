@@ -76,7 +76,7 @@ export default function Materials() {
       </div>
 
       {showForm && (
-        <div className="modal-backdrop z-50 flex items-center justify-center" onClick={() => setShowForm(false)}>
+        <div className="modal-backdrop" onClick={() => setShowForm(false)}>
           <div className="modal-content max-w-lg w-full p-0 mx-4" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-glass-border)]">
               <div className="flex items-center gap-3">
