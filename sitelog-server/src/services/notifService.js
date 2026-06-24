@@ -18,10 +18,10 @@ export function emitToProject(io, projectId, event, data) {
 
 export async function notifyProjectTeam(io, project, { type, title, body, link, excludeUserId }) {
   const User = (await import('../models/User.js')).default;
-  const teamIds = project.team.map((m) => {
-    const u = m.user?._id || m.user;
-    return u?.toString?.() || String(u);
-  });
+  const teamIds = project.team
+    .map((m) => m.user?._id || m.user)
+    .filter(Boolean)
+    .map((u) => u.toString());
   const pms = await User.find({ organisation: project.organisation, role: { $in: ['PM', 'SuperAdmin'] } });
   const recipients = new Set([
     ...teamIds,
@@ -31,6 +31,7 @@ export async function notifyProjectTeam(io, project, { type, title, body, link, 
   if (excludeUserId) recipients.delete(excludeUserId.toString());
 
   for (const id of recipients) {
+    if (!id || id === 'null' || id === 'undefined') continue;
     await createNotification({ recipient: id, project: project._id, type, title, body, link });
   }
 

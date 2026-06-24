@@ -12,11 +12,18 @@ export default function DailyLogs() {
 
   const filteredLogs = logs.filter(log => {
     if (activeFilter === 'Today') {
-      return new Date(log.date).toDateString() === new Date().toDateString();
+      const logDate = new Date(log.date);
+      const today = new Date();
+      return logDate.getDate() === today.getDate() && logDate.getMonth() === today.getMonth() && logDate.getFullYear() === today.getFullYear();
     }
     if (activeFilter === 'This Week') {
-      const diff = Math.floor((new Date() - new Date(log.date)) / (1000 * 60 * 60 * 24));
-      return diff >= 0 && diff <= 7;
+      const logDate = new Date(log.date);
+      const today = new Date();
+      today.setHours(23, 59, 59, 999);
+      const weekAgo = new Date(today);
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      weekAgo.setHours(0, 0, 0, 0);
+      return logDate >= weekAgo && logDate <= today;
     }
     return true; // Custom shows all for now
   });
