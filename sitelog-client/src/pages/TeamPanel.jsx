@@ -277,186 +277,193 @@ export default function TeamPanel() {
 
         {/* Members Tab */}
         {tab === 'members' && (
-          <div className="bg-card border border-white/[0.06] rounded-2xl pb-6">
-            {/* Desktop Table */}
-            <div className="hidden md:block">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    {['Name', 'Email', 'Role', 'Project', 'Last Active', 'Status', 'Actions'].map((h) => (
-                      <th key={h} className="text-left px-6 py-3 text-xs font-medium text-muted uppercase tracking-wider">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {loading ? (
-                    Array.from({ length: 5 }).map((_, i) => (
-                      <tr key={i} className="border-b border-white/[0.04]">
-                        <td className="px-6 py-4"><div className="flex items-center gap-3"><div className="skeleton h-8 w-8 rounded-full" /><div className="skeleton h-4 w-28 rounded-lg" /></div></td>
-                        <td className="px-6 py-4"><div className="skeleton h-4 w-36 rounded-lg" /></td>
-                        <td className="px-6 py-4"><div className="skeleton h-5 w-20 rounded-full" /></td>
-                        <td className="px-6 py-4"><div className="skeleton h-4 w-24 rounded-lg" /></td>
-                        <td className="px-6 py-4"><div className="skeleton h-4 w-16 rounded-lg" /></td>
-                        <td className="px-6 py-4"><div className="skeleton h-5 w-14 rounded-full" /></td>
-                        <td className="px-6 py-4"><div className="skeleton h-8 w-16 rounded-lg" /></td>
-                      </tr>
-                    ))
-                  ) : members.length === 0 ? (
-                    <tr><td colSpan={7} className="text-center py-12 text-muted">No team members found.</td></tr>
-                  ) : members.map((m) => (
-                    <tr key={m._id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold">
-                            {m.name?.charAt(0)?.toUpperCase()}
+          <div className="space-y-8">
+            {/* Create groups */}
+            {(() => {
+              const projectGroups = projects.map(p => ({
+                project: p,
+                team: members.filter(m => m.projects?.some(mp => mp.id === p.id || mp._id === p._id || mp.id === p._id))
+              })).filter(g => g.team.length > 0);
+              
+              const unassigned = members.filter(m => !m.projects || m.projects.length === 0);
+
+              const renderMemberTable = (groupName, memberList) => (
+                <div key={groupName} className="bg-card border border-white/[0.06] rounded-2xl pb-2 overflow-hidden">
+                  <div className="px-6 py-4 border-b border-white/[0.06] bg-surface/30">
+                    <h3 className="font-bold text-navy dark:text-white">{groupName}</h3>
+                  </div>
+                  
+                  {/* Desktop Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-white/[0.06]">
+                          {['Name', 'Email', 'Role', 'Project', 'Last Active', 'Status', 'Actions'].map((h) => (
+                            <th key={h} className="text-left px-6 py-3 text-xs font-medium text-muted uppercase tracking-wider">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {memberList.map((m) => (
+                          <tr key={m._id} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition">
+                            <td className="px-6 py-4">
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold shrink-0">
+                                  {m.name?.charAt(0)?.toUpperCase()}
+                                </div>
+                                <span className="text-navy dark:text-white font-medium whitespace-nowrap">{m.name}</span>
+                              </div>
+                            </td>
+                            <td className="px-6 py-4 text-muted text-sm">{m.email}</td>
+                            <td className="px-6 py-4 relative">
+                              {isManager && m._id !== user._id ? (
+                                <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="flex items-center gap-1 hover:bg-navy/5 dark:hover:bg-white/5 px-2 py-1 -ml-2 rounded transition whitespace-nowrap">
+                                  <RoleBadge role={m.role} />
+                                  <ChevronDown size={12} className="text-muted" />
+                                </button>
+                              ) : (
+                                <RoleBadge role={m.role} />
+                              )}
+                              {roleDropdown === m._id && isManager && (
+                                <div className="absolute z-50 mt-1 w-56 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1 left-0">
+                                  {ROLE_OPTIONS.map((r) => (
+                                    <button
+                                      key={r.value}
+                                      onClick={() => handleChangeRole(m._id, r.value)}
+                                      className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5"
+                                    >
+                                      <span className="text-sm font-semibold text-navy dark:text-white">{r.label}</span>
+                                      <span className="text-xs text-muted leading-tight">{r.desc}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </td>
+                            <td className="px-6 py-4 text-navy dark:text-white text-sm font-medium">
+                              {m.projects && m.projects.length > 0 ? (
+                                <div className="flex flex-wrap gap-1">
+                                  {m.projects.map(p => (
+                                    <span key={p.id} className="px-2 py-1 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200 whitespace-nowrap">
+                                      {p.name}
+                                    </span>
+                                  ))}
+                                </div>
+                              ) : (
+                                <span className="text-muted text-xs">Unassigned</span>
+                              )}
+                            </td>
+                            <td className="px-6 py-4 text-muted text-sm whitespace-nowrap">
+                              <span className="flex items-center gap-1"><Clock size={14} /> {timeAgo(m.lastSeen || m.lastLogin)}</span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className={`inline-flex items-center gap-1 text-xs font-medium ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
+                                {m.isActive ? <><CheckCircle size={12} /> Active</> : <><XCircle size={12} /> Inactive</>}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              {isManager && m._id !== user._id && (
+                                <div className="flex items-center gap-2">
+                                  <button
+                                    onClick={() => handleDeactivate(m._id)}
+                                    className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur"
+                                    title="Deactivate"
+                                  >
+                                    <UserMinus size={14} />
+                                  </button>
+                                  <button
+                                    onClick={() => handleDelete(m._id)}
+                                    className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
+                                    title="Delete Member"
+                                  >
+                                    <Trash2 size={14} />
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  {/* Mobile Card Layout */}
+                  <div className="md:hidden p-3 space-y-3">
+                    {memberList.map((m) => (
+                      <div key={m._id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold shrink-0">
+                              {m.name?.charAt(0)?.toUpperCase()}
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-sm font-semibold text-navy dark:text-white truncate">{m.name}</p>
+                              <p className="text-xs text-muted truncate">{m.email}</p>
+                            </div>
                           </div>
-                          <span className="text-navy dark:text-white font-medium">{m.name}</span>
+                          <span className={`inline-flex items-center gap-1 text-[10px] font-medium shrink-0 ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
+                            {m.isActive ? <><CheckCircle size={10} /> Active</> : <><XCircle size={10} /> Off</>}
+                          </span>
                         </div>
-                      </td>
-                      <td className="px-6 py-4 text-muted text-sm">{m.email}</td>
-                      <td className="px-6 py-4 relative">
-                        {isManager && m._id !== user._id ? (
-                          <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="flex items-center gap-1 hover:bg-navy/5 dark:hover:bg-white/5 px-2 py-1 -ml-2 rounded transition">
-                            <RoleBadge role={m.role} />
-                            <ChevronDown size={12} className="text-muted" />
-                          </button>
-                        ) : (
+                        <div className="flex flex-wrap items-center gap-2 mt-2.5 pt-2.5 border-t border-white/[0.04]">
                           <RoleBadge role={m.role} />
+                          {m.projects && m.projects.length > 0 && m.projects.map(p => (
+                            <span key={p.id} className="px-2 py-0.5 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200">
+                              {p.name}
+                            </span>
+                          ))}
+                          <span className="text-[10px] text-muted flex items-center gap-1 ml-auto">
+                            <Clock size={10} /> {timeAgo(m.lastSeen || m.lastLogin)}
+                          </span>
+                        </div>
+                        {isManager && m._id !== user._id && (
+                          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
+                            <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-navy dark:text-white transition flex items-center gap-1">
+                              Change Role <ChevronDown size={10} />
+                            </button>
+                            <div className="flex-1" />
+                            <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
+                              <UserMinus size={14} />
+                            </button>
+                            <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
                         )}
                         {roleDropdown === m._id && isManager && (
-                          <div className="absolute z-50 mt-1 w-56 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1 left-0">
+                          <div className="mt-2 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1">
                             {ROLE_OPTIONS.map((r) => (
-                              <button
-                                key={r.value}
-                                onClick={() => handleChangeRole(m._id, r.value)}
-                                className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5"
-                              >
+                              <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5">
                                 <span className="text-sm font-semibold text-navy dark:text-white">{r.label}</span>
                                 <span className="text-xs text-muted leading-tight">{r.desc}</span>
                               </button>
                             ))}
                           </div>
                         )}
-                      </td>
-                      <td className="px-6 py-4 text-navy dark:text-white text-sm font-medium">
-                        {m.projects && m.projects.length > 0 ? (
-                          <div className="flex flex-wrap gap-1">
-                            {m.projects.map(p => (
-                              <span key={p.id} className="px-2 py-1 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200">
-                                {p.name}
-                              </span>
-                            ))}
-                          </div>
-                        ) : (
-                          <span className="text-muted text-xs">Unassigned</span>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-muted text-sm">
-                        <span className="flex items-center gap-1"><Clock size={14} /> {timeAgo(m.lastSeen || m.lastLogin)}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`inline-flex items-center gap-1 text-xs font-medium ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
-                          {m.isActive ? <><CheckCircle size={12} /> Active</> : <><XCircle size={12} /> Inactive</>}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        {isManager && m._id !== user._id && (
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => handleDeactivate(m._id)}
-                              className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur"
-                              title="Deactivate"
-                            >
-                              <UserMinus size={14} />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(m._id)}
-                              className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
-                              title="Delete Member"
-                            >
-                              <Trash2 size={14} />
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile Card Layout */}
-            <div className="md:hidden p-3 space-y-3">
-              {loading ? (
-                Array.from({ length: 4 }).map((_, i) => (
-                  <div key={i} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="skeleton h-9 w-9 rounded-full" />
-                      <div className="flex-1 space-y-2">
-                        <div className="skeleton h-4 w-28 rounded-lg" />
-                        <div className="skeleton h-3 w-20 rounded-lg" />
                       </div>
-                      <div className="skeleton h-5 w-14 rounded-full" />
-                    </div>
-                    <div className="skeleton h-3 w-full rounded-lg" />
-                  </div>
-                ))
-              ) : members.length === 0 ? (
-                <div className="text-center py-12 text-muted">No team members found.</div>
-              ) : members.map((m) => (
-                <div key={m._id} className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-bold shrink-0">
-                        {m.name?.charAt(0)?.toUpperCase()}
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-sm font-semibold text-navy dark:text-white truncate">{m.name}</p>
-                        <p className="text-xs text-muted truncate">{m.email}</p>
-                      </div>
-                    </div>
-                    <span className={`inline-flex items-center gap-1 text-[10px] font-medium shrink-0 ${m.isActive ? 'text-emerald-400' : 'text-red-400'}`}>
-                      {m.isActive ? <><CheckCircle size={10} /> Active</> : <><XCircle size={10} /> Off</>}
-                    </span>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2 mt-2.5 pt-2.5 border-t border-white/[0.04]">
-                    <RoleBadge role={m.role} />
-                    {m.projects && m.projects.length > 0 && m.projects.map(p => (
-                      <span key={p.id} className="px-2 py-0.5 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200">
-                        {p.name}
-                      </span>
                     ))}
-                    <span className="text-[10px] text-muted flex items-center gap-1 ml-auto">
-                      <Clock size={10} /> {timeAgo(m.lastSeen || m.lastLogin)}
-                    </span>
                   </div>
-                  {isManager && m._id !== user._id && (
-                    <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
-                      <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-navy dark:text-white transition flex items-center gap-1">
-                        Change Role <ChevronDown size={10} />
-                      </button>
-                      <div className="flex-1" />
-                      <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
-                        <UserMinus size={14} />
-                      </button>
-                      <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  )}
-                  {roleDropdown === m._id && isManager && (
-                    <div className="mt-2 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1">
-                      {ROLE_OPTIONS.map((r) => (
-                        <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5">
-                          <span className="text-sm font-semibold text-navy dark:text-white">{r.label}</span>
-                          <span className="text-xs text-muted leading-tight">{r.desc}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
                 </div>
-              ))}
-            </div>
+              );
+
+              if (loading) {
+                return (
+                  <div className="bg-card border border-white/[0.06] rounded-2xl p-6">
+                    <div className="flex h-32 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-navy/20 border-t-orange" /></div>
+                  </div>
+                );
+              }
+
+              if (members.length === 0) {
+                return <div className="bg-card border border-white/[0.06] rounded-2xl p-12 text-center text-muted">No team members found.</div>;
+              }
+
+              return (
+                <>
+                  {projectGroups.map(g => renderMemberTable(`${g.project.name} Team`, g.team))}
+                  {unassigned.length > 0 && renderMemberTable('Organization Members (Unassigned)', unassigned)}
+                </>
+              );
+            })()}
           </div>
         )}
 
