@@ -317,14 +317,14 @@ export default function TeamPanel() {
                             <td className="px-6 py-4 text-muted text-sm">{m.email}</td>
                             <td className="px-6 py-4 relative">
                               {isManager && m._id !== user._id ? (
-                                <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="flex items-center gap-1 hover:bg-navy/5 dark:hover:bg-white/5 px-2 py-1 -ml-2 rounded transition whitespace-nowrap">
+                                <button onClick={() => setRoleDropdown(roleDropdown === `${groupName}-${m._id}` ? null : `${groupName}-${m._id}`)} className="flex items-center gap-1 hover:bg-navy/5 dark:hover:bg-white/5 px-2 py-1 -ml-2 rounded transition whitespace-nowrap">
                                   <RoleBadge role={m.role} />
                                   <ChevronDown size={12} className="text-muted" />
                                 </button>
                               ) : (
                                 <RoleBadge role={m.role} />
                               )}
-                              {roleDropdown === m._id && isManager && (
+                              {roleDropdown === `${groupName}-${m._id}` && isManager && (
                                 <div className="absolute z-50 mt-1 w-56 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1 left-0">
                                   {ROLE_OPTIONS.map((r) => (
                                     <button
@@ -417,7 +417,7 @@ export default function TeamPanel() {
                         </div>
                         {isManager && m._id !== user._id && (
                           <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/[0.04]">
-                            <button onClick={() => setRoleDropdown(roleDropdown === m._id ? null : m._id)} className="text-xs text-muted hover:text-navy dark:text-white transition flex items-center gap-1">
+                            <button onClick={() => setRoleDropdown(roleDropdown === `${groupName}-${m._id}` ? null : `${groupName}-${m._id}`)} className="text-xs text-muted hover:text-navy dark:text-white transition flex items-center gap-1">
                               Change Role <ChevronDown size={10} />
                             </button>
                             <div className="flex-1" />
@@ -429,7 +429,7 @@ export default function TeamPanel() {
                             </button>
                           </div>
                         )}
-                        {roleDropdown === m._id && isManager && (
+                        {roleDropdown === `${groupName}-${m._id}` && isManager && (
                           <div className="mt-2 bg-card border border-navy/10 dark:border-white/10 rounded-xl shadow-2xl py-1">
                             {ROLE_OPTIONS.map((r) => (
                               <button key={r.value} onClick={() => handleChangeRole(m._id, r.value)} className="w-full text-left px-4 py-2 hover:bg-navy/5 dark:hover:bg-white/5 transition flex flex-col items-start gap-0.5">
