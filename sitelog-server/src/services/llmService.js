@@ -7,22 +7,34 @@ dotenv.config({ path: path.join(__dirname, '../../.env'), override: true });
 
 import Anthropic from '@anthropic-ai/sdk';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import OpenAI from 'openai';
 
 // ─────────────────────────────────────────────
 // Provider Detection
 // ─────────────────────────────────────────────
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
 const GEMINI_KEY = process.env.GEMINI_API_KEY || '';
+const OPENROUTER_KEY = process.env.OPENROUTER_API_KEY || '';
 
 const HAS_CLAUDE = ANTHROPIC_KEY.length > 10 && !ANTHROPIC_KEY.includes('your-anthropic-api-key');
 const HAS_GEMINI = GEMINI_KEY.length > 10 && !GEMINI_KEY.includes('your-gemini-api-key');
+const HAS_OPENROUTER = OPENROUTER_KEY.length > 10;
 
 let anthropicClient = null;
 let geminiModel = null;
+let openRouterClient = null;
 
 if (HAS_CLAUDE) {
   anthropicClient = new Anthropic({ apiKey: ANTHROPIC_KEY });
   console.log('[PlinthAI] ✓ Claude API configured');
+}
+
+if (HAS_OPENROUTER) {
+  openRouterClient = new OpenAI({
+    baseURL: 'https://openrouter.ai/api/v1',
+    apiKey: OPENROUTER_KEY,
+  });
+  console.log('[PlinthAI] ✓ OpenRouter API configured');
 }
 
 // Gemini model priority list — if primary model is rate-limited, try fallbacks
@@ -41,11 +53,11 @@ if (HAS_GEMINI) {
   console.log(`[PlinthAI] ✓ Gemini API configured (primary: ${GEMINI_MODELS[0]})`);
 }
 
-if (!HAS_CLAUDE && !HAS_GEMINI) {
+if (!HAS_CLAUDE && !HAS_GEMINI && !HAS_OPENROUTER) {
   console.warn('[PlinthAI] ⚠ No LLM API key configured. Chatbot will use built-in fallback mode.');
 }
 
-export const activeProvider = HAS_CLAUDE ? 'claude' : HAS_GEMINI ? 'gemini' : 'fallback';
+export const activeProvider = HAS_CLAUDE ? 'claude' : HAS_OPENROUTER ? 'openrouter' : HAS_GEMINI ? 'gemini' : 'fallback';
 
 // ─────────────────────────────────────────────
 // Tool Definitions (Claude format — converted for Gemini at call time)
@@ -487,6 +499,109 @@ export async function chatWithGemini(systemPrompt, messages, _modelIndex = 0) {
 }
 
 // ─────────────────────────────────────────────
+// Chat Functions — OpenRouter
+// ─────────────────────────────────────────────
+
+function toOpenRouterFunctionDeclarations() {
+  return toolDefinitions.map((tool) => ({
+    type: 'function',
+    function: {
+      name: tool.name,
+      description: tool.description,
+      parameters: {
+        type: 'object',
+        properties: tool.input_schema.properties || {},
+        required: tool.input_schema.required || [],
+      },
+    }
+  }));
+}
+
+function toOpenRouterHistory(messages, systemPrompt) {
+  const history = [{ role: 'system', content: systemPrompt }];
+
+  for (const msg of messages) {
+    if (msg.role === 'user') {
+      if (typeof msg.content === 'string') {
+        history.push({ role: 'user', content: msg.content });
+      } else if (Array.isArray(msg.content)) {
+        const parts = msg.content
+          .filter((c) => c.type === 'tool_result')
+          .map((c) => ({
+            role: 'tool',
+            tool_call_id: c.tool_use_id,
+            content: c.content,
+          }));
+        history.push(...parts);
+      }
+    } else if (msg.role === 'assistant') {
+      if (typeof msg.content === 'string') {
+        history.push({ role: 'assistant', content: msg.content });
+      } else if (Array.isArray(msg.content)) {
+        const textParts = msg.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+        const toolCalls = msg.content
+          .filter(b => b.type === 'tool_use')
+          .map(b => ({
+            id: b.id,
+            type: 'function',
+            function: {
+              name: b.name,
+              arguments: JSON.stringify(b.input || {})
+            }
+          }));
+        
+        history.push({
+          role: 'assistant',
+          content: textParts || null,
+          tool_calls: toolCalls.length > 0 ? toolCalls : undefined
+        });
+      }
+    }
+  }
+
+  return history;
+}
+
+export async function chatWithOpenRouter(systemPrompt, messages) {
+  if (!openRouterClient) throw new Error('OpenRouter not configured');
+
+  const openRouterHistory = toOpenRouterHistory(messages, systemPrompt);
+
+  const response = await openRouterClient.chat.completions.create({
+    model: 'openrouter/free',
+    messages: openRouterHistory,
+    tools: toOpenRouterFunctionDeclarations(),
+  });
+
+  const msg = response.choices[0].message;
+  
+  const content = [];
+  let stopReason = 'end_turn';
+
+  if (msg.content) {
+    content.push({ type: 'text', text: msg.content });
+  }
+
+  if (msg.tool_calls && msg.tool_calls.length > 0) {
+    stopReason = 'tool_use';
+    for (const tool of msg.tool_calls) {
+      content.push({
+        type: 'tool_use',
+        id: tool.id,
+        name: tool.function.name,
+        input: JSON.parse(tool.function.arguments || '{}'),
+      });
+    }
+  }
+
+  if (content.length === 0) {
+    content.push({ type: 'text', text: "I'm processing your request. Could you please try again?" });
+  }
+
+  return { content, stop_reason: stopReason };
+}
+
+// ─────────────────────────────────────────────
 // Unified Interface
 // ─────────────────────────────────────────────
 
@@ -498,12 +613,15 @@ export async function chat(systemPrompt, messages) {
     try {
       return await chatWithClaude(systemPrompt, messages);
     } catch (err) {
-      console.error('[PlinthAI] Claude error, trying Gemini fallback:', err.message);
-      if (HAS_GEMINI) {
-        return chatWithGemini(systemPrompt, messages);
-      }
+      console.error('[PlinthAI] Claude error, trying fallback:', err.message);
+      if (HAS_OPENROUTER) return chatWithOpenRouter(systemPrompt, messages);
+      if (HAS_GEMINI) return chatWithGemini(systemPrompt, messages);
       throw err;
     }
+  }
+
+  if (HAS_OPENROUTER) {
+    return chatWithOpenRouter(systemPrompt, messages);
   }
 
   if (HAS_GEMINI) {
