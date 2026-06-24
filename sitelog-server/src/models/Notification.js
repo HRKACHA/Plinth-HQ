@@ -4,7 +4,7 @@ const notificationSchema = new mongoose.Schema(
   {
     recipient: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
-    type: { type: String, enum: ['newLog', 'budgetAlert', 'milestoneDelay', 'ownerComment', 'approval', 'issueAssigned', 'teamInvite'], required: true },
+    type: { type: String, enum: ['newLog', 'budgetAlert', 'milestoneDelay', 'ownerComment', 'approval', 'issueAssigned', 'teamInvite', 'newExpense', 'expenseApproved'], required: true },
     title: { type: String, maxlength: 100, required: true },
     body: { type: String, maxlength: 300 },
     link: String,
