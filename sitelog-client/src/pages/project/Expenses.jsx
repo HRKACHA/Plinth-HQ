@@ -15,7 +15,7 @@ export default function Expenses() {
   const { data, loading, reload } = useAsync(() => budgetApi.get(id), [id]);
   const [showModal, setShowModal] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [formData, setFormData] = useState({ category: 'material', vendor: '', description: '', amount: '', invoiceDate: new Date().toISOString().split('T')[0], receiptUrl: '' });
+  const [formData, setFormData] = useState({ category: 'material', customCategory: '', vendor: '', description: '', amount: '', invoiceDate: new Date().toISOString().split('T')[0], receiptUrl: '' });
 
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
@@ -36,9 +36,10 @@ export default function Expenses() {
     e.preventDefault();
     try {
       setSubmitting(true);
-      await budgetApi.createExpense(id, { ...formData, amount: Number(formData.amount) });
+      const submitData = { ...formData, category: formData.category === 'other' ? formData.customCategory : formData.category, amount: Number(formData.amount) };
+      await budgetApi.createExpense(id, submitData);
       setShowModal(false);
-      setFormData({ category: 'material', vendor: '', description: '', amount: '', invoiceDate: new Date().toISOString().split('T')[0], receiptUrl: '' });
+      setFormData({ category: 'material', customCategory: '', vendor: '', description: '', amount: '', invoiceDate: new Date().toISOString().split('T')[0], receiptUrl: '' });
       reload();
     } catch (err) {
       console.error(err);
@@ -144,6 +145,9 @@ export default function Expenses() {
                     ]}
                     placeholder="Select Category"
                   />
+                  {formData.category === 'other' && (
+                    <input type="text" placeholder="Specify category..." value={formData.customCategory} onChange={(e) => setFormData({ ...formData, customCategory: e.target.value })} className="input-field mt-2" required />
+                  )}
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-medium text-navy">Amount (₹) *</label>
