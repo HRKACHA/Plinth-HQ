@@ -77,7 +77,7 @@ export default function Materials() {
 
       {showForm && (
         <div className="modal-backdrop z-50 flex items-center justify-center" onClick={() => setShowForm(false)}>
-          <div className="modal-content max-w-2xl w-full p-0 mx-4" onClick={e => e.stopPropagation()}>
+          <div className="modal-content max-w-lg w-full p-0 mx-4" onClick={e => e.stopPropagation()}>
             <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-glass-border)]">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange/10"><Package className="h-5 w-5 text-orange" /></div>
@@ -85,35 +85,35 @@ export default function Materials() {
               </div>
               <button onClick={() => setShowForm(false)} className="rounded-lg p-2 text-muted hover:bg-info hover:text-navy transition-colors"><X className="h-5 w-5" /></button>
             </div>
-            <form onSubmit={submitMaterial} className="p-6 grid gap-4 sm:grid-cols-7 items-start">
-              <div className="sm:col-span-2">
+            <form onSubmit={submitMaterial} className="p-6 grid gap-4 sm:grid-cols-2 items-start">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Date</label>
                 <GlassDatePicker required  value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
               </div>
-              <div className="sm:col-span-5">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Item Name</label>
                 <input placeholder="e.g. Cement" required className="input-field" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Quantity</label>
                 <input placeholder="e.g. 50" required className="input-field" value={formData.qty} onChange={(e) => setFormData({ ...formData, qty: e.target.value })} />
               </div>
-              <div className="sm:col-span-2">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Unit</label>
                 <CustomSelectMenu value={formData.unit} onChange={(val) => setFormData({ ...formData, unit: val })} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Unit" />
                 {formData.unit === 'Other' && (
                   <input placeholder="Specify..." required className="input-field mt-2" value={formData.customUnit} onChange={(e) => setFormData({ ...formData, customUnit: e.target.value })} />
                 )}
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Supplier</label>
                 <input placeholder="Supplier" className="input-field" value={formData.supplier} onChange={(e) => setFormData({ ...formData, supplier: e.target.value })} />
               </div>
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-1">
                 <label className="mb-1 text-xs font-semibold text-navy">Price (₹)</label>
                 <input placeholder="Price" required type="number" min="0" className="input-field" value={formData.price} onChange={(e) => setFormData({ ...formData, price: e.target.value })} />
               </div>
-              <div className="sm:col-span-7 flex justify-end gap-3 pt-4 mt-2 border-t border-[var(--color-glass-border)]">
+              <div className="sm:col-span-2 flex justify-end gap-3 pt-4 mt-2 border-t border-[var(--color-glass-border)]">
                 <button type="button" onClick={() => setShowForm(false)} className="btn-secondary">Cancel</button>
                 <button type="submit" disabled={submitting} className="btn-accent px-8">{submitting ? 'Saving...' : 'Save Material'}</button>
               </div>
