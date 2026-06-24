@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const expenseSchema = new mongoose.Schema(
   {
     project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: true, index: true },
-    category: { type: String, enum: ['material', 'labour', 'equipment', 'overhead', 'other'], required: true },
+    category: { type: String, required: true },
     vendor: { type: String, required: true, maxlength: 100 },
     description: { type: String, maxlength: 300 },
     amount: { type: Number, required: true, min: 0 },
