@@ -144,19 +144,19 @@ export default function Materials() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-navy/10 bg-info/50 text-left text-xs uppercase text-muted">
-                        <th className="px-5 py-3">Item</th>
-                        <th className="px-5 py-3">Qty</th>
-                        <th className="px-5 py-3">Supplier</th>
-                        <th className="px-5 py-3 text-right">Price (₹)</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Item</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Qty</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Supplier</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Price (₹)</th>
                       </tr>
                     </thead>
                     <tbody>
                       {dayMaterials.map((item, i) => (
                         <tr key={i} className={i % 2 === 0 ? 'bg-card' : 'bg-info/20'}>
-                          <td className="px-5 py-3 font-medium">{item.name}</td>
-                          <td className="px-5 py-3 font-mono">{item.qty} {item.unit}</td>
-                          <td className="px-5 py-3 text-muted">{item.supplier}</td>
-                          <td className="px-5 py-3 text-right font-mono font-semibold">
+                          <td className="px-5 py-3 font-medium whitespace-nowrap">{item.name}</td>
+                          <td className="px-5 py-3 font-mono whitespace-nowrap">{item.qty} {item.unit}</td>
+                          <td className="px-5 py-3 text-muted whitespace-nowrap">{item.supplier}</td>
+                          <td className="px-5 py-3 text-right font-mono font-semibold whitespace-nowrap">
                             {item.price ? `₹${Number(item.price).toLocaleString('en-IN')}` : '—'}
                           </td>
                         </tr>

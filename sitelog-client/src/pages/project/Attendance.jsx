@@ -115,23 +115,31 @@ export default function Attendance() {
                 defaultOpen={index === 0}
                 summary={`${total} workers • Total Cost: ₹${cost.toLocaleString('en-IN')} (${dayLogs.length} logs)`}
               >
-                <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
-                  {Object.values(map).map((data, idx) => {
-                    if (data.present === 0) return null;
-                    const tradeCost = data.present * data.wage;
-                    return (
-                      <div key={idx} className="card bg-surface border border-navy/10 p-4">
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="capitalize font-medium text-navy">{data.trade}</span>
-                          <span className="font-mono font-bold text-lg">{data.present}</span>
-                        </div>
-                        <div className="flex justify-between items-center text-xs text-muted">
-                          <span>₹{data.wage}/day</span>
-                          <span className="font-mono font-semibold text-orange-dark">₹{tradeCost.toLocaleString('en-IN')}</span>
-                        </div>
-                      </div>
-                    );
-                  })}
+                <div className="overflow-x-auto rounded-xl border border-navy/10 bg-surface">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-navy/10 bg-info/50 text-left text-xs uppercase text-muted">
+                        <th className="px-5 py-3 whitespace-nowrap">Trade</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Workers</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Rate (₹)</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Total (₹)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.values(map).map((data, idx) => {
+                        if (data.present === 0) return null;
+                        const tradeCost = data.present * data.wage;
+                        return (
+                          <tr key={idx} className={idx % 2 === 0 ? 'bg-card' : 'bg-info/20'}>
+                            <td className="px-5 py-3 font-medium capitalize whitespace-nowrap">{data.trade}</td>
+                            <td className="px-5 py-3 text-right font-mono font-bold whitespace-nowrap">{data.present}</td>
+                            <td className="px-5 py-3 text-right text-muted whitespace-nowrap">₹{data.wage}/day</td>
+                            <td className="px-5 py-3 text-right font-mono font-semibold text-orange-dark whitespace-nowrap">₹{tradeCost.toLocaleString('en-IN')}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </DateAccordion>
             );

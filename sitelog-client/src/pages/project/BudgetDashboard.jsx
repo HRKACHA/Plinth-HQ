@@ -175,19 +175,19 @@ export default function BudgetDashboard() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-navy/10 bg-info/50 text-left text-xs uppercase text-muted">
-                        <th className="px-5 py-3">Category</th>
-                        <th className="px-5 py-3">Vendor</th>
-                        <th className="px-5 py-3">Description</th>
-                        <th className="px-5 py-3 text-right">Amount</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Category</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Vendor</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Description</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Amount</th>
                       </tr>
                     </thead>
                     <tbody>
                       {dayExpenses.map((e, i) => (
                         <tr key={e._id} className={i % 2 === 0 ? 'bg-card' : 'bg-info/20'}>
-                          <td className="px-5 py-3"><Badge status={e.category} /></td>
-                          <td className="px-5 py-3 font-medium">{e.vendor}</td>
-                          <td className="px-5 py-3 text-muted">{e.description}</td>
-                          <td className="px-5 py-3 text-right font-mono font-semibold">{formatCurrency(e.amount)}</td>
+                          <td className="px-5 py-3 whitespace-nowrap"><Badge status={e.category} /></td>
+                          <td className="px-5 py-3 font-medium whitespace-nowrap">{e.vendor}</td>
+                          <td className="px-5 py-3 text-muted min-w-[200px]">{e.description}</td>
+                          <td className="px-5 py-3 text-right font-mono font-semibold whitespace-nowrap">{formatCurrency(e.amount)}</td>
                         </tr>
                       ))}
                     </tbody>

@@ -90,31 +90,37 @@ export default function Expenses() {
                 defaultOpen={index === 0}
                 summary={`${dayExpenses.length} expenses • Total: ${formatCurrency(dayTotal)}`}
               >
-                <div className="space-y-3">
-                  {dayExpenses.map((e) => (
-                    <div key={e._id} className="card flex flex-col gap-4 sm:flex-row sm:items-center bg-surface border border-navy/10">
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-navy/5 dark:bg-white/5">
-                        <Receipt className="h-5 w-5 text-navy" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <h4 className="font-bold text-navy">{e.vendor}</h4>
-                          <Badge status={e.category} />
-                        </div>
-                        <p className="mt-1 text-sm text-muted">{e.description}</p>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="font-mono text-lg font-bold">{formatCurrency(e.amount)}</span>
-                        {e.receiptUrl ? (
-                          <a href={e.receiptUrl} target="_blank" rel="noreferrer" className="text-orange hover:text-orange-dark">
-                            <FileImage className="h-5 w-5" />
-                          </a>
-                        ) : (
-                          <FileImage className="h-5 w-5 text-muted/30" />
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                <div className="overflow-x-auto rounded-xl border border-navy/10 bg-surface">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-navy/10 bg-info/50 text-left text-xs uppercase text-muted">
+                        <th className="px-5 py-3 whitespace-nowrap">Vendor</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Category</th>
+                        <th className="px-5 py-3 whitespace-nowrap">Description</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-right">Amount (₹)</th>
+                        <th className="px-5 py-3 whitespace-nowrap text-center">Receipt</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {dayExpenses.map((e, i) => (
+                        <tr key={e._id} className={i % 2 === 0 ? 'bg-card' : 'bg-info/20'}>
+                          <td className="px-5 py-3 font-medium whitespace-nowrap">{e.vendor}</td>
+                          <td className="px-5 py-3 whitespace-nowrap"><Badge status={e.category} /></td>
+                          <td className="px-5 py-3 text-muted min-w-[200px]">{e.description}</td>
+                          <td className="px-5 py-3 text-right font-mono font-semibold whitespace-nowrap">{formatCurrency(e.amount)}</td>
+                          <td className="px-5 py-3 text-center">
+                            {e.receiptUrl ? (
+                              <a href={e.receiptUrl} target="_blank" rel="noreferrer" className="inline-block text-orange hover:text-orange-dark">
+                                <FileImage className="h-5 w-5" />
+                              </a>
+                            ) : (
+                              <span className="inline-block text-muted/30"><FileImage className="h-5 w-5" /></span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </DateAccordion>
             );
