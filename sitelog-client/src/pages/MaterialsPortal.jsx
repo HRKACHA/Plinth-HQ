@@ -28,7 +28,7 @@ export default function MaterialsPortal() {
   const [submitting, setSubmitting] = useState(false);
 
   const [form, setForm] = useState({
-    name: '', category: 'Cement', unit: 'bags', currentStock: '', minThreshold: '',
+    name: '', category: 'Cement', unit: 'bags', customUnit: '', currentStock: '', minThreshold: '',
     unitPrice: '', supplier: '', location: 'Central Warehouse', project: '',
   });
   const [moveForm, setMoveForm] = useState({
@@ -49,7 +49,7 @@ export default function MaterialsPortal() {
   const totalValue = safeMaterials.reduce((sum, m) => sum + (m.currentStock * m.unitPrice), 0);
 
   const resetForm = () => setForm({
-    name: '', category: 'Cement', unit: 'bags', currentStock: '', minThreshold: '',
+    name: '', category: 'Cement', unit: 'bags', customUnit: '', currentStock: '', minThreshold: '',
     unitPrice: '', supplier: '', location: 'Central Warehouse', project: '',
   });
 
@@ -57,7 +57,8 @@ export default function MaterialsPortal() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await materialApi.create(form);
+      const submitData = { ...form, unit: form.unit === 'Other' ? form.customUnit : form.unit };
+      await materialApi.create(submitData);
       setShowAddModal(false);
       resetForm();
       refresh();
@@ -72,7 +73,8 @@ export default function MaterialsPortal() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await materialApi.update(selectedMaterial._id || selectedMaterial.id, form);
+      const submitData = { ...form, unit: form.unit === 'Other' ? form.customUnit : form.unit };
+      await materialApi.update(selectedMaterial._id || selectedMaterial.id, submitData);
       setShowEditModal(false);
       refresh();
     } catch (err) {
@@ -94,8 +96,11 @@ export default function MaterialsPortal() {
 
   const openEdit = (mat) => {
     setSelectedMaterial(mat);
+    const isCustomUnit = !UNITS.includes(mat.unit) && mat.unit !== 'Other';
     setForm({
-      name: mat.name, category: mat.category, unit: mat.unit,
+      name: mat.name, category: mat.category, 
+      unit: isCustomUnit ? 'Other' : mat.unit,
+      customUnit: isCustomUnit ? mat.unit : '',
       currentStock: mat.currentStock, minThreshold: mat.minThreshold,
       unitPrice: mat.unitPrice, supplier: mat.supplier || '',
       location: mat.location || '', project: mat.project?._id || mat.project || '',
@@ -285,6 +290,9 @@ export default function MaterialsPortal() {
                 <div>
                   <label className="mb-1.5 block text-sm font-semibold text-navy">Unit</label>
                   <CustomSelectMenu value={form.unit} onChange={val => setForm({...form, unit: val})} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Select Unit" />
+                  {form.unit === 'Other' && (
+                    <input type="text" className="input-field mt-2" placeholder="Specify unit..." value={form.customUnit} onChange={e => setForm({...form, customUnit: e.target.value})} required />
+                  )}
                 </div>
                 <div>
                   <label className="mb-1.5 block text-sm font-semibold text-navy">Initial Stock</label>
@@ -336,8 +344,13 @@ export default function MaterialsPortal() {
                   <input type="text" className="input-field" value={form.name} onChange={e => setForm({...form, name: e.target.value})} required /></div>
                 <div><label className="mb-1.5 block text-sm font-semibold text-navy">Category</label>
                   <CustomSelectMenu value={form.category} onChange={val => setForm({...form, category: val})} options={CATEGORIES.map(c => ({value: c, label: c}))} placeholder="Select Category" /></div>
-                <div><label className="mb-1.5 block text-sm font-semibold text-navy">Unit</label>
-                  <CustomSelectMenu value={form.unit} onChange={val => setForm({...form, unit: val})} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Select Unit" /></div>
+                <div>
+                  <label className="mb-1.5 block text-sm font-semibold text-navy">Unit</label>
+                  <CustomSelectMenu value={form.unit} onChange={val => setForm({...form, unit: val})} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Select Unit" />
+                  {form.unit === 'Other' && (
+                    <input type="text" className="input-field mt-2" placeholder="Specify unit..." value={form.customUnit} onChange={e => setForm({...form, customUnit: e.target.value})} required />
+                  )}
+                </div>
                 <div><label className="mb-1.5 block text-sm font-semibold text-navy">Min Threshold</label>
                   <input type="number" min="0" className="input-field" value={form.minThreshold} onChange={e => setForm({...form, minThreshold: e.target.value})} /></div>
                 <div><label className="mb-1.5 block text-sm font-semibold text-navy">Price/Unit (₹)</label>
@@ -371,7 +384,6 @@ export default function MaterialsPortal() {
               <div className="flex gap-2">
                 {[
                   { val: 'inward', label: 'Inward', icon: ArrowDownToLine, color: 'text-success' },
-                  { val: 'outward', label: 'Outward', icon: ArrowUpFromLine, color: 'text-danger' },
                   { val: 'transfer', label: 'Transfer', icon: ArrowRightLeft, color: 'text-orange' },
                 ].map(({ val, label, icon: Icon, color }) => (
                   <button key={val} type="button" onClick={() => setMoveForm({...moveForm, type: val})}

@@ -5,6 +5,7 @@ import AppLayout from '../../components/layout/AppLayout';
 import { logApi, uploadApi, budgetApi } from '../../api/index';
 import VoiceInput from '../../components/common/VoiceInput';
 import GlassDatePicker from '../../components/common/GlassDatePicker';
+import CustomSelectMenu from '../../components/common/CustomSelectMenu';
 const STEPS = ['Date & Weather', 'Activities', 'Labour', 'Materials', 'Photos', 'Review'];
 const WEATHER = [
   { id: 'sunny', icon: Sun, label: 'Sunny' },
@@ -21,6 +22,7 @@ const TRADE_RATES = {
   welder: 950,
   helper: 500
 };
+const UNITS = ['bags', 'kg', 'ton', 'pieces', 'sqft', 'litres', 'cu.m', 'bundle', 'Other'];
 
 export default function LogForm() {
   const { id } = useParams();
@@ -40,7 +42,7 @@ export default function LogForm() {
     }
   }, [activities]);
   const [labour, setLabour] = useState(Object.fromEntries(TRADES.map((t) => [t, { present: 0, wage: TRADE_RATES[t] }])));
-  const [materials, setMaterials] = useState([{ name: '', qty: '', unit: 'bags', supplier: '', price: '' }]);
+  const [materials, setMaterials] = useState([{ name: '', qty: '', unit: 'bags', customUnit: '', supplier: '', price: '' }]);
   const [photos, setPhotos] = useState([]);
 
   const handlePhotoUpload = async (e) => {
@@ -70,7 +72,7 @@ export default function LogForm() {
         weather,
         activities,
         labour: TRADES.filter((t) => labour[t].present > 0).map((t) => ({ trade: t, present: labour[t].present, absent: 0, wagePerDay: labour[t].wage })),
-        materials: materials.filter((m) => m.name).map((m) => ({ ...m, recdAt: date })),
+        materials: materials.filter((m) => m.name).map((m) => ({ ...m, unit: m.unit === 'Other' ? m.customUnit : m.unit, recdAt: date })),
         photos: photos.map(url => ({ url, caption: '' })),
       });
       
@@ -199,15 +201,21 @@ export default function LogForm() {
                 <p><strong>Step 4:</strong> Log any materials delivered to site today. Enter the item name, quantity, supplier, and total price (₹) for each material.</p>
               </div>
               {materials.map((m, i) => (
-                <div key={i} className="grid gap-3 sm:grid-cols-5">
+                <div key={i} className="grid gap-3 sm:grid-cols-6 items-start">
                   <input placeholder="Item" className="input-field sm:col-span-2" value={m.name} onChange={(e) => { const n = [...materials]; n[i].name = e.target.value; setMaterials(n); }} />
                   <input placeholder="Qty" className="input-field" value={m.qty} onChange={(e) => { const n = [...materials]; n[i].qty = e.target.value; setMaterials(n); }} />
+                  <div className="flex flex-col gap-2">
+                    <CustomSelectMenu value={m.unit} onChange={(val) => { const n = [...materials]; n[i].unit = val; setMaterials(n); }} options={UNITS.map(u => ({value: u, label: u}))} placeholder="Unit" />
+                    {m.unit === 'Other' && (
+                      <input placeholder="Specify unit" className="input-field" value={m.customUnit} onChange={(e) => { const n = [...materials]; n[i].customUnit = e.target.value; setMaterials(n); }} />
+                    )}
+                  </div>
                   <input placeholder="Supplier" className="input-field" value={m.supplier} onChange={(e) => { const n = [...materials]; n[i].supplier = e.target.value; setMaterials(n); }} />
                   <input placeholder="Price (₹)" type="number" min="0" className="input-field" value={m.price} onChange={(e) => { const n = [...materials]; n[i].price = e.target.value; setMaterials(n); }} />
                 </div>
               ))}
               <div className="flex items-center justify-between">
-                <button type="button" onClick={() => setMaterials([...materials, { name: '', qty: '', unit: 'bags', supplier: '', price: '' }])} className="text-sm font-semibold text-orange">+ Add Row</button>
+                <button type="button" onClick={() => setMaterials([...materials, { name: '', qty: '', unit: 'bags', customUnit: '', supplier: '', price: '' }])} className="text-sm font-semibold text-orange">+ Add Row</button>
                 <span className="text-sm font-semibold text-navy">Total: ₹{materials.reduce((sum, m) => sum + (Number(m.price) || 0), 0).toLocaleString('en-IN')}</span>
               </div>
             </div>
