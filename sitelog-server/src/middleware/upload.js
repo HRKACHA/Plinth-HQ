@@ -31,7 +31,7 @@ const storage = new CloudinaryStorage({
       folder: 'sitelog-uploads',
       allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'],
       resource_type: resource_type,
-      public_id: resource_type === 'raw' ? `${uniqueId}.${ext}` : uniqueId,
+      public_id: uniqueId, // Do not append .ext to bypass Cloudinary PDF security blocks
     };
   },
 });

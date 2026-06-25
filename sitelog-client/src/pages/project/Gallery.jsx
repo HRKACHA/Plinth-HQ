@@ -122,14 +122,16 @@ export default function Gallery() {
             <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
               {items.map((item, index) => (
                 <div key={`${item.id}-${index}`} className="relative group overflow-hidden rounded-xl border border-navy/5 dark:border-white/5 bg-card break-inside-avoid">
-                  <img src={mediaUrl(item.url)} alt={item.title} className="w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
+                  <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="block">
+                    <img src={mediaUrl(item.url)} alt={item.title} className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105" />
+                  </a>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 pointer-events-none">
                     <span className="text-xs font-semibold text-orange mb-1">{item.source}</span>
                     <p className="text-sm font-bold text-navy dark:text-white mb-1 line-clamp-1">{item.title}</p>
                     <div className="flex justify-between items-center text-xs text-navy/70 dark:text-white/70">
                       <span>{item.uploader}</span>
                     </div>
-                    <div className="absolute top-3 right-3 flex gap-2">
+                    <div className="absolute top-3 right-3 flex gap-2 pointer-events-auto">
                       <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="p-1.5 bg-navy/10 dark:bg-white/10 hover:bg-navy/20 dark:bg-white/20 backdrop-blur-md rounded-lg text-navy dark:text-white transition-colors">
                         <ExternalLink className="h-4 w-4" />
                       </a>
