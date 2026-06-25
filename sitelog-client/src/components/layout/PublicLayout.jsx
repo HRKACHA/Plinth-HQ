@@ -21,7 +21,7 @@ function PublicNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="sticky top-4 z-50 mx-auto max-w-7xl w-full px-4 lg:px-8 pt-4 pointer-events-none">
+    <div className="sticky top-4 z-50 w-full px-4 lg:px-[60px] xl:px-[100px] pt-4 pointer-events-none">
       <div className="relative w-full pointer-events-auto">
         <div className="liquid-glass grid grid-cols-2 md:grid-cols-3 items-center rounded-2xl px-6 py-3">
           <div className="flex justify-start">
