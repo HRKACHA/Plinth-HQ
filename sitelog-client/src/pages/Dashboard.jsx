@@ -39,6 +39,8 @@ export default function Dashboard() {
     projectId: '',
     name: '',
     quantity: '',
+    unit: 'bags',
+    customUnit: '',
     supplier: '',
     price: ''
   });
@@ -218,7 +220,7 @@ export default function Dashboard() {
       const newMat = {
         name: materialForm.name,
         qty: materialForm.quantity,
-        unit: 'Units',
+        unit: materialForm.unit === 'Other' ? materialForm.customUnit : materialForm.unit,
         supplier: materialForm.supplier,
         price: Number(materialForm.price),
         recdAt: dateStr
@@ -257,7 +259,7 @@ export default function Dashboard() {
       await budgetApi.createExpense(materialForm.projectId, payload);
 
       setMaterialSuccess(true);
-      setMaterialForm({ projectId: '', name: '', quantity: '', supplier: '', price: '' });
+      setMaterialForm({ projectId: '', name: '', quantity: '', unit: 'bags', customUnit: '', supplier: '', price: '' });
       setTimeout(() => setMaterialSuccess(false), 3000);
       refresh();
     } catch (err) {
@@ -541,14 +543,25 @@ export default function Dashboard() {
                       required
                     />
                     <div className="grid grid-cols-2 gap-3">
-                      <input
-                        type="text"
-                        placeholder="Quantity (e.g. 50 bags)"
-                        className="input-field py-2 text-sm"
-                        value={materialForm.quantity}
-                        onChange={(e) => setMaterialForm({ ...materialForm, quantity: e.target.value })}
-                        required
-                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="number"
+                          placeholder="Qty"
+                          className="input-field py-2 text-sm w-1/2"
+                          value={materialForm.quantity}
+                          onChange={(e) => setMaterialForm({ ...materialForm, quantity: e.target.value })}
+                          required min="0" step="any"
+                        />
+                        <select
+                          className="input-field py-2 text-sm w-1/2 px-1"
+                          value={materialForm.unit}
+                          onChange={(e) => setMaterialForm({ ...materialForm, unit: e.target.value })}
+                        >
+                          {['bags', 'kg', 'ton', 'pieces', 'sqft', 'litres', 'cu.m', 'bundle', 'Other'].map(u => (
+                            <option key={u} value={u}>{u}</option>
+                          ))}
+                        </select>
+                      </div>
                       <input
                         type="number"
                         placeholder="Total Price (₹)"
@@ -559,6 +572,16 @@ export default function Dashboard() {
                         required
                       />
                     </div>
+                    {materialForm.unit === 'Other' && (
+                      <input
+                        type="text"
+                        placeholder="Specify custom unit"
+                        className="input-field py-2 text-sm"
+                        value={materialForm.customUnit}
+                        onChange={(e) => setMaterialForm({ ...materialForm, customUnit: e.target.value })}
+                        required
+                      />
+                    )}
                     <input
                       type="text"
                       placeholder="Supplier Name"
