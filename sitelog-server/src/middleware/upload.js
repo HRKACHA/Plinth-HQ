@@ -28,12 +28,12 @@ const storage = new CloudinaryStorage({
     const uniqueId = `${baseName}_${Date.now()}`;
 
     // Cloudinary blocks the delivery of .pdf files on free accounts. 
-    // To bypass this, we trick Cloudinary by saving PDFs with a .bin extension.
-    const formatExt = ext === 'pdf' ? 'bin' : ext;
+    // To bypass this, we trick Cloudinary by saving PDFs with a .txt extension.
+    const formatExt = ext === 'pdf' ? 'txt' : ext;
 
     return {
       folder: 'sitelog-uploads',
-      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx', 'bin'],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx', 'txt'],
       resource_type: resource_type,
       public_id: resource_type === 'raw' ? `${uniqueId}.${formatExt}` : uniqueId,
     };
