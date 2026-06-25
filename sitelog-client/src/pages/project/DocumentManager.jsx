@@ -16,7 +16,12 @@ export default function DocumentManager() {
 
   const getDownloadUrl = (url, docName) => {
     if (!url) return '';
-    return mediaUrl(url);
+    const fullUrl = mediaUrl(url);
+    if (fullUrl.includes('res.cloudinary.com') && fullUrl.includes('/upload/')) {
+      const parts = fullUrl.split('/upload/');
+      return `${parts[0]}/upload/fl_attachment/${parts[1]}`;
+    }
+    return fullUrl;
   };
 
   const handleUploadSubmit = async (e) => {
