@@ -133,7 +133,7 @@ export default function Gallery() {
                       <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="p-1.5 bg-navy/10 dark:bg-white/10 hover:bg-navy/20 dark:bg-white/20 backdrop-blur-md rounded-lg text-navy dark:text-white transition-colors">
                         <ExternalLink className="h-4 w-4" />
                       </a>
-                      {user?.role === 'Owner' && (
+                      {['owner', 'Owner'].includes(user?.role) && (
                         <button onClick={() => handleDelete(item)} className="p-1.5 bg-red-500/10 hover:bg-red-500/20 backdrop-blur-md rounded-lg text-red-500 transition-colors">
                           <Trash2 className="h-4 w-4" />
                         </button>

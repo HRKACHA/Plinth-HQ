@@ -106,7 +106,7 @@ export default function DocumentManager() {
                     <a href={getDownloadUrl(doc.fileUrl, doc.name)} download={doc.name} target="_blank" rel="noreferrer" className="hover:text-orange transition p-1">
                       <Download className="h-4 w-4 text-muted hover:text-orange" />
                     </a>
-                    {user?.role === 'Owner' && (
+                    {['owner', 'Owner'].includes(user?.role) && (
                       <button onClick={() => handleDelete(doc._id)} className="hover:text-red-500 transition p-1">
                         <Trash2 className="h-4 w-4 text-muted hover:text-red-500" />
                       </button>
