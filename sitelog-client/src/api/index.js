@@ -77,6 +77,7 @@ export const documentApi = {
     return api.post(`/projects/${projectId}/documents`, form, { headers: { 'Content-Type': 'multipart/form-data' } }).then((r) => r.data.data);
   },
   delete: (projectId, docId) => api.delete(`/projects/${projectId}/documents/${docId}`).then((r) => r.data.data),
+  download: (projectId, docId) => api.get(`/projects/${projectId}/documents/${docId}/download`, { responseType: 'blob' }).then((r) => r.data),
 };
 
 export const notificationApi = {

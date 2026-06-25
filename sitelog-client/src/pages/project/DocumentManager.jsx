@@ -16,14 +16,26 @@ export default function DocumentManager() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [uploadData, setUploadData] = useState({ file: null, name: '', type: 'drawing', tags: '' });
 
-  const getDownloadUrl = (url, docName) => {
-    if (!url) return '';
-    const fullUrl = mediaUrl(url);
-    if (fullUrl.includes('res.cloudinary.com') && fullUrl.includes('/upload/') && !fullUrl.includes('/raw/upload/')) {
-      const parts = fullUrl.split('/upload/');
-      return `${parts[0]}/upload/fl_attachment/${parts[1]}`;
+  const [downloading, setDownloading] = useState({});
+
+  const handleDownload = async (doc) => {
+    try {
+      setDownloading(prev => ({ ...prev, [doc._id]: true }));
+      const blob = await documentApi.download(id, doc._id);
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = doc.name;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (err) {
+      console.error('Download failed:', err);
+      alert('Failed to download document');
+    } finally {
+      setDownloading(prev => ({ ...prev, [doc._id]: false }));
     }
-    return fullUrl;
   };
 
   const handleDelete = async (docId) => {
@@ -103,9 +115,9 @@ export default function DocumentManager() {
                 <td className="px-5 py-4">{(doc.tags || []).map((t) => <span key={t} className="badge bg-info text-navy text-[10px] mr-1">{t}</span>)}</td>
                 <td className="px-5 py-4">
                   <div className="flex items-center gap-2">
-                    <a href={getDownloadUrl(doc.fileUrl, doc.name)} download={doc.name} target="_blank" rel="noreferrer" className="hover:text-orange transition p-1">
-                      <Download className="h-4 w-4 text-muted hover:text-orange" />
-                    </a>
+                    <button onClick={() => handleDownload(doc)} disabled={downloading[doc._id]} className="hover:text-orange transition p-1">
+                      <Download className={`h-4 w-4 ${downloading[doc._id] ? 'animate-bounce text-orange' : 'text-muted hover:text-orange'}`} />
+                    </button>
                     {['owner', 'Owner'].includes(user?.role) && (
                       <button onClick={() => handleDelete(doc._id)} className="hover:text-red-500 transition p-1">
                         <Trash2 className="h-4 w-4 text-muted hover:text-red-500" />

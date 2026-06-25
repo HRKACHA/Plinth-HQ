@@ -48,6 +48,7 @@ router.post('/:id/milestones/:mId/approve', getProjectOrFail, milestone.approveM
 router.get('/:id/documents', getProjectOrFail, document.listDocuments);
 router.post('/:id/documents', getProjectOrFail, upload.single('file'), document.uploadDocument);
 router.delete('/:id/documents/:docId', restrictTo('PM', 'SuperAdmin'), getProjectOrFail, document.deleteDocument);
+router.get('/:id/documents/:docId/download', getProjectOrFail, document.proxyDownload);
 
 // Issues / Punch List
 router.get('/:id/issues', getProjectOrFail, issue.listIssues);
