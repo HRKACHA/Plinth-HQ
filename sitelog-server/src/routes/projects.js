@@ -59,5 +59,6 @@ router.delete('/:id/issues/:issueId', restrictTo('PM', 'SuperAdmin'), getProject
 // Gallery
 router.get('/:id/gallery', getProjectOrFail, gallery.getProjectGallery);
 router.post('/:id/gallery', getProjectOrFail, gallery.addGalleryPhoto);
+router.delete('/:id/gallery/:parentId', getProjectOrFail, gallery.deleteGalleryPhoto);
 
 export default router;

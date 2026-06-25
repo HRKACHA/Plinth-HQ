@@ -1,14 +1,16 @@
 import { useParams } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { Upload, Search, FileText, Download, X, Save } from 'lucide-react';
+import { Upload, Search, FileText, Download, X, Save, Trash2 } from 'lucide-react';
 import Badge from '../../components/common/Badge';
 import { formatDate } from '../../data/mockData';
 import { useAsync } from '../../hooks/useAsync';
 import { documentApi, mediaUrl } from '../../api/index';
 import CustomSelectMenu from '../../components/common/CustomSelectMenu';
+import { useAuth } from '../../context/AuthContext';
 
 export default function DocumentManager() {
   const { id } = useParams();
+  const { user } = useAuth();
   const { data: documents = [], loading, reload } = useAsync(() => documentApi.list(id), [id]);
   const [uploading, setUploading] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -17,11 +19,22 @@ export default function DocumentManager() {
   const getDownloadUrl = (url, docName) => {
     if (!url) return '';
     const fullUrl = mediaUrl(url);
-    if (fullUrl.includes('res.cloudinary.com') && fullUrl.includes('/upload/')) {
+    if (fullUrl.includes('res.cloudinary.com') && fullUrl.includes('/upload/') && !fullUrl.includes('/raw/upload/')) {
       const parts = fullUrl.split('/upload/');
       return `${parts[0]}/upload/fl_attachment/${parts[1]}`;
     }
     return fullUrl;
+  };
+
+  const handleDelete = async (docId) => {
+    if (!window.confirm('Are you sure you want to delete this document?')) return;
+    try {
+      await documentApi.delete(id, docId);
+      reload();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to delete document');
+    }
   };
 
   const handleUploadSubmit = async (e) => {
@@ -89,9 +102,16 @@ export default function DocumentManager() {
                 <td className="px-5 py-4 text-muted">{formatDate(doc.createdAt)}</td>
                 <td className="px-5 py-4">{(doc.tags || []).map((t) => <span key={t} className="badge bg-info text-navy text-[10px] mr-1">{t}</span>)}</td>
                 <td className="px-5 py-4">
-                  <a href={getDownloadUrl(doc.fileUrl, doc.name)} download={doc.name} target="_blank" rel="noreferrer" className="hover:text-orange transition">
-                    <Download className="h-4 w-4 text-muted hover:text-orange" />
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <a href={getDownloadUrl(doc.fileUrl, doc.name)} download={doc.name} target="_blank" rel="noreferrer" className="hover:text-orange transition p-1">
+                      <Download className="h-4 w-4 text-muted hover:text-orange" />
+                    </a>
+                    {user?.role === 'Owner' && (
+                      <button onClick={() => handleDelete(doc._id)} className="hover:text-red-500 transition p-1">
+                        <Trash2 className="h-4 w-4 text-muted hover:text-red-500" />
+                      </button>
+                    )}
+                  </div>
                 </td>
               </tr>
             )) : (

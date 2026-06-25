@@ -99,3 +99,36 @@ export const addGalleryPhoto = catchAsync(async (req, res) => {
 
   res.status(200).json({ success: true, message: 'Photo added to gallery' });
 });
+
+export const deleteGalleryPhoto = catchAsync(async (req, res) => {
+  const { id, parentId } = req.params; // id is projectId, parentId is the item's id
+  const { source, url } = req.body;
+
+  if (source === 'Direct Upload') {
+    const project = await Project.findById(id);
+    if (project) {
+      project.photos = project.photos.filter(p => p._id.toString() !== parentId);
+      await project.save();
+    }
+  } else if (source === 'Daily Log') {
+    const log = await SiteLog.findById(parentId);
+    if (log) {
+      log.photos = log.photos.filter(p => (p.url || p) !== url);
+      await log.save();
+    }
+  } else if (source === 'Issue/Snag') {
+    const issue = await Issue.findById(parentId);
+    if (issue) {
+      issue.photos = issue.photos.filter(p => p !== url);
+      await issue.save();
+    }
+  } else if (source === 'Project Chat') {
+    const msg = await Message.findById(parentId);
+    if (msg) {
+      msg.imageUrl = null;
+      await msg.save();
+    }
+  }
+
+  res.status(200).json({ success: true, message: 'Photo removed from gallery' });
+});

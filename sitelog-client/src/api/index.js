@@ -48,6 +48,7 @@ export const issueApi = {
 export const galleryApi = {
   list: (projectId) => api.get(`/projects/${projectId}/gallery`).then((r) => r.data.data),
   upload: (projectId, payload) => api.post(`/projects/${projectId}/gallery`, payload).then((r) => r.data),
+  delete: (projectId, parentId, payload) => api.delete(`/projects/${projectId}/gallery/${parentId}`, { data: payload }).then((r) => r.data),
 };
 
 export const budgetApi = {
