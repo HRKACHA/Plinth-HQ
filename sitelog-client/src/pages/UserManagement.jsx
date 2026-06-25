@@ -22,7 +22,7 @@ export default function UserManagement() {
     u.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     u.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     u.role.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  ).sort((a, b) => new Date(b.lastLogin || 0) - new Date(a.lastLogin || 0));
 
   const handleInvite = async (e) => {
     e.preventDefault();
@@ -109,7 +109,10 @@ export default function UserManagement() {
                       <span className="badge bg-success/10 text-success">Active</span>
                     </td>
                     <td className="px-6 py-4 text-muted text-xs">
-                      {u.lastLogin ? new Date(u.lastLogin).toLocaleDateString() : 'Never'}
+                      {u.lastLogin ? new Date(u.lastLogin).toLocaleString('en-IN', {
+                        day: 'numeric', month: 'short', year: 'numeric',
+                        hour: 'numeric', minute: '2-digit', hour12: true
+                      }) : 'Never'}
                     </td>
                     <td className="px-6 py-4 text-right">
                       <button className="text-muted hover:text-navy transition p-1 rounded-md hover:bg-navy/5 dark:hover:bg-white/5">
