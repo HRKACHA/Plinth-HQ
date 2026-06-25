@@ -168,7 +168,7 @@ export default function Login() {
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={handleEmailBlur}
                     className={`input-field !pl-11 py-2.5 text-base ${emailError ? 'border-danger focus:ring-danger/20' : ''}`}
-                    placeholder="priya@plinthhq.in"
+                    placeholder="john@company.com"
                     required
                   />
                 </div>
