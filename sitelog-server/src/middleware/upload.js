@@ -23,15 +23,19 @@ const storage = new CloudinaryStorage({
       resource_type = 'raw';
     }
 
-    const ext = file.originalname.split('.').pop();
+    const ext = file.originalname.split('.').pop().toLowerCase();
     const baseName = file.originalname.split('.')[0].replace(/[^a-zA-Z0-9]/g, '_');
     const uniqueId = `${baseName}_${Date.now()}`;
 
+    // Cloudinary blocks the delivery of .pdf files on free accounts. 
+    // To bypass this, we trick Cloudinary by saving PDFs with a .bin extension.
+    const formatExt = ext === 'pdf' ? 'bin' : ext;
+
     return {
       folder: 'sitelog-uploads',
-      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'],
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx', 'bin'],
       resource_type: resource_type,
-      public_id: uniqueId, // Do not append .ext to bypass Cloudinary PDF security blocks
+      public_id: resource_type === 'raw' ? `${uniqueId}.${formatExt}` : uniqueId,
     };
   },
 });
