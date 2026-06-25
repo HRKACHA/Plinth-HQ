@@ -14,6 +14,20 @@ export default function DocumentManager() {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [uploadData, setUploadData] = useState({ file: null, name: '', type: 'drawing', tags: '' });
 
+  const getDownloadUrl = (url, docName) => {
+    if (!url) return '';
+    const fullUrl = mediaUrl(url);
+    if (fullUrl.includes('res.cloudinary.com') && fullUrl.includes('/upload/')) {
+      const parts = fullUrl.split('/upload/');
+      let filename = docName.replace(/[^a-zA-Z0-9.-]/g, '_');
+      if (!filename.includes('.')) {
+        filename += '.pdf';
+      }
+      return `${parts[0]}/upload/fl_attachment:${filename}/${parts[1]}`;
+    }
+    return fullUrl;
+  };
+
   const handleUploadSubmit = async (e) => {
     e.preventDefault();
     if (!uploadData.file) return alert('Please select a file to upload');
@@ -79,7 +93,7 @@ export default function DocumentManager() {
                 <td className="px-5 py-4 text-muted">{formatDate(doc.createdAt)}</td>
                 <td className="px-5 py-4">{(doc.tags || []).map((t) => <span key={t} className="badge bg-info text-navy text-[10px] mr-1">{t}</span>)}</td>
                 <td className="px-5 py-4">
-                  <a href={mediaUrl(doc.fileUrl)} target="_blank" rel="noreferrer" className="hover:text-orange transition">
+                  <a href={getDownloadUrl(doc.fileUrl, doc.name)} download={doc.name} target="_blank" rel="noreferrer" className="hover:text-orange transition">
                     <Download className="h-4 w-4 text-muted hover:text-orange" />
                   </a>
                 </td>

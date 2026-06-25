@@ -23,10 +23,15 @@ const storage = new CloudinaryStorage({
       resource_type = 'raw';
     }
 
+    const ext = file.originalname.split('.').pop();
+    const baseName = file.originalname.split('.')[0].replace(/[^a-zA-Z0-9]/g, '_');
+    const uniqueId = `${baseName}_${Date.now()}`;
+
     return {
       folder: 'sitelog-uploads',
       allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'],
       resource_type: resource_type,
+      public_id: resource_type === 'raw' ? `${uniqueId}.${ext}` : uniqueId,
     };
   },
 });
