@@ -119,11 +119,11 @@ export default function Gallery() {
         {Object.entries(groupedGallery).map(([date, items]) => (
           <div key={date}>
             <h3 className="text-sm font-semibold text-navy/70 dark:text-white/70 mb-4 sticky top-0 bg-surface z-10 py-2 border-b border-navy/5 dark:border-white/5">{date}</h3>
-            <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3 sm:gap-4">
               {items.map((item, index) => (
-                <div key={`${item.id}-${index}`} className="relative group overflow-hidden rounded-xl border border-navy/5 dark:border-white/5 bg-card break-inside-avoid">
-                  <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="block">
-                    <img src={mediaUrl(item.url)} alt={item.title} className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div key={`${item.id}-${index}`} className="relative group overflow-hidden rounded-xl border border-navy/5 dark:border-white/5 bg-surface aspect-square">
+                  <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="block w-full h-full">
+                    <img src={mediaUrl(item.url)} alt={item.title} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 p-2" />
                   </a>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 pointer-events-none">
                     <span className="text-xs font-semibold text-orange mb-1">{item.source}</span>
