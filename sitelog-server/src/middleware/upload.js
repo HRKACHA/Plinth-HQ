@@ -13,9 +13,21 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'sitelog-uploads',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'],
+  params: async (req, file) => {
+    let resource_type = 'auto';
+    if (
+      file.mimetype === 'application/pdf' ||
+      file.mimetype.includes('msword') ||
+      file.mimetype.includes('officedocument')
+    ) {
+      resource_type = 'raw';
+    }
+
+    return {
+      folder: 'sitelog-uploads',
+      allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'pdf', 'doc', 'docx'],
+      resource_type: resource_type,
+    };
   },
 });
 
