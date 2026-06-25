@@ -16,24 +16,7 @@ export default function DocumentManager() {
 
   const getDownloadUrl = (url, docName) => {
     if (!url) return '';
-    const fullUrl = mediaUrl(url);
-    if (fullUrl.includes('res.cloudinary.com')) {
-      // Raw files download automatically and don't support transformations (adding them causes 400 error)
-      if (fullUrl.includes('/raw/upload/')) {
-        return fullUrl;
-      }
-      
-      // For older files uploaded as images, we can try to force attachment
-      if (fullUrl.includes('/image/upload/')) {
-        const parts = fullUrl.split('/upload/');
-        let filename = docName.replace(/[^a-zA-Z0-9.-]/g, '_');
-        if (!filename.includes('.')) {
-          filename += '.pdf';
-        }
-        return `${parts[0]}/upload/fl_attachment:${filename}/${parts[1]}`;
-      }
-    }
-    return fullUrl;
+    return mediaUrl(url);
   };
 
   const handleUploadSubmit = async (e) => {
