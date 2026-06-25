@@ -48,15 +48,6 @@ export const getRecentActivity = async (req, res) => {
       .populate('addedBy', 'name')
       .lean();
 
-    // Fetch recent team members (users)
-    const recentUsers = await User.find({
-      createdAt: { $gte: thirtyDaysAgo },
-    })
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .select('name role createdAt')
-      .lean();
-
     // Fetch recent materials
     const materials = await Material.find({
       createdAt: { $gte: thirtyDaysAgo },
@@ -103,18 +94,6 @@ export const getRecentActivity = async (req, res) => {
         user: exp.addedBy?.name || 'System',
         timestamp: exp.createdAt,
         icon: 'receipt',
-      });
-    });
-
-    recentUsers.forEach((u) => {
-      activities.push({
-        id: u._id,
-        type: 'new_member',
-        title: 'Team Member Joined',
-        description: `${u.name} joined as ${u.role?.replace('_', ' ')}`,
-        user: u.name,
-        timestamp: u.createdAt,
-        icon: 'user_plus',
       });
     });
 
