@@ -38,11 +38,11 @@ export default function StatCard({ label, value, sub, icon: Icon, accent = 'navy
       )}
       <div className="relative z-10 flex-1 min-w-0">
         <div className="flex flex-col 2xl:flex-row items-start 2xl:items-center justify-between gap-1.5 mb-1.5">
-          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-navy/60 dark:text-white/60 leading-tight">{label}</p>
+          <p className="text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-navy/80 dark:text-white/60 leading-tight">{label}</p>
           {children && <div className="self-start">{children}</div>}
         </div>
         <p className="font-mono text-base sm:text-xl xl:text-2xl font-bold text-navy tracking-tighter break-all">{value}</p>
-        {sub && <p className="mt-1 text-xs font-medium text-navy/60 dark:text-white/60 break-words">{sub}</p>}
+        {sub && <p className="mt-1 text-xs font-medium text-navy/80 dark:text-white/60 break-words">{sub}</p>}
       </div>
     </div>
   );

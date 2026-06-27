@@ -13,7 +13,7 @@ import PlinthLogo from '../common/PlinthLogo';
 import PlinthAIChatbot from '../common/PlinthAIChatbot';
 import Switch from '../ui/sky-toggle';
 
-/* ── Navigation Structure ── */
+/* â”€â”€ Navigation Structure â”€â”€ */
 const directNavItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/projects', label: 'Projects', icon: FolderKanban },
@@ -157,12 +157,12 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
   const searchBorder = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)';
   const dropdownBg = isDark ? 'rgba(16,18,24,0.88)' : 'rgba(245,248,255,0.96)';
   const hoverBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,40,0.03)';
-  const iconTextClass = isDark ? 'text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white' : 'text-navy-light hover:bg-black/5 hover:text-navy';
+  const iconTextClass = isDark ? 'text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white' : 'text-navy-light hover:bg-black/5 hover:text-navy';
 
   return (
     <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
       <div className="absolute inset-0 backdrop-blur-sm bg-surface/50 pointer-events-none -z-10" />
-      {/* ═══ Vertical Sidebar — Liquid Glass ═══ */}
+      {/* â•â•â• Vertical Sidebar â€” Liquid Glass â•â•â• */}
       <aside className={`hidden lg:flex flex-col ${isCollapsed ? 'w-[72px]' : 'w-52'} shrink-0 z-50 transition-all duration-300`}
         style={{ background: sidebarBg, backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder, transition: 'background 0.3s ease' }}>
         <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ borderBottom: subtleBorder }}>
@@ -205,7 +205,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 {!isCollapsed && (
                   <div className="flex-1 flex items-center justify-between min-w-0">
                     <span className="truncate">{label}</span>
-                    {comingSoon && <span className="text-[9px] text-navy/60 dark:text-white/60 bg-navy/5 dark:bg-white/5 px-1 py-0.5 rounded shrink-0 ml-1">Soon</span>}
+                    {comingSoon && <span className="text-[9px] text-navy/80 dark:text-white/60 bg-navy/5 dark:bg-white/5 px-1 py-0.5 rounded shrink-0 ml-1">Soon</span>}
                   </div>
                 )}
               </button>
@@ -235,7 +235,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           <div className="pt-4 mt-4 relative" style={{ borderTop: subtleBorder }}>
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
-              className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'w-full gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium text-navy/60 dark:text-white/60 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-all`}
+              className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'w-full gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium text-navy/80 dark:text-white/60 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-all`}
               title={isCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
             >
               {isCollapsed ? <PanelLeftOpen className="h-4 w-4 shrink-0" /> : <PanelLeftClose className="h-4 w-4 shrink-0" />}
@@ -245,10 +245,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </nav>
       </aside>
 
-      {/* ═══ Main Content Area ═══ */}
+      {/* â•â•â• Main Content Area â•â•â• */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
-        {/* ═══ Header — Liquid Glass ═══ */}
+        {/* â•â•â• Header â€” Liquid Glass â•â•â• */}
         <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 relative z-[60]"
           style={{ background: headerBg, backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: subtleBorder, transition: 'background 0.3s ease' }}>
           
@@ -267,7 +267,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
               {title && <h1 className="text-lg font-bold text-navy">{title}</h1>}
               {backTo && (
                 <Link to={backTo} className="flex items-center gap-1 text-sm text-muted hover:text-navy transition-colors">
-                  ← Back
+                  â† Back
                 </Link>
               )}
             </div>
@@ -282,11 +282,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
                   <FolderKanban className="h-4 w-4 text-orange" />
                   <span className="truncate max-w-[160px]">{location.pathname.includes('/projects/') ? projects.find(p => location.pathname.includes(p._id || p.id))?.name || 'Select Project' : 'Select Project'}</span>
-                  <ChevronDown className="h-4 w-4 text-navy/60 dark:text-white/60" />
+                  <ChevronDown className="h-4 w-4 text-navy/80 dark:text-white/60" />
                 </button>
                 <div className="absolute right-0 top-full mt-2 w-max min-w-[260px] max-w-[320px] rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
                   style={{ background: dropdownBg, backdropFilter: 'blur(24px) saturate(180%)', border: searchBorder }}>
-                  <p className="px-3 py-2 text-xs font-semibold text-navy/60 dark:text-white/60 uppercase tracking-wider">Your Projects</p>
+                  <p className="px-3 py-2 text-xs font-semibold text-navy/80 dark:text-white/60 uppercase tracking-wider">Your Projects</p>
                   <div className="max-h-60 overflow-y-auto overflow-x-hidden">
                     {projects.map(p => (
                       <Link
@@ -306,26 +306,26 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             )}
 
             <button
-              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-navy/70 dark:text-white/70 transition-all hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5"
+              className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-navy/90 dark:text-white/70 transition-all hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5"
               style={{ border: '1px solid rgba(255,255,255,0.06)' }}
               onClick={() => setSearchOpen(true)}
             >
               <Search className="h-3.5 w-3.5" />
               <span className="hidden md:inline">Search...</span>
-              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>⌘K</kbd>
+              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>âŒ˜K</kbd>
             </button>
 
-            <Link to="/about" className="rounded-full p-2 text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="About PlinthHQ">
+            <Link to="/about" className="rounded-full p-2 text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="About PlinthHQ">
               <Info className="h-4 w-4" />
             </Link>
 
             <Switch theme={theme} toggleTheme={toggleTheme} />
 
-            <Link to="/" className="rounded-full p-2 text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="Back to Website">
+            <Link to="/" className="rounded-full p-2 text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="Back to Website">
               <Globe className="h-4 w-4" />
             </Link>
 
-            <Link to="/notifications" className="relative rounded-full p-2 text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all">
+            <Link to="/notifications" className="relative rounded-full p-2 text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all">
               <Bell className="h-4 w-4" />
               {unreadCount > 0 && (
                 <span className="absolute right-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-danger px-1 text-[9px] font-bold text-white">
@@ -342,7 +342,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 </div>
                 <div className="hidden md:block text-left min-w-0">
                   <p className="text-sm font-semibold text-navy truncate max-w-[100px]">{user?.name}</p>
-                  <p className="text-[10px] text-navy/60 dark:text-white/60">{user?.role}</p>
+                  <p className="text-[10px] text-navy/80 dark:text-white/60">{user?.role}</p>
                 </div>
               </button>
 
@@ -366,14 +366,14 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           </div>
         </header>
 
-        {/* ═══ Main Scrolling Content ═══ */}
+        {/* â•â•â• Main Scrolling Content â•â•â• */}
         <main className={`flex-1 overflow-y-auto ${noPadding ? '' : 'p-3 sm:p-4 lg:p-8'}`}>
           {/* Sub-header shown only on mobile or if not in header */}
           {!noPadding && <div className="sm:hidden mb-4">
             {title && <h1 className="text-lg font-bold text-navy mb-1">{title}</h1>}
             {backTo && (
               <Link to={backTo} className="inline-flex items-center gap-1 text-sm text-muted hover:text-navy transition-colors">
-                ← Back
+                â† Back
               </Link>
             )}
           </div>}
@@ -381,7 +381,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </main>
       </div>
 
-      {/* ═══ Mobile Menu Overlay — Liquid Glass ═══ */}
+      {/* â•â•â• Mobile Menu Overlay â€” Liquid Glass â•â•â• */}
       {mobileOpen && (
         <>
           <div className="fixed inset-0 z-[70] backdrop-blur-sm animate-fadeIn lg:hidden" style={{ background: isDark ? 'rgba(0,0,0,0.50)' : 'rgba(0,0,40,0.25)' }} onClick={() => setMobileOpen(false)} />
@@ -389,7 +389,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             style={{ background: mobileBg, backdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder }}>
             <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: subtleBorder }}>
               <PlinthLogo size="xs" />
-              <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
+              <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -406,7 +406,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   <Icon className="h-4 w-4" />
                   <div>
                     <span>{label}</span>
-                    {comingSoon && <span className="ml-1.5 text-[9px] text-navy/60 dark:text-white/60 bg-navy/5 dark:bg-white/5 px-1 py-0.5 rounded">Soon</span>}
+                    {comingSoon && <span className="ml-1.5 text-[9px] text-navy/80 dark:text-white/60 bg-navy/5 dark:bg-white/5 px-1 py-0.5 rounded">Soon</span>}
                   </div>
                 </button>
               ))}
@@ -422,7 +422,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </>
       )}
 
-      {/* ═══ Global Search Modal — Liquid Glass ═══ */}
+      {/* â•â•â• Global Search Modal â€” Liquid Glass â•â•â• */}
       {searchOpen && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: isDark ? 'rgba(0,0,0,0.40)' : 'rgba(0,0,40,0.20)' }} onClick={() => setSearchOpen(false)}>
           <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: searchBg, backdropFilter: 'blur(24px) saturate(180%)', border: searchBorder }} onClick={e => e.stopPropagation()}>
@@ -434,17 +434,17 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             <div className="max-h-[60vh] overflow-y-auto p-2">
               {searchQuery ? (
                 <div className="space-y-4 p-2">
-                  {isSearching && <div className="text-center text-navy/70 dark:text-white/70 py-4"><div className="animate-spin h-5 w-5 border-2 border-navy/20 dark:border-white/20 border-t-white rounded-full mx-auto" /></div>}
+                  {isSearching && <div className="text-center text-navy/90 dark:text-white/70 py-4"><div className="animate-spin h-5 w-5 border-2 border-navy/20 dark:border-white/20 border-t-white rounded-full mx-auto" /></div>}
                   {!isSearching && searchResults && (
                     <>
                       {/* Projects */}
                       {searchResults.projects?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2">Projects</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2">Projects</h4>
                           {searchResults.projects.map(p => (
                             <Link key={p._id} to={`/projects/${p._id}`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange/10"><FolderKanban className="h-5 w-5 text-orange" /></div>
-                              <div><p className="font-semibold text-sm">{p.name}</p><p className="text-xs text-navy/70 dark:text-white/70">{p.location?.city || p.location}</p></div>
+                              <div><p className="font-semibold text-sm">{p.name}</p><p className="text-xs text-navy/90 dark:text-white/70">{p.location?.city || p.location}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -453,11 +453,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Team */}
                       {searchResults.team?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Team Members</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Team Members</h4>
                           {searchResults.team.map(u => (
                             <Link key={u._id} to="/team" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-info/10"><User className="h-5 w-5 text-info" /></div>
-                              <div><p className="font-semibold text-sm">{u.name}</p><p className="text-xs text-navy/70 dark:text-white/70">{u.role}</p></div>
+                              <div><p className="font-semibold text-sm">{u.name}</p><p className="text-xs text-navy/90 dark:text-white/70">{u.role}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -466,11 +466,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Materials */}
                       {searchResults.materials?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Materials</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Materials</h4>
                           {searchResults.materials.map(m => (
                             <Link key={m._id} to="/materials" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-success/10"><Package className="h-5 w-5 text-success" /></div>
-                              <div><p className="font-semibold text-sm">{m.name}</p><p className="text-xs text-navy/70 dark:text-white/70">{m.category}</p></div>
+                              <div><p className="font-semibold text-sm">{m.name}</p><p className="text-xs text-navy/90 dark:text-white/70">{m.category}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -479,11 +479,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Equipment */}
                       {searchResults.equipment?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Equipment</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Equipment</h4>
                           {searchResults.equipment.map(eq => (
                             <Link key={eq._id} to="/equipment" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-warning/10"><Wrench className="h-5 w-5 text-warning" /></div>
-                              <div><p className="font-semibold text-sm">{eq.name}</p><p className="text-xs text-navy/70 dark:text-white/70">{eq.type}</p></div>
+                              <div><p className="font-semibold text-sm">{eq.name}</p><p className="text-xs text-navy/90 dark:text-white/70">{eq.type}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -492,11 +492,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Vendors */}
                       {searchResults.vendors?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Vendors</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Vendors</h4>
                           {searchResults.vendors.map(v => (
                             <Link key={v._id} to="/vendor" onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10"><Truck className="h-5 w-5 text-indigo-400" /></div>
-                              <div><p className="font-semibold text-sm">{v.name}</p><p className="text-xs text-navy/70 dark:text-white/70">{v.category}</p></div>
+                              <div><p className="font-semibold text-sm">{v.name}</p><p className="text-xs text-navy/90 dark:text-white/70">{v.category}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -505,11 +505,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Expenses */}
                       {searchResults.expenses?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Expenses</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Expenses</h4>
                           {searchResults.expenses.map(e => (
                             <Link key={e._id} to={`/projects/${e.project?._id || e.project}/budget`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-danger/10"><Receipt className="h-5 w-5 text-danger" /></div>
-                              <div><p className="font-semibold text-sm">{e.vendor} - ₹{e.amount}</p><p className="text-xs text-navy/70 dark:text-white/70">{e.description}</p></div>
+                              <div><p className="font-semibold text-sm">{e.vendor} - â‚¹{e.amount}</p><p className="text-xs text-navy/90 dark:text-white/70">{e.description}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -518,11 +518,11 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                       {/* Logs */}
                       {searchResults.logs?.length > 0 && (
                         <div>
-                          <h4 className="text-xs font-bold text-navy/70 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Daily Logs</h4>
+                          <h4 className="text-xs font-bold text-navy/90 dark:text-white/70 uppercase tracking-wider mb-2 px-2 mt-4">Daily Logs</h4>
                           {searchResults.logs.map(l => (
                             <Link key={l._id} to={`/projects/${l.project?._id || l.project}/logs/${l._id}`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy/10 dark:bg-white/10"><FileText className="h-5 w-5 text-navy/80 dark:text-white/80" /></div>
-                              <div><p className="font-semibold text-sm">Log from {new Date(l.date).toLocaleDateString()}</p><p className="text-xs text-navy/70 dark:text-white/70 line-clamp-1">{l.activities}</p></div>
+                              <div><p className="font-semibold text-sm">Log from {new Date(l.date).toLocaleDateString()}</p><p className="text-xs text-navy/90 dark:text-white/70 line-clamp-1">{l.activities}</p></div>
                             </Link>
                           ))}
                         </div>
@@ -530,7 +530,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
                       {/* Empty State */}
                       {!Object.values(searchResults).some(arr => arr?.length > 0) && (
-                        <div className="p-8 text-center text-navy/60 dark:text-white/60">
+                        <div className="p-8 text-center text-navy/80 dark:text-white/60">
                           <p className="text-sm">No results found for "{searchQuery}"</p>
                         </div>
                       )}
@@ -538,7 +538,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   )}
                 </div>
               ) : (
-                <div className="p-8 text-center text-navy/60 dark:text-white/60">
+                <div className="p-8 text-center text-navy/80 dark:text-white/60">
                   <Search className="h-8 w-8 mx-auto mb-3 opacity-20" />
                   <p className="text-sm font-medium">Type to search across your workspace</p>
                 </div>

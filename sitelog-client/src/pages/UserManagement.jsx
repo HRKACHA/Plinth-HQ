@@ -46,7 +46,7 @@ export default function UserManagement() {
     switch (role) {
       case 'PM': return <ShieldAlert className="h-4 w-4 text-orange" />;
       case 'Owner': return <ShieldCheck className="h-4 w-4 text-success" />;
-      default: return <Shield className="h-4 w-4 text-navy/60" />;
+      default: return <Shield className="h-4 w-4 text-navy/80" />;
     }
   };
 

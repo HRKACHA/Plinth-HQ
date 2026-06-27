@@ -82,7 +82,7 @@ export default function NotificationsPage() {
                         <Clock className="h-3 w-3" /> {n.time}
                       </span>
                     </div>
-                    <p className={`mt-1 text-sm ${!n.isRead ? 'text-navy/70' : 'text-muted'}`}>{n.body}</p>
+                    <p className={`mt-1 text-sm ${!n.isRead ? 'text-navy/90' : 'text-muted'}`}>{n.body}</p>
                   </div>
                   {!n.isRead && (
                     <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-orange self-center" />

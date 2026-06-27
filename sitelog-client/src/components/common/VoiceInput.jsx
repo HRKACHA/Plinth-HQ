@@ -4,8 +4,8 @@ import { useTheme } from '../../context/ThemeContext';
 
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
-  { code: 'hi-IN', label: 'Hindi (हिंदी)' },
-  { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
+  { code: 'hi-IN', label: 'Hindi (à¤¹à¤¿à¤‚à¤¦à¥€)' },
+  { code: 'gu-IN', label: 'Gujarati (àª—à«àªœàª°àª¾àª¤à«€)' }
 ];
 
 export default function VoiceInput({ onTranscript, onStart, position = 'right' }) {
@@ -101,7 +101,7 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       <button
         type="button"
         onClick={() => setShowLangs(!showLangs)}
-        className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:hover:text-white transition-colors flex items-center justify-center"
+        className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:hover:text-white transition-colors flex items-center justify-center"
         title="Select Language"
       >
         <Languages className="w-4 h-4" />
@@ -125,7 +125,7 @@ export default function VoiceInput({ onTranscript, onStart, position = 'right' }
       <button
         type="button"
         onClick={toggleListening}
-        className={`h-10 w-10 rounded-full transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse border border-red-500/30' : 'bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:hover:text-white'}`}
+        className={`h-10 w-10 rounded-full transition-all flex items-center justify-center ${listening ? 'bg-red-500/20 text-red-500 animate-pulse border border-red-500/30' : 'bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:hover:text-white'}`}
         title={listening ? "Stop recording" : "Start recording"}
       >
         {listening ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}

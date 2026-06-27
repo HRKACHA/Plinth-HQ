@@ -14,7 +14,7 @@ import { useAsync } from '../../hooks/useAsync';
 import { projectApi, uploadApi, equipmentApi } from '../../api/index';
 
 import GlassDatePicker from '../../components/common/GlassDatePicker';
-/* ── Project Navigation Structure ── */
+/* â”€â”€ Project Navigation Structure â”€â”€ */
 const operationsItems = [
   { path: 'logs', label: 'Daily Logs', icon: ClipboardList },
   { path: 'issues', label: 'Issues', icon: AlertTriangle },
@@ -188,7 +188,7 @@ export default function ProjectLayout() {
           <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-center gap-3">
               <Badge status={project.status} />
-              <span className={`font-mono text-sm font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.50)' : 'rgba(255,255,255,0.50)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
+              <span className={`font-mono text-sm font-semibold tracking-wide uppercase px-2.5 py-1 rounded-lg backdrop-blur-sm ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`} style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.50)' : 'rgba(255,255,255,0.50)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)' }}>{project.location?.city || project.location || 'Unknown'}</span>
             </div>
             <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
               <div className="flex items-center gap-4">
@@ -211,16 +211,16 @@ export default function ProjectLayout() {
             <div className="mt-3 sm:mt-6 flex flex-wrap gap-3 sm:gap-8 text-xs sm:text-sm text-muted border-t border-[var(--color-glass-border)] pt-3 sm:pt-4">
               <span className="font-medium">Budget: <strong className="font-mono text-navy text-base ml-1">{formatCurrency(project.totalBudget)}</strong></span>
               <span className="font-medium">Progress: <strong className="font-mono text-orange text-base ml-1">{project.progress}%</strong></span>
-              <span className="font-medium">Timeline: <span className="text-navy font-semibold ml-1">{formatDate(project.startDate)} — {formatDate(project.endDate)}</span></span>
+              <span className="font-medium">Timeline: <span className="text-navy font-semibold ml-1">{formatDate(project.startDate)} â€” {formatDate(project.endDate)}</span></span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ═══ Project Horizontal Nav ═══ */}
+      {/* â•â•â• Project Horizontal Nav â•â•â• */}
       <div className="mb-6 pb-2" ref={dropdownRef}>
         <div className="flex flex-wrap items-center gap-2 px-1">
-          {/* Project Overview — standalone */}
+          {/* Project Overview â€” standalone */}
           <Link
             to={basePath}
             className={`project-nav-pill ${isOverview ? 'project-nav-pill-active' : ''}`}
@@ -326,7 +326,7 @@ export default function ProjectLayout() {
             )}
           </div>
 
-          {/* Documents — standalone */}
+          {/* Documents â€” standalone */}
           <Link
             to={`${basePath}/documents`}
             className={`project-nav-pill ${isActiveTab('documents') ? 'project-nav-pill-active' : ''}`}
@@ -335,7 +335,7 @@ export default function ProjectLayout() {
             <span>Documents</span>
           </Link>
 
-          {/* Owner Dashboard — standalone */}
+          {/* Owner Dashboard â€” standalone */}
           {canViewProjectTab('owner') && (
             <Link
               to={`${basePath}/owner`}
@@ -388,7 +388,7 @@ export default function ProjectLayout() {
               </div>
               <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (₹) *</label>
+                  <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (â‚¹) *</label>
                   <input type="number" value={formData.totalBudget} onChange={(e) => setFormData({ ...formData, totalBudget: e.target.value })} className="input-field" required min="0" />
                 </div>
                 <div>
@@ -533,7 +533,7 @@ export function ProjectOverview() {
                   </div>
                   <div>
                     <p className="font-semibold text-navy text-sm">{eq.name}</p>
-                    <p className="text-xs text-muted">{eq.type} • {eq.status}</p>
+                    <p className="text-xs text-muted">{eq.type} â€¢ {eq.status}</p>
                   </div>
                 </div>
                 {eq.type === 'Rented' && (
@@ -574,7 +574,7 @@ export function ProjectOverview() {
           <h3 className="font-bold text-navy flex items-center gap-2 tracking-tight relative z-10"><Users className="h-5 w-5 text-orange" /> Team</h3>
           <p className="mt-4 font-mono text-4xl font-bold text-navy relative z-10 tracking-tight">{project.teamCount || 0}</p>
           <p className="text-sm text-muted font-medium mt-1 relative z-10">Active members on site</p>
-          <Link to="/team" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-orange hover:text-orange-dark transition-colors relative z-10">Manage team <span className="text-lg">→</span></Link>
+          <Link to="/team" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-orange hover:text-orange-dark transition-colors relative z-10">Manage team <span className="text-lg">â†’</span></Link>
         </div>
       </div>
     </div>

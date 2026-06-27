@@ -72,7 +72,7 @@ export default function Landing() {
         {/* Right Image Background (Full Bleed) */}
         <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[80%] sm:h-[85%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[mask-image:radial-gradient(ellipse_closest-side,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[-webkit-mask-image:radial-gradient(ellipse_closest-side,black_75%,transparent_100%)]"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)]"
                style={{
                  maskSize: '100% 100%',
                  WebkitMaskSize: '100% 100%',
@@ -93,7 +93,7 @@ export default function Landing() {
           </div>
 
           {/* Dark Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[mask-image:radial-gradient(ellipse_closest-side,black_20%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[-webkit-mask-image:radial-gradient(ellipse_closest-side,black_20%,transparent_100%)]"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)]"
                style={{
                  maskSize: '100% 100%',
                  WebkitMaskSize: '100% 100%',

@@ -37,7 +37,7 @@ function PublicNavbar() {
                     key={item.name}
                     to={item.path}
                     className={`relative px-3 py-1.5 text-sm font-medium transition-colors rounded-full ${
-                      isActive ? 'text-navy dark:text-white' : 'text-navy/70 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
+                      isActive ? 'text-navy dark:text-white' : 'text-navy/90 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5'
                     }`}
                   >
                     {isActive && (
@@ -57,7 +57,7 @@ function PublicNavbar() {
 
             {!user ? (
               <div className="flex items-center gap-4">
-                <Link to="/login" className="hidden lg:block text-sm font-medium text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
+                <Link to="/login" className="hidden lg:block text-sm font-medium text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-colors">Log In</Link>
                 <Link to="/register" className="btn-accent text-xs sm:text-sm px-4 py-1.5 text-white">Get Started</Link>
               </div>
             ) : (
@@ -95,7 +95,7 @@ function PublicNavbar() {
                     to={item.path}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`px-4 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                      isActive ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-navy/70 dark:text-white/70'
+                      isActive ? 'bg-navy/10 dark:bg-white/10 text-navy dark:text-white' : 'text-navy/90 dark:text-white/70'
                     }`}
                   >
                     {item.name}
@@ -105,7 +105,7 @@ function PublicNavbar() {
               <hr className="border-navy/5 dark:border-white/5 my-1.5" />
               {!user ? (
                 <div className="flex flex-col gap-1">
-                  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium text-navy/70 dark:text-white/70 text-center">Log In</Link>
+                  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="px-4 py-2.5 rounded-xl text-sm font-medium text-navy/90 dark:text-white/70 text-center">Log In</Link>
                   <Link to="/register" onClick={() => setIsMobileMenuOpen(false)} className="btn-accent text-center px-4 py-2.5 text-white rounded-xl">Get Started</Link>
                 </div>
               ) : (

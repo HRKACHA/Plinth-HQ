@@ -360,7 +360,7 @@ export default function ChatBox() {
       <div className="flex flex-col h-[calc(100dvh-64px)] p-2 sm:p-4 lg:p-6">
         <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-navy/10 dark:border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
-          {/* ── Left: Room List (Desktop) ── */}
+          {/* â”€â”€ Left: Room List (Desktop) â”€â”€ */}
           <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
             <div className="p-4 border-b border-white/[0.06]">
               <h2 className="text-lg font-bold text-navy dark:text-white flex items-center gap-2">
@@ -398,7 +398,7 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* ── Mobile Room Selector Strip ── */}
+          {/* â”€â”€ Mobile Room Selector Strip â”€â”€ */}
           <div className="md:hidden flex w-full items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-card overflow-x-auto shrink-0 scrollbar-none">
             {rooms.map((room) => (
               <button
@@ -406,7 +406,7 @@ export default function ChatBox() {
                 onClick={() => setActiveRoom(room.name)}
                 className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-1.5 text-xs font-medium transition shrink-0 ${activeRoom === room.name
                   ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                  : 'text-navy/70 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 border border-transparent'
+                  : 'text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 border border-transparent'
                   }`}
               >
                 {getRoomIcon(room.name)}
@@ -420,7 +420,7 @@ export default function ChatBox() {
             ))}
           </div>
 
-          {/* ── Center: Messages ── */}
+          {/* â”€â”€ Center: Messages â”€â”€ */}
           <div className="flex-1 flex flex-col min-w-0 min-h-0">
             {/* Room Header */}
             {activeRoom ? (
@@ -557,7 +557,7 @@ export default function ChatBox() {
                                 </span>
                                 {mine && (
                                   <span className="text-[10px] text-blue-200 cursor-default" title={msg.readBy?.length > 1 ? `Read by ${msg.readBy.length - 1} others` : 'Sent'}>
-                                    {msg.readBy?.length > 1 ? '✓✓' : '✓'}
+                                    {msg.readBy?.length > 1 ? 'âœ“âœ“' : 'âœ“'}
                                   </span>
                                 )}
                                 {/* Reply button */}
@@ -654,7 +654,7 @@ export default function ChatBox() {
                   <Reply size={14} className="text-blue-400 shrink-0" />
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] font-semibold text-blue-400">Replying to {replyingTo.senderName}</p>
-                    <p className="text-xs text-navy/60 dark:text-white/60 truncate">{replyingTo.message}</p>
+                    <p className="text-xs text-navy/80 dark:text-white/60 truncate">{replyingTo.message}</p>
                   </div>
                   <button onClick={() => setReplyingTo(null)} className="p-1 rounded-lg hover:bg-navy/5 dark:hover:bg-white/5 text-navy/40 dark:text-white/40 hover:text-navy dark:text-white transition-colors shrink-0">
                     <X size={14} />
@@ -736,7 +736,7 @@ export default function ChatBox() {
                   <button
                     onClick={() => cameraInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Take Photo"
                   >
                     <Camera size={18} />
@@ -744,7 +744,7 @@ export default function ChatBox() {
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/70 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
                     title="Attach File"
                   >
                     <ImageIcon size={18} />
@@ -758,7 +758,7 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* ── Right: Team Members ── */}
+          {/* â”€â”€ Right: Team Members â”€â”€ */}
           {showSidebar && (
             <>
               {/* Mobile overlay backdrop */}
@@ -802,7 +802,7 @@ export default function ChatBox() {
                             {u.roleLabel || u.role?.replace('_', ' ')}
                           </span>
                           {u.invitedBy && (
-                            <p className="text-[9px] text-navy/70 dark:text-white/70 truncate mt-0.5">
+                            <p className="text-[9px] text-navy/90 dark:text-white/70 truncate mt-0.5">
                               Invited by: {u.invitedBy}
                             </p>
                           )}

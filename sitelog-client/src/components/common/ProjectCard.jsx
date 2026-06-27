@@ -27,15 +27,15 @@ export default function ProjectCard({ project }) {
       </div>
       <div className="p-3 sm:p-4" style={{ background: 'rgb(var(--color-card))' }}>
         <h3 className="font-bold text-base text-navy group-hover:text-orange transition-colors truncate">{project.name}</h3>
-        <p className="mt-0.5 line-clamp-2 text-xs text-navy/70 dark:text-white/70 h-8">{project.description || 'No description provided.'}</p>
-        <div className="mt-3 space-y-1.5 text-[11px] text-navy/70 dark:text-white/70">
+        <p className="mt-0.5 line-clamp-2 text-xs text-navy/90 dark:text-white/70 h-8">{project.description || 'No description provided.'}</p>
+        <div className="mt-3 space-y-1.5 text-[11px] text-navy/90 dark:text-white/70">
           <div className="flex items-center gap-2 truncate"><MapPin className="h-3 w-3 text-orange/50 shrink-0" />{project.location?.city || project.location || 'Unknown Location'}</div>
           <div className="flex items-center gap-2"><Users className="h-3 w-3 text-orange/50 shrink-0" />{project.team || 0} team members</div>
           <div className="flex items-center gap-2 truncate"><Calendar className="h-3 w-3 text-orange/50 shrink-0" />Last log: {project.lastLogDate ? formatDate(project.lastLogDate) : 'No logs yet'}</div>
         </div>
         <div className="mt-3 pt-3" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,40,0.06)' }}>
           <div className="flex justify-between text-[11px] mb-1.5">
-            <span className="text-navy/60 dark:text-white/60 font-medium">Budget used</span>
+            <span className="text-navy/80 dark:text-white/60 font-medium">Budget used</span>
             <span className="font-mono font-bold text-navy">{spentPct}%</span>
           </div>
           <div className="h-1.5 overflow-hidden rounded-full" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,40,0.04)' }}>

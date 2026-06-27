@@ -118,7 +118,7 @@ export default function Gallery() {
       <div className="space-y-8">
         {Object.entries(groupedGallery).map(([date, items]) => (
           <div key={date}>
-            <h3 className="text-sm font-semibold text-navy/70 dark:text-white/70 mb-4 sticky top-0 bg-surface z-10 py-2 border-b border-navy/5 dark:border-white/5">{date}</h3>
+            <h3 className="text-sm font-semibold text-navy/90 dark:text-white/70 mb-4 sticky top-0 bg-surface z-10 py-2 border-b border-navy/5 dark:border-white/5">{date}</h3>
             <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-2 sm:gap-3">
               {items.map((item, index) => (
                 <div key={`${item.id}-${index}`} className="relative group overflow-hidden rounded-xl border border-navy/5 dark:border-white/5 bg-surface aspect-square">
@@ -128,7 +128,7 @@ export default function Gallery() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 pointer-events-none">
                     <span className="text-xs font-semibold text-orange mb-1">{item.source}</span>
                     <p className="text-sm font-bold text-navy dark:text-white mb-1 line-clamp-1">{item.title}</p>
-                    <div className="flex justify-between items-center text-xs text-navy/70 dark:text-white/70">
+                    <div className="flex justify-between items-center text-xs text-navy/90 dark:text-white/70">
                       <span>{item.uploader}</span>
                     </div>
                     <div className="absolute top-3 right-3 flex gap-2 pointer-events-auto">

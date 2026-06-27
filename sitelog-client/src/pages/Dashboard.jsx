@@ -68,7 +68,7 @@ export default function Dashboard() {
           if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
           if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
           if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-          setWeathers([{ temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: geo.city || 'Local Site', projectName: 'Local' }]);
+          setWeathers([{ temp: `${Math.round(w.current_weather.temperature)}Â°C`, condition, icon: Icon, city: geo.city || 'Local Site', projectName: 'Local' }]);
         } catch (err) {
           setWeathers([{ temp: '--', condition: 'Unavailable', icon: Sun, city: 'Local Site', projectName: 'Local' }]);
         }
@@ -130,7 +130,7 @@ export default function Dashboard() {
               if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
               if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
               if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: resolvedCity };
+              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}Â°C`, condition, icon: Icon, city: resolvedCity };
             }
           } catch (e) {
             console.error("Weather fetch failed for", proj.name, e);
@@ -324,7 +324,7 @@ export default function Dashboard() {
             <h2 className="font-display text-xl sm:text-2xl font-bold text-navy lg:text-3xl tracking-tight">
               {greeting}, <span className="text-orange">{user?.name?.split(' ')[0]}</span>
             </h2>
-            <p className="mt-1 text-sm text-navy/60 dark:text-white/60">
+            <p className="mt-1 text-sm text-navy/80 dark:text-white/60">
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -468,7 +468,7 @@ export default function Dashboard() {
                       <FolderKanban className="h-8 w-8 text-navy/20 dark:text-white/20" />
                     </div>
                     <h4 className="mt-5 text-base font-bold text-navy tracking-tight">No projects yet</h4>
-                    <p className="mt-2 max-w-xs text-sm text-navy/60 dark:text-white/60">
+                    <p className="mt-2 max-w-xs text-sm text-navy/80 dark:text-white/60">
                       Create your first project to start tracking daily logs, budgets, and milestones.
                     </p>
                     <Link to="/projects" className="btn-accent mt-6">
@@ -489,10 +489,10 @@ export default function Dashboard() {
                     {weathers.length > 0 ? (
                       <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
                         <div>
-                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
+                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Weather â€¢ {weathers[currentWeatherIndex].projectName}</p>
                           <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
-                          <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
-                            {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
+                          <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
+                            {weathers[currentWeatherIndex].condition} â€¢ {weathers[currentWeatherIndex].city}
                           </p>
                         </div>
                         {(() => {
@@ -502,7 +502,7 @@ export default function Dashboard() {
                       </div>
                     ) : (
                       <div className="min-h-[100px]">
-                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/70'}`}>Site Weather</p>
+                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Site Weather</p>
                         <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>--</p>
                       </div>
                     )}
@@ -564,7 +564,7 @@ export default function Dashboard() {
                       </div>
                       <input
                         type="number"
-                        placeholder="Total Price (₹)"
+                        placeholder="Total Price (â‚¹)"
                         className="input-field py-2 text-sm"
                         min="0"
                         value={materialForm.price}
@@ -600,7 +600,7 @@ export default function Dashboard() {
                     )}
                   </form>
                 ) : (
-                  <p className="text-sm text-navy/60 dark:text-white/60">Create a project first</p>
+                  <p className="text-sm text-navy/80 dark:text-white/60">Create a project first</p>
                 )}
               </div>
 
@@ -650,7 +650,7 @@ export default function Dashboard() {
                 </div>
                 <div className="grid grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (₹) *</label>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (â‚¹) *</label>
                     <input type="number" value={formData.totalBudget} onChange={(e) => setFormData({ ...formData, totalBudget: e.target.value })} className="input-field" required min="0" />
                   </div>
                   <div>
