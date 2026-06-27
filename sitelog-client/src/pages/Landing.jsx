@@ -44,7 +44,7 @@ export default function Landing() {
         
         {/* Dotted Background on the Left (Text Side) fading out towards right completely */}
         <div 
-          className="absolute inset-0 opacity-[0.04] z-0" 
+          className="absolute inset-0 opacity-10 dark:opacity-20 z-0" 
           style={{
             backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.5) 0.5px, transparent 0)',
             backgroundSize: '24px 24px',
@@ -56,14 +56,14 @@ export default function Landing() {
         {/* Seamless Dual-Tone Background & Particle Blocker */}
         {/* Light Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-150 opacity-100 dark:opacity-0"
+          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-100 dark:opacity-0"
           style={{
             background: 'linear-gradient(to right, transparent 0%, transparent 40%, rgb(220, 232, 255) 80%, rgb(220, 232, 255) 100%)',
           }}
         />
         {/* Dark Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-150 opacity-0 dark:opacity-100"
+          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 dark:opacity-100"
           style={{
             background: 'linear-gradient(to right, transparent 0%, transparent 40%, #0A0C10 80%, #0A0C10 100%)',
           }}
