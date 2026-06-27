@@ -22,7 +22,7 @@ function PublicNavbar() {
 
   return (
     <div className="sticky top-2 lg:top-4 z-50 w-full px-4 lg:px-[60px] xl:px-[100px] pt-2 lg:pt-4 pointer-events-none">
-      <div className="relative w-full pointer-events-auto">
+      <div className="relative w-full max-w-7xl mx-auto pointer-events-auto">
         <div className="liquid-glass grid grid-cols-2 md:grid-cols-3 items-center rounded-2xl px-4 lg:px-6 py-2 lg:py-3">
           <div className="flex justify-start items-center">
             <Link to="/"><PlinthLogo size="xxs" /></Link>

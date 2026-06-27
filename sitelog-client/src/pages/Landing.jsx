@@ -40,7 +40,7 @@ export default function Landing() {
 
 
       {/* ── Hero with Particle Canvas ── */}
-      <section className="relative overflow-hidden flex items-center min-h-screen -mt-24 lg:-mt-[104px]">
+      <section className="relative overflow-hidden flex items-start lg:items-center min-h-screen -mt-24 lg:-mt-[104px]">
         
         {/* Dotted Background on the Left (Text Side) fading out towards right completely */}
         <div 
@@ -119,7 +119,7 @@ export default function Landing() {
              }} />
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[110px] pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-4 text-left">
