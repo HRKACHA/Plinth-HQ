@@ -70,12 +70,14 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 top-[10%] lg:top-0 w-full lg:w-[60%] h-[85%] lg:h-full z-0 pointer-events-none">
+        <div className="absolute right-0 top-[35%] lg:top-0 w-full lg:w-[60%] h-[65%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
-                 maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 95%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 10%, black 95%, transparent)',
+                 maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                 maskComposite: 'intersect',
+                 WebkitMaskComposite: 'destination-in',
                }}>
             <img 
               src="/Landing_image_white.png" 
@@ -91,8 +93,10 @@ export default function Landing() {
           {/* Dark Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
                style={{
-                 maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 90%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 90%, transparent)',
+                 maskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                 maskComposite: 'intersect',
+                 WebkitMaskComposite: 'destination-in',
                }}>
             <img 
               src="/Landing_image.png" 
@@ -104,22 +108,14 @@ export default function Landing() {
               decoding="sync"
             />
           </div>
-
-          {/* PC-only left fade so image blends into text area seamlessly */}
-          <div className="hidden lg:block absolute inset-0 transition-colors duration-500"
-               style={{
-                 background: theme === 'dark'
-                   ? 'linear-gradient(to right, rgb(10, 12, 16) 0%, transparent 35%)'
-                   : 'linear-gradient(to right, rgb(220, 232, 255) 0%, transparent 35%)',
-               }} />
         </div>
 
         {/* Mobile text background overlay — keeps text area clean */}
-        <div className="absolute inset-x-0 top-0 h-[55%] z-[1] lg:hidden transition-colors duration-500"
+        <div className="absolute inset-x-0 top-0 h-[45%] z-[1] lg:hidden transition-colors duration-500"
              style={{
                background: theme === 'dark'
-                 ? 'linear-gradient(to bottom, rgb(10, 12, 16) 70%, transparent 100%)'
-                 : 'linear-gradient(to bottom, rgb(220, 232, 255) 70%, transparent 100%)',
+                 ? 'linear-gradient(to bottom, rgb(10, 12, 16) 80%, transparent 100%)'
+                 : 'linear-gradient(to bottom, rgb(220, 232, 255) 80%, transparent 100%)',
              }} />
 
         {/* Content Container */}
