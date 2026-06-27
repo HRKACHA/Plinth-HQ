@@ -74,8 +74,8 @@ export default function Landing() {
           {/* Light Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
-                 maskImage: 'linear-gradient(to right, transparent, black 20%, black 95%, transparent), linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 95%, transparent), linear-gradient(to bottom, transparent, black 5%, black 95%, transparent)',
+                 maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
                  maskComposite: 'intersect',
                  WebkitMaskComposite: 'destination-in',
                }}>
@@ -93,8 +93,8 @@ export default function Landing() {
           {/* Dark Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
                style={{
-                 maskImage: 'linear-gradient(to right, transparent, black 40%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 40%, black 85%, transparent), linear-gradient(to bottom, transparent, black 15%, black 85%, transparent)',
+                 maskImage: 'linear-gradient(to right, transparent, black 30%, black 80%, transparent), linear-gradient(to bottom, transparent, black 10%, black 85%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 30%, black 80%, transparent), linear-gradient(to bottom, transparent, black 10%, black 85%, transparent)',
                  maskComposite: 'intersect',
                  WebkitMaskComposite: 'destination-in',
                }}>
