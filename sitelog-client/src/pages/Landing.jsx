@@ -56,14 +56,14 @@ export default function Landing() {
         {/* Seamless Dual-Tone Background & Particle Blocker */}
         {/* Light Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-100 dark:opacity-0"
+          className="absolute inset-0 z-0 transition-opacity duration-150 opacity-100 dark:opacity-0"
           style={{
             background: 'linear-gradient(to right, transparent 0%, transparent 40%, rgb(220, 232, 255) 80%, rgb(220, 232, 255) 100%)',
           }}
         />
         {/* Dark Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 dark:opacity-100"
+          className="absolute inset-0 z-0 transition-opacity duration-150 opacity-0 dark:opacity-100"
           style={{
             background: 'linear-gradient(to right, transparent 0%, transparent 40%, #0A0C10 80%, #0A0C10 100%)',
           }}
@@ -72,7 +72,7 @@ export default function Landing() {
         {/* Right Image Background (Full Bleed) */}
         <div className="absolute right-0 top-[25%] lg:top-0 w-full lg:w-[60%] h-[75%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Image */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-150 opacity-100 dark:opacity-0"
                style={{
                  maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
                  WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
@@ -91,7 +91,7 @@ export default function Landing() {
           </div>
 
           {/* Dark Mode Image */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-150 opacity-0 dark:opacity-100"
                style={{
                  maskImage: 'linear-gradient(to right, transparent, black 30%, black 80%, transparent), linear-gradient(to bottom, transparent, black 10%, black 85%, transparent)',
                  WebkitMaskImage: 'linear-gradient(to right, transparent, black 30%, black 80%, transparent), linear-gradient(to bottom, transparent, black 10%, black 85%, transparent)',

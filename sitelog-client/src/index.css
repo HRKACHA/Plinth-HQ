@@ -75,7 +75,7 @@
 
   body {
     @apply antialiased text-navy dark:text-white bg-surface overflow-x-hidden selection:bg-orange/30 selection:text-white;
-    transition: background-color 0.5s ease-out, color 0.5s ease-out, border-color 0.5s ease-out;
+    transition: background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
