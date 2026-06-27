@@ -80,7 +80,7 @@ export default function Landing() {
                  WebkitMaskComposite: 'destination-in',
                }}>
             <img 
-              src="/Landing_image_white.png" 
+              src="/Image_white.png" 
               alt="PlinthHQ Dashboard Light" 
               className="absolute inset-0 w-full h-full object-cover" 
               style={{ objectPosition: 'center center' }}
@@ -99,7 +99,7 @@ export default function Landing() {
                  WebkitMaskComposite: 'destination-in',
                }}>
             <img 
-              src="/Landing_image.png" 
+              src="/Image.png" 
               alt="PlinthHQ Dashboard Dark" 
               className="absolute inset-0 w-full h-full object-cover" 
               style={{ objectPosition: 'center center' }}
