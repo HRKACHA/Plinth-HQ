@@ -87,7 +87,10 @@ export default function Landing() {
               src="/Landing_image_white.png" 
               alt="PlinthHQ Dashboard Light" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectFit: 'cover', objectPosition: 'center 85%' }}
+              style={{ objectFit: 'cover', objectPosition: 'center center' }}
+              loading="eager"
+              fetchpriority="high"
+              decoding="sync"
             />
           </div>
 
@@ -107,13 +110,16 @@ export default function Landing() {
               src="/Landing_image.png" 
               alt="PlinthHQ Dashboard Dark" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectFit: 'cover', objectPosition: 'center 85%' }}
+              style={{ objectFit: 'cover', objectPosition: 'center center' }}
+              loading="eager"
+              fetchpriority="high"
+              decoding="sync"
             />
           </div>
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-20 pb-8 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
