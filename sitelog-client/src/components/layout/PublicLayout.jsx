@@ -21,10 +21,10 @@ function PublicNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <div className="sticky top-4 z-50 w-full px-4 lg:px-[60px] xl:px-[100px] pt-4 pointer-events-none">
+    <div className="sticky top-2 lg:top-4 z-50 w-full px-4 lg:px-[60px] xl:px-[100px] pt-2 lg:pt-4 pointer-events-none">
       <div className="relative w-full pointer-events-auto">
-        <div className="liquid-glass grid grid-cols-2 md:grid-cols-3 items-center rounded-2xl px-6 py-3">
-          <div className="flex justify-start">
+        <div className="liquid-glass grid grid-cols-2 md:grid-cols-3 items-center rounded-2xl px-4 lg:px-6 py-2 lg:py-3">
+          <div className="flex justify-start items-center">
             <Link to="/"><PlinthLogo size="xxs" /></Link>
           </div>
           
@@ -66,14 +66,14 @@ function PublicNavbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="flex md:hidden justify-end items-center gap-2">
+          <div className="flex md:hidden justify-end items-center gap-1">
             <Switch theme={theme} toggleTheme={toggleTheme} />
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex items-center gap-1.5 p-2 text-navy dark:text-white focus:outline-none rounded-xl hover:bg-navy/5 dark:hover:bg-white/5 transition-colors"
+              className="flex items-center gap-1 p-1.5 text-navy dark:text-white focus:outline-none rounded-xl hover:bg-navy/5 dark:hover:bg-white/5 transition-colors ml-1"
             >
-              <span className="text-sm font-medium">{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
-              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              <span className="text-[13px] font-medium leading-none">{isMobileMenuOpen ? 'Close' : 'Menu'}</span>
+              {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>

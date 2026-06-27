@@ -70,7 +70,7 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 top-[35%] lg:top-0 w-full lg:w-[60%] h-[65%] lg:h-full z-0 pointer-events-none">
+        <div className="absolute right-0 top-[25%] lg:top-0 w-full lg:w-[60%] h-[75%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
@@ -119,10 +119,10 @@ export default function Landing() {
              }} />
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
-          <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
+          <div className="lg:pr-8 flex flex-col items-start gap-4 text-left">
             <div className="inline-block animate-slideUp">
               <span className="py-1 px-3 rounded-full text-[10px] sm:text-xs font-mono text-muted tracking-widest uppercase"
                 style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.08)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(8px)' }}>
@@ -141,7 +141,18 @@ export default function Landing() {
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Real-time Sync</span>
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Cloud Storage</span>
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Offline Mode</span>
-              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Owner Dashboards</span>
+              <Link 
+                to="/about#features"
+                onClick={() => {
+                  setTimeout(() => {
+                    const el = document.getElementById('features');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 flex items-center cursor-pointer active:scale-95"
+              >
+                All Features <ArrowRight className="h-3 w-3 ml-1" />
+              </Link>
             </div>
 
             <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
@@ -151,6 +162,9 @@ export default function Landing() {
             <div className="animate-slideUp flex gap-4" style={{ animationDelay: '0.3s' }}>
               <Link to="/register" className="btn-accent px-6 py-2.5 text-sm shadow-glow">
                 Get Started <ArrowRight className="h-3.5 w-3.5 ml-1" />
+              </Link>
+              <Link to="/about" className="hidden lg:flex items-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white transition-colors">
+                See How It Works
               </Link>
             </div>
           </div>
