@@ -59,12 +59,12 @@ export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutP
   return (
     <h1 className={`font-display font-bold tracking-tighter leading-[1.05] sm:leading-[1.1] ${className}`}>
       {staticText.split('\n').map((line, i) => (
-        <span key={i} className="block pt-1 pb-2 -mt-1 -mb-2" style={gradientStyle}>{line}</span>
+        <span key={i} className="block pt-2 pb-4 pr-4 -mt-2 -mb-4 -mr-4" style={gradientStyle}>{line}</span>
       ))}
-      <span className="grid relative overflow-hidden mt-2 sm:mt-0 pt-1 pb-2 -mt-1 -mb-2 whitespace-normal md:whitespace-nowrap">
+      <span className="grid relative overflow-hidden mt-2 sm:mt-0 pt-2 pb-4 pr-4 -mt-2 -mb-4 -mr-4 whitespace-normal lg:whitespace-nowrap">
         <span className="col-start-1 row-start-1 invisible pointer-events-none">
           {longestPhrase.split('\n').map((line, idx) => (
-            <span key={idx} className="block pt-1 pb-2 -mt-1 -mb-2" style={gradientStyle}>{line}</span>
+            <span key={idx} className="block pt-2 pb-4 pr-4 -mt-2 -mb-4 -mr-4" style={gradientStyle}>{line}</span>
           ))}
         </span>
         <AnimatePresence>
@@ -77,7 +77,7 @@ export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutP
             className="col-start-1 row-start-1 block"
           >
             {rotatingPhrases[index].split('\n').map((line, idx) => (
-              <span key={idx} className="block pt-1 pb-2 -mt-1 -mb-2" style={gradientStyle}>{line}</span>
+              <span key={idx} className="block pt-2 pb-4 pr-4 -mt-2 -mb-4 -mr-4" style={gradientStyle}>{line}</span>
             ))}
           </motion.span>
         </AnimatePresence>
