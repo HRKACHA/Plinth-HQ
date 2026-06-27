@@ -13,7 +13,7 @@ import PlinthLogo from '../common/PlinthLogo';
 import PlinthAIChatbot from '../common/PlinthAIChatbot';
 import Switch from '../ui/sky-toggle';
 
-/* â”€â”€ Navigation Structure â”€â”€ */
+/* ── Navigation Structure ── */
 const directNavItems = [
   { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { path: '/projects', label: 'Projects', icon: FolderKanban },
@@ -162,7 +162,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
   return (
     <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
       <div className="absolute inset-0 backdrop-blur-sm bg-surface/50 pointer-events-none -z-10" />
-      {/* â•â•â• Vertical Sidebar â€” Liquid Glass â•â•â• */}
+      {/* ═══ Vertical Sidebar — Liquid Glass ═══ */}
       <aside className={`hidden lg:flex flex-col ${isCollapsed ? 'w-[72px]' : 'w-52'} shrink-0 z-50 transition-all duration-300`}
         style={{ background: sidebarBg, backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder, transition: 'background 0.3s ease' }}>
         <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ borderBottom: subtleBorder }}>
@@ -245,10 +245,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </nav>
       </aside>
 
-      {/* â•â•â• Main Content Area â•â•â• */}
+      {/* ═══ Main Content Area ═══ */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
-        {/* â•â•â• Header â€” Liquid Glass â•â•â• */}
+        {/* ═══ Header — Liquid Glass ═══ */}
         <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 relative z-[60]"
           style={{ background: headerBg, backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: subtleBorder, transition: 'background 0.3s ease' }}>
           
@@ -267,7 +267,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
               {title && <h1 className="text-lg font-bold text-navy">{title}</h1>}
               {backTo && (
                 <Link to={backTo} className="flex items-center gap-1 text-sm text-muted hover:text-navy transition-colors">
-                  â† Back
+                  ← Back
                 </Link>
               )}
             </div>
@@ -312,7 +312,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             >
               <Search className="h-3.5 w-3.5" />
               <span className="hidden md:inline">Search...</span>
-              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>âŒ˜K</kbd>
+              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>⌘K</kbd>
             </button>
 
             <Link to="/about" className="rounded-full p-2 text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="About PlinthHQ">
@@ -366,14 +366,14 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           </div>
         </header>
 
-        {/* â•â•â• Main Scrolling Content â•â•â• */}
+        {/* — Main Scrolling Content — */}
         <main className={`flex-1 overflow-y-auto ${noPadding ? '' : 'p-3 sm:p-4 lg:p-8'}`}>
           {/* Sub-header shown only on mobile or if not in header */}
           {!noPadding && <div className="sm:hidden mb-4">
             {title && <h1 className="text-lg font-bold text-navy mb-1">{title}</h1>}
             {backTo && (
               <Link to={backTo} className="inline-flex items-center gap-1 text-sm text-muted hover:text-navy transition-colors">
-                â† Back
+                ← Back
               </Link>
             )}
           </div>}
@@ -381,7 +381,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </main>
       </div>
 
-      {/* â•â•â• Mobile Menu Overlay â€” Liquid Glass â•â•â• */}
+      {/* ═══ Mobile Menu Overlay — Liquid Glass ═══ */}
       {mobileOpen && (
         <>
           <div className="fixed inset-0 z-[70] backdrop-blur-sm animate-fadeIn lg:hidden" style={{ background: isDark ? 'rgba(0,0,0,0.50)' : 'rgba(0,0,40,0.25)' }} onClick={() => setMobileOpen(false)} />
@@ -422,7 +422,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         </>
       )}
 
-      {/* â•â•â• Global Search Modal â€” Liquid Glass â•â•â• */}
+      {/* ═══ Global Search Modal — Liquid Glass ═══ */}
       {searchOpen && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: isDark ? 'rgba(0,0,0,0.40)' : 'rgba(0,0,40,0.20)' }} onClick={() => setSearchOpen(false)}>
           <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: searchBg, backdropFilter: 'blur(24px) saturate(180%)', border: searchBorder }} onClick={e => e.stopPropagation()}>
@@ -509,7 +509,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                           {searchResults.expenses.map(e => (
                             <Link key={e._id} to={`/projects/${e.project?._id || e.project}/budget`} onClick={() => { setSearchOpen(false); setSearchQuery(''); }} className="flex items-center gap-3 p-3 hover:bg-navy/5 dark:hover:bg-white/5 rounded-xl text-navy dark:text-white transition-colors">
                               <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-danger/10"><Receipt className="h-5 w-5 text-danger" /></div>
-                              <div><p className="font-semibold text-sm">{e.vendor} - â‚¹{e.amount}</p><p className="text-xs text-navy/90 dark:text-white/70">{e.description}</p></div>
+                              <div><p className="font-semibold text-sm">{e.vendor} - ₹{e.amount}</p><p className="text-xs text-navy/90 dark:text-white/70">{e.description}</p></div>
                             </Link>
                           ))}
                         </div>

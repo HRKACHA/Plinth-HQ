@@ -360,7 +360,7 @@ export default function ChatBox() {
       <div className="flex flex-col h-[calc(100dvh-64px)] p-2 sm:p-4 lg:p-6">
         <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-navy/10 dark:border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
 
-          {/* â”€â”€ Left: Room List (Desktop) â”€â”€ */}
+          {/* ── Left: Room List (Desktop) ── */}
           <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
             <div className="p-4 border-b border-white/[0.06]">
               <h2 className="text-lg font-bold text-navy dark:text-white flex items-center gap-2">
@@ -398,7 +398,7 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* â”€â”€ Mobile Room Selector Strip â”€â”€ */}
+          {/* ── Mobile Room Selector Strip ── */}
           <div className="md:hidden flex w-full items-center gap-2 px-3 py-2 border-b border-white/[0.06] bg-card overflow-x-auto shrink-0 scrollbar-none">
             {rooms.map((room) => (
               <button
@@ -420,7 +420,7 @@ export default function ChatBox() {
             ))}
           </div>
 
-          {/* â”€â”€ Center: Messages â”€â”€ */}
+          {/* ── Center: Messages ── */}
           <div className="flex-1 flex flex-col min-w-0 min-h-0">
             {/* Room Header */}
             {activeRoom ? (
@@ -557,7 +557,7 @@ export default function ChatBox() {
                                 </span>
                                 {mine && (
                                   <span className="text-[10px] text-blue-200 cursor-default" title={msg.readBy?.length > 1 ? `Read by ${msg.readBy.length - 1} others` : 'Sent'}>
-                                    {msg.readBy?.length > 1 ? 'âœ“âœ“' : 'âœ“'}
+                                    {msg.readBy?.length > 1 ? '✓✓' : '✓'}
                                   </span>
                                 )}
                                 {/* Reply button */}
@@ -758,7 +758,7 @@ export default function ChatBox() {
             </div>
           </div>
 
-          {/* â”€â”€ Right: Team Members â”€â”€ */}
+          {/* ── Right: Team Members ── */}
           {showSidebar && (
             <>
               {/* Mobile overlay backdrop */}

@@ -68,7 +68,7 @@ export default function Dashboard() {
           if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
           if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
           if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-          setWeathers([{ temp: `${Math.round(w.current_weather.temperature)}Â°C`, condition, icon: Icon, city: geo.city || 'Local Site', projectName: 'Local' }]);
+          setWeathers([{ temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: geo.city || 'Local Site', projectName: 'Local' }]);
         } catch (err) {
           setWeathers([{ temp: '--', condition: 'Unavailable', icon: Sun, city: 'Local Site', projectName: 'Local' }]);
         }
@@ -130,7 +130,7 @@ export default function Dashboard() {
               if (code >= 71 && code <= 77) { condition = 'Snowy'; Icon = CloudSnow; }
               if (code >= 80 && code <= 82) { condition = 'Showers'; Icon = CloudRain; }
               if (code >= 95) { condition = 'Thunderstorm'; Icon = CloudLightning; }
-              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}Â°C`, condition, icon: Icon, city: resolvedCity };
+              weatherObj = { ...weatherObj, temp: `${Math.round(w.current_weather.temperature)}°C`, condition, icon: Icon, city: resolvedCity };
             }
           } catch (e) {
             console.error("Weather fetch failed for", proj.name, e);
@@ -489,10 +489,10 @@ export default function Dashboard() {
                     {weathers.length > 0 ? (
                       <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
                         <div>
-                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Weather â€¢ {weathers[currentWeatherIndex].projectName}</p>
+                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
                           <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
                           <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
-                            {weathers[currentWeatherIndex].condition} â€¢ {weathers[currentWeatherIndex].city}
+                            {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
                           </p>
                         </div>
                         {(() => {
@@ -564,7 +564,7 @@ export default function Dashboard() {
                       </div>
                       <input
                         type="number"
-                        placeholder="Total Price (â‚¹)"
+                        placeholder="Total Price (₹)"
                         className="input-field py-2 text-sm"
                         min="0"
                         value={materialForm.price}
@@ -650,7 +650,7 @@ export default function Dashboard() {
                 </div>
                 <div className="grid grid-cols-2 gap-5">
                   <div>
-                    <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (â‚¹) *</label>
+                    <label className="mb-1.5 block text-sm font-semibold text-navy">Total Budget (₹) *</label>
                     <input type="number" value={formData.totalBudget} onChange={(e) => setFormData({ ...formData, totalBudget: e.target.value })} className="input-field" required min="0" />
                   </div>
                   <div>

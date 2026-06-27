@@ -143,7 +143,7 @@ function renderMessage(text) {
     }
 
     // Unordered list
-    const ulMatch = line.match(/^(\s*)[*\-â€¢]\s+(.+)/);
+    const ulMatch = line.match(/^(\s*)[*\-•]\s+(.+)/);
     if (ulMatch) {
       if (listType !== 'ul') flushList();
       listType = 'ul';
@@ -187,8 +187,8 @@ function inlineFormat(text) {
   result = result.replace(/\*(.+?)\*/g, '<em>$1</em>');
   // Inline code
   result = result.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 rounded bg-navy/5 dark:bg-white/5 dark:bg-navy/10 dark:bg-white/10 text-xs font-mono">$1</code>');
-  // Citation markers like [IS 456:2000 Â§26.5.1.1]
-  result = result.replace(/\[([A-Z][A-Z\s\d:.Â§/()â€“-]+)\]/g, '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-orange/10 text-orange-dark text-[11px] font-semibold cursor-help border border-orange/20" title="$1">ðŸ“‹ $1</span>');
+  // Citation markers like [IS 456:2000 §26.5.1.1]
+  result = result.replace(/\[([A-Z][A-Z\s\d:.§/()–-]+)\]/g, '<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-orange/10 text-orange-dark text-[11px] font-semibold cursor-help border border-orange/20" title="$1">📋 $1</span>');
   return result;
 }
 
@@ -254,7 +254,7 @@ export default function PlinthAIChatbot() {
       setMessages([{
         id: 'welcome',
         role: 'assistant',
-        content: `Hey ${firstName}! ðŸ‘‹ I'm **PlinthAI**, your construction management assistant.\n\nI can help you with:\n- ðŸ“Š **Project progress & summaries**\n- ðŸ“ **Your tasks & daily logs**\n- ðŸ‘¥ **Team management & invites**\n- ðŸ’¬ **Real-time team chat**\n- ðŸ§± **Material & inventory tracking**\n- ðŸ’° **Budget & expense details**\n- ðŸ—ï¸ **Construction standards (IS codes, CPWD)**\n- â“ **Navigating PlinthHQ**\n\nWhat would you like to know?`,
+        content: `Hey ${firstName}! 👋 I'm **PlinthAI**, your construction management assistant.\n\nI can help you with:\n- 📊 **Project progress & summaries**\n- 📝 **Your tasks & daily logs**\n- 👥 **Team management & invites**\n- 💬 **Real-time team chat**\n- 🧱 **Material & inventory tracking**\n- 💰 **Budget & expense details**\n- 🏗️ **Construction standards (IS codes, CPWD)**\n- ❓ **Navigating PlinthHQ**\n\nWhat would you like to know?`,
         timestamp: new Date(),
       }]);
     } catch (err) {
