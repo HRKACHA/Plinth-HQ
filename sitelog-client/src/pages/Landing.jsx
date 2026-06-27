@@ -69,22 +69,18 @@ export default function Landing() {
           }}
         />
 
-        {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[80%] sm:h-[85%] lg:h-full z-0 pointer-events-none">
+        {/* Right Image Background (Full Bleed) — Desktop Only */}
+        <div className="absolute right-0 top-0 w-[60%] h-full z-0 pointer-events-none hidden lg:block">
           {/* Light Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)]"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
-                 maskSize: '100% 100%',
-                 WebkitMaskSize: '100% 100%',
-                 maskRepeat: 'no-repeat',
-                 WebkitMaskRepeat: 'no-repeat',
-                 maskPosition: 'center',
-                 WebkitMaskPosition: 'center',
+                 maskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
                }}>
             <img 
               src="/Landing_image_white.png" 
               alt="PlinthHQ Dashboard Light" 
-              className="absolute inset-0 w-full h-full object-cover lg:object-center" 
+              className="absolute inset-0 w-full h-full object-cover" 
               style={{ objectPosition: 'center center' }}
               loading="eager"
               fetchpriority="high"
@@ -93,19 +89,15 @@ export default function Landing() {
           </div>
 
           {/* Dark Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[-webkit-mask-image:linear-gradient(to_right,transparent,black_15%,black_100%)]"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
                style={{
-                 maskSize: '100% 100%',
-                 WebkitMaskSize: '100% 100%',
-                 maskRepeat: 'no-repeat',
-                 WebkitMaskRepeat: 'no-repeat',
-                 maskPosition: 'center',
-                 WebkitMaskPosition: 'center',
+                 maskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
+                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
                }}>
             <img 
               src="/Landing_image.png" 
               alt="PlinthHQ Dashboard Dark" 
-              className="absolute inset-0 w-full h-full object-cover lg:object-center" 
+              className="absolute inset-0 w-full h-full object-cover" 
               style={{ objectPosition: 'center center' }}
               loading="eager"
               fetchpriority="high"
@@ -115,7 +107,7 @@ export default function Landing() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-4 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
@@ -152,6 +144,25 @@ export default function Landing() {
           </div>
         </div>
       </section>
+
+      {/* ── Mobile Hero Image (shown only on mobile, below hero text) ── */}
+      <div className="lg:hidden relative w-full overflow-hidden -mt-4 mb-4">
+        <div className="relative w-full aspect-[16/10]"
+             style={{
+               maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
+             }}>
+          <img 
+            src={theme === 'dark' ? '/Landing_image.png' : '/Landing_image_white.png'}
+            alt="PlinthHQ Dashboard" 
+            className="w-full h-full object-cover rounded-xl"
+            style={{ objectPosition: 'center center' }}
+            loading="eager"
+            fetchpriority="high"
+            decoding="sync"
+          />
+        </div>
+      </div>
 
       {/* ── Features ── */}
       <section className="mx-auto max-w-7xl px-4 pb-8 lg:px-8">
