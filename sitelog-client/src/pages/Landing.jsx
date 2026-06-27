@@ -40,7 +40,7 @@ export default function Landing() {
 
 
       {/* ── Hero with Particle Canvas ── */}
-      <section className="relative overflow-hidden flex flex-col lg:flex-row lg:items-center min-h-[auto] lg:min-h-screen -mt-24 lg:-mt-[104px]">
+      <section className="relative overflow-hidden flex items-center min-h-screen -mt-24 lg:-mt-[104px]">
         
         {/* Dotted Background on the Left (Text Side) fading out towards right completely */}
         <div 
@@ -54,72 +54,26 @@ export default function Landing() {
         />
 
         {/* Seamless Dual-Tone Background & Particle Blocker */}
-        {/* Light Mode Gradient - hidden on mobile */}
+        {/* Light Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 lg:opacity-100 lg:dark:opacity-0"
+          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-100 dark:opacity-0"
           style={{
-            background: 'linear-gradient(to right, transparent 0%, transparent 40%, rgb(220, 232, 255) 80%, rgb(220, 232, 255) 100%)',
+            background: 'linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(220,232,255,0.7) 100%)',
           }}
         />
-        {/* Dark Mode Gradient - hidden on mobile */}
+        {/* Dark Mode Gradient */}
         <div 
-          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 lg:dark:opacity-100"
+          className="absolute inset-0 z-0 transition-opacity duration-500 opacity-0 dark:opacity-100"
           style={{
-            background: 'linear-gradient(to right, transparent 0%, transparent 40%, #0A0C10 80%, #0A0C10 100%)',
+            background: 'linear-gradient(135deg, rgba(10,12,16,1) 0%, rgba(20,26,38,1) 100%)',
           }}
         />
 
-        {/* Right Image Background (Full Bleed) - DESKTOP ONLY */}
-        <div 
-          className="absolute right-0 top-0 hidden lg:block lg:w-[60%] h-full z-0 animate-slideUp"
-          style={{
-            animationDelay: '0.4s',
-          }}
-        >
-          {/* Light Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
-               style={{
-                 maskImage: 'radial-gradient(ellipse closest-side, black 60%, transparent 100%)',
-                 WebkitMaskImage: 'radial-gradient(ellipse closest-side, black 60%, transparent 100%)',
-                 maskSize: '100% 100%',
-                 WebkitMaskSize: '100% 100%',
-                 maskRepeat: 'no-repeat',
-                 WebkitMaskRepeat: 'no-repeat',
-                 maskPosition: 'center',
-                 WebkitMaskPosition: 'center',
-               }}>
-            <img 
-              src="/Landing_image_white.png" 
-              alt="PlinthHQ Dashboard Light" 
-              className="absolute inset-0 w-full h-full object-cover object-center" 
-            />
-          </div>
-
-          {/* Dark Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
-               style={{
-                 maskImage: 'radial-gradient(ellipse closest-side, black 20%, transparent 100%)',
-                 WebkitMaskImage: 'radial-gradient(ellipse closest-side, black 20%, transparent 100%)',
-                 maskSize: '100% 100%',
-                 WebkitMaskSize: '100% 100%',
-                 maskRepeat: 'no-repeat',
-                 WebkitMaskRepeat: 'no-repeat',
-                 maskPosition: 'center',
-                 WebkitMaskPosition: 'center',
-               }}>
-            <img 
-              src="/Landing_image.png" 
-              alt="PlinthHQ Dashboard Dark" 
-              className="absolute inset-0 w-full h-full object-cover object-center" 
-            />
-          </div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-32 pb-8 lg:pt-48 lg:pb-16">
+        {/* Content Container (Unified Grid: side-by-side on PC, stacked above the fold on mobile) */}
+        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center pt-32 pb-16 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
-          <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
+          <div className="lg:col-span-7 flex flex-col items-start gap-5 lg:gap-6 text-left">
             <div className="inline-block animate-slideUp">
               <span className="py-1 px-3 rounded-full text-[10px] sm:text-xs font-mono text-muted tracking-widest uppercase"
                 style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.08)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(8px)' }}>
@@ -131,7 +85,7 @@ export default function Landing() {
               staticText={"Your site's\nsingle source"} 
               rotatingPhrases={['of truth', 'of control', 'of visibility', 'of progress', 'of accountability', 'of confidence']} 
               isAboutPage={false} 
-              className="text-[2.75rem] md:text-7xl lg:text-8xl"
+              className="text-[2.25rem] sm:text-5xl md:text-7xl lg:text-[5.5rem] xl:text-8xl"
             />
 
             <div className="flex flex-wrap gap-2 sm:gap-3 animate-slideUp" style={{ animationDelay: '0.1s' }}>
@@ -141,7 +95,7 @@ export default function Landing() {
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Owner Dashboards</span>
             </div>
 
-            <p className="text-base md:text-lg text-navy/70 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
+            <p className="text-sm sm:text-base md:text-lg text-navy/70 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
               Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
             </p>
 
@@ -151,28 +105,25 @@ export default function Landing() {
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* Mobile Image - shown ONLY on mobile, below the text */}
-        <div className="relative z-10 w-full lg:hidden px-4 pb-12 animate-slideUp" style={{ animationDelay: '0.4s' }}>
-          <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden shadow-xl"
-               style={{
-                 maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-                 WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
-               }}>
-            {/* Light Mode */}
-            <img 
-              src="/Landing_image_white.png" 
-              alt="PlinthHQ Dashboard Light" 
-              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 opacity-100 dark:opacity-0" 
-            />
-            {/* Dark Mode */}
-            <img 
-              src="/Landing_image.png" 
-              alt="PlinthHQ Dashboard Dark" 
-              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 opacity-0 dark:opacity-100" 
-            />
+          {/* Right Image Side */}
+          <div className="lg:col-span-5 w-full flex justify-center lg:justify-end animate-slideUp" style={{ animationDelay: '0.4s' }}>
+            <div className="relative w-full max-w-[450px] lg:max-w-none rounded-2xl overflow-hidden shadow-2xl border border-navy/10 dark:border-white/10 aspect-[4/3] sm:aspect-video lg:aspect-auto">
+              {/* Light Mode */}
+              <img 
+                src="/Landing_image_white.png" 
+                alt="PlinthHQ Dashboard Light" 
+                className="w-full h-auto block transition-opacity duration-500 opacity-100 dark:opacity-0" 
+              />
+              {/* Dark Mode */}
+              <img 
+                src="/Landing_image.png" 
+                alt="PlinthHQ Dashboard Dark" 
+                className="absolute inset-0 w-full h-auto block transition-opacity duration-500 opacity-0 dark:opacity-100" 
+              />
+            </div>
           </div>
+
         </div>
       </section>
 
