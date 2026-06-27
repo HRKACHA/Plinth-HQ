@@ -215,7 +215,7 @@ export default function About() {
                   'your progress\ndeserves.'
                 ]}
                 isAboutPage={true}
-                className="text-[2.5rem] md:text-6xl lg:text-7xl"
+                className="text-[2.5rem] md:text-7xl lg:text-8xl"
               />
             </div>
             <p className="text-lg md:text-xl text-navy/70 dark:text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">

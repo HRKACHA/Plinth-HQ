@@ -70,12 +70,7 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div 
-          className="absolute right-0 top-0 w-full lg:w-[60%] h-full z-0 animate-slideUp"
-          style={{
-            animationDelay: '0.4s',
-          }}
-        >
+        <div className="absolute right-0 top-0 w-full lg:w-[60%] h-full z-0">
           {/* Light Mode Mask Container */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
@@ -92,7 +87,7 @@ export default function Landing() {
               src="/Landing_image_white.png" 
               alt="PlinthHQ Dashboard Light" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center 85%' }}
+              style={{ objectFit: 'cover', objectPosition: 'center 85%' }}
             />
           </div>
 
@@ -112,13 +107,13 @@ export default function Landing() {
               src="/Landing_image.png" 
               alt="PlinthHQ Dashboard Dark" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center 85%' }}
+              style={{ objectFit: 'cover', objectPosition: 'center 85%' }}
             />
           </div>
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-32 pb-8 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-20 pb-8 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
