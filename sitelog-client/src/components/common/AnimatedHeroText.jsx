@@ -57,11 +57,11 @@ export default function AnimatedHeroText({ staticText, rotatingPhrases, isAboutP
   const longestPhrase = rotatingPhrases.reduce((a, b) => a.length > b.length ? a : b, "");
 
   return (
-    <h1 className={`font-display font-bold tracking-tighter leading-[1.1] sm:leading-[1.1] ${className}`}>
+    <h1 className={`font-display font-bold tracking-tighter leading-[1.05] sm:leading-[1.1] ${className}`}>
       {staticText.split('\n').map((line, i) => (
         <span key={i} className="block pt-2 pb-4 -mt-2 -mb-4" style={gradientStyle}>{line}</span>
       ))}
-      <span className="grid relative overflow-hidden mt-2 sm:mt-0 pt-2 pb-4 -mt-2 -mb-4 whitespace-nowrap">
+      <span className="grid relative overflow-hidden mt-2 sm:mt-0 pt-2 pb-4 -mt-2 -mb-4">
         <span className="col-start-1 row-start-1 invisible pointer-events-none">
           {longestPhrase.split('\n').map((line, idx) => (
             <span key={idx} className="block pt-2 pb-4 -mt-2 -mb-4" style={gradientStyle}>{line}</span>

@@ -197,17 +197,17 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
+      <section className="relative" style={{ minHeight: '60vh' }}>
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20" style={{ minHeight: '60vh' }}>
           <div className="max-w-4xl w-full">
             <div className="inline-block animate-slideUp mb-6">
               <SectionBadge>About PlinthHQ</SectionBadge>
             </div>
-            <div className="mb-8">
+            <div className="mb-8 overflow-hidden">
               <AnimatedHeroText
                 staticText={"The command center"}
                 rotatingPhrases={[
-                  'your construction site\ndeserves.',
+                  'your construction\nsite deserves.',
                   'your projects\ndeserve.',
                   'your teams\ndeserve.',
                   'your budgets\ndeserve.',
@@ -215,9 +215,10 @@ export default function About() {
                   'your progress\ndeserves.'
                 ]}
                 isAboutPage={true}
+                className="text-[2.5rem] md:text-6xl lg:text-7xl"
               />
             </div>
-            <p className="text-xl text-navy/70 dark:text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">
+            <p className="text-lg md:text-xl text-navy/70 dark:text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">
               PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
             </p>
             <div className="pt-10 flex justify-center">
