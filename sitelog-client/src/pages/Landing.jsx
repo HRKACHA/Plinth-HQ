@@ -72,10 +72,8 @@ export default function Landing() {
         {/* Right Image Background (Full Bleed) */}
         <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[80%] sm:h-[85%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0 [mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[mask-image:radial-gradient(ellipse_closest-side,black_75%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_15%,black_90%,transparent)] lg:[-webkit-mask-image:radial-gradient(ellipse_closest-side,black_75%,transparent_100%)]"
                style={{
-                 maskImage: 'radial-gradient(ellipse closest-side, black 75%, transparent 100%)',
-                 WebkitMaskImage: 'radial-gradient(ellipse closest-side, black 75%, transparent 100%)',
                  maskSize: '100% 100%',
                  WebkitMaskSize: '100% 100%',
                  maskRepeat: 'no-repeat',
@@ -95,10 +93,8 @@ export default function Landing() {
           </div>
 
           {/* Dark Mode Mask Container */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
+          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100 [mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[mask-image:radial-gradient(ellipse_closest-side,black_20%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,black_20%,black_80%,transparent)] lg:[-webkit-mask-image:radial-gradient(ellipse_closest-side,black_20%,transparent_100%)]"
                style={{
-                 maskImage: 'radial-gradient(ellipse closest-side, black 20%, transparent 100%)',
-                 WebkitMaskImage: 'radial-gradient(ellipse closest-side, black 20%, transparent 100%)',
                  maskSize: '100% 100%',
                  WebkitMaskSize: '100% 100%',
                  maskRepeat: 'no-repeat',
@@ -144,7 +140,7 @@ export default function Landing() {
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Owner Dashboards</span>
             </div>
 
-            <p className="text-base md:text-lg text-navy/70 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
+            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
               Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
             </p>
 
@@ -167,7 +163,7 @@ export default function Landing() {
                 <Icon className="h-6 w-6 text-orange" />
               </div>
               <h3 className="font-semibold text-navy dark:text-white text-lg tracking-tight">{title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-navy/70 dark:text-white/70">{desc}</p>
+              <p className="mt-2 text-sm leading-relaxed text-navy/90 dark:text-white/70">{desc}</p>
             </div>
           ))}
         </div>
@@ -182,7 +178,7 @@ export default function Landing() {
         }} />
         <div className="relative mx-auto max-w-4xl px-4 text-center lg:px-8">
           <h2 className="font-display text-3xl font-bold lg:text-4xl tracking-tight text-navy dark:text-white">Ready to digitise your construction site?</h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-navy/70 dark:text-white/70 leading-relaxed">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-navy/90 dark:text-white/70 leading-relaxed">
             Join forward-thinking contractors who reduced project overruns by 30% with PlinthHQ&apos;s real-time accountability and owner visibility.
           </p>
           <Link to="/register" className="btn-accent mt-10 inline-flex px-10 py-4 text-base shadow-glow">
@@ -196,8 +192,8 @@ export default function Landing() {
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row lg:px-8">
           <PlinthLogo size="xs" variant="full" />
           <div className="flex items-center gap-6">
-            <Link to="/sitemap" className="text-sm text-navy/60 dark:text-white/60 hover:text-navy dark:text-white transition-colors">Sitemap</Link>
-            <p className="text-sm text-navy/60 dark:text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
+            <Link to="/sitemap" className="text-sm text-navy/80 dark:text-white/60 hover:text-navy dark:text-white transition-colors">Sitemap</Link>
+            <p className="text-sm text-navy/80 dark:text-white/60">&copy; {new Date().getFullYear()} PlinthHQ. All rights reserved.</p>
           </div>
         </div>
       </footer>
