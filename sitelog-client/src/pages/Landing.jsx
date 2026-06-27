@@ -69,13 +69,13 @@ export default function Landing() {
           }}
         />
 
-        {/* Right Image Background (Full Bleed) — Desktop Only */}
-        <div className="absolute right-0 top-0 w-[60%] h-full z-0 pointer-events-none hidden lg:block">
-          {/* Light Mode Mask Container */}
+        {/* Right Image Background (Full Bleed) */}
+        <div className="absolute right-0 top-[10%] lg:top-0 w-full lg:w-[60%] h-[85%] lg:h-full z-0 pointer-events-none">
+          {/* Light Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
-                 maskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
+                 maskImage: 'linear-gradient(to bottom, transparent, black 10%, black 95%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 10%, black 95%, transparent)',
                }}>
             <img 
               src="/Landing_image_white.png" 
@@ -88,11 +88,11 @@ export default function Landing() {
             />
           </div>
 
-          {/* Dark Mode Mask Container */}
+          {/* Dark Mode Image */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
                style={{
-                 maskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 30%, black 100%)',
+                 maskImage: 'linear-gradient(to bottom, transparent, black 15%, black 90%, transparent)',
+                 WebkitMaskImage: 'linear-gradient(to bottom, transparent, black 15%, black 90%, transparent)',
                }}>
             <img 
               src="/Landing_image.png" 
@@ -104,10 +104,26 @@ export default function Landing() {
               decoding="sync"
             />
           </div>
+
+          {/* PC-only left fade so image blends into text area seamlessly */}
+          <div className="hidden lg:block absolute inset-0 transition-colors duration-500"
+               style={{
+                 background: theme === 'dark'
+                   ? 'linear-gradient(to right, rgb(10, 12, 16) 0%, transparent 35%)'
+                   : 'linear-gradient(to right, rgb(220, 232, 255) 0%, transparent 35%)',
+               }} />
         </div>
 
+        {/* Mobile text background overlay — keeps text area clean */}
+        <div className="absolute inset-x-0 top-0 h-[55%] z-[1] lg:hidden transition-colors duration-500"
+             style={{
+               background: theme === 'dark'
+                 ? 'linear-gradient(to bottom, rgb(10, 12, 16) 70%, transparent 100%)'
+                 : 'linear-gradient(to bottom, rgb(220, 232, 255) 70%, transparent 100%)',
+             }} />
+
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-4 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-center h-full pt-8 pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-6 text-left">
@@ -144,25 +160,6 @@ export default function Landing() {
           </div>
         </div>
       </section>
-
-      {/* ── Mobile Hero Image (shown only on mobile, below hero text) ── */}
-      <div className="lg:hidden relative w-full overflow-hidden -mt-4 mb-4">
-        <div className="relative w-full aspect-[16/10]"
-             style={{
-               maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
-               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 85%, transparent 100%)',
-             }}>
-          <img 
-            src={theme === 'dark' ? '/Landing_image.png' : '/Landing_image_white.png'}
-            alt="PlinthHQ Dashboard" 
-            className="w-full h-full object-cover rounded-xl"
-            style={{ objectPosition: 'center center' }}
-            loading="eager"
-            fetchpriority="high"
-            decoding="sync"
-          />
-        </div>
-      </div>
 
       {/* ── Features ── */}
       <section className="mx-auto max-w-7xl px-4 pb-8 lg:px-8">
