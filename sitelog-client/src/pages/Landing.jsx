@@ -70,7 +70,7 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 bottom-0 top-auto lg:top-0 w-full lg:w-[60%] h-[75%] sm:h-[85%] lg:h-full z-0 pointer-events-none">
+        <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[80%] sm:h-[85%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Mask Container */}
           <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
                style={{
@@ -92,8 +92,6 @@ export default function Landing() {
               fetchpriority="high"
               decoding="sync"
             />
-            {/* Mobile-only white fade for text readability */}
-            <div className="absolute inset-0 bg-white/60 lg:bg-transparent" />
           </div>
 
           {/* Dark Mode Mask Container */}
@@ -117,8 +115,6 @@ export default function Landing() {
               fetchpriority="high"
               decoding="sync"
             />
-            {/* Mobile-only dark fade for text readability */}
-            <div className="absolute inset-0 bg-[#0A0C10]/40 lg:bg-transparent" />
           </div>
         </div>
 
