@@ -635,3 +635,18 @@
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
+
+/* ── Responsive Hero Image Mask ── */
+.hero-image-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 95%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 2%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 95%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 2%, black 95%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-composite: destination-in;
+}
+
+@media (min-width: 1024px) {
+  .hero-image-mask {
+    mask-image: linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
+  }
+}

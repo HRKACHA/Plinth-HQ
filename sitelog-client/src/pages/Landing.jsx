@@ -59,15 +59,9 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 top-[25%] lg:top-0 w-full lg:w-[60%] h-[75%] lg:h-full z-0 pointer-events-none">
+        <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[85%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Image */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0"
-               style={{
-                 maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
-                 maskComposite: 'intersect',
-                 WebkitMaskComposite: 'destination-in',
-               }}>
+          <div className="hero-image-mask absolute inset-0 w-full h-full transition-opacity duration-500 opacity-100 dark:opacity-0">
             <img 
               src="/Image_white.png" 
               alt="PlinthHQ Dashboard Light" 
@@ -80,13 +74,7 @@ export default function Landing() {
           </div>
 
           {/* Dark Mode Image */}
-          <div className="absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100"
-               style={{
-                 maskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
-                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 20%, black 80%, transparent), linear-gradient(to bottom, transparent, black 5%, black 85%, transparent)',
-                 maskComposite: 'intersect',
-                 WebkitMaskComposite: 'destination-in',
-               }}>
+          <div className="hero-image-mask absolute inset-0 w-full h-full transition-opacity duration-500 opacity-0 dark:opacity-100">
             <img 
               src="/Image.png" 
               alt="PlinthHQ Dashboard Dark" 
