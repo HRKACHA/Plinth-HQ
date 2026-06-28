@@ -3,7 +3,7 @@ import { Link, useParams, Outlet, useLocation, useNavigate } from 'react-router-
 import {
   LayoutGrid, ClipboardList, Users, Package, Receipt, PieChart,
   Flag, FileText, Eye, Pencil, Trash2, MoreVertical, Plus,
-  ChevronDown, Briefcase, CalendarCheck, Wrench, AlertTriangle, Image, MessageSquare
+  ChevronDown, Briefcase, CalendarCheck, Wrench, AlertTriangle, Image, MessageSquare, X
 } from 'lucide-react';
 import AppLayout from '../../components/layout/AppLayout';
 import Badge from '../../components/common/Badge';
@@ -94,11 +94,21 @@ export default function ProjectLayout() {
   const isDropdownActive = (items) => items.some(item => isActiveTab(item.path));
 
   const openEdit = () => {
+    let city = '';
+    let state = '';
+    if (typeof project.location === 'string') {
+      const parts = project.location.split(', ');
+      city = parts[0] || '';
+      state = parts.slice(1).join(', ') || '';
+    } else if (project.location) {
+      city = project.location.city || '';
+      state = project.location.state || '';
+    }
     setFormData({
       name: project.name,
       description: project.description,
-      location: project.location,
-      state: project.state || '',
+      location: city,
+      state: state,
       progress: project.progress || 0,
       totalBudget: project.totalBudget,
       startDate: project.startDate ? new Date(project.startDate).toISOString().split('T')[0] : '',
@@ -114,7 +124,7 @@ export default function ProjectLayout() {
     try {
       const payload = {
         ...formData,
-        location: { city: formData.location },
+        location: { city: formData.location, state: formData.state },
         totalBudget: Number(formData.totalBudget)
       };
       await projectApi.update(id, payload);
@@ -356,6 +366,9 @@ export default function ProjectLayout() {
           <div className="modal-content max-w-lg p-6 sm:p-8">
             <div className="mb-6 flex items-center justify-between">
               <h3 className="font-display text-2xl font-bold text-navy tracking-tight">Edit Project</h3>
+              <button type="button" onClick={() => setShowEditModal(false)} className="text-navy/50 hover:text-navy transition-colors">
+                <X className="h-6 w-6" />
+              </button>
             </div>
             <form onSubmit={handleEdit} className="space-y-5">
               <div>

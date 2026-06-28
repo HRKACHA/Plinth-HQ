@@ -333,6 +333,9 @@ export default function ProjectsList() {
             <div className="modal-content max-w-lg p-6 sm:p-8 border border-[var(--color-glass-border)] shadow-elevated">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="text-2xl font-bold text-navy tracking-tight">Edit Project</h3>
+                <button type="button" onClick={() => setShowEditModal(false)} className="text-muted hover:text-navy transition-colors">
+                  <X className="h-5 w-5" />
+                </button>
               </div>
               <form onSubmit={handleEdit} className="space-y-5">
                 <div>

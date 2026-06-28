@@ -6,7 +6,7 @@ import {
   Sun, ArrowUpRight, FileText, Upload, CalendarClock, Activity,
   TrendingUp, Building2, Pencil, Package, CheckCircle2,
   Cloud, CloudFog, CloudRain, CloudSnow, CloudLightning,
-  AlertCircle, TrendingDown, Loader2, ChevronLeft, ChevronRight
+  AlertCircle, TrendingDown, Loader2, ChevronLeft, ChevronRight, X
 } from 'lucide-react';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
 import AppLayout from '../components/layout/AppLayout';
@@ -163,11 +163,21 @@ export default function Dashboard() {
 
   const openEdit = (p) => {
     setSelectedProject(p);
+    let city = '';
+    let state = '';
+    if (typeof p.location === 'string') {
+      const parts = p.location.split(', ');
+      city = parts[0] || '';
+      state = parts.slice(1).join(', ') || '';
+    } else if (p.location) {
+      city = p.location.city || '';
+      state = p.location.state || '';
+    }
     setFormData({
       name: p.name,
       description: p.description,
-      location: p.location,
-      state: p.state || '',
+      location: city,
+      state: state,
       progress: p.progress || 0,
       totalBudget: p.totalBudget,
       startDate: p.startDate ? new Date(p.startDate).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
@@ -183,7 +193,7 @@ export default function Dashboard() {
     try {
       const payload = {
         ...formData,
-        location: { city: formData.location },
+        location: { city: formData.location, state: formData.state },
         totalBudget: Number(formData.totalBudget)
       };
       await projectApi.update(selectedProject._id || selectedProject.id, payload);
@@ -235,7 +245,8 @@ export default function Dashboard() {
         });
       } else {
         let apiWeather = 'sunny';
-        const cond = weatherData.condition.toLowerCase();
+        const projWeather = weathers.find(w => (w.projectId === materialForm.projectId || w.projectId === (materialForm.projectId?._id || materialForm.projectId?.id)));
+        const cond = projWeather ? projWeather.condition.toLowerCase() : 'sunny';
         if (cond.includes('cloud')) apiWeather = 'cloudy';
         if (cond.includes('fog')) apiWeather = 'foggy';
         if (cond.includes('rain') || cond.includes('shower') || cond.includes('snow')) apiWeather = 'rainy';
@@ -618,6 +629,9 @@ export default function Dashboard() {
             <div className="modal-content max-w-lg p-6 sm:p-8">
               <div className="mb-6 flex items-center justify-between">
                 <h3 className="font-display text-2xl font-bold text-navy tracking-tight">Edit Project</h3>
+                <button type="button" onClick={() => setShowEditModal(false)} className="text-navy/50 hover:text-navy transition-colors">
+                  <X className="h-6 w-6" />
+                </button>
               </div>
               <form onSubmit={handleEdit} className="space-y-5">
                 <div>
