@@ -116,7 +116,7 @@ export default function Landing() {
               className="text-[2.75rem] md:text-7xl lg:text-8xl"
             />
 
-            <div className="flex flex-wrap gap-2 sm:gap-3 animate-slideUp" style={{ animationDelay: '0.1s' }}>
+            <div className="flex flex-wrap gap-2 sm:gap-3 animate-slideUp mt-4 lg:mt-6" style={{ animationDelay: '0.1s' }}>
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Daily Operations</span>
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Financial Control</span>
               <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">AI & Accessibility</span>
@@ -134,7 +134,7 @@ export default function Landing() {
               </Link>
             </div>
 
-            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp my-4 lg:my-6" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp my-2 lg:my-3" style={{ animationDelay: '0.2s' }}>
               Plinth-HQ is a comprehensive Construction Site Management System<br className="hidden lg:block" /> designed to streamline daily site operations, track material inventory,<br className="hidden lg:block" /> control project budgets, and automatically generate professional reports.
             </p>
 
