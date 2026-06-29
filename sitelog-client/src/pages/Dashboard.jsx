@@ -563,15 +563,13 @@ export default function Dashboard() {
                           onChange={(e) => setMaterialForm({ ...materialForm, quantity: e.target.value })}
                           required min="0" step="any"
                         />
-                        <select
-                          className="input-field py-2 text-sm w-1/2 px-1"
+                        <CustomSelectMenu
                           value={materialForm.unit}
-                          onChange={(e) => setMaterialForm({ ...materialForm, unit: e.target.value })}
-                        >
-                          {['bags', 'kg', 'ton', 'pieces', 'sqft', 'litres', 'cu.m', 'bundle', 'Other'].map(u => (
-                            <option key={u} value={u}>{u}</option>
-                          ))}
-                        </select>
+                          onChange={(val) => setMaterialForm({ ...materialForm, unit: val })}
+                          options={['bags', 'kg', 'ton', 'pieces', 'sqft', 'litres', 'cu.m', 'bundle', 'Other'].map(u => ({ value: u, label: u }))}
+                          placeholder="Unit"
+                          className="w-1/2"
+                        />
                       </div>
                       <input
                         type="number"
