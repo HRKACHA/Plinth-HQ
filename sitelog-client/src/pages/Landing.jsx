@@ -98,7 +98,7 @@ export default function Landing() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-8 xl:px-12 grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[140px] pb-20 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-[50px] xl:px-[80px] grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[140px] pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
           <div className="lg:pr-8 flex flex-col items-start gap-4 text-left">
