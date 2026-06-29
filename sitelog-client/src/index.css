@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Enable smooth transitions for gradient backgrounds in modern browsers */
+@property --gradient-card-start {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #111827;
+}
+@property --gradient-card-mid {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #1e293b;
+}
+@property --gradient-card-end {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #0f172a;
+}
+
 @layer base {
   :root {
     /* ── Liquid Glass Design System — Light Premium ── */
@@ -104,7 +121,7 @@
 
   body {
     @apply antialiased text-navy dark:text-white bg-surface overflow-x-hidden selection:bg-orange/30 selection:text-white;
-    transition: background-color 0.35s ease, color 0.35s ease;
+    transition: background-color 0.35s ease, color 0.35s ease, --gradient-card-start 0.35s ease, --gradient-card-mid 0.35s ease, --gradient-card-end 0.35s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

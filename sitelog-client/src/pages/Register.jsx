@@ -251,7 +251,7 @@ export default function Register() {
                 <div className="w-full" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(120,140,200,0.12)' }} />
               </div>
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="px-4 text-muted font-medium" style={{ background: 'rgb(var(--color-card))' }}>or register with email</span>
+                <span className="px-4 text-muted font-medium" style={{ background: 'rgb(var(--color-card))', transition: 'background-color 0.35s ease' }}>or register with email</span>
               </div>
             </div>
 

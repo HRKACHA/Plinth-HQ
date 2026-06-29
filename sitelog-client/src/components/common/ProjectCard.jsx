@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
           </span>
         </div>
       </div>
-      <div className="p-3 sm:p-4" style={{ background: 'rgb(var(--color-card))' }}>
+      <div className="p-3 sm:p-4" style={{ background: 'rgb(var(--color-card))', transition: 'background-color 0.35s ease' }}>
         <h3 className="font-bold text-base text-navy group-hover:text-orange transition-colors truncate">{project.name}</h3>
         <p className="mt-0.5 line-clamp-2 text-xs text-navy/90 dark:text-white/70 h-8">{project.description || 'No description provided.'}</p>
         <div className="mt-3 space-y-1.5 text-[11px] text-navy/90 dark:text-white/70">
