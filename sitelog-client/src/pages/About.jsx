@@ -152,13 +152,32 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative" style={{ minHeight: '60vh' }}>
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20" style={{ minHeight: '60vh' }}>
-          <div className="max-w-4xl w-full">
-            <div className="inline-block animate-slideUp mb-6">
+      <section className="relative overflow-hidden" style={{ minHeight: '75vh' }}>
+        {/* Background Particles (using existing imported component) */}
+        <div className="absolute inset-0 z-0">
+          <ParticleBackground />
+        </div>
+        
+        {/* Ambient Glowing Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen opacity-60 animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 dark:bg-emerald-600/10 rounded-full blur-[100px] mix-blend-screen opacity-60 animate-pulse" style={{ animationDuration: '7s' }} />
+        </div>
+
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] z-0" style={{
+          backgroundImage: theme === 'dark' ? 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)' : 'linear-gradient(rgba(10,12,16,1) 1px, transparent 1px), linear-gradient(90deg, rgba(10,12,16,1) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
+        }} />
+
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24" style={{ minHeight: '75vh' }}>
+          <div className="max-w-4xl w-full flex flex-col items-center">
+            
+            <div className="inline-block animate-slideUp mb-8" style={{ animationDelay: '0.1s' }}>
               <SectionBadge>About PlinthHQ</SectionBadge>
             </div>
-            <div className="mb-8 overflow-hidden">
+            
+            <div className="mb-8 overflow-visible animate-slideUp" style={{ animationDelay: '0.2s' }}>
               <AnimatedHeroText
                 staticText={"The command center"}
                 rotatingPhrases={[
@@ -170,16 +189,21 @@ export default function About() {
                   'your progress\ndeserves.'
                 ]}
                 isAboutPage={true}
-                className="text-[2.5rem] md:text-7xl lg:text-8xl"
+                className="text-[2.75rem] md:text-7xl lg:text-[5.5rem] leading-[1.1]"
               />
             </div>
-            <p className="text-lg md:text-xl text-navy/90 dark:text-white/70 leading-relaxed max-w-3xl mx-auto mt-6">
+            
+            <p className="text-lg md:text-xl text-navy/80 dark:text-white/70 font-light leading-relaxed max-w-2xl mx-auto mt-6 animate-slideUp" style={{ animationDelay: '0.3s' }}>
               PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
             </p>
-            <div className="pt-10 flex justify-center">
-              <Link to="/register" className="btn-accent px-12 py-3.5 text-base shadow-glow">
-                Get Started
+            
+            <div className="pt-12 flex flex-col sm:flex-row justify-center gap-4 w-full animate-slideUp" style={{ animationDelay: '0.4s' }}>
+              <Link to="/register" className="btn-accent px-8 py-3.5 text-base shadow-glow flex items-center justify-center">
+                Get Started Free <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
+              <a href="#features" className="px-8 py-3.5 text-base font-semibold text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white transition-all duration-300 rounded-full border border-navy/20 dark:border-white/20 bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 flex items-center justify-center active:scale-95">
+                Explore Features
+              </a>
             </div>
           </div>
         </div>
