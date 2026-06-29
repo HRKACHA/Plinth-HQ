@@ -61,8 +61,8 @@ export default function Sitemap() {
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {sitemapLinks.map((section, idx) => (
-            <div key={idx} className="p-8 rounded-2xl border border-violet-200 dark:border-violet-800/40 bg-violet-50/80 dark:bg-violet-900/10 shadow-sm backdrop-blur-md animate-slideUp transition-all hover:shadow-md hover:border-violet-300 dark:hover:border-violet-700/50" style={{ animationDelay: `${idx * 0.1}s` }}>
-              <h2 className="text-lg font-bold text-navy mb-6 pb-4 border-b border-navy/10 dark:border-white/10">{section.category}</h2>
+            <div key={idx} className="p-8 rounded-2xl border border-blue-500/10 dark:border-blue-400/10 bg-blue-500/5 dark:bg-blue-400/5 shadow-sm backdrop-blur-md animate-slideUp transition-all hover:shadow-md hover:border-blue-500/30 dark:hover:border-blue-400/30" style={{ animationDelay: `${idx * 0.1}s` }}>
+              <h2 className="text-lg font-bold text-navy dark:text-white mb-6 pb-4 border-b border-navy/10 dark:border-white/10">{section.category}</h2>
               <ul className="space-y-4">
                 {section.links.map((link, lIdx) => (
                   <li key={lIdx}>
