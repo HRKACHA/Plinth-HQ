@@ -117,9 +117,9 @@ export default function Landing() {
             />
 
             <div className="flex flex-wrap gap-2 sm:gap-3 animate-slideUp" style={{ animationDelay: '0.1s' }}>
-              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Real-time Sync</span>
-              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Cloud Storage</span>
-              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Offline Mode</span>
+              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Owner Dashboard</span>
+              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Budget Control</span>
+              <span className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm">Offline PWA</span>
               <Link 
                 to="/about#features"
                 onClick={() => {
@@ -135,7 +135,7 @@ export default function Landing() {
             </div>
 
             <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s', maxWidth: '500px' }}>
-              Replace paper logs, WhatsApp updates, and spreadsheets with real-time site monitoring, budget control, and owner transparency.
+              Plinth-HQ is a comprehensive Construction Site Management System designed to streamline daily site operations, track material inventory, control project budgets, and automatically generate professional reports.
             </p>
 
             <div className="animate-slideUp flex gap-4" style={{ animationDelay: '0.3s' }}>
