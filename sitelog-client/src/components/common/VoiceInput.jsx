@@ -4,8 +4,8 @@ import { useTheme } from '../../context/ThemeContext';
 
 const LANGUAGES = [
   { code: 'en-US', label: 'English' },
-  { code: 'hi-IN', label: 'Hindi (à¤¹à¤¿à¤‚à¤¦à¥€)' },
-  { code: 'gu-IN', label: 'Gujarati (àª—à«àªœàª°àª¾àª¤à«€)' }
+  { code: 'hi-IN', label: 'Hindi (हिंदी)' },
+  { code: 'gu-IN', label: 'Gujarati (ગુજરાતી)' }
 ];
 
 export default function VoiceInput({ onTranscript, onStart, position = 'right' }) {
