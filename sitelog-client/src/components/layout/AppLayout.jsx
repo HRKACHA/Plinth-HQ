@@ -147,25 +147,16 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
     ...accountItems,
   ];
 
-  // Theme-aware inline style helpers
+  // All theme-variant styles now use CSS custom properties — no JS recalculation needed
   const isDark = theme === 'dark';
-  const sidebarBg = isDark ? 'rgba(16, 18, 24, 0.40)' : 'rgba(255, 255, 255, 0.55)';
-  const headerBg = isDark ? 'rgba(16, 18, 24, 0.30)' : 'rgba(255, 255, 255, 0.50)';
-  const mobileBg = isDark ? 'rgba(16, 18, 24, 0.92)' : 'rgba(245, 248, 255, 0.96)';
-  const subtleBorder = isDark ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,40,0.06)';
-  const searchBg = isDark ? 'rgba(16,18,24,0.90)' : 'rgba(245,248,255,0.96)';
-  const searchBorder = isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)';
-  const dropdownBg = isDark ? 'rgba(16,18,24,0.88)' : 'rgba(245,248,255,0.96)';
-  const hoverBg = isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,40,0.03)';
-  const iconTextClass = isDark ? 'text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white' : 'text-navy-light hover:bg-black/5 hover:text-navy';
 
   return (
     <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
       <div className="absolute inset-0 backdrop-blur-sm bg-surface/50 pointer-events-none -z-10" />
       {/* ═══ Vertical Sidebar — Liquid Glass ═══ */}
       <aside className={`hidden lg:flex flex-col ${isCollapsed ? 'w-[72px]' : 'w-52'} shrink-0 z-50 transition-all duration-300`}
-        style={{ background: sidebarBg, backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder, transition: 'background 0.3s ease' }}>
-        <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ borderBottom: subtleBorder }}>
+        style={{ background: 'var(--sidebar-bg)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderRight: '1px solid var(--subtle-border)', transition: 'background 0.35s ease, border-color 0.35s ease' }}>
+        <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ borderBottom: '1px solid var(--subtle-border)' }}>
           <Link to="/dashboard" title={isCollapsed ? "PlinthHQ" : ""}>
             <PlinthLogo size="xs" iconOnly={isCollapsed} />
           </Link>
@@ -216,7 +207,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           <div className="flex-1" />
 
           {/* Account Group */}
-          <div className="space-y-1 pt-4" style={{ borderTop: subtleBorder }}>
+          <div className="space-y-1 pt-4" style={{ borderTop: '1px solid var(--subtle-border)' }}>
             {!isCollapsed && <p className="px-3 pb-2 text-[10px] font-bold uppercase tracking-widest text-navy/20 dark:text-white/20">Account</p>}
             {accountItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon }) => (
               <Link
@@ -232,7 +223,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
           </div>
 
           {/* Collapse Toggle Button */}
-          <div className="pt-4 mt-4 relative" style={{ borderTop: subtleBorder }}>
+          <div className="pt-4 mt-4 relative" style={{ borderTop: '1px solid var(--subtle-border)' }}>
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}
               className={`flex items-center ${isCollapsed ? 'justify-center h-10 w-10 mx-auto' : 'w-full gap-3 px-3 py-2.5'} rounded-xl text-sm font-medium text-navy/80 dark:text-white/60 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-all`}
@@ -250,7 +241,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
         
         {/* ═══ Header — Liquid Glass ═══ */}
         <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 relative z-[60]"
-          style={{ background: headerBg, backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: subtleBorder, transition: 'background 0.3s ease' }}>
+          style={{ background: 'var(--header-bg)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: '1px solid var(--subtle-border)', transition: 'background 0.35s ease, border-color 0.35s ease' }}>
           
           <div className="flex items-center gap-4">
             {/* Mobile hamburger */}
@@ -285,7 +276,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   <ChevronDown className="h-4 w-4 text-navy/80 dark:text-white/60" />
                 </button>
                 <div className="absolute right-0 top-full mt-2 w-max min-w-[260px] max-w-[320px] rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
-                  style={{ background: dropdownBg, backdropFilter: 'blur(24px) saturate(180%)', border: searchBorder }}>
+                  style={{ background: 'var(--dropdown-bg)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid var(--search-border)' }}>
                   <p className="px-3 py-2 text-xs font-semibold text-navy/80 dark:text-white/60 uppercase tracking-wider">Your Projects</p>
                   <div className="max-h-60 overflow-y-auto overflow-x-hidden">
                     {projects.map(p => (
@@ -348,7 +339,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
               {profileOpen && (
                 <div className="absolute right-0 left-auto top-full mt-2 w-56 glass-dropdown z-[100]">
-                  <div className="mb-1 rounded-xl px-3 py-2.5" style={{ background: isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,40,0.03)' }}>
+                  <div className="mb-1 rounded-xl px-3 py-2.5" style={{ background: 'var(--hover-bg)' }}>
                     <p className="text-sm font-semibold text-navy">{user?.name}</p>
                     <p className="text-xs text-muted">{user?.email}</p>
                     <span className="mt-1 inline-block badge bg-orange/10 text-orange text-[10px]">{user?.role}</span>
@@ -356,7 +347,7 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                   <Link to="/settings" onClick={() => setProfileOpen(false)} className="dropdown-item">
                     <User className="h-4 w-4 text-muted" /> Profile & Settings
                   </Link>
-                  <div className="my-1" style={{ borderTop: subtleBorder }} />
+                  <div className="my-1" style={{ borderTop: '1px solid var(--subtle-border)' }} />
                   <button type="button" onClick={handleLogout} className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-danger hover:bg-danger/5 transition-colors">
                     <LogOut className="h-4 w-4" /> Sign Out
                   </button>
@@ -384,10 +375,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       {/* ═══ Mobile Menu Overlay — Liquid Glass ═══ */}
       {mobileOpen && (
         <>
-          <div className="fixed inset-0 z-[70] backdrop-blur-sm animate-fadeIn lg:hidden" style={{ background: isDark ? 'rgba(0,0,0,0.50)' : 'rgba(0,0,40,0.25)' }} onClick={() => setMobileOpen(false)} />
+          <div className="fixed inset-0 z-[70] backdrop-blur-sm animate-fadeIn lg:hidden" style={{ background: 'var(--overlay-bg)' }} onClick={() => setMobileOpen(false)} />
           <div className="fixed inset-y-0 left-0 z-[80] w-64 flex flex-col shadow-elevated animate-slideDown lg:hidden"
-            style={{ background: mobileBg, backdropFilter: 'blur(24px) saturate(180%)', borderRight: subtleBorder }}>
-            <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: subtleBorder }}>
+            style={{ background: 'var(--mobile-bg)', backdropFilter: 'blur(24px) saturate(180%)', borderRight: '1px solid var(--subtle-border)' }}>
+            <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--subtle-border)' }}>
               <PlinthLogo size="xs" />
               <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
                 <X className="h-5 w-5" />
@@ -424,9 +415,9 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
       {/* ═══ Global Search Modal — Liquid Glass ═══ */}
       {searchOpen && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: isDark ? 'rgba(0,0,0,0.40)' : 'rgba(0,0,40,0.20)' }} onClick={() => setSearchOpen(false)}>
-          <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: searchBg, backdropFilter: 'blur(24px) saturate(180%)', border: searchBorder }} onClick={e => e.stopPropagation()}>
-            <div className="flex items-center gap-3 p-4" style={{ borderBottom: subtleBorder }}>
+        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: 'var(--overlay-bg)' }} onClick={() => setSearchOpen(false)}>
+          <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: 'var(--search-bg)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid var(--search-border)' }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center gap-3 p-4" style={{ borderBottom: '1px solid var(--subtle-border)' }}>
               <Search className="h-5 w-5 text-muted" />
               <input autoFocus type="text" className="flex-1 bg-transparent text-navy outline-none text-lg placeholder:text-muted/40" placeholder="Search projects, pages, team..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
               <button onClick={() => setSearchOpen(false)} className="rounded-lg p-1 hover:bg-navy/5 dark:hover:bg-white/5 text-muted transition-colors"><X className="h-5 w-5" /></button>

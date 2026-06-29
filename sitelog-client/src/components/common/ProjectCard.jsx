@@ -2,25 +2,23 @@ import { Link } from 'react-router-dom';
 import { MapPin, Users, Calendar, ArrowRight } from 'lucide-react';
 import Badge from './Badge';
 import { formatCurrency, formatDate } from '../../data/mockData';
-import { useTheme } from '../../context/ThemeContext';
 
 export default function ProjectCard({ project }) {
   const spentPct = Math.round((project.spent / project.totalBudget) * 100) || 0;
-  const { theme } = useTheme();
 
   return (
     <Link to={`/projects/${project.id}`} className="group card overflow-hidden p-0 block">
-      <div className="relative h-28 sm:h-32 overflow-hidden" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
+      <div className="relative h-28 sm:h-32 overflow-hidden" style={{ background: 'linear-gradient(135deg, var(--gradient-card-start) 0%, var(--gradient-card-mid) 50%, var(--gradient-card-end) 100%)' }}>
         {project.coverPhoto ? (
           <img src={project.coverPhoto} alt={project.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-105 opacity-70" />
         ) : (
-          <div className="absolute inset-0 transition duration-500 group-hover:scale-105" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }} />
+          <div className="absolute inset-0 transition duration-500 group-hover:scale-105" style={{ background: 'linear-gradient(135deg, var(--gradient-card-start) 0%, var(--gradient-card-mid) 50%, var(--gradient-card-end) 100%)' }} />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-[rgb(var(--color-card))] via-transparent to-transparent opacity-90" />
         <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between z-10">
           <Badge status={project.status} />
-          <span className={`rounded-lg px-2 py-1 font-mono text-sm font-bold shadow-sm ${theme === 'dark' ? 'text-white' : 'text-navy'}`}
-            style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.70)' : 'rgba(255,255,255,0.70)', backdropFilter: 'blur(12px)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(0,0,40,0.08)' }}>
+          <span className="rounded-lg px-2 py-1 font-mono text-sm font-bold shadow-sm text-navy dark:text-white"
+            style={{ background: 'var(--dropdown-bg)', backdropFilter: 'blur(12px)', border: '1px solid var(--card-border-style)' }}>
             {project.progress || 0}%
           </span>
         </div>
@@ -33,12 +31,12 @@ export default function ProjectCard({ project }) {
           <div className="flex items-center gap-2"><Users className="h-3 w-3 text-orange/50 shrink-0" />{project.team || 0} team members</div>
           <div className="flex items-center gap-2 truncate"><Calendar className="h-3 w-3 text-orange/50 shrink-0" />Last log: {project.lastLogDate ? formatDate(project.lastLogDate) : 'No logs yet'}</div>
         </div>
-        <div className="mt-3 pt-3" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,40,0.06)' }}>
+        <div className="mt-3 pt-3" style={{ borderTop: '1px solid var(--subtle-border)' }}>
           <div className="flex justify-between text-[11px] mb-1.5">
             <span className="text-navy/80 dark:text-white/60 font-medium">Budget used</span>
             <span className="font-mono font-bold text-navy">{spentPct}%</span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,40,0.04)' }}>
+          <div className="h-1.5 overflow-hidden rounded-full" style={{ background: 'var(--progress-track)' }}>
             <div
               className={`h-full rounded-full ${spentPct > 100 ? 'bg-danger' : spentPct > 80 ? 'bg-orange' : 'bg-emerald-500'}`}
               style={{ width: `${Math.min(spentPct, 100)}%` }}

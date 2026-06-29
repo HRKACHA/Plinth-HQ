@@ -1,11 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, CalendarDays } from 'lucide-react';
-import { useTheme } from '../../context/ThemeContext';
 
 export default function DateAccordion({ date, summary, children, defaultOpen = false }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const contentRef = useRef(null);
-  const { theme } = useTheme();
 
   // We use grid transition for smooth expand/collapse
   return (
@@ -34,7 +32,7 @@ export default function DateAccordion({ date, summary, children, defaultOpen = f
         className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="p-5" style={{ borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.10)', background: theme === 'dark' ? 'rgba(0,0,0,0.20)' : 'rgba(220,228,255,0.40)' }} ref={contentRef}>
+          <div className="p-5 border-t border-[var(--subtle-border)] bg-black/[0.20] dark:bg-black/[0.20]" style={{ background: 'var(--accordion-content-bg, rgba(0,0,0,0.20))' }} ref={contentRef}>
             {children}
           </div>
         </div>
@@ -42,3 +40,4 @@ export default function DateAccordion({ date, summary, children, defaultOpen = f
     </div>
   );
 }
+

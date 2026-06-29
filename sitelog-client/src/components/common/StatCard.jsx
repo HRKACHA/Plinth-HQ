@@ -1,7 +1,4 @@
-import { useTheme } from '../../context/ThemeContext';
-
 export default function StatCard({ label, value, sub, icon: Icon, accent = 'navy', children }) {
-  const { theme } = useTheme();
   const accents = {
     navy: 'text-navy/80 dark:text-white/80',
     orange: 'text-orange',
@@ -10,23 +7,16 @@ export default function StatCard({ label, value, sub, icon: Icon, accent = 'navy
     warning: 'text-warning',
   };
 
-  const bgAccentsDark = {
-    navy: 'rgba(255,255,255,0.04)',
-    orange: 'rgba(66,133,244,0.08)',
-    success: 'rgba(74,200,140,0.08)',
-    danger: 'rgba(220,70,70,0.08)',
-    warning: 'rgba(230,180,60,0.08)',
+  // Use CSS variables for theme-aware backgrounds — no useTheme needed
+  const bgAccents = {
+    navy: 'var(--stat-bg-navy, rgba(255,255,255,0.04))',
+    orange: 'var(--stat-bg-orange, rgba(66,133,244,0.08))',
+    success: 'var(--stat-bg-success, rgba(74,200,140,0.08))',
+    danger: 'var(--stat-bg-danger, rgba(220,70,70,0.08))',
+    warning: 'var(--stat-bg-warning, rgba(230,180,60,0.08))',
   };
 
-  const bgAccentsLight = {
-    navy: 'rgba(120,140,200,0.08)',
-    orange: 'rgba(50,115,230,0.10)',
-    success: 'rgba(52,168,83,0.10)',
-    danger: 'rgba(220,70,70,0.10)',
-    warning: 'rgba(230,180,60,0.10)',
-  };
-
-  const bgAccent = theme === 'dark' ? bgAccentsDark[accent] : bgAccentsLight[accent];
+  const bgAccent = bgAccents[accent] || bgAccents.navy;
 
   return (
     <div className="card flex items-start gap-3 sm:gap-4 relative group focus-within:z-[60] hover:z-[60]">

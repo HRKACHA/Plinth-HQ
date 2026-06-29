@@ -1,5 +1,4 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import { useTheme } from '../../context/ThemeContext';
+import React, { useRef, useEffect, useCallback, memo } from 'react';
 
 const PARTICLE_DENSITY = 0.00012;
 const BG_PARTICLE_DENSITY = 0.00004;
@@ -10,7 +9,12 @@ const REPULSION_STRENGTH = 1.2;
 
 const randomRange = (min, max) => Math.random() * (max - min) + min;
 
-export default function ParticleBackground({ blur = false }) {
+// Read current theme from DOM directly — avoids React context subscription & re-renders
+function isDarkTheme() {
+  return document.documentElement.classList.contains('dark');
+}
+
+const ParticleBackground = memo(function ParticleBackground({ blur = false }) {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const particlesRef = useRef([]);
@@ -18,12 +22,6 @@ export default function ParticleBackground({ blur = false }) {
   const mouseRef = useRef({ x: -1000, y: -1000, isActive: false });
   const frameIdRef = useRef(0);
   const lastTimeRef = useRef(0);
-  const { theme } = useTheme();
-  const themeRef = useRef(theme);
-
-  useEffect(() => {
-    themeRef.current = theme;
-  }, [theme]);
 
   const initParticles = useCallback((width, height) => {
     const count = Math.floor(width * height * PARTICLE_DENSITY);
@@ -62,7 +60,8 @@ export default function ParticleBackground({ blur = false }) {
     if (!ctx) return;
     lastTimeRef.current = time;
 
-    const isDark = themeRef.current === 'dark';
+    // Read theme directly from DOM — no React state needed
+    const isDark = isDarkTheme();
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -176,16 +175,16 @@ export default function ParticleBackground({ blur = false }) {
     };
   }, []);
 
-  // Background color adapts to theme
-  const bgColor = theme === 'dark' ? '#0D0F14' : '#EBF0FA';
-
+  // Background color now from CSS variable — no React re-render needed
   return (
     <div
       ref={containerRef}
       className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${blur ? 'backdrop-blur-md' : ''}`}
-      style={{ background: bgColor, transition: 'background 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }}
+      style={{ background: 'var(--particle-bg)', transition: 'background 0.35s ease' }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );
-}
+});
+
+export default ParticleBackground;

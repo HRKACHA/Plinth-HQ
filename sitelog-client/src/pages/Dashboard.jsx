@@ -495,26 +495,26 @@ export default function Dashboard() {
             <div className="space-y-6">
               {/* Weather widget */}
               <div className="card overflow-hidden !p-0 !border-0 shadow-elevated">
-                <div className="relative p-6 transition-all duration-300" style={{ background: theme === 'dark' ? 'linear-gradient(135deg, #111827 0%, #1e293b 50%, #0f172a 100%)' : 'linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #a5b4fc 100%)' }}>
+                <div className="relative p-6 transition-all duration-300" style={{ background: 'linear-gradient(135deg, var(--gradient-card-start) 0%, var(--gradient-card-mid) 50%, var(--gradient-card-end) 100%)' }}>
                   <div className="flex items-center justify-between relative z-10">
                     {weathers.length > 0 ? (
                       <div key={currentWeatherIndex} className="animate-fadeIn w-full flex items-center justify-between min-h-[100px]">
                         <div>
-                          <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Weather • {weathers[currentWeatherIndex].projectName}</p>
-                          <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>{weathers[currentWeatherIndex].temp}</p>
-                          <p className={`mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`} style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,40,0.08)', backdropFilter: 'blur(8px)' }}>
+                          <p className="text-sm font-semibold tracking-wide uppercase" style={{ color: 'var(--weather-text)' }}>Weather • {weathers[currentWeatherIndex].projectName}</p>
+                          <p className="mt-1 font-mono text-4xl font-bold tracking-tight" style={{ color: 'var(--weather-heading)' }}>{weathers[currentWeatherIndex].temp}</p>
+                          <p className="mt-2 text-xs font-medium px-2 py-1 rounded-md inline-block" style={{ color: 'var(--weather-text)', background: 'var(--weather-badge-bg)', backdropFilter: 'blur(8px)' }}>
                             {weathers[currentWeatherIndex].condition} • {weathers[currentWeatherIndex].city}
                           </p>
                         </div>
                         {(() => {
                           const WIcon = weathers[currentWeatherIndex].icon;
-                          return <WIcon className={`h-16 w-16 ${theme === 'dark' ? 'text-white/10' : 'text-navy/10'}`} />;
+                          return <WIcon className="h-16 w-16" style={{ color: 'var(--weather-icon)' }} />;
                         })()}
                       </div>
                     ) : (
                       <div className="min-h-[100px]">
-                        <p className={`text-sm font-semibold tracking-wide uppercase ${theme === 'dark' ? 'text-white/70' : 'text-navy/90'}`}>Site Weather</p>
-                        <p className={`mt-1 font-mono text-4xl font-bold tracking-tight ${theme === 'dark' ? 'text-white' : 'text-navy'}`}>--</p>
+                        <p className="text-sm font-semibold tracking-wide uppercase" style={{ color: 'var(--weather-text)' }}>Site Weather</p>
+                        <p className="mt-1 font-mono text-4xl font-bold tracking-tight" style={{ color: 'var(--weather-heading)' }}>--</p>
                       </div>
                     )}
                   </div>

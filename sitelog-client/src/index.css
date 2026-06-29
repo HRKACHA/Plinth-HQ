@@ -71,37 +71,44 @@
     --glass-blur: 22px;
 
     --text-primary: 240 240 235;
+
+    /* Theme-variant CSS custom properties for inline-style elimination */
+    --sidebar-bg: rgba(16, 18, 24, 0.40);
+    --header-bg: rgba(16, 18, 24, 0.30);
+    --mobile-bg: rgba(16, 18, 24, 0.92);
+    --subtle-border: rgba(255, 255, 255, 0.06);
+    --search-bg: rgba(16, 18, 24, 0.90);
+    --search-border: rgba(255, 255, 255, 0.08);
+    --dropdown-bg: rgba(16, 18, 24, 0.88);
+    --hover-bg: rgba(255, 255, 255, 0.03);
+    --overlay-bg: rgba(0, 0, 0, 0.50);
+    --gradient-card-start: #111827;
+    --gradient-card-mid: #1e293b;
+    --gradient-card-end: #0f172a;
+    --particle-bg: #0D0F14;
+    --progress-track: rgba(255, 255, 255, 0.04);
+    --card-border-style: rgba(255, 255, 255, 0.08);
+    --weather-text: rgba(255, 255, 255, 0.70);
+    --weather-heading: #ffffff;
+    --weather-badge-bg: rgba(255, 255, 255, 0.08);
+    --weather-icon: rgba(255, 255, 255, 0.10);
+
+    /* StatCard accent backgrounds */
+    --stat-bg-navy: rgba(255, 255, 255, 0.04);
+    --stat-bg-orange: rgba(66, 133, 244, 0.08);
+    --stat-bg-success: rgba(74, 200, 140, 0.08);
+    --stat-bg-danger: rgba(220, 70, 70, 0.08);
+    --stat-bg-warning: rgba(230, 180, 60, 0.08);
+    --accordion-content-bg: rgba(0, 0, 0, 0.20);
   }
 
   body {
     @apply antialiased text-navy dark:text-white bg-surface overflow-x-hidden selection:bg-orange/30 selection:text-white;
-    transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1), color 0.6s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.35s ease, color 0.35s ease;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── Buttery Smooth Theme Transition ──
-     When .theme-transitioning is on <html>, every element smoothly
-     transitions color-related properties. The class is added just before
-     the dark/light swap and removed ~600ms later so it doesn't
-     interfere with normal hover/click transitions. */
-}
-
-.theme-transitioning,
-.theme-transitioning *,
-.theme-transitioning *::before,
-.theme-transitioning *::after {
-  transition: background-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              background 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              fill 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              stroke 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-@layer base {
   *:focus-visible {
     @apply outline-none ring-2 ring-orange/30 ring-offset-2 ring-offset-surface;
   }
@@ -114,6 +121,54 @@
   html {
     scroll-behavior: smooth;
   }
+}
+
+/* ── Light Mode CSS Variable Overrides ── */
+:root:not(.dark) {
+  --sidebar-bg: rgba(255, 255, 255, 0.55);
+  --header-bg: rgba(255, 255, 255, 0.50);
+  --mobile-bg: rgba(245, 248, 255, 0.96);
+  --subtle-border: rgba(0, 0, 40, 0.06);
+  --search-bg: rgba(245, 248, 255, 0.96);
+  --search-border: rgba(0, 0, 40, 0.08);
+  --dropdown-bg: rgba(245, 248, 255, 0.96);
+  --hover-bg: rgba(0, 0, 40, 0.03);
+  --overlay-bg: rgba(30, 35, 60, 0.25);
+  --gradient-card-start: #e0e7ff;
+  --gradient-card-mid: #c7d2fe;
+  --gradient-card-end: #a5b4fc;
+  --particle-bg: #EBF0FA;
+  --progress-track: rgba(0, 0, 40, 0.04);
+  --card-border-style: rgba(0, 0, 40, 0.08);
+  --weather-text: rgba(30, 35, 60, 0.90);
+  --weather-heading: rgb(30, 35, 60);
+  --weather-badge-bg: rgba(0, 0, 40, 0.08);
+  --weather-icon: rgba(30, 35, 60, 0.10);
+
+  /* StatCard accent backgrounds */
+  --stat-bg-navy: rgba(120, 140, 200, 0.08);
+  --stat-bg-orange: rgba(50, 115, 230, 0.10);
+  --stat-bg-success: rgba(52, 168, 83, 0.10);
+  --stat-bg-danger: rgba(220, 70, 70, 0.10);
+  --stat-bg-warning: rgba(230, 180, 60, 0.10);
+  --accordion-content-bg: rgba(220, 228, 255, 0.40);
+}
+
+/* ── Targeted theme transitions — only on structural layout elements ── */
+.card,
+.card-static,
+.glass-card,
+.glass-panel,
+.liquid-glass,
+.input-field,
+.badge,
+.btn-secondary,
+.btn-ghost,
+.modal-content,
+.glass-dropdown,
+.project-nav-pill,
+.dropdown-item {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 /* ══════════════════════════════════════════════════════════
