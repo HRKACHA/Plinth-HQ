@@ -164,16 +164,12 @@ export default function About() {
           <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 dark:bg-emerald-600/10 rounded-full blur-[100px] mix-blend-screen opacity-60 animate-pulse" style={{ animationDuration: '7s' }} />
         </div>
 
-        {/* Subtle Grid Pattern */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] z-0" style={{
-          backgroundImage: theme === 'dark' ? 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)' : 'linear-gradient(rgba(10,12,16,1) 1px, transparent 1px), linear-gradient(90deg, rgba(10,12,16,1) 1px, transparent 1px)',
-          backgroundSize: '40px 40px'
-        }} />
+
 
         <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24" style={{ minHeight: '75vh' }}>
           <div className="max-w-4xl w-full flex flex-col items-center">
             
-            <div className="inline-block animate-slideUp mb-8" style={{ animationDelay: '0.1s' }}>
+            <div className="inline-block animate-slideUp mb-4" style={{ animationDelay: '0.1s' }}>
               <SectionBadge>About PlinthHQ</SectionBadge>
             </div>
             
