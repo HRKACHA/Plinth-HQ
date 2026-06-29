@@ -170,7 +170,7 @@ export default function About() {
           backgroundSize: '24px 24px',
         }} />
 
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-10 pb-8 lg:pt-16 lg:pb-10">
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20 lg:py-24" style={{ minHeight: '85vh' }}>
           <div className="max-w-4xl w-full flex flex-col items-center">
             
             <div className="inline-block animate-slideUp mb-4" style={{ animationDelay: '0.1s' }}>
