@@ -152,7 +152,7 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
+      <section className="relative overflow-hidden">
         {/* Background Particles (using existing imported component) */}
         <div className="absolute inset-0 z-0">
           <ParticleBackground />
@@ -160,13 +160,17 @@ export default function About() {
         
         {/* Ambient Glowing Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen opacity-60 animate-pulse" style={{ animationDuration: '4s' }} />
-          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/10 dark:bg-emerald-600/10 rounded-full blur-[100px] mix-blend-screen opacity-60 animate-pulse" style={{ animationDuration: '7s' }} />
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-500/20 dark:bg-blue-600/20 rounded-full blur-[120px] opacity-60 animate-pulse" style={{ animationDuration: '4s' }} />
+          <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-emerald-500/20 dark:bg-emerald-600/20 rounded-full blur-[100px] opacity-60 animate-pulse" style={{ animationDuration: '7s' }} />
         </div>
 
+        {/* Subtle Dotted Pattern (like How It Works) */}
+        <div className="absolute inset-0 opacity-[0.05] dark:opacity-[0.03] z-0" style={{
+          backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
+          backgroundSize: '24px 24px',
+        }} />
 
-
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-12 lg:py-16" style={{ minHeight: '60vh' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 pt-10 pb-8 lg:pt-16 lg:pb-10">
           <div className="max-w-4xl w-full flex flex-col items-center">
             
             <div className="inline-block animate-slideUp mb-4" style={{ animationDelay: '0.1s' }}>
