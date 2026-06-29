@@ -142,7 +142,7 @@ export default function Landing() {
               <Link to="/register" className="btn-accent px-6 py-2.5 text-sm shadow-glow">
                 Get Started <ArrowRight className="h-3.5 w-3.5 ml-1" />
               </Link>
-              <Link to="/about" className="hidden lg:flex items-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white transition-colors">
+              <Link to="/about" className="hidden lg:flex items-center justify-center gap-1.5 px-6 py-2.5 text-sm font-semibold text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white transition-all duration-300 rounded-full border border-navy/20 dark:border-white/20 bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:hover:bg-white/10 active:scale-95">
                 See How It Works
               </Link>
             </div>
