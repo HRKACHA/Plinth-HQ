@@ -134,7 +134,7 @@ export default function Landing() {
               </Link>
             </div>
 
-            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp my-4 lg:my-6" style={{ animationDelay: '0.2s' }}>
               Plinth-HQ is a comprehensive Construction Site Management System<br className="hidden lg:block" /> designed to streamline daily site operations, track material inventory,<br className="hidden lg:block" /> control project budgets, and automatically generate professional reports.
             </p>
 
