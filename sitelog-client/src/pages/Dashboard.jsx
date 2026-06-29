@@ -530,7 +530,7 @@ export default function Dashboard() {
               </div>
 
               {/* Quick Add Material */}
-              <div className="card">
+              <div className="card relative z-10">
                 <div className="flex items-center justify-between mb-5">
                   <h3 className="font-bold text-navy flex items-center gap-2">
                     <Package className="h-5 w-5 text-orange" /> Quick Add Material
