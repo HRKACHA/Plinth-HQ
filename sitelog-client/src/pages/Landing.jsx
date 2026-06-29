@@ -98,10 +98,10 @@ export default function Landing() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full px-4 lg:px-[60px] xl:px-[100px] grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[140px] pb-20 lg:pt-48 lg:pb-16">
+        <div className="relative z-10 w-full px-4 lg:px-8 xl:px-12 grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[140px] pb-20 lg:pt-48 lg:pb-16">
           
           {/* Left Text Side */}
-          <div className="lg:pr-8 lg:pl-6 flex flex-col items-start gap-4 text-left">
+          <div className="lg:pr-8 flex flex-col items-start gap-4 text-left">
             <div className="inline-block animate-slideUp">
               <span className="py-1 px-3 rounded-full text-[10px] sm:text-xs font-mono text-muted tracking-widest uppercase"
                 style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(120,140,200,0.08)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.12)' : '1px solid rgba(120,140,200,0.15)', backdropFilter: 'blur(8px)' }}>
