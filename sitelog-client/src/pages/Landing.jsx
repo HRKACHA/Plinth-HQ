@@ -128,7 +128,7 @@ export default function Landing() {
                     if (el) el.scrollIntoView({ behavior: 'smooth' });
                   }, 100);
                 }}
-                className="badge bg-navy/5 dark:bg-white/5 text-navy/80 dark:text-white/80 border-navy/10 dark:border-white/10 px-2.5 py-1 text-xs sm:text-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 flex items-center cursor-pointer active:scale-95"
+                className="btn-accent px-3 py-1 text-xs sm:text-sm hover:-translate-y-0.5 hover:shadow-md transition-all duration-300 flex items-center cursor-pointer active:scale-95 border-none"
               >
                 All Features <ArrowRight className="h-3 w-3 ml-1" />
               </Link>
