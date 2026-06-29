@@ -152,7 +152,7 @@ export default function About() {
       {/* ══════════════════════════════════════════════════
          SECTION 1: Hero
          ══════════════════════════════════════════════════ */}
-      <section className="relative overflow-hidden" style={{ minHeight: '75vh' }}>
+      <section className="relative overflow-hidden" style={{ minHeight: '60vh' }}>
         {/* Background Particles (using existing imported component) */}
         <div className="absolute inset-0 z-0">
           <ParticleBackground />
@@ -166,14 +166,14 @@ export default function About() {
 
 
 
-        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-24" style={{ minHeight: '75vh' }}>
+        <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-12 lg:py-16" style={{ minHeight: '60vh' }}>
           <div className="max-w-4xl w-full flex flex-col items-center">
             
             <div className="inline-block animate-slideUp mb-4" style={{ animationDelay: '0.1s' }}>
               <SectionBadge>About PlinthHQ</SectionBadge>
             </div>
             
-            <div className="mb-8 overflow-visible animate-slideUp" style={{ animationDelay: '0.2s' }}>
+            <div className="mb-4 overflow-visible animate-slideUp" style={{ animationDelay: '0.2s' }}>
               <AnimatedHeroText
                 staticText={"The command center"}
                 rotatingPhrases={[
@@ -189,11 +189,11 @@ export default function About() {
               />
             </div>
             
-            <p className="text-lg md:text-xl text-navy/80 dark:text-white/70 font-light leading-relaxed max-w-2xl mx-auto mt-6 animate-slideUp" style={{ animationDelay: '0.3s' }}>
+            <p className="text-lg md:text-xl text-navy/80 dark:text-white/70 font-light leading-relaxed max-w-2xl mx-auto mt-4 animate-slideUp" style={{ animationDelay: '0.3s' }}>
               PlinthHQ is a comprehensive construction management platform that replaces paper logs, scattered spreadsheets, and fragmented WhatsApp groups with a unified, real-time digital command center. Built for the realities of the Indian construction industry.
             </p>
             
-            <div className="pt-12 flex flex-col sm:flex-row justify-center gap-4 w-full animate-slideUp" style={{ animationDelay: '0.4s' }}>
+            <div className="pt-8 flex flex-col sm:flex-row justify-center gap-4 w-full animate-slideUp" style={{ animationDelay: '0.4s' }}>
               <Link to="/register" className="btn-accent px-8 py-3.5 text-base shadow-glow flex items-center justify-center">
                 Get Started Free <ArrowRight className="h-4 w-4 ml-2" />
               </Link>
