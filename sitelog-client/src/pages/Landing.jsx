@@ -9,6 +9,7 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import AnimatedHeroText from '../components/common/AnimatedHeroText';
 import Switch from '../components/ui/sky-toggle';
+import ParticleBackground from '../components/common/ParticleBackground';
 
 /* ══════════════════════════════════════════════════════════
    FEATURES & DATA
@@ -42,6 +43,15 @@ export default function Landing() {
       {/* ── Hero with Particle Canvas ── */}
       <section className="relative overflow-hidden flex items-start lg:items-center min-h-screen -mt-24 lg:-mt-[104px]">
         
+        {/* Background Particles and Subtle Grid */}
+        <div className="absolute inset-0 z-0">
+          <ParticleBackground />
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" style={{
+            backgroundImage: theme === 'dark' ? 'radial-gradient(circle at 2px 2px, white 0.5px, transparent 0)' : 'radial-gradient(circle at 2px 2px, rgba(50,60,100,0.4) 0.5px, transparent 0)',
+            backgroundSize: '24px 24px',
+          }} />
+        </div>
+
         {/* Seamless Dual-Tone Background & Particle Blocker */}
         {/* Light Mode Gradient */}
         <div 
