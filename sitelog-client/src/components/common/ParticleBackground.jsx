@@ -183,7 +183,7 @@ export default function ParticleBackground({ blur = false }) {
     <div
       ref={containerRef}
       className={`fixed inset-0 pointer-events-none z-0 overflow-hidden ${blur ? 'backdrop-blur-md' : ''}`}
-      style={{ background: bgColor, transition: 'background 0.5s ease' }}
+      style={{ background: bgColor, transition: 'background 0.6s cubic-bezier(0.4, 0, 0.2, 1)' }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>

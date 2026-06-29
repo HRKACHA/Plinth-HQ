@@ -1,6 +1,8 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from 'react';
 
 const ThemeContext = createContext(null);
+
+const THEME_TRANSITION_DURATION = 600; // ms — matches CSS transition
 
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
@@ -9,6 +11,7 @@ export function ThemeProvider({ children }) {
     // Default to dark
     return 'dark';
   });
+  const transitionTimerRef = useRef(null);
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -22,9 +25,38 @@ export function ThemeProvider({ children }) {
     localStorage.setItem('plinthhq_theme', theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
+  const toggleTheme = useCallback(() => {
+    const root = window.document.documentElement;
+
+    // Clear any pending removal from a previous rapid toggle
+    if (transitionTimerRef.current) {
+      clearTimeout(transitionTimerRef.current);
+    }
+
+    // Enable global smooth transition BEFORE the class swap
+    root.classList.add('theme-transitioning');
+
+    // Toggle theme on the next frame so the transition class is painted first
+    requestAnimationFrame(() => {
+      setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+
+      // Remove the transition class after animations complete
+      // so it doesn't interfere with normal hover/interaction transitions
+      transitionTimerRef.current = setTimeout(() => {
+        root.classList.remove('theme-transitioning');
+        transitionTimerRef.current = null;
+      }, THEME_TRANSITION_DURATION);
+    });
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
