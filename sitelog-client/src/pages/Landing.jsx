@@ -69,14 +69,14 @@ export default function Landing() {
         />
 
         {/* Right Image Background (Full Bleed) */}
-        <div className="absolute right-0 top-[15%] lg:top-0 w-full lg:w-[60%] h-[85%] lg:h-full z-0 pointer-events-none">
+        <div className="absolute right-0 bottom-0 lg:top-0 w-full lg:w-[60%] h-[50%] sm:h-[60%] lg:h-full z-0 pointer-events-none">
           {/* Light Mode Image */}
           <div className="hero-image-mask absolute inset-0 w-full h-full transition-opacity duration-300 ease-out opacity-100 dark:opacity-0">
             <img 
               src="/Image_white.png" 
               alt="PlinthHQ Dashboard Light" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center center' }}
+              style={{ objectPosition: 'center bottom' }}
               loading="eager"
               fetchpriority="high"
               decoding="sync"
@@ -89,7 +89,7 @@ export default function Landing() {
               src="/Image.png" 
               alt="PlinthHQ Dashboard Dark" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center center' }}
+              style={{ objectPosition: 'center bottom' }}
               loading="eager"
               fetchpriority="high"
               decoding="sync"
