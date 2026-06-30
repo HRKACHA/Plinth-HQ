@@ -97,16 +97,6 @@ export default function Landing() {
           </div>
         </div>
 
-        {/* Mobile text background overlay — keeps text area clean */}
-        <div className="absolute inset-x-0 top-0 h-[65%] z-[1] lg:hidden pointer-events-none">
-          {/* Light Mode Overlay */}
-          <div className="absolute inset-0 transition-opacity duration-300 ease-out opacity-100 dark:opacity-0"
-               style={{ background: 'linear-gradient(to bottom, rgb(220, 232, 255) 80%, transparent 100%)' }} />
-          {/* Dark Mode Overlay */}
-          <div className="absolute inset-0 transition-opacity duration-300 ease-out opacity-0 dark:opacity-100"
-               style={{ background: 'linear-gradient(to bottom, rgb(10, 12, 16) 80%, transparent 100%)' }} />
-        </div>
-
         {/* Content Container */}
         <div className="relative z-10 w-full px-4 lg:px-[50px] xl:px-[80px] grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center h-full pt-[140px] pb-20 lg:pt-48 lg:pb-16">
           
