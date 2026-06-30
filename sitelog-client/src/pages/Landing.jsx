@@ -76,7 +76,7 @@ export default function Landing() {
               src="/Image_white.png" 
               alt="PlinthHQ Dashboard Light" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center 70%' }}
+              style={{ objectPosition: 'center 50%' }}
               loading="eager"
               fetchpriority="high"
               decoding="sync"
@@ -89,7 +89,7 @@ export default function Landing() {
               src="/Image.png" 
               alt="PlinthHQ Dashboard Dark" 
               className="absolute inset-0 w-full h-full object-cover" 
-              style={{ objectPosition: 'center 70%' }}
+              style={{ objectPosition: 'center 50%' }}
               loading="eager"
               fetchpriority="high"
               decoding="sync"
