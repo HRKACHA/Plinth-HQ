@@ -35,7 +35,10 @@ export const sendInvite = catchAsync(async (req, res) => {
   // Check if user already exists
   const existingUser = await User.findOne({ email: email.toLowerCase() });
   if (existingUser) {
-    throw new AppError('A user with this email already exists.', 400);
+    // If the user already exists, we still generate an invite link for them
+    // so the admin can share it, and the user can accept it (or we can just add them).
+    // For now, let the flow continue so the UI doesn't break and the link generates.
+    console.log('Inviting an existing user. Proceeding with invite generation.');
   }
 
   // Check if a valid unused invite already exists IN THIS ORGANISATION
