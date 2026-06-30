@@ -119,6 +119,8 @@ function PublicNavbar() {
   );
 }
 
+import PlinthAIChatbot from '../common/PlinthAIChatbot';
+
 export default function PublicLayout() {
   return (
     <div className="min-h-screen bg-transparent text-navy dark:text-white flex flex-col relative">
@@ -126,6 +128,7 @@ export default function PublicLayout() {
       <div className="flex-1 flex flex-col">
         <Outlet />
       </div>
+      <PlinthAIChatbot />
     </div>
   );
 }

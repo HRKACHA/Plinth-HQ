@@ -239,8 +239,7 @@ export default function PlinthAIChatbot() {
     setInput(newValue);
   }, []);
 
-  // Don't render if not authenticated
-  if (!isAuthenticated) return null;
+  // Remove the !isAuthenticated return null to allow public access
 
   // Initialize session when widget opens
   const initializeSession = useCallback(async () => {
@@ -250,13 +249,22 @@ export default function PlinthAIChatbot() {
       const data = await plinthaiApi.init();
       setInitData(data);
       // Add welcome message
-      const firstName = data.user?.first_name || user?.name?.split(' ')[0] || 'there';
-      setMessages([{
-        id: 'welcome',
-        role: 'assistant',
-        content: `Hey ${firstName}! 👋 I'm **PlinthAI**, your construction management assistant.\n\nI can help you with:\n- 📊 **Project progress & summaries**\n- 📝 **Your tasks & daily logs**\n- 👥 **Team management & invites**\n- 💬 **Real-time team chat**\n- 🧱 **Material & inventory tracking**\n- 💰 **Budget & expense details**\n- 🏗️ **Construction standards (IS codes, CPWD)**\n- ❓ **Navigating PlinthHQ**\n\nWhat would you like to know?`,
-        timestamp: new Date(),
-      }]);
+      if (data.isPublic) {
+        setMessages([{
+          id: 'welcome',
+          role: 'assistant',
+          content: `Hello! 👋 I'm **PlinthAI**, your construction management assistant.\n\nI can help you understand how **PlinthHQ** works, explain construction terms, or answer questions about building standards.\n\n*Sign up or log in to manage your projects, track budgets, and collaborate with your team!*`,
+          timestamp: new Date(),
+        }]);
+      } else {
+        const firstName = data.user?.first_name || user?.name?.split(' ')[0] || 'there';
+        setMessages([{
+          id: 'welcome',
+          role: 'assistant',
+          content: `Hey ${firstName}! 👋 I'm **PlinthAI**, your construction management assistant.\n\nI can help you with:\n- 📊 **Project progress & summaries**\n- 📝 **Your tasks & daily logs**\n- 👥 **Team management & invites**\n- 💬 **Real-time team chat**\n- 🧱 **Material & inventory tracking**\n- 💰 **Budget & expense details**\n- 🏗️ **Construction standards (IS codes, CPWD)**\n- ❓ **Navigating PlinthHQ**\n\nWhat would you like to know?`,
+          timestamp: new Date(),
+        }]);
+      }
     } catch (err) {
       setError('Failed to initialize PlinthAI. Please try again.');
     } finally {
@@ -619,7 +627,7 @@ export default function PlinthAIChatbot() {
           {messages.length <= 1 && !loading && (
             <div className="px-4 pb-2">
               <div className="flex flex-wrap gap-1.5">
-                {quickActions.map((action) => (
+                {quickActions.filter(action => !initData?.isPublic || action.label === 'Construction rules' || action.label === 'Help me navigate').map((action) => (
                   <button
                     key={action.label}
                     onClick={() => sendMessage(action.prompt)}

@@ -22,7 +22,7 @@ import teamRoutes from './routes/team.js';
 import chatRoutes from './routes/chat.js';
 import searchRoutes from './routes/search.js';
 import activityRoutes from './routes/activity.js';
-import { protect } from './middleware/auth.js';
+import { protect, optionalAuth } from './middleware/auth.js';
 import globalErrorHandler, { notFound } from './middleware/errorHandler.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -54,7 +54,7 @@ app.use('/api/v1/vendors', vendorRoutes);
 app.use('/api/v1/materials', materialRoutes);
 app.use('/api/v1/equipment', equipmentRoutes);
 app.use('/api/v1/upload', uploadRoutes);
-app.use('/api/v1/plinthai', protect, plinthaiRoutes);
+app.use('/api/v1/plinthai', optionalAuth, plinthaiRoutes);
 app.use('/api/v1/subscription', protect, subscriptionRoutes);
 app.use('/api/v1/invite', inviteRoutes);
 app.use('/api/v1/team', teamRoutes);

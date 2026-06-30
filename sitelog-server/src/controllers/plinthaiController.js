@@ -26,6 +26,16 @@ const MAX_HISTORY = 50; // Increased for better context retention
 export const initSession = catchAsync(async (req, res) => {
   const user = req.user;
 
+  if (!user) {
+    return res.json({
+      success: true,
+      data: {
+        isPublic: true,
+        llm_provider: activeProvider
+      }
+    });
+  }
+
   const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
   const projectFilter = { isDeleted: false, organisation: user.organisation };
   if (!isGlobalManager) {
@@ -55,6 +65,7 @@ export const initSession = catchAsync(async (req, res) => {
     })),
     pending_notifications: pendingNotifications,
     llm_provider: activeProvider,
+    isPublic: false
   };
 
   res.json({ success: true, data: context });
@@ -72,7 +83,7 @@ export const chatHandler = catchAsync(async (req, res) => {
   }
 
   const user = req.user;
-  const sessionKey = `${user._id}:${session_id || 'default'}`;
+  const sessionKey = user ? `${user._id}:${session_id || 'default'}` : `public:${session_id || 'default'}`;
 
   // Load or create conversation history
   if (!conversationStore.has(sessionKey)) {
@@ -80,29 +91,37 @@ export const chatHandler = catchAsync(async (req, res) => {
   }
   const history = conversationStore.get(sessionKey);
 
-  const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
-  const projectFilter = { isDeleted: false, organisation: user.organisation };
-  if (!isGlobalManager) {
-    projectFilter['team.user'] = user._id;
+  let userContext;
+  let projects = [];
+
+  if (user) {
+    const isGlobalManager = ['SuperAdmin', 'admin', 'owner', 'Owner'].includes(user.role);
+    const projectFilter = { isDeleted: false, organisation: user.organisation };
+    if (!isGlobalManager) {
+      projectFilter['team.user'] = user._id;
+    }
+
+    // Get user projects for context
+    projects = await Project.find(projectFilter)
+      .select('name status progress _id totalBudget startDate endDate location')
+      .lean();
+
+    userContext = {
+      name: user.name,
+      role: user.role,
+      userId: user._id.toString(),
+      orgId: user.organisation?.toString(),
+      projects: projects.map((p) => ({
+        id: p._id.toString(),
+        name: p.name,
+        status: p.status,
+        progress: p.progress || 0,
+      })),
+      isPublic: false
+    };
+  } else {
+    userContext = { isPublic: true };
   }
-
-  // Get user projects for context
-  const projects = await Project.find(projectFilter)
-    .select('name status progress _id totalBudget startDate endDate location')
-    .lean();
-
-  const userContext = {
-    name: user.name,
-    role: user.role,
-    userId: user._id.toString(),
-    orgId: user.organisation?.toString(),
-    projects: projects.map((p) => ({
-      id: p._id.toString(),
-      name: p.name,
-      status: p.status,
-      progress: p.progress || 0,
-    })),
-  };
 
   // Try LLM providers (Claude → Gemini)
   if (activeProvider !== 'fallback') {
@@ -192,7 +211,8 @@ export const chatHandler = catchAsync(async (req, res) => {
  */
 export const feedbackHandler = catchAsync(async (req, res) => {
   const { session_id, message_id, rating, comment } = req.body;
-  console.log(`[PlinthAI Feedback] User: ${req.user._id}, Session: ${session_id}, Message: ${message_id}, Rating: ${rating}, Comment: ${comment || 'N/A'}`);
+  const userIdentifier = req.user ? req.user._id : 'public';
+  console.log(`[PlinthAI Feedback] User: ${userIdentifier}, Session: ${session_id}, Message: ${message_id}, Rating: ${rating}, Comment: ${comment || 'N/A'}`);
   res.json({ success: true, message: 'Feedback recorded. Thank you!' });
 });
 
@@ -200,6 +220,10 @@ export const feedbackHandler = catchAsync(async (req, res) => {
 // Tool Router
 // ─────────────────────────────────────────────
 async function executeTool(name, input, user, userProjects) {
+  if (!user && name !== 'search_construction_knowledge') {
+    return { error: 'not_authorized' };
+  }
+
   const projectIds = userProjects.map((p) => p._id.toString());
 
   switch (name) {
@@ -533,7 +557,7 @@ function intentScore(msg, patterns) {
 
 async function generateFallbackResponse(message, user, projects, history) {
   const msg = message.toLowerCase().trim();
-  const firstName = user.name.split(' ')[0];
+  const firstName = user ? user.name.split(' ')[0] : 'Guest';
   const now = new Date();
   const hour = now.getHours();
   const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
@@ -571,11 +595,15 @@ async function generateFallbackResponse(message, user, projects, history) {
 
   switch (bestIntent.intent) {
     case 'greeting': {
+      if (!user) {
+        return `${timeGreeting}! 👋 I'm PlinthAI, your construction management assistant.\n\nI can help you understand how PlinthHQ works, explain construction terms, or answer questions about building standards.\n\nSign up or log in to manage your projects, track budgets, and collaborate with your team!`;
+      }
+      
       const projectList = projects.length
         ? projects.map((p) => `- **${p.name}** — ${p.status} (${p.progress || 0}% complete)`).join('\n')
         : '- No projects assigned yet';
 
-      const unreadCount = await Notification.countDocuments({ user: user._id, isRead: false });
+      const unreadCount = await Notification.countDocuments({ recipient: user._id, isRead: false });
       const notifLine = unreadCount > 0 ? `\n📬 You have **${unreadCount} unread notification${unreadCount > 1 ? 's' : ''}**.` : '';
 
       return `${timeGreeting}, ${firstName}! 👋 Great to see you.\n\nHere's a quick snapshot:\n\n### 📊 Your Projects\n${projectList}${notifLine}\n\n### What can I help you with?\nI'm a **full AI assistant** — I can help with anything, not just construction! Ask me about:\n\n- 📋 **Project data** — progress, budgets, expenses, milestones\n- 👥 **Team & Chat** — team roles, invites, real-time messaging\n- 📝 **Your activities** — recent logs, tasks, notifications\n- 🏗️ **Construction standards** — IS codes, CPWD specs, safety\n- 💻 **Coding** — write, debug, or explain code in any language\n- ✍️ **Writing** — emails, reports, proposals, documentation\n- 🧮 **Calculations** — math, percentages, cost estimates\n- 📚 **Research** — explain topics, compare options, analysis\n- 📋 **Planning** — schedules, task breakdowns, roadmaps\n\nJust ask! 🚀`;
