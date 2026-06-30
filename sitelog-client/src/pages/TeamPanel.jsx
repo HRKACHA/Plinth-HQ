@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { inviteApi, teamApi, projectApi } from '../api/index.js';
 import AppLayout from '../components/layout/AppLayout';
-import { Users, Mail, Shield, Clock, CheckCircle, XCircle, Trash2, ChevronDown, Send, RefreshCw, UserMinus, Folder } from 'lucide-react';
+import { Users, Mail, Shield, Clock, CheckCircle, XCircle, Trash2, ChevronDown, Send, RefreshCw, UserMinus, Folder, Link as LinkIcon } from 'lucide-react';
 
 const ROLE_OPTIONS = [
   { value: 'site_engineer', label: 'Site Engineer', desc: 'Can view and submit logs', color: '#3B82F6' },
@@ -512,13 +512,26 @@ export default function TeamPanel() {
                       </td>
                       <td className="px-6 py-4">
                         {!inv.used && (
-                          <button
-                            onClick={() => handleRevoke(inv._id)}
-                            className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
-                            title="Revoke"
-                          >
-                            <Trash2 size={14} />
-                          </button>
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => {
+                                const link = `${window.location.origin}/register?token=${inv.token}`;
+                                navigator.clipboard.writeText(link);
+                                showToast('Invite link copied!');
+                              }}
+                              className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-blue-500/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-blue-500 transition shadow-sm backdrop-blur"
+                              title="Copy Invite Link"
+                            >
+                              <LinkIcon size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleRevoke(inv._id)}
+                              className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
+                              title="Revoke"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
                         )}
                       </td>
                     </tr>
