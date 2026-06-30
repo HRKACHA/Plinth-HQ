@@ -138,9 +138,13 @@ export const acceptInvite = catchAsync(async (req, res) => {
     throw new AppError('Invite token is invalid or has expired.', 400);
   }
 
-  // Ensure the logged in user's email matches the invite
-  if (req.user.email !== invite.email) {
+  // Ensure the logged in user's email matches the invite (case insensitive)
+  if (req.user.email.toLowerCase() !== invite.email.toLowerCase()) {
     throw new AppError('This invite was sent to a different email address.', 403);
+  }
+
+  if (!invite.project) {
+    throw new AppError('This invite is corrupted or old. Please ask the admin to send a new invite.', 400);
   }
 
   const project = await Project.findById(invite.project);
