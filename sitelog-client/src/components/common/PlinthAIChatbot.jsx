@@ -427,7 +427,7 @@ export default function PlinthAIChatbot() {
         id="plinthai-fab"
         className={`fixed z-[90] flex items-center justify-center rounded-full shadow-elevated transition-colors transition-shadow duration-500 hover:scale-105 group ${isOpen && !isMinimized
             ? 'bottom-20 right-4 sm:bottom-6 sm:right-6 h-11 w-11 sm:h-14 sm:w-14 bg-white/90 dark:bg-navy/80 backdrop-blur-xl border border-[var(--color-glass-border)]'
-            : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-auto pl-[4px] pr-4 sm:h-16 sm:pl-[4px] sm:pr-5 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
+            : 'bottom-24 right-4 sm:bottom-6 sm:right-6 h-12 w-12 sm:h-16 sm:w-16 bg-gradient-to-br from-orange to-orange-dark shadow-[0_8px_32px_rgba(184,151,106,0.3)]'
           }`}
         aria-label={isOpen ? 'Close PlinthAI' : 'Open PlinthAI'}
       >
@@ -435,16 +435,16 @@ export default function PlinthAIChatbot() {
           <X className="h-5 w-5 sm:h-6 sm:w-6 text-navy dark:text-white transition-transform duration-300" />
         ) : (
           <>
-            <div className="flex items-center gap-2.5 sm:gap-3 pointer-events-none">
-              <img
-                src="/chatbot-logo.png"
-                alt="PlinthAI"
-                className="h-10 w-10 sm:h-14 sm:w-14 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12 shrink-0 shadow-sm"
-              />
-              <span className="font-bold text-white text-[13px] sm:text-[15px] whitespace-nowrap tracking-wide drop-shadow-md">
-                Ask AI
-              </span>
-            </div>
+            {/* Floating Label */}
+            <span className="absolute -top-6 right-1 whitespace-nowrap text-navy dark:text-white font-bold text-xs sm:text-sm drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+              Ask AI
+            </span>
+            
+            <img
+              src="/chatbot-logo.png"
+              alt="PlinthAI"
+              className="h-10 w-10 sm:h-14 sm:w-14 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12 pointer-events-none"
+            />
             {/* Pulse ring */}
             {!isOpen && (
               <span className="absolute inset-0 rounded-full border-2 border-orange animate-pulse_ring pointer-events-none" />
