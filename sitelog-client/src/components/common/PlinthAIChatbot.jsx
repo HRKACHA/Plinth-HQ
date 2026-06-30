@@ -438,7 +438,7 @@ export default function PlinthAIChatbot() {
             <img
               src="/chatbot-logo.png"
               alt="PlinthAI"
-              className="h-7 w-7 sm:h-10 sm:w-10 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12 pointer-events-none"
+              className="h-10 w-10 sm:h-14 sm:w-14 rounded-full object-cover transition-transform duration-300 group-hover:rotate-12 pointer-events-none"
             />
             {/* Pulse ring */}
             {!isOpen && (
