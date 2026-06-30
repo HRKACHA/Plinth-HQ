@@ -161,7 +161,7 @@ export default function TeamPanel() {
     <AppLayout>
         {/* Toast */}
         {toast && (
-          <div className={`fixed top-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg text-sm font-medium backdrop-blur-xl border animate-fadeIn ${toast.type === 'error' ? 'bg-red-500/90 text-white border-red-400/30' : 'bg-emerald-500/90 text-white border-emerald-400/30'}`}>
+          <div className={`fixed top-4 right-4 z-[100] px-4 py-3 rounded-xl shadow-lg text-sm font-medium backdrop-blur-xl border animate-fadeIn ${toast.type === 'error' ? 'bg-red-500/90 text-white border-red-400/30' : 'bg-emerald-500/90 text-white border-emerald-400/30'}`}>
             {toast.msg}
           </div>
         )}
