@@ -39,32 +39,36 @@ export const sendInvite = catchAsync(async (req, res) => {
   }
 
   // Check if a valid unused invite already exists IN THIS ORGANISATION
-  const existingInvite = await InviteToken.findOne({
+  let existingInvite = await InviteToken.findOne({
     email: email.toLowerCase(),
     used: false,
     organisation: req.user.organisation,
     expiresAt: { $gt: new Date() },
   });
+
+  let token;
+  const baseUrl = process.env.BASE_URL || process.env.FRONTEND_URL || 'http://localhost:5173';
+
   if (existingInvite) {
-    throw new AppError('An active invite already exists for this email.', 400);
+    // Reuse existing invite
+    token = existingInvite.token;
+  } else {
+    // Generate secure token
+    token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+
+    await InviteToken.create({
+      email: email.toLowerCase(),
+      role,
+      roleLabel,
+      token,
+      invitedBy: req.user._id,
+      organisation: req.user.organisation,
+      project: projectId,
+      expiresAt,
+    });
   }
 
-  // Generate secure token
-  const token = crypto.randomBytes(32).toString('hex');
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
-
-  await InviteToken.create({
-    email: email.toLowerCase(),
-    role,
-    roleLabel,
-    token,
-    invitedBy: req.user._id,
-    organisation: req.user.organisation,
-    project: projectId,
-    expiresAt,
-  });
-
-  const baseUrl = process.env.BASE_URL || process.env.FRONTEND_URL || 'http://localhost:5173';
   const inviteLink = `${baseUrl}/register?token=${token}`;
 
   try {
