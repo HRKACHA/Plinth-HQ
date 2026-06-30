@@ -161,6 +161,7 @@ export function mediaUrl(path) {
 export const inviteApi = {
   send: (payload) => api.post('/invite/send', payload).then((r) => r.data),
   verify: (token) => api.get(`/invite/verify/${token}`).then((r) => r.data),
+  accept: (token) => api.post(`/invite/accept/${token}`).then((r) => r.data),
   list: () => api.get('/invite/list').then((r) => r.data.data),
   revoke: (id) => api.delete(`/invite/${id}`).then((r) => r.data),
 };
@@ -171,7 +172,7 @@ export const teamApi = {
   getMember: (id) => api.get(`/team/members/${id}`).then((r) => r.data.data),
   changeRole: (id, role) => api.patch(`/team/members/${id}/role`, { role }).then((r) => r.data.data),
   deactivate: (id) => api.patch(`/team/members/${id}/deactivate`).then((r) => r.data),
-  deleteMember: (id) => api.delete(`/team/members/${id}`).then((r) => r.data),
+  deleteMember: (id, projectId) => api.delete(`/team/members/${id}`, { params: { projectId } }).then((r) => r.data),
 };
 
 // ── Chat API ──

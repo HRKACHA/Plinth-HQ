@@ -146,11 +146,14 @@ export default function TeamPanel() {
     }
   };
 
-  const handleDelete = async (memberId) => {
-    if (!confirm('Permanently remove this member from your team? This action cannot be undone.')) return;
+  const handleDelete = async (memberId, projectId) => {
+    const msg = projectId 
+      ? 'Remove this member from the project?' 
+      : 'Permanently remove this member from the organisation? This action cannot be undone.';
+    if (!confirm(msg)) return;
     try {
-      await teamApi.deleteMember(memberId);
-      showToast('Member completely removed');
+      await teamApi.deleteMember(memberId, projectId);
+      showToast(projectId ? 'Member removed from project' : 'Member completely removed');
       loadData();
     } catch (err) {
       showToast(err.response?.data?.message || 'Failed to remove member', 'error');
@@ -287,7 +290,7 @@ export default function TeamPanel() {
               
               const unassigned = members.filter(m => !m.projects || m.projects.length === 0);
 
-              const renderMemberTable = (groupName, memberList) => (
+              const renderMemberTable = (groupName, memberList, projectId = null) => (
                 <div key={groupName} className="bg-card border border-white/[0.06] rounded-2xl pb-2">
                   <div className="px-6 py-4 border-b border-white/[0.06] bg-surface/30 rounded-t-2xl">
                     <h3 className="font-bold text-navy dark:text-white">{groupName}</h3>
@@ -359,7 +362,7 @@ export default function TeamPanel() {
                                     <UserMinus size={14} />
                                   </button>
                                   <button
-                                    onClick={() => handleDelete(m._id)}
+                                    onClick={() => handleDelete(m._id, projectId)}
                                     className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur"
                                     title="Delete Member"
                                   >
@@ -408,7 +411,7 @@ export default function TeamPanel() {
                             <button onClick={() => handleDeactivate(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-warning/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-warning transition shadow-sm backdrop-blur" title="Deactivate">
                               <UserMinus size={14} />
                             </button>
-                            <button onClick={() => handleDelete(m._id)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
+                            <button onClick={() => handleDelete(m._id, projectId)} className="p-1.5 bg-navy/5 dark:bg-black/50 hover:bg-danger/20 border border-navy/10 dark:border-white/10 rounded-md text-navy/80 dark:text-white/80 hover:text-danger transition shadow-sm backdrop-blur" title="Delete Member">
                               <Trash2 size={14} />
                             </button>
                           </div>
@@ -443,7 +446,7 @@ export default function TeamPanel() {
 
               return (
                 <>
-                  {projectGroups.map(g => renderMemberTable(`${g.project.name} Team`, g.team))}
+                  {projectGroups.map(g => renderMemberTable(`${g.project.name} Team`, g.team, g.project._id || g.project.id))}
                   {unassigned.length > 0 && renderMemberTable('Organization Members (Unassigned)', unassigned)}
                 </>
               );

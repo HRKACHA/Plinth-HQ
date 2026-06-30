@@ -1,13 +1,36 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bell, Check, CheckCircle2, Clock, Info, ShieldAlert } from 'lucide-react';
 import AppLayout from '../components/layout/AppLayout';
 import { useAsync } from '../hooks/useAsync';
-import { notificationApi } from '../api/index';
+import { notificationApi, inviteApi } from '../api/index';
 import { useState } from 'react';
 
 export default function NotificationsPage() {
+  const navigate = useNavigate();
   const { data: initialNotifications, loading, refresh } = useAsync(() => notificationApi.list(), []);
   const [marking, setMarking] = useState(false);
+  const [accepting, setAccepting] = useState(false);
+
+  const handleAcceptInvite = async (e, token, notificationId) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (accepting) return;
+    setAccepting(true);
+    try {
+      const res = await inviteApi.accept(token);
+      alert('Successfully joined the project!');
+      await notificationApi.markRead(notificationId);
+      if (res.data?.projectId) {
+        navigate(`/projects/${res.data.projectId}`);
+      } else {
+        refresh();
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || 'Failed to accept invite');
+    } finally {
+      setAccepting(false);
+    }
+  };
 
   if (loading) return <AppLayout title="Notifications"><div className="flex h-64 items-center justify-center"><div className="h-8 w-8 animate-spin rounded-full border-4 border-navy/20 border-t-orange" /></div></AppLayout>;
 
@@ -83,6 +106,17 @@ export default function NotificationsPage() {
                       </span>
                     </div>
                     <p className={`mt-1 text-sm ${!n.isRead ? 'text-navy/90' : 'text-muted'}`}>{n.body}</p>
+                    {n.type === 'teamInvite' && n.link?.includes('/invite/accept/') && (
+                      <div className="mt-3">
+                        <button
+                          onClick={(e) => handleAcceptInvite(e, n.link.split('/invite/accept/')[1], n._id)}
+                          disabled={accepting}
+                          className="px-4 py-1.5 bg-orange text-white text-xs font-semibold rounded-lg shadow-sm hover:bg-orange/90 transition disabled:opacity-50"
+                        >
+                          {accepting ? 'Accepting...' : 'Accept Invitation'}
+                        </button>
+                      </div>
+                    )}
                   </div>
                   {!n.isRead && (
                     <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-orange self-center" />

@@ -76,7 +76,23 @@ export const deactivateMember = catchAsync(async (req, res) => {
  * DELETE /api/v1/team/members/:id
  */
 export const deleteMember = catchAsync(async (req, res) => {
-  const member = await User.findByIdAndDelete(req.params.id);
+  const { projectId } = req.query;
+  const memberId = req.params.id;
+
+  const member = await User.findById(memberId);
   if (!member) throw new AppError('Member not found.', 404);
+
+  if (projectId) {
+    const Project = (await import('../models/Project.js')).default;
+    const project = await Project.findById(projectId);
+    if (!project) throw new AppError('Project not found.', 404);
+
+    project.team = project.team.filter(t => t.user && t.user.toString() !== memberId);
+    await project.save();
+
+    return res.json({ success: true, message: `${member.name} has been removed from ${project.name}.` });
+  }
+
+  await User.findByIdAndDelete(memberId);
   res.json({ success: true, message: `${member.name} has been permanently deleted.` });
 });

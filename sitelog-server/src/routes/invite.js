@@ -12,5 +12,7 @@ router.get('/verify/:token', invite.verifyInvite);
 router.post('/send', protect, requireRole('admin', 'project_manager', 'PM', 'SuperAdmin', 'owner', 'Owner'), invite.sendInvite);
 router.get('/list', protect, requireRole('admin', 'project_manager', 'PM', 'SuperAdmin', 'owner', 'Owner'), invite.listInvites);
 router.delete('/:id', protect, requireRole('admin', 'project_manager', 'PM', 'SuperAdmin', 'owner', 'Owner'), invite.revokeInvite);
+// Protected — all authenticated users can accept invites
+router.post('/accept/:token', protect, invite.acceptInvite);
 
 export default router;

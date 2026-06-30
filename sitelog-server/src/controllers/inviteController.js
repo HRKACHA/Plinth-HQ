@@ -44,35 +44,9 @@ export const sendInvite = catchAsync(async (req, res) => {
   if (existingUser) {
     // Check if the user is already in this project's team
     const isAlreadyInTeam = project.team.some(member => member.user.toString() === existingUser._id.toString());
-    
     if (isAlreadyInTeam) {
       throw new AppError('This user is already a member of this project.', 400);
     }
-
-    // Add user directly to the project team
-    project.team.push({
-      user: existingUser._id,
-      role,
-      invitedBy: req.user._id
-    });
-    await project.save();
-
-    // Send an in-app notification to the existing user
-    await Notification.create({
-      recipient: existingUser._id,
-      project: project._id,
-      type: 'teamInvite',
-      title: 'Added to new project',
-      body: `${req.user.name} added you to the project "${project.name}" as a ${roleLabel}.`,
-      link: `/projects/${project._id}`,
-      channels: ['inApp']
-    });
-
-    return res.status(200).json({
-      success: true,
-      message: `${existingUser.name} was successfully added directly to the project!`,
-      data: { email, role, roleLabel, existingUser: true },
-    });
   }
 
   // Check if a valid unused invite already exists IN THIS ORGANISATION
@@ -106,25 +80,90 @@ export const sendInvite = catchAsync(async (req, res) => {
     });
   }
 
-  const inviteLink = `${baseUrl}/register?token=${token}`;
-
-  try {
-    await sendInviteEmail({
-      to: email.toLowerCase(),
-      inviteLink,
-      role,
-      roleLabel,
-      invitedByName: req.user.name,
+  if (existingUser) {
+    // Send an in-app notification to the existing user with a link to accept the invite
+    await Notification.create({
+      recipient: existingUser._id,
+      project: project._id,
+      type: 'teamInvite',
+      title: 'Project Invitation',
+      body: `${req.user.name} invited you to join the project "${project.name}" as a ${roleLabel}.`,
+      link: `/invite/accept/${token}`,
+      channels: ['inApp']
     });
-  } catch (error) {
-    console.error('Failed to send invite email:', error);
-    // Don't throw, let the invite succeed so the admin can copy the manual link
+
+    return res.status(200).json({
+      success: true,
+      message: `An invitation has been sent to ${existingUser.name}.`,
+      data: { email, role, roleLabel, existingUser: true },
+    });
+  } else {
+    // Send external email
+    const inviteLink = `${baseUrl}/register?token=${token}`;
+    try {
+      await sendInviteEmail({
+        to: email.toLowerCase(),
+        inviteLink,
+        role,
+        roleLabel,
+        invitedByName: req.user.name,
+      });
+    } catch (error) {
+      console.error('Failed to send invite email:', error);
+    }
+
+    return res.status(201).json({
+      success: true,
+      message: 'Invite email sent successfully!',
+      data: { email, role, roleLabel, inviteLink },
+    });
+  }
+});
+
+/**
+ * POST /api/v1/invite/accept/:token
+ * Accept a team invite for an already registered user.
+ */
+export const acceptInvite = catchAsync(async (req, res) => {
+  const { token } = req.params;
+
+  const invite = await InviteToken.findOne({
+    token,
+    used: false,
+    expiresAt: { $gt: new Date() },
+  });
+
+  if (!invite) {
+    throw new AppError('Invite token is invalid or has expired.', 400);
   }
 
-  res.status(201).json({
+  // Ensure the logged in user's email matches the invite
+  if (req.user.email !== invite.email) {
+    throw new AppError('This invite was sent to a different email address.', 403);
+  }
+
+  const project = await Project.findById(invite.project);
+  if (!project) {
+    throw new AppError('Project not found.', 404);
+  }
+
+  const isAlreadyInTeam = project.team.some(member => member.user.toString() === req.user._id.toString());
+  if (!isAlreadyInTeam) {
+    project.team.push({
+      user: req.user._id,
+      role: invite.role,
+      invitedBy: invite.invitedBy
+    });
+    await project.save();
+  }
+
+  invite.used = true;
+  await invite.save();
+
+  res.json({
     success: true,
-    message: 'Invite email sent successfully!',
-    data: { email, role, roleLabel, inviteLink },
+    message: `You have successfully joined ${project.name}!`,
+    data: { projectId: project._id }
   });
 });
 
