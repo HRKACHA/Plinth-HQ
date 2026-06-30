@@ -98,7 +98,7 @@ export default function Landing() {
         </div>
 
         {/* Mobile text background overlay — keeps text area clean */}
-        <div className="absolute inset-x-0 top-0 h-[45%] z-[1] lg:hidden pointer-events-none">
+        <div className="absolute inset-x-0 top-0 h-[65%] z-[1] lg:hidden pointer-events-none">
           {/* Light Mode Overlay */}
           <div className="absolute inset-0 transition-opacity duration-300 ease-out opacity-100 dark:opacity-0"
                style={{ background: 'linear-gradient(to bottom, rgb(220, 232, 255) 80%, transparent 100%)' }} />
@@ -144,7 +144,7 @@ export default function Landing() {
               </Link>
             </div>
 
-            <p className="text-base md:text-lg text-navy/90 dark:text-white/70 font-light leading-relaxed animate-slideUp my-2 lg:my-3" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base md:text-lg text-navy dark:text-white/70 font-normal lg:font-light leading-relaxed animate-slideUp my-2 lg:my-3" style={{ animationDelay: '0.2s' }}>
               Plinth-HQ is a comprehensive Construction Site Management System<br className="hidden lg:block" /> designed to streamline daily site operations, track material inventory,<br className="hidden lg:block" /> control project budgets, and automatically generate professional reports.
             </p>
 
