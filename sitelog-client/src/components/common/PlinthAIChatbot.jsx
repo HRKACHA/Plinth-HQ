@@ -436,7 +436,10 @@ export default function PlinthAIChatbot() {
         ) : (
           <>
             {/* Floating Label */}
-            <span className="absolute right-full mr-3 top-1/2 -translate-y-1/2 whitespace-nowrap text-navy dark:text-white font-bold text-[13px] sm:text-[15px] drop-shadow-[0_2px_2px_rgba(255,255,255,0.8)] dark:drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+            <span 
+              className="absolute right-full mr-2 -top-2 whitespace-nowrap text-navy dark:text-white font-black text-[14px] sm:text-[16px] pointer-events-none opacity-100 transition-opacity"
+              style={{ textShadow: '0 0 10px rgba(255,255,255,1), 0 0 20px rgba(255,255,255,0.8), 0 2px 4px rgba(255,255,255,0.9)' }}
+            >
               Ask AI
             </span>
             
