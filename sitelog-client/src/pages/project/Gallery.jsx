@@ -119,7 +119,7 @@ export default function Gallery() {
         {Object.entries(groupedGallery).map(([date, items]) => (
           <div key={date}>
             <h3 className="text-sm font-semibold text-navy/90 dark:text-white/70 mb-4 sticky top-0 bg-surface z-10 py-2 border-b border-navy/5 dark:border-white/5">{date}</h3>
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-12 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 lg:gap-6">
               {items.map((item, index) => (
                 <div key={`${item.id}-${index}`} className="relative group overflow-hidden rounded-xl border border-navy/5 dark:border-white/5 bg-surface aspect-square">
                   <a href={mediaUrl(item.url)} target="_blank" rel="noreferrer" className="block w-full h-full">
