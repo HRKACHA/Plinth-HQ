@@ -1,6 +1,8 @@
 import crypto from 'crypto';
 import InviteToken from '../models/InviteToken.js';
 import User from '../models/User.js';
+import Project from '../models/Project.js';
+import Notification from '../models/Notification.js';
 import catchAsync from '../utils/catchAsync.js';
 import AppError from '../utils/AppError.js';
 import { sendInviteEmail } from '../services/emailService.js';
@@ -32,13 +34,45 @@ export const sendInvite = catchAsync(async (req, res) => {
 
   const roleLabel = ROLE_LABEL_MAP[role];
 
+  // Fetch project to get its name for the notification
+  const project = await Project.findById(projectId);
+  if (!project) throw new AppError('Project not found.', 404);
+
   // Check if user already exists
   const existingUser = await User.findOne({ email: email.toLowerCase() });
+  
   if (existingUser) {
-    // If the user already exists, we still generate an invite link for them
-    // so the admin can share it, and the user can accept it (or we can just add them).
-    // For now, let the flow continue so the UI doesn't break and the link generates.
-    console.log('Inviting an existing user. Proceeding with invite generation.');
+    // Check if the user is already in this project's team
+    const isAlreadyInTeam = project.team.some(member => member.user.toString() === existingUser._id.toString());
+    
+    if (isAlreadyInTeam) {
+      throw new AppError('This user is already a member of this project.', 400);
+    }
+
+    // Add user directly to the project team
+    project.team.push({
+      user: existingUser._id,
+      role,
+      invitedBy: req.user._id
+    });
+    await project.save();
+
+    // Send an in-app notification to the existing user
+    await Notification.create({
+      recipient: existingUser._id,
+      project: project._id,
+      type: 'teamInvite',
+      title: 'Added to new project',
+      body: `${req.user.name} added you to the project "${project.name}" as a ${roleLabel}.`,
+      link: `/projects/${project._id}`,
+      channels: ['inApp']
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: `${existingUser.name} was successfully added directly to the project!`,
+      data: { email, role, roleLabel, existingUser: true },
+    });
   }
 
   // Check if a valid unused invite already exists IN THIS ORGANISATION
