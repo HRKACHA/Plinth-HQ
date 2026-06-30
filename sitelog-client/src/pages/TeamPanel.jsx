@@ -298,7 +298,7 @@ export default function TeamPanel() {
                     <table className="w-full">
                       <thead>
                         <tr className="border-b border-white/[0.06]">
-                          {['Name', 'Email', 'Role', 'Project', 'Last Active', 'Status', 'Actions'].map((h) => (
+                          {['Name', 'Email', 'Role', 'Last Active', 'Status', 'Actions'].map((h) => (
                             <th key={h} className="text-left px-6 py-3 text-xs font-medium text-muted uppercase tracking-wider">{h}</th>
                           ))}
                         </tr>
@@ -339,19 +339,7 @@ export default function TeamPanel() {
                                 </div>
                               )}
                             </td>
-                            <td className="px-6 py-4 text-navy dark:text-white text-sm font-medium">
-                              {m.projects && m.projects.length > 0 ? (
-                                <div className="flex flex-wrap gap-1">
-                                  {m.projects.map(p => (
-                                    <span key={p.id} className="px-2 py-1 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200 whitespace-nowrap">
-                                      {p.name}
-                                    </span>
-                                  ))}
-                                </div>
-                              ) : (
-                                <span className="text-muted text-xs">Unassigned</span>
-                              )}
-                            </td>
+
                             <td className="px-6 py-4 text-muted text-sm whitespace-nowrap">
                               <span className="flex items-center gap-1"><Clock size={14} /> {timeAgo(m.lastSeen || m.lastLogin)}</span>
                             </td>
@@ -406,11 +394,7 @@ export default function TeamPanel() {
                         </div>
                         <div className="flex flex-wrap items-center gap-2 mt-2.5 pt-2.5 border-t border-white/[0.04]">
                           <RoleBadge role={m.role} />
-                          {m.projects && m.projects.length > 0 && m.projects.map(p => (
-                            <span key={p.id} className="px-2 py-0.5 text-[10px] bg-white/[0.08] border border-white/[0.1] rounded text-gray-200">
-                              {p.name}
-                            </span>
-                          ))}
+
                           <span className="text-[10px] text-muted flex items-center gap-1 ml-auto">
                             <Clock size={10} /> {timeAgo(m.lastSeen || m.lastLogin)}
                           </span>
