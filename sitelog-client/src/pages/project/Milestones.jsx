@@ -5,7 +5,7 @@ import Badge from '../../components/common/Badge';
 import { formatDate } from '../../data/mockData';
 import { useAsync } from '../../hooks/useAsync';
 import { milestoneApi } from '../../api/index';
-import { X, Save } from 'lucide-react';
+import { X, Save, Trash2 } from 'lucide-react';
 import CustomSelectMenu from '../../components/common/CustomSelectMenu';
 
 import GlassDatePicker from '../../components/common/GlassDatePicker';
@@ -46,6 +46,16 @@ export default function Milestones() {
       reload();
     } catch (err) {
       alert('Error updating status: ' + (err.response?.data?.message || err.message));
+    }
+  };
+
+  const handleDelete = async (mId) => {
+    if (!window.confirm('Are you sure you want to delete this milestone?')) return;
+    try {
+      await milestoneApi.delete(id, mId);
+      reload();
+    } catch (err) {
+      alert('Error deleting milestone: ' + (err.response?.data?.message || err.message));
     }
   };
 
@@ -91,7 +101,12 @@ export default function Milestones() {
               </div>
               <h4 className="mt-3 font-bold text-navy">{m.title}</h4>
               <p className="mt-1 text-xs text-muted">{formatDate(m.startDate)} — {formatDate(m.endDate)}</p>
-              <p className="mt-3 text-xs text-muted">Weight: {m.weightage}%</p>
+              <div className="mt-3 flex items-center justify-between">
+                <p className="text-xs text-muted">Weight: {m.weightage}%</p>
+                <button onClick={() => handleDelete(mid)} className="p-1.5 text-muted hover:text-danger hover:bg-danger/10 rounded-md transition" title="Delete Milestone">
+                  <Trash2 className="h-4 w-4" />
+                </button>
+              </div>
             </div>
           );
         })}
