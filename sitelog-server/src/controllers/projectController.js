@@ -9,11 +9,12 @@ import { recalcProjectProgress } from '../middleware/projectAccess.js';
 
 function enrichProject(project, spent = 0) {
   const p = project.toObject ? project.toObject() : project;
+  const validTeam = p.team ? p.team.filter(t => t.user != null) : [];
   return {
     ...p,
     id: p._id,
     spent,
-    teamCount: p.team?.length || 0,
+    teamCount: validTeam.length,
     location: [p.location?.city, p.location?.state].filter(Boolean).join(', '),
   };
 }
@@ -29,7 +30,7 @@ export const listProjects = catchAsync(async (req, res) => {
     filter['team.user'] = req.user._id;
   }
   const [projects, total] = await Promise.all([
-    Project.find(filter).sort('-updatedAt').skip(skip).limit(limit),
+    Project.find(filter).populate('team.user', '_id name avatar').sort('-updatedAt').skip(skip).limit(limit),
     Project.countDocuments(filter),
   ]);
 

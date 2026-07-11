@@ -82,8 +82,9 @@ export const deleteMember = catchAsync(async (req, res) => {
   const member = await User.findById(memberId);
   if (!member) throw new AppError('Member not found.', 404);
 
+  const Project = (await import('../models/Project.js')).default;
+
   if (projectId) {
-    const Project = (await import('../models/Project.js')).default;
     const project = await Project.findById(projectId);
     if (!project) throw new AppError('Project not found.', 404);
 
@@ -92,6 +93,12 @@ export const deleteMember = catchAsync(async (req, res) => {
 
     return res.json({ success: true, message: `${member.name} has been removed from ${project.name}.` });
   }
+
+  // Remove the member from all project teams in their organisation
+  await Project.updateMany(
+    { organisation: member.organisation, 'team.user': memberId },
+    { $pull: { team: { user: memberId } } }
+  );
 
   await User.findByIdAndDelete(memberId);
   res.json({ success: true, message: `${member.name} has been permanently deleted.` });
