@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useRef, useEffect, useCallback, useState } from 'react';
+import { useScrollReveal, useScrollRevealChildren } from '../hooks/useScrollReveal';
 import {
   ArrowRight, CheckCircle, Camera, BarChart3, FileText,
   Shield, Smartphone, Users, Building2, ChevronRight, Sun, Moon
@@ -36,6 +37,7 @@ const stats = [
 export default function Landing() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
+  const featuresRef = useScrollRevealChildren({ staggerMs: 150 });
   return (
     <>
 
@@ -152,9 +154,9 @@ export default function Landing() {
 
       {/* ── Features ── */}
       <section className="mx-auto max-w-7xl px-4 pb-8 lg:px-8">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+        <div ref={featuresRef} className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-4">
           {features.map(({ icon: Icon, title, desc }, idx) => (
-            <div key={title} className="card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
+            <div key={title} className="card group scroll-item">
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:shadow-lg"
                 style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
                 <Icon className="h-6 w-6 text-orange" />

@@ -20,5 +20,4 @@ build/
 .DS_Store
 Thumbs.db
 
-# Local Reports
-Plinth_Reports/
+

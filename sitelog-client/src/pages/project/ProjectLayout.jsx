@@ -187,7 +187,7 @@ export default function ProjectLayout() {
 
   return (
     <AppLayout backTo="/projects">
-      <div className="mb-6 overflow-hidden rounded-2xl shadow-elevated relative" style={{ background: theme === 'dark' ? 'rgba(16,18,24,0.40)' : 'rgba(255,255,255,0.40)', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <div className="card mb-6 overflow-hidden relative p-0 sm:p-0 border-none bg-transparent" style={{ padding: 0 }}>
         <div className="relative h-36 sm:h-48 lg:h-64">
           {project.coverPhoto ? (
             <img src={project.coverPhoto} alt={project.name} className="h-full w-full object-cover opacity-60" />

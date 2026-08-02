@@ -21,6 +21,7 @@
 
 @layer base {
   :root {
+    color-scheme: light;
     /* ── Liquid Glass Design System — Light Premium ── */
     --color-surface: 220 232 255;       /* #DCE8FF — Even Lighter Blue Surface */
     --color-card: 235 242 255;          /* #EBF2FF — Very Light Soft Blue Card */
@@ -55,39 +56,61 @@
     --shadow-elevated: 0 16px 48px rgba(100, 120, 180, 0.18), 0 4px 12px rgba(100, 120, 180, 0.10);
 
     --text-primary: 30 35 60;
+
+    /* ── Neumorphic Shadow System — Light Mode ── */
+    /* Derived from surface #DCE8FF */
+    --neu-shadow-light: rgba(255, 255, 255, 1);
+    --neu-shadow-dark: rgba(163, 177, 214, 0.75);
+    --neu-raised: 8px 8px 16px var(--neu-shadow-dark), -8px -8px 16px var(--neu-shadow-light);
+    --neu-inset: inset 6px 6px 12px var(--neu-shadow-dark), inset -6px -6px 12px var(--neu-shadow-light);
+    --neu-raised-sm: 4px 4px 8px var(--neu-shadow-dark), -4px -4px 8px var(--neu-shadow-light);
+    --neu-inset-sm: inset 3px 3px 6px var(--neu-shadow-dark), inset -3px -3px 6px var(--neu-shadow-light);
+    --neu-raised-hover: 12px 12px 24px var(--neu-shadow-dark), -12px -12px 24px var(--neu-shadow-light);
+    --neu-float: 0 12px 32px rgba(163, 177, 214, 0.4), 0 4px 12px rgba(163, 177, 214, 0.2);
   }
 
   /* ── Dark Premium Theme ── */
   .dark {
-    --color-surface: 10 12 16;          /* Even deeper */
-    --color-card: 20 22 28;
-    --color-border: 36 38 46;
+    color-scheme: dark;
+    --color-surface: 10 12 20;          /* #0a0c14 */
+    --color-card: 16 19 31;             /* #10131f */
+    --color-border: 16 19 31;           /* Match card bg to remove visible border */
 
-    --glass-bg: rgba(16, 18, 24, 0.14);
-    --glass-border: rgba(255, 255, 255, 0.03);
-    --glass-border-hover: rgba(255, 255, 255, 0.14);
-    --glass-highlight: rgba(255, 255, 255, 0.10);
-    --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+    --glass-bg: rgba(16, 19, 31, 0.14);
+    --glass-border: transparent;
+    --glass-border-hover: transparent;
+    --glass-highlight: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 10px 30px rgba(3, 4, 8, 0.5);
 
-    --color-glass-border: rgba(255, 255, 255, 0.03);
-    --color-glass-border-hover: rgba(255, 255, 255, 0.12);
+    --color-glass-border: transparent;
+    --color-glass-border-hover: transparent;
 
     --color-navy: 240 240 235;
     --color-navy-dark: 255 255 255;
     --color-navy-light: 170 170 175;
 
-    --color-orange: 80 145 255;
-    --color-orange-dark: 66 133 244;
-    --color-orange-light: 120 180 255;
+    --color-orange: 79 127 255;         /* #4f7fff */
+    --color-orange-dark: 63 101 224;    /* #3f65e0 */
+    --color-orange-light: 106 147 255;  /* #6a93ff */
 
-    --color-info: 20 22 28;
-    --color-muted: 145 145 150;
+    --color-info: 16 19 31;
+    --color-muted: 131 139 160;         /* #838ba0 */
 
-    --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.2);
-    --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-card: 8px 8px 18px #030408, -8px -8px 18px #1c2136;
+    --shadow-elevated: 12px 12px 24px #030408, -12px -12px 24px #1c2136;
     --glass-blur: 22px;
 
-    --text-primary: 240 240 235;
+    --text-primary: 242 244 250;        /* #f2f4fa */
+
+    /* ── Neumorphic Shadow System — Dark Mode ── */
+    --neu-shadow-light: #1c2136;
+    --neu-shadow-dark: #030408;
+    --neu-raised: 8px 8px 18px var(--neu-shadow-dark), -8px -8px 18px var(--neu-shadow-light);
+    --neu-inset: inset 8px 8px 18px var(--neu-shadow-dark), inset -8px -8px 18px var(--neu-shadow-light);
+    --neu-raised-sm: 4px 4px 10px var(--neu-shadow-dark), -4px -4px 10px var(--neu-shadow-light);
+    --neu-inset-sm: inset 4px 4px 10px var(--neu-shadow-dark), inset -4px -4px 10px var(--neu-shadow-light);
+    --neu-raised-hover: 12px 12px 24px var(--neu-shadow-dark), -12px -12px 24px var(--neu-shadow-light);
+    --neu-float: 16px 16px 32px var(--neu-shadow-dark), -16px -16px 32px var(--neu-shadow-light);
 
     /* Theme-variant CSS custom properties for inline-style elimination */
     --sidebar-bg: rgba(16, 18, 24, 0.40);
@@ -198,8 +221,8 @@
   background: var(--glass-bg);
   backdrop-filter: blur(18px) saturate(180%);
   -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  border: none;
+  box-shadow: var(--neu-raised);
   overflow: hidden;
   isolation: isolate;
 }
@@ -244,13 +267,104 @@
   animation: float 8s ease-in-out infinite;
 }
 
+/* ── Scroll Reveal Animations ── */
+@keyframes scrollFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scrollSlideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scrollSlideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scroll-item: hidden by default, revealed when in view */
+.scroll-item {
+  opacity: 0;
+  transform: translateY(50px) scale(0.97);
+  transition: none;
+}
+.scroll-item.scroll-revealed {
+  animation: scrollFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Section-level reveal */
+.scroll-section {
+  opacity: 0;
+  transform: translateY(40px);
+}
+.scroll-section.scroll-revealed {
+  animation: scrollFadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Scale-in variant */
+.scroll-scale {
+  opacity: 0;
+  transform: scale(0.88);
+}
+.scroll-scale.scroll-revealed {
+  animation: scrollScaleIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Slide-from-left */
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-60px);
+}
+.scroll-slide-left.scroll-revealed {
+  animation: scrollSlideRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Slide-from-right */
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateX(60px);
+}
+.scroll-slide-right.scroll-revealed {
+  animation: scrollSlideLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 @layer components {
   /* ── Buttons — Glass System ── */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-orange/30 focus:ring-offset-2 active:scale-[0.98] overflow-hidden;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-orange/30 focus:ring-offset-2 active:scale-[0.98] overflow-hidden;
     background: linear-gradient(135deg, rgb(var(--color-orange)), rgb(var(--color-orange-dark)));
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 24px rgba(66, 133, 244, 0.25);
+    border: none;
+    box-shadow: var(--neu-raised-sm);
   }
   .btn-primary::before {
     content: '';
@@ -264,27 +378,33 @@
   }
   .btn-primary:hover {
     transform: translateY(-2px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 16px 40px rgba(66, 133, 244, 0.40);
+    box-shadow: var(--neu-raised-hover);
     background: linear-gradient(135deg, rgb(var(--color-orange-light)), rgb(var(--color-orange)));
+  }
+  .btn-primary:active {
+    box-shadow: var(--neu-inset-sm) !important;
   }
 
   .btn-secondary {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-navy shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-navy/10 active:scale-[0.98];
+    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold text-navy transition-all duration-300 hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-navy/10 active:scale-[0.98];
     background: rgba(16, 18, 24, 0.12);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: none;
+    box-shadow: var(--neu-raised-sm);
   }
   .btn-secondary:hover {
-    border-color: rgba(255, 255, 255, 0.14);
+    box-shadow: var(--neu-raised-hover);
+  }
+  .btn-secondary:active {
+    box-shadow: var(--neu-inset-sm) !important;
   }
 
   .btn-accent {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-[1px] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-orange/30 focus:ring-offset-2 active:scale-[0.98] overflow-hidden;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-orange/30 focus:ring-offset-2 active:scale-[0.98] overflow-hidden;
     background: linear-gradient(135deg, rgb(var(--color-orange)), rgb(var(--color-orange-dark)));
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 24px rgba(66, 133, 244, 0.25);
+    border: none;
+    box-shadow: var(--neu-raised-sm);
   }
   .btn-accent::before {
     content: '';
@@ -298,78 +418,97 @@
   }
   .btn-accent:hover {
     transform: translateY(-2px) scale(1.02);
-    border-color: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 16px 40px rgba(66, 133, 244, 0.40);
+    box-shadow: var(--neu-raised-hover);
     background: linear-gradient(135deg, rgb(var(--color-orange-light)), rgb(var(--color-orange)));
+  }
+  .btn-accent:active {
+    box-shadow: var(--neu-inset-sm) !important;
   }
 
   .btn-danger {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-danger/90 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-danger hover:shadow-md hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-danger/30 focus:ring-offset-2 active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-danger/90 px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-danger hover:-translate-y-[1px] focus:outline-none focus:ring-2 focus:ring-danger/30 focus:ring-offset-2 active:scale-[0.98];
+    border: none;
+    box-shadow: var(--neu-raised-sm);
+  }
+  .btn-danger:hover {
+    box-shadow: var(--neu-raised-hover);
+  }
+  .btn-danger:active {
+    box-shadow: var(--neu-inset-sm) !important;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-muted transition-all duration-200 hover:bg-white/5 hover:text-navy active:scale-[0.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-muted transition-all duration-200 hover:text-navy active:scale-[0.98];
+    box-shadow: none;
+  }
+  .btn-ghost:hover {
+    box-shadow: var(--neu-raised-sm);
+  }
+  .btn-ghost:active {
+    box-shadow: var(--neu-inset-sm) !important;
   }
 
   /* ── Cards — Liquid Glass ── */
   .card {
     @apply relative rounded-2xl p-4 sm:p-6 transition-all duration-300;
     background: rgba(16, 18, 24, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    border-radius: 20px;
+    border: none;
+    border-radius: 24px;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-  }
-  @media (min-width: 640px) {
-    .card {
-      border-radius: 24px;
-    }
+    box-shadow: var(--neu-raised);
   }
   .card:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.10);
+    box-shadow: var(--neu-raised-hover);
+  }
+  .card:active {
+    box-shadow: var(--neu-inset);
   }
 
   .card-static {
     @apply relative rounded-2xl p-4 sm:p-6;
     background: rgba(16, 18, 24, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: none;
+    border-radius: 24px;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--neu-raised);
   }
 
   .glass-card {
     @apply rounded-2xl p-4 sm:p-6;
     background: rgba(16, 18, 24, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: none;
+    border-radius: 24px;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--neu-raised);
   }
 
   .glass-panel {
     @apply rounded-2xl;
     background: rgba(16, 18, 24, 0.14);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: none;
+    border-radius: 24px;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+    box-shadow: var(--neu-raised);
   }
 
   /* ── Inputs — Glass ── */
   .input-field {
-    @apply w-full rounded-xl px-4 py-2.5 text-sm text-navy transition-all duration-300 placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-orange/10 focus:shadow-sm;
+    @apply w-full rounded-xl px-4 py-2.5 text-sm text-navy transition-all duration-300 placeholder:text-muted/50 focus:outline-none focus:ring-2 focus:ring-orange/10;
     background: rgba(16, 18, 24, 0.10);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
     backdrop-filter: blur(18px);
+    box-shadow: var(--neu-inset-sm);
   }
   .input-field:focus {
-    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow: var(--neu-inset), 0 0 0 2px rgba(50, 115, 230, 0.15);
   }
   .input-field:hover {
-    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: var(--neu-inset);
   }
 
   select.input-field option {
@@ -380,8 +519,9 @@
   /* ── Labels & Tags ── */
   .badge {
     @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: none;
     backdrop-filter: blur(12px);
+    box-shadow: var(--neu-raised-sm);
   }
 
   .section-title {
@@ -408,11 +548,12 @@
   }
 
   .modal-content {
-    @apply relative w-full rounded-t-2xl sm:rounded-2xl shadow-elevated animate-scaleIn max-h-[92vh] sm:max-h-[90vh] overflow-y-auto;
+    @apply relative w-full rounded-t-2xl sm:rounded-2xl animate-scaleIn max-h-[92vh] sm:max-h-[90vh] overflow-y-auto;
     background: rgba(16, 18, 24, 0.85);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
+    box-shadow: var(--neu-float);
   }
   .modal-content::before {
     content: "";
@@ -427,12 +568,12 @@
 
   /* ── Glassmorphism Dropdown ── */
   .glass-dropdown {
-    @apply absolute top-full mt-2 min-w-[260px] rounded-2xl p-2 shadow-elevated animate-slideDown z-[60];
+    @apply absolute top-full mt-2 min-w-[260px] rounded-2xl p-2 animate-slideDown z-[60];
     background: rgba(16, 18, 24, 0.88);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: none;
+    box-shadow: var(--neu-float);
   }
 
   /* Bridge the gap so hover state doesn't break when moving from trigger to dropdown */
@@ -464,19 +605,24 @@
     @apply relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300 cursor-pointer select-none;
     color: rgb(var(--color-muted));
     background: rgba(16, 18, 24, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: none;
     backdrop-filter: blur(12px);
+    box-shadow: var(--neu-raised-sm);
   }
   .project-nav-pill:hover {
-    @apply text-navy shadow-sm;
+    @apply text-navy;
     background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.10);
+    box-shadow: var(--neu-raised-hover);
     transform: translateY(-1px);
   }
+  .project-nav-pill:active {
+    box-shadow: var(--neu-inset-sm) !important;
+  }
   .project-nav-pill-active {
-    @apply text-white border-transparent;
+    @apply text-white;
     background: linear-gradient(135deg, rgb(var(--color-orange)), rgb(var(--color-orange-dark)));
-    box-shadow: 0 4px 12px rgba(66, 133, 244, 0.25);
+    border: none;
+    box-shadow: var(--neu-raised-sm);
   }
 }
 
@@ -495,37 +641,37 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
 }
 
-/* Cards in light mode — frosted white-violet glass, easy on the eyes */
+/* Cards in light mode — neumorphic soft surfaces */
 :root:not(.dark) .card,
 :root:not(.dark) .card-static,
 :root:not(.dark) .glass-card,
 :root:not(.dark) .glass-panel {
   background: rgba(235, 240, 255, 0.65);
-  border-color: rgba(120, 140, 200, 0.12);
-  box-shadow: 0 4px 20px rgba(100, 120, 200, 0.08), 0 1px 3px rgba(100, 120, 200, 0.05);
+  border: none;
+  box-shadow: var(--neu-raised);
 }
 :root:not(.dark) .card:hover {
-  border-color: rgba(100, 120, 200, 0.20);
-  box-shadow: 0 8px 28px rgba(100, 120, 200, 0.12), 0 2px 6px rgba(100, 120, 200, 0.06);
+  box-shadow: var(--neu-raised-hover);
 }
 
-/* Input fields in light mode */
+/* Input fields in light mode — sunken neumorphic */
 :root:not(.dark) .input-field {
   background: rgba(240, 244, 255, 0.70);
-  border-color: rgba(120, 140, 200, 0.15);
+  border: none;
   color: rgb(30, 35, 60);
+  box-shadow: var(--neu-inset-sm);
 }
 :root:not(.dark) .input-field:focus {
-  border-color: rgba(50, 115, 230, 0.45);
-  box-shadow: 0 0 0 3px rgba(50, 115, 230, 0.08);
+  box-shadow: var(--neu-inset), 0 0 0 2px rgba(50, 115, 230, 0.15);
 }
 :root:not(.dark) .input-field:hover {
-  border-color: rgba(100, 120, 200, 0.25);
+  box-shadow: var(--neu-inset);
 }
 
-/* Badge in light mode */
+/* Badge in light mode — neumorphic */
 :root:not(.dark) .badge {
-  border-color: rgba(100, 120, 200, 0.12);
+  border: none;
+  box-shadow: var(--neu-raised-sm);
 }
 
 /* Skeleton in light mode */
@@ -536,24 +682,24 @@
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
 }
 
-/* Modal in light mode */
+/* Modal in light mode — neumorphic */
 :root:not(.dark) .modal-backdrop {
   background: rgba(30, 35, 60, 0.25);
 }
 :root:not(.dark) .modal-content {
   background: rgba(237, 242, 255, 0.95);
-  border-color: rgba(120, 140, 200, 0.12);
-  box-shadow: 0 24px 64px rgba(80, 100, 180, 0.20);
+  border: none;
+  box-shadow: var(--neu-float);
 }
 :root:not(.dark) .modal-content::before {
   background: rgba(255, 255, 255, 0.80);
 }
 
-/* Dropdown in light mode */
+/* Dropdown in light mode — neumorphic */
 :root:not(.dark) .glass-dropdown {
   background: rgba(240, 244, 255, 0.96);
-  border-color: rgba(120, 140, 200, 0.12);
-  box-shadow: 0 16px 48px rgba(80, 100, 180, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: none;
+  box-shadow: var(--neu-float);
 }
 
 /* Dropdown items in light mode */
@@ -564,29 +710,32 @@
   background: rgba(50, 115, 230, 0.06);
 }
 
-/* Buttons in light mode */
+/* Buttons in light mode — neumorphic */
 :root:not(.dark) .btn-secondary {
   background: rgba(235, 240, 255, 0.65);
-  border-color: rgba(120, 140, 200, 0.12);
+  border: none;
   color: rgb(30, 35, 60);
+  box-shadow: var(--neu-raised-sm);
 }
 :root:not(.dark) .btn-secondary:hover {
-  border-color: rgba(100, 120, 200, 0.22);
   background: rgba(235, 240, 255, 0.80);
+  box-shadow: var(--neu-raised-hover);
 }
 :root:not(.dark) .btn-ghost:hover {
   background: rgba(50, 115, 230, 0.05);
+  box-shadow: var(--neu-raised-sm);
 }
 
-/* Project nav pill in light mode — clear readable text */
+/* Project nav pill in light mode — neumorphic */
 :root:not(.dark) .project-nav-pill {
   background: rgba(235, 240, 255, 0.65);
-  border-color: rgba(120, 140, 200, 0.12);
+  border: none;
   color: rgb(50, 60, 90);
+  box-shadow: var(--neu-raised-sm);
 }
 :root:not(.dark) .project-nav-pill:hover {
   background: rgba(230, 236, 255, 0.80);
-  border-color: rgba(100, 120, 200, 0.20);
+  box-shadow: var(--neu-raised-hover);
   color: rgb(30, 35, 60);
 }
 
@@ -743,4 +892,343 @@
     mask-image: linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 35%, black 85%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 5%, black 90%, transparent 100%);
   }
+}
+
+/* ══════════════════════════════════════════════════════════
+   NEUMORPHIC GLOBAL OVERRIDES
+   Catch all inline Tailwind borders/shadows that bypass
+   the design-system CSS classes
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Tables — soft neumorphic row separators ── */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+thead tr {
+  border-bottom: none !important;
+  box-shadow: 0 2px 4px var(--neu-shadow-dark);
+}
+tbody tr {
+  border-bottom: none !important;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+}
+tbody tr + tr {
+  box-shadow: inset 0 1px 0 var(--neu-shadow-dark);
+}
+tbody tr:hover {
+  box-shadow: var(--neu-inset-sm);
+}
+/* Override Tailwind divide-y on tbody */
+tbody[class*="divide-y"] > tr {
+  border-bottom: none !important;
+  border-top: none !important;
+}
+tbody[class*="divide-y"] > tr + tr {
+  box-shadow: inset 0 1px 0 var(--neu-shadow-dark);
+}
+
+/* thead header background — neumorphic raised strip */
+thead {
+  border: none !important;
+}
+thead th {
+  border: none !important;
+}
+
+/* ── Inline Action Buttons — small icon buttons (p-1.5 rounded-md) ── */
+button[class*="p-1.5"][class*="rounded-md"][class*="backdrop-blur"],
+button[class*="p-1.5"][class*="rounded-md"][class*="shadow-sm"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm) !important;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+button[class*="p-1.5"][class*="rounded-md"][class*="backdrop-blur"]:hover,
+button[class*="p-1.5"][class*="rounded-md"][class*="shadow-sm"]:hover {
+  box-shadow: var(--neu-raised-hover) !important;
+}
+button[class*="p-1.5"][class*="rounded-md"][class*="backdrop-blur"]:active,
+button[class*="p-1.5"][class*="rounded-md"][class*="shadow-sm"]:active {
+  box-shadow: var(--neu-inset-sm) !important;
+}
+
+/* ── Container cards that use inline border — bg-card border ── */
+div[class*="bg-card"][class*="border"][class*="rounded-2xl"],
+div[class*="bg-card"][class*="border"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised);
+}
+
+/* ── Fixed floating popups (like Chatbot) ── */
+div[class*="fixed"][class*="bg-card"][class*="border"] {
+  box-shadow: var(--neu-float) !important;
+}
+
+/* ── Sidebar Navigation Buttons ── */
+aside a[class*="rounded-xl"],
+aside button[class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent;
+  transition: box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+aside a[class*="rounded-xl"]:hover,
+aside button[class*="rounded-xl"]:hover {
+  box-shadow: var(--neu-raised-sm) !important;
+  background-color: var(--color-card) !important;
+}
+aside a[class*="rounded-xl"]:active,
+aside button[class*="rounded-xl"]:active,
+aside a[class*="rounded-xl"][class*="bg-orange"],
+aside a[class*="rounded-xl"][class*="text-orange"],
+aside button[class*="rounded-xl"][class*="bg-orange"],
+aside button[class*="rounded-xl"][class*="text-orange"] {
+  /* Active / Pressed state */
+  box-shadow: var(--neu-inset-sm) !important;
+  background-color: var(--color-card) !important;
+}
+
+
+/* ── Billing / Usage stat boxes — bg-surface border rounded-xl ── */
+div[class*="bg-surface"][class*="border"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Billing plan overview card — bg-card shadow-card border ── */
+div[class*="bg-card"][class*="shadow-card"][class*="border"] {
+  border: none !important;
+  box-shadow: var(--neu-raised);
+}
+
+/* ── Alert banners — success/danger/info borders ── */
+div[class*="bg-success"][class*="border"][class*="rounded-xl"],
+div[class*="bg-danger"][class*="border"][class*="rounded-xl"],
+div[class*="bg-blue-500"][class*="border"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Register page alert banners ── */
+div[class*="border-danger"][class*="bg-danger"][class*="rounded-xl"],
+div[class*="border-emerald"][class*="bg-emerald"][class*="rounded-xl"],
+div[class*="border-blue"][class*="bg-blue"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Modal content with inline border override ── */
+div[class*="modal-content"][class*="border"] {
+  border: none !important;
+  box-shadow: var(--neu-float) !important;
+}
+
+/* ── Settings / section dividers — use neumorphic groove instead of border-b ── */
+div[class*="border-b"][class*="border-\\[var\\(--color-glass-border\\)\\]"] {
+  border-bottom: none !important;
+  box-shadow: 0 1px 0 var(--neu-shadow-dark), 0 2px 0 var(--neu-shadow-light);
+}
+
+/* ── Team Panel tab bar — bg-card border rounded-xl p-1 ── */
+div[class*="bg-card"][class*="border"][class*="rounded-xl"][class*="p-1"] {
+  border: none !important;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* ── Chat panels — border-b on chat containers ── */
+div[class*="border-b"][class*="border-white\\/\\[0\\.06\\]"] {
+  border-bottom-color: transparent !important;
+  box-shadow: 0 1px 0 var(--neu-shadow-dark);
+}
+
+/* ── Role dropdown menus — bg-card border shadow-2xl ── */
+div[class*="bg-card"][class*="border"][class*="shadow-2xl"] {
+  border: none !important;
+  box-shadow: var(--neu-float) !important;
+}
+
+/* ── File upload dashed borders — keep dashed but soften ── */
+div[class*="border-dashed"] {
+  border-style: dashed !important;
+  border-color: var(--neu-shadow-dark) !important;
+  box-shadow: var(--neu-inset-sm);
+}
+
+/* ── Images with border ── */
+img[class*="border"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Team member card — rounded-xl border bg-white ── */
+div[class*="rounded-xl"][class*="border-white"][class*="bg-white"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Invite/link bar — bg-orange/10 border border-orange ── */
+div[class*="bg-orange"][class*="border"][class*="border-orange"][class*="rounded-xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Global: any button with explicit shadow-sm and border, make neumorphic ── */
+button[class*="shadow-sm"][class*="border"]:not(.btn-primary):not(.btn-accent):not(.btn-secondary):not(.btn-danger):not(.btn-ghost):not(.theme-switch *):not([class*="theme-switch"]) {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm) !important;
+}
+button[class*="shadow-sm"][class*="border"]:not(.btn-primary):not(.btn-accent):not(.btn-secondary):not(.btn-danger):not(.btn-ghost):not(.theme-switch *):active {
+  box-shadow: var(--neu-inset-sm) !important;
+}
+
+/* ── Active badge with inline border (success/Active badge) ── */
+span[class*="rounded-full"][class*="border"][class*="font-semibold"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Sitemap section cards — specific override ── */
+/* These use: border border-blue-500/10 bg-blue-500/5 shadow-sm */
+div[class*="border-blue-500"][class*="bg-blue-500"][class*="rounded-2xl"],
+div[class*="border-blue-400"][class*="bg-blue-400"][class*="rounded-2xl"] {
+  border: none !important;
+  box-shadow: var(--neu-raised) !important;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+div[class*="border-blue-500"][class*="bg-blue-500"][class*="rounded-2xl"]:hover,
+div[class*="border-blue-400"][class*="bg-blue-400"][class*="rounded-2xl"]:hover {
+  box-shadow: var(--neu-raised-hover) !important;
+}
+
+/* ── Sitemap section title border-b → neumorphic groove ── */
+h2[class*="border-b"][class*="border-navy"],
+h2[class*="border-b"][class*="border-white"],
+h3[class*="border-b"][class*="border-navy"],
+h3[class*="border-b"][class*="border-white"] {
+  border-bottom: none !important;
+  padding-bottom: 1rem;
+  box-shadow: 0 1px 0 var(--neu-shadow-dark), 0 2px 0 var(--neu-shadow-light);
+}
+
+/* ── Settings theme toggle container ── */
+div[class*="border"][class*="border-\\[var\\(--color-glass-border\\)\\]"][class*="rounded-lg"][class*="bg-surface"] {
+  border: none !important;
+  box-shadow: var(--neu-raised-sm);
+}
+
+/* ── Vendor / Project modal footer divider ── */
+div[class*="border-t"][class*="border-\\[var\\(--color-glass-border\\)\\]"] {
+  border-top: none !important;
+  box-shadow: 0 -1px 0 var(--neu-shadow-dark), 0 -2px 0 var(--neu-shadow-light);
+}
+
+/* ── PublicOwnerDashboard header ── */
+header[class*="bg-card"][class*="border-b"] {
+  border-bottom: none !important;
+  box-shadow: var(--neu-raised);
+}
+
+/* ── All select elements in forms (outside .input-field) ── */
+select[class*="border"][class*="rounded-xl"]:not(.input-field) {
+  border: none !important;
+  box-shadow: var(--neu-inset-sm);
+  transition: box-shadow 0.3s ease;
+}
+select[class*="border"][class*="rounded-xl"]:not(.input-field):focus {
+  box-shadow: var(--neu-inset), 0 0 0 2px rgba(50, 115, 230, 0.15);
+}
+
+/* ── Input fields with inline border (not using .input-field class) ── */
+input[class*="border"][class*="rounded-xl"]:not(.input-field),
+textarea[class*="border"][class*="rounded-xl"]:not(.input-field) {
+  border: none !important;
+  box-shadow: var(--neu-inset-sm);
+  transition: box-shadow 0.3s ease;
+}
+input[class*="border"][class*="rounded-xl"]:not(.input-field):focus,
+textarea[class*="border"][class*="rounded-xl"]:not(.input-field):focus {
+  box-shadow: var(--neu-inset), 0 0 0 2px rgba(50, 115, 230, 0.15);
+}
+
+/* ── Billing plan cards — button states within cards ── */
+div[class*="card"] button[class*="rounded-xl"][class*="font-semibold"]:not(.btn-primary):not(.btn-accent):not(.btn-secondary):not(.btn-danger):not(.btn-ghost) {
+  box-shadow: var(--neu-raised-sm);
+  border: none !important;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+div[class*="card"] button[class*="rounded-xl"][class*="font-semibold"]:not(.btn-primary):not(.btn-accent):not(.btn-secondary):not(.btn-danger):not(.btn-ghost):hover {
+  box-shadow: var(--neu-raised-hover);
+}
+div[class*="card"] button[class*="rounded-xl"][class*="font-semibold"]:not(.btn-primary):not(.btn-accent):not(.btn-secondary):not(.btn-danger):not(.btn-ghost):active {
+  box-shadow: var(--neu-inset-sm) !important;
+}
+
+/* ── Smooth transition on all neumorphic overrides ── */
+table, thead, tbody, tr, th, td {
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* ══════════════════════════════════════════════════════════
+   USER REQUESTED DARK NEUMORPHIC OVERRIDES
+   ══════════════════════════════════════════════════════════ */
+.dark .card,
+.dark .card-static {
+  background: #10131f !important;
+  border: none !important;
+  border-radius: 24px !important;
+  box-shadow: 8px 8px 18px #030408, -8px -8px 18px #1c2136 !important;
+}
+
+.dark .glass-card,
+.dark .glass-panel,
+.dark .liquid-glass,
+.dark .modal-content,
+.dark .glass-dropdown {
+  background: rgba(16, 19, 31, 0.40) !important;
+  border: none !important;
+  border-radius: 24px !important;
+  backdrop-filter: blur(32px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(32px) saturate(200%) !important;
+  box-shadow: 8px 8px 18px #030408, -8px -8px 18px #1c2136, inset 1px 1px 2px rgba(255, 255, 255, 0.08) !important;
+}
+
+.dark .btn-primary,
+.dark .btn-accent {
+  background: linear-gradient(145deg, #6a93ff, #3f65e0) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  box-shadow: 6px 6px 14px #030408, -3px -3px 10px rgba(79,127,255,0.1) !important;
+  border: none !important;
+}
+.dark .btn-primary:active,
+.dark .btn-accent:active {
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.35), inset -3px -3px 8px rgba(255,255,255,0.1) !important;
+}
+
+.dark .btn-secondary,
+.dark .btn-ghost {
+  background: transparent !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #838ba0 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+}
+.dark .btn-secondary:hover,
+.dark .btn-ghost:hover {
+  color: #4f7fff !important;
+  border-color: #4f7fff !important;
+}
+.dark .btn-secondary:active,
+.dark .btn-ghost:active {
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.35), inset -3px -3px 8px rgba(255,255,255,0.1) !important;
+}
+.dark .btn-danger {
+  background: linear-gradient(145deg, #fb7185, #ef4444) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  box-shadow: 6px 6px 14px #030408, -3px -3px 10px rgba(239, 68, 68, 0.1) !important;
+  border: none !important;
+}
+.dark .btn-danger:active {
+  box-shadow: inset 3px 3px 8px rgba(0,0,0,0.35), inset -3px -3px 8px rgba(255,255,255,0.1) !important;
 }

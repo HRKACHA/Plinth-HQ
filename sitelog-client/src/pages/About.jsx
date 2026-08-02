@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
+import { useScrollReveal, useScrollRevealChildren } from '../hooks/useScrollReveal';
 import {
   ArrowRight, HardHat, BarChart3, ShieldCheck, Zap, Camera, FileText,
   Users, Smartphone, Building2, CheckCircle, MessageSquare, Package,
@@ -144,6 +145,13 @@ export default function About() {
   const { user } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [activeFeatureCategory, setActiveFeatureCategory] = useState(0);
+  const problemsRef = useScrollRevealChildren({ staggerMs: 130 });
+  const featuresRef = useScrollRevealChildren({ staggerMs: 120, deps: [activeFeatureCategory] });
+  const workflowRef = useScrollRevealChildren({ staggerMs: 140 });
+  const rolesRef = useScrollRevealChildren({ staggerMs: 130 });
+  const techRef = useScrollRevealChildren({ staggerMs: 150 });
+  const valuesRef = useScrollRevealChildren({ staggerMs: 140 });
+  const ownerRef = useScrollReveal();
   return (
     <>
 
@@ -232,9 +240,9 @@ export default function About() {
             Every day, project managers lose hours to disconnected tools, missing data, and communication gaps. Here's how PlinthHQ transforms each pain point into a superpower.
           </p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div ref={problemsRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {PROBLEMS.map(({ icon: Icon, problem, solution }, idx) => (
-            <div key={idx} className="card group animate-slideUp" style={{ animationDelay: `${0.08 * idx}s` }}>
+            <div key={idx} className="card group scroll-item">
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: 'rgba(239, 68, 68, 0.08)', border: '1px solid rgba(239, 68, 68, 0.15)' }}>
@@ -295,9 +303,9 @@ export default function About() {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-6" key={activeFeatureCategory}>
+        <div ref={featuresRef} className="grid md:grid-cols-3 gap-6" key={activeFeatureCategory}>
           {FEATURES[activeFeatureCategory].items.map(({ icon: Icon, title, desc }, idx) => (
-            <div key={title} className="card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
+            <div key={title} className="card group scroll-item">
               <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 group-hover:shadow-lg"
                 style={{ background: `${FEATURES[activeFeatureCategory].color}12`, border: `1px solid ${FEATURES[activeFeatureCategory].color}20` }}>
                 <Icon className="h-6 w-6" style={{ color: FEATURES[activeFeatureCategory].color }} />
@@ -326,9 +334,9 @@ export default function About() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div ref={workflowRef} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {WORKFLOW_STEPS.map(({ step, title, desc, icon: Icon }, idx) => (
-              <div key={step} className="relative card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
+              <div key={step} className="relative card group scroll-item">
                 <div className="flex items-start gap-4">
                   <div className="shrink-0">
                     <span className="font-mono text-3xl font-bold tracking-tight"
@@ -364,9 +372,9 @@ export default function About() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div ref={rolesRef} className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {ROLES.map(({ role, icon: Icon, color, access }, idx) => (
-            <div key={role} className="card group animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
+            <div key={role} className="card group scroll-item">
               <div className="h-12 w-12 rounded-xl flex items-center justify-center mb-5"
                 style={{ background: `${color}15`, border: `1px solid ${color}25` }}>
                 <Icon className="h-6 w-6" style={{ color }} />
@@ -396,8 +404,8 @@ export default function About() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300">
+        <div ref={valuesRef} className="grid md:grid-cols-2 gap-6">
+          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300 scroll-item">
             <div className="h-12 w-12 rounded-2xl bg-orange/10 flex items-center justify-center mb-6" style={{ border: '1px solid rgba(255,255,255,0.05)' }}>
               <HardHat className="h-6 w-6 text-orange" />
             </div>
@@ -407,7 +415,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300">
+          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300 scroll-item">
             <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'rgba(66, 133, 244, 0.1)', border: '1px solid rgba(255,255,255,0.05)' }}>
               <BarChart3 className="h-6 w-6" style={{ color: '#4285F4' }} />
             </div>
@@ -417,7 +425,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300">
+          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300 scroll-item">
             <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'rgba(52, 168, 83, 0.1)', border: '1px solid rgba(255,255,255,0.05)' }}>
               <ShieldCheck className="h-6 w-6" style={{ color: '#34A853' }} />
             </div>
@@ -427,7 +435,7 @@ export default function About() {
             </p>
           </div>
 
-          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300">
+          <div className="liquid-glass p-10 rounded-3xl hover:-translate-y-1 transition-transform duration-300 scroll-item">
             <div className="h-12 w-12 rounded-2xl flex items-center justify-center mb-6" style={{ background: 'rgba(168, 85, 247, 0.1)', border: '1px solid rgba(255,255,255,0.05)' }}>
               <Zap className="h-6 w-6" style={{ color: '#A855F7' }} />
             </div>
@@ -468,7 +476,7 @@ export default function About() {
             </ul>
           </div>
           <div className="flex-1 flex justify-center">
-            <div className="w-full max-w-[340px] rounded-2xl p-6" style={{ background: theme === 'dark' ? 'rgba(255,255,255,0.02)' : 'rgba(120,140,200,0.06)', border: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(120,140,200,0.10)' }}>
+            <div ref={ownerRef} className="card w-full max-w-[340px] p-6 scroll-slide-right">
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-10 w-10 rounded-xl bg-emerald-500/15 flex items-center justify-center">
                   <Eye className="h-5 w-5 text-emerald-400" />
@@ -522,14 +530,14 @@ export default function About() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div ref={techRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               { label: 'Frontend', tech: 'React + Vite', desc: 'Lightning-fast SPA with real-time HMR and optimized production builds.', icon: Layers, color: '#61DAFB' },
               { label: 'Backend', tech: 'Node.js + Express', desc: 'RESTful API with 35+ endpoints, JWT auth, role middleware, and Socket.IO.', icon: Globe, color: '#68A063' },
               { label: 'Database', tech: 'MongoDB Atlas', desc: 'Cloud-hosted NoSQL database with indexed queries and atomic operations.', icon: BookOpen, color: '#47A248' },
               { label: 'Real-Time', tech: 'Socket.IO', desc: 'WebSocket-based real-time chat, typing indicators, and live notifications.', icon: Zap, color: '#010101' },
             ].map(({ label, tech, desc, icon: Icon, color }, idx) => (
-              <div key={label} className="card-static p-6 animate-slideUp" style={{ animationDelay: `${0.1 * idx}s` }}>
+              <div key={label} className="card-static p-6 scroll-item">
                 <div className="h-10 w-10 rounded-lg flex items-center justify-center mb-4"
                   style={{ background: `${color}15`, border: `1px solid ${color}25` }}>
                   <Icon className="h-5 w-5" style={{ color }} />

@@ -155,8 +155,8 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       <div className="absolute inset-0 backdrop-blur-sm bg-surface/50 pointer-events-none -z-10" />
       {/* ═══ Vertical Sidebar — Liquid Glass ═══ */}
       <aside className={`hidden lg:flex flex-col ${isCollapsed ? 'w-[72px]' : 'w-52'} shrink-0 z-50 transition-all duration-300`}
-        style={{ background: 'var(--sidebar-bg)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', borderRight: '1px solid var(--subtle-border)', transition: 'background 0.35s ease, border-color 0.35s ease' }}>
-        <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ borderBottom: '1px solid var(--subtle-border)' }}>
+        style={{ background: 'var(--sidebar-bg)', backdropFilter: 'blur(24px) saturate(180%)', WebkitBackdropFilter: 'blur(24px) saturate(180%)', boxShadow: 'none', transition: 'background 0.35s ease, box-shadow 0.35s ease' }}>
+        <div className={`py-4 flex items-center justify-center shrink-0 transition-all`} style={{ boxShadow: '0 2px 4px var(--neu-shadow-dark)' }}>
           <Link to="/dashboard" title={isCollapsed ? "PlinthHQ" : ""}>
             <PlinthLogo size="xs" iconOnly={isCollapsed} />
           </Link>
@@ -240,8 +240,8 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
         {/* ═══ Header — Liquid Glass ═══ */}
-        <header className="h-14 sm:h-16 flex items-center justify-between px-3 sm:px-4 lg:px-8 shrink-0 relative z-[60]"
-          style={{ background: 'var(--header-bg)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', borderBottom: '1px solid var(--subtle-border)', transition: 'background 0.35s ease, border-color 0.35s ease' }}>
+        <header className="sticky top-0 z-40 flex h-16 items-center justify-between px-4 lg:px-8"
+          style={{ background: 'var(--header-bg)', backdropFilter: 'blur(20px) saturate(180%)', WebkitBackdropFilter: 'blur(20px) saturate(180%)', boxShadow: '0 2px 8px var(--neu-shadow-dark)', transition: 'background 0.35s ease, box-shadow 0.35s ease' }}>
           
           <div className="flex items-center gap-4">
             {/* Mobile hamburger */}
@@ -270,13 +270,13 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
             {projects && projects.length > 0 && (
               <div className="hidden md:flex relative group mr-2">
                 <button className="flex items-center gap-2 rounded-xl px-3 py-1.5 text-sm font-medium text-navy/80 dark:text-white/80 transition-all hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5"
-                  style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+                  style={{ boxShadow: 'var(--neu-raised-sm)' }}>
                   <FolderKanban className="h-4 w-4 text-orange" />
                   <span className="truncate max-w-[160px]">{location.pathname.includes('/projects/') ? projects.find(p => location.pathname.includes(p._id || p.id))?.name || 'Select Project' : 'Select Project'}</span>
                   <ChevronDown className="h-4 w-4 text-navy/80 dark:text-white/60" />
                 </button>
                 <div className="absolute right-0 top-full mt-2 w-max min-w-[260px] max-w-[320px] rounded-2xl p-2 shadow-elevated opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[70]"
-                  style={{ background: 'var(--dropdown-bg)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid var(--search-border)' }}>
+                  style={{ background: 'var(--dropdown-bg)', backdropFilter: 'blur(24px) saturate(180%)', boxShadow: 'var(--neu-raised)' }}>
                   <p className="px-3 py-2 text-xs font-semibold text-navy/80 dark:text-white/60 uppercase tracking-wider">Your Projects</p>
                   <div className="max-h-60 overflow-y-auto overflow-x-hidden">
                     {projects.map(p => (
@@ -298,12 +298,12 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
 
             <button
               className="hidden sm:flex items-center gap-2 rounded-full px-3 py-1.5 text-sm text-navy/90 dark:text-white/70 transition-all hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5"
-              style={{ border: '1px solid rgba(255,255,255,0.06)' }}
+              style={{ boxShadow: 'var(--neu-raised-sm)' }}
               onClick={() => setSearchOpen(true)}
             >
               <Search className="h-3.5 w-3.5" />
               <span className="hidden md:inline">Search...</span>
-              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(255,255,255,0.03)' }}>⌘K</kbd>
+              <kbd className="hidden md:inline ml-2 rounded-md px-1.5 py-0.5 text-[10px] font-mono text-navy/20 dark:text-white/20" style={{ background: 'rgba(255,255,255,0.03)' }}>⌘K</kbd>
             </button>
 
             <Link to="/about" className="rounded-full p-2 text-navy/90 dark:text-white/70 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-navy dark:text-white transition-all" title="About PlinthHQ">
@@ -376,24 +376,30 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       {mobileOpen && (
         <>
           <div className="fixed inset-0 z-[70] backdrop-blur-sm animate-fadeIn lg:hidden" style={{ background: 'var(--overlay-bg)' }} onClick={() => setMobileOpen(false)} />
-          <div className="fixed inset-y-0 left-0 z-[80] w-64 flex flex-col shadow-elevated animate-slideDown lg:hidden"
-            style={{ background: 'var(--mobile-bg)', backdropFilter: 'blur(24px) saturate(180%)', borderRight: '1px solid var(--subtle-border)' }}>
-            <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid var(--subtle-border)' }}>
+          <div className="fixed top-0 bottom-0 left-0 z-[80] w-72 flex flex-col animate-slideRight rounded-r-2xl"
+            style={{ background: 'rgb(var(--color-card))', backdropFilter: 'blur(24px) saturate(180%)', boxShadow: 'var(--neu-float)' }}>
+            <div className="flex items-center justify-between px-5 py-4" style={{ boxShadow: '0 2px 6px var(--neu-shadow-dark)' }}>
               <PlinthLogo size="xs" />
-              <button onClick={() => setMobileOpen(false)} className="rounded-lg p-2 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white hover:bg-navy/5 dark:hover:bg-white/5 transition-colors">
+              <button onClick={() => setMobileOpen(false)} className="rounded-xl p-2 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-all" style={{ boxShadow: 'var(--neu-raised-sm)', background: 'rgb(var(--color-card))' }}>
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto p-3 space-y-1">
+            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
               {directNavItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon }) => (
-                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-navy/80 dark:text-white/80 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-white'}`}>
+                <Link key={path} to={path} onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${isActive(path) ? 'text-orange' : 'text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white'}`}
+                  style={isActive(path) ? { boxShadow: 'var(--neu-inset-sm)', background: 'rgb(var(--color-card))' } : {}}
+                >
                   <Icon className="h-4 w-4" /> {label}
                 </Link>
               ))}
 
-              <p className="px-3 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-navy/20 dark:text-white/20">Operations</p>
+              <p className="px-3 pt-5 pb-2 text-[10px] font-bold uppercase tracking-widest text-navy/20 dark:text-white/20">Operations</p>
               {operationsItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon, comingSoon }) => (
-                <button key={path} type="button" onClick={() => { if (!comingSoon) { navigate(path); setMobileOpen(false); } }} disabled={comingSoon} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all w-full text-left ${comingSoon ? 'opacity-40' : isActive(path) ? 'bg-orange/10 text-orange' : 'text-navy/80 dark:text-white/80 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-white'}`}>
+                <button key={path} type="button" onClick={() => { if (!comingSoon) { navigate(path); setMobileOpen(false); } }} disabled={comingSoon}
+                  className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 w-full text-left ${comingSoon ? 'opacity-40' : isActive(path) ? 'text-orange' : 'text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white'}`}
+                  style={!comingSoon && isActive(path) ? { boxShadow: 'var(--neu-inset-sm)', background: 'rgb(var(--color-card))' } : {}}
+                >
                   <Icon className="h-4 w-4" />
                   <div>
                     <span>{label}</span>
@@ -402,9 +408,12 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
                 </button>
               ))}
 
-              <p className="px-3 pt-4 pb-1 text-[10px] font-bold uppercase tracking-widest text-navy/20 dark:text-white/20">Account</p>
+              <p className="px-3 pt-5 pb-2 text-[10px] font-bold uppercase tracking-widest text-navy/20 dark:text-white/20">Account</p>
               {accountItems.filter(item => canViewNav(item.path)).map(({ path, label, icon: Icon }) => (
-                <Link key={path} to={path} onClick={() => setMobileOpen(false)} className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${isActive(path) ? 'bg-orange/10 text-orange' : 'text-navy/80 dark:text-white/80 hover:bg-navy/5 dark:hover:bg-white/5 hover:text-white'}`}>
+                <Link key={path} to={path} onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-200 ${isActive(path) ? 'text-orange' : 'text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white'}`}
+                  style={isActive(path) ? { boxShadow: 'var(--neu-inset-sm)', background: 'rgb(var(--color-card))' } : {}}
+                >
                   <Icon className="h-4 w-4" /> {label}
                 </Link>
               ))}
@@ -416,10 +425,10 @@ export default function AppLayout({ children, title, backTo, noPadding = false }
       {/* ═══ Global Search Modal — Liquid Glass ═══ */}
       {searchOpen && (
         <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 backdrop-blur-md p-4 animate-fadeIn" style={{ background: 'var(--overlay-bg)' }} onClick={() => setSearchOpen(false)}>
-          <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: 'var(--search-bg)', backdropFilter: 'blur(24px) saturate(180%)', border: '1px solid var(--search-border)' }} onClick={e => e.stopPropagation()}>
-            <div className="flex items-center gap-3 p-4" style={{ borderBottom: '1px solid var(--subtle-border)' }}>
+          <div className="w-full max-w-xl rounded-2xl shadow-elevated overflow-hidden animate-slideDown" style={{ background: 'var(--search-bg)', backdropFilter: 'blur(24px) saturate(180%)', boxShadow: 'var(--neu-float)' }} onClick={e => e.stopPropagation()}>
+            <div className="flex items-center gap-3 p-4" style={{ boxShadow: '0 2px 4px var(--neu-shadow-dark)' }}>
               <Search className="h-5 w-5 text-muted" />
-              <input autoFocus type="text" className="flex-1 bg-transparent text-navy outline-none text-lg placeholder:text-muted/40" placeholder="Search projects, pages, team..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+              <input autoFocus type="text" className="flex-1 bg-transparent text-navy dark:text-white outline-none focus:outline-none focus:ring-0 text-lg placeholder:text-muted/40 rounded-xl px-4 py-2" style={{ boxShadow: 'var(--neu-inset)', border: 'none' }} placeholder="Search projects, pages, team..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
               <button onClick={() => setSearchOpen(false)} className="rounded-lg p-1 hover:bg-navy/5 dark:hover:bg-white/5 text-muted transition-colors"><X className="h-5 w-5" /></button>
             </div>
             <div className="max-h-[60vh] overflow-y-auto p-2">

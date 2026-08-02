@@ -357,12 +357,12 @@ export default function ChatBox() {
 
   return (
     <AppLayout noPadding={true}>
-      <div className="flex flex-col h-[calc(100dvh-64px)] p-2 sm:p-4 lg:p-6">
-        <div className="flex flex-col md:flex-row flex-1 rounded-2xl border border-navy/10 dark:border-white/10 bg-card/40 backdrop-blur-xl overflow-hidden shadow-2xl">
+      <div className="flex flex-col h-[calc(100dvh-64px)] p-4 sm:p-6 lg:p-10 overflow-hidden">
+        <div className="flex flex-col md:flex-row flex-1 gap-5 min-h-0">
 
           {/* ── Left: Room List (Desktop) ── */}
-          <div className="w-[280px] bg-card border-r border-white/[0.06] flex-col shrink-0 hidden md:flex">
-            <div className="p-4 border-b border-white/[0.06]">
+          <div className="w-[260px] flex-col shrink-0 hidden md:flex rounded-2xl" style={{ background: 'rgb(var(--color-card))', boxShadow: 'var(--neu-raised)' }}>
+            <div className="p-5 pb-4 rounded-t-2xl" style={{ boxShadow: '0 2px 6px var(--neu-shadow-dark)' }}>
               <h2 className="text-lg font-bold text-navy dark:text-white flex items-center gap-2">
                 <MessageCircle size={20} className="text-blue-400" /> Chat
               </h2>
@@ -371,15 +371,16 @@ export default function ChatBox() {
                 {onlineCount} online
               </p>
             </div>
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto p-3">
               {rooms.map((room) => (
                 <button
                   key={room.name}
                   onClick={() => setActiveRoom(room.name)}
-                  className={`w-full text-left px-4 py-3 border-b border-white/[0.04] transition hover:bg-white/[0.03] ${activeRoom === room.name ? 'bg-white/[0.06] border-l-2 border-l-blue-500' : ''}`}
+                  className={`w-full text-left px-4 py-3 mb-2 rounded-xl transition-all duration-200 ${activeRoom === room.name ? 'text-blue-500 font-semibold' : 'text-navy/80 dark:text-white/80 hover:text-navy dark:hover:text-white'}`}
+                  style={activeRoom === room.name ? { boxShadow: 'var(--neu-inset-sm)', background: 'rgb(var(--color-surface))' } : { boxShadow: 'var(--neu-raised-sm)', background: 'rgb(var(--color-card))' }}
                 >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-navy dark:text-white flex items-center gap-2.5">
+                    <span className="text-sm font-medium flex items-center gap-2.5">
                       {getRoomIcon(room.name)} <span className="capitalize">{room.label || room.name.replace('_', ' ')}</span>
                     </span>
                     {room.unreadCount > 0 && (
@@ -421,10 +422,10 @@ export default function ChatBox() {
           </div>
 
           {/* ── Center: Messages ── */}
-          <div className="flex-1 flex flex-col min-w-0 min-h-0">
+          <div className="flex-1 flex flex-col min-w-0 min-h-0 rounded-2xl" style={{ background: 'rgb(var(--color-card))', boxShadow: 'var(--neu-raised)' }}>
             {/* Room Header */}
             {activeRoom ? (
-              <div className="px-3 sm:px-6 py-2 sm:py-3 bg-card border-b border-white/[0.06] flex items-center justify-between shrink-0">
+              <div className="px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between shrink-0 rounded-t-2xl" style={{ boxShadow: '0 2px 6px var(--neu-shadow-dark)' }}>
                 <div className="min-w-0">
                   <h3 className="text-navy dark:text-white font-semibold flex items-center gap-2 text-sm sm:text-lg capitalize truncate">
                     {getRoomIcon(activeRoom)} {rooms.find((r) => r.name === activeRoom)?.label || 'Project Chat'}
@@ -451,7 +452,7 @@ export default function ChatBox() {
                 </div>
               </div>
             ) : (
-              <div className="px-6 py-4 bg-card border-b border-white/[0.06] text-muted">Select a project to start chatting</div>
+              <div className="px-6 py-4 text-muted" style={{ boxShadow: '0 2px 6px var(--neu-shadow-dark)' }}>Select a project to start chatting</div>
             )}
 
             {/* Messages Area */}
@@ -646,7 +647,7 @@ export default function ChatBox() {
             )}
 
             {/* Input Area */}
-            <div className="px-3 sm:px-6 py-3 sm:py-4 bg-card border-t border-white/[0.06] shrink-0 pb-3 sm:pb-4">
+            <div className="px-4 sm:px-6 py-4 shrink-0 rounded-b-2xl" style={{ boxShadow: '0 -2px 6px var(--neu-shadow-dark)' }}>
               
               {/* Reply Preview Bar */}
               {replyingTo && (
@@ -697,8 +698,8 @@ export default function ChatBox() {
                       placeholder={activeRoom ? `Message ${rooms.find(r => r.name === activeRoom)?.label || 'Project Chat'}...` : "Select a project to start"}
                       disabled={!activeRoom}
                       rows={1}
-                      className="w-full px-4 py-3 bg-surface border border-navy/10 dark:border-white/10 rounded-2xl text-navy dark:text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition resize-none text-sm"
-                      style={{ minHeight: '44px', maxHeight: '120px' }}
+                      className="w-full px-4 py-3 rounded-2xl text-navy dark:text-white placeholder-gray-500 focus:outline-none focus:ring-0 transition resize-none text-sm"
+                      style={{ minHeight: '44px', maxHeight: '120px', boxShadow: 'var(--neu-inset)', border: 'none', background: 'rgb(var(--color-surface))' }}
                     />
                     {input.length > 1800 && (
                       <span className={`absolute bottom-1 right-2 text-[10px] ${input.length > 2000 ? 'text-red-400' : 'text-muted'}`}>
@@ -736,7 +737,8 @@ export default function ChatBox() {
                   <button
                     onClick={() => cameraInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-all disabled:opacity-50 flex items-center justify-center"
+                    style={{ boxShadow: 'var(--neu-raised-sm)', background: 'rgb(var(--color-card))' }}
                     title="Take Photo"
                   >
                     <Camera size={18} />
@@ -744,7 +746,8 @@ export default function ChatBox() {
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={!activeRoom || isUploading}
-                    className="h-10 w-10 rounded-full bg-navy/5 dark:bg-white/5 hover:bg-navy/10 dark:bg-white/10 text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-colors disabled:opacity-50 flex items-center justify-center"
+                    className="h-10 w-10 rounded-full text-navy/90 dark:text-white/70 hover:text-navy dark:text-white transition-all disabled:opacity-50 flex items-center justify-center"
+                    style={{ boxShadow: 'var(--neu-raised-sm)', background: 'rgb(var(--color-card))' }}
                     title="Attach File"
                   >
                     <ImageIcon size={18} />
@@ -765,8 +768,8 @@ export default function ChatBox() {
               <div className="lg:hidden absolute inset-0 bg-navy/5 dark:bg-black/50 z-40" onClick={() => setShowSidebar(false)} />
 
               {/* Sidebar */}
-              <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[220px] bg-card/95 lg:bg-card backdrop-blur-xl border-l border-white/[0.06] flex flex-col shrink-0 animate-slideUp lg:animate-none">
-                <div className="p-4 border-b border-white/[0.06] flex justify-between items-center">
+              <div className="absolute lg:relative right-0 top-0 bottom-0 z-50 w-[240px] backdrop-blur-xl flex flex-col shrink-0 animate-slideUp lg:animate-none lg:rounded-2xl" style={{ background: 'rgb(var(--color-card))', boxShadow: 'var(--neu-raised)' }}>
+                <div className="p-5 pb-4 flex justify-between items-center rounded-t-2xl" style={{ boxShadow: '0 2px 6px var(--neu-shadow-dark)' }}>
                   <h3 className="text-sm font-semibold text-navy dark:text-white">Project Team</h3>
                   <button className="lg:hidden p-1 text-muted hover:text-navy dark:text-white" onClick={() => setShowSidebar(false)}>
                     <X size={16} />
